@@ -9,5 +9,5 @@ MotionStateMachine <|-- MainMotionStateMachine
 MotionStateMachine <|-- AdditiveMotionStateMachine
 MotionStateMachine o-- MotionState
 MotionController o-- MotionStateMachine
-MainMotionStateMachine <|-- DefultState
+MotionState <|-- DefultState
 ```
