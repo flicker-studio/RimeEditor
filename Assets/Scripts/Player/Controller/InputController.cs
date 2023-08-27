@@ -4,8 +4,8 @@ using UnityEngine;
 
 public struct InputData
 {
-    public Vector2 moveInput;
-    public bool jumpInput;
+    public Vector2 MoveInput;
+    public bool JumpInput;
 }
 
 public class InputController
@@ -16,8 +16,8 @@ public class InputController
     {
         get
         {
-            m_inputData.moveInput = InputManager.Instance.GetMoveInput;
-            m_inputData.jumpInput = InputManager.Instance.GetJumpInput;
+            m_inputData.MoveInput = InputManager.Instance.GetMoveInput;
+            m_inputData.JumpInput = InputManager.Instance.GetJumpInput;
             return m_inputData;
         }
     }

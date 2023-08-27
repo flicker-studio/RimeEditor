@@ -4,7 +4,19 @@ using UnityEngine;
 
 public abstract class MotionState
 {
-    public abstract void Motion(InputData inputData);
+    protected InputController m_inputController;
+
+    protected ComponentController m_componentController;
+
+    protected CharacterProperty m_characterProperty;
+
+    public MotionState(PlayerInformation information)
+    {
+        m_inputController = information.InputController;
+        m_componentController = information.ComponentController;
+        m_characterProperty = information.CharacterProperty;
+    }
+    public abstract void Motion(PlayerInformation playerInformation);
     
     protected void ChangeMoveState(MotionState motionState)
     {

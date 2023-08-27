@@ -6,13 +6,13 @@ public abstract class MotionStateMachine
 {
     protected List<MotionState> m_playerMoveStates;
 
-    public void Motion(InputData inputData)
+    public void Motion(PlayerInformation playerInformation)
     {
         List<MotionState> tempList = new List<MotionState>();
         tempList.AddRange(m_playerMoveStates);
         foreach (var motionState in tempList)
         {
-            motionState.Motion(inputData);
+            motionState.Motion(playerInformation);
         }
     }
 

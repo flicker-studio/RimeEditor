@@ -14,11 +14,11 @@ public class MotionController
         EventCenterManager.Instance.AddEventListener<MotionState>(GameEvent.ChangeMoveState,ChangeMotionState);
     }
     
-    public void Motion(InputData inputData)
+    public void Motion(PlayerInformation playerInformation)
     {
         foreach (var motionStateMachine in m_motionStateMachines)
         {
-            motionStateMachine.Motion(inputData);
+            motionStateMachine.Motion(playerInformation);
         }
     }
 

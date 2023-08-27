@@ -4,10 +4,14 @@ using UnityEngine;
 
 public abstract class AdditiveMotionState : MotionState
 {
-    override public void Motion(InputData inputData)
+    protected AdditiveMotionState(PlayerInformation information) : base(information)
     {
-        EndTimer();
     }
 
-    protected abstract void EndTimer();
+    public override void Motion(PlayerInformation playerInformation)
+    {
+        EndTimmer();
+    }
+
+    protected abstract void EndTimmer();
 }

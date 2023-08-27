@@ -4,5 +4,9 @@ using UnityEngine;
 
 public abstract class MainMotionState : MotionState
 {
-
+    protected MainMotionState(PlayerInformation information) : base(information)
+    {
+    }
+    
+    
 }

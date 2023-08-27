@@ -41,7 +41,10 @@ MotionStateMachine *-- MotionState
 MotionController o-- MotionStateMachine
 PlayerController *-- MotionController
 PlayerController *-- InputController
+PlayerController *-- ComponentController
+PlayerController *-- PlayerInformation
 MainMotionState <|-- DefultState
+MainMotionState <|-- WalkState
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
 ```

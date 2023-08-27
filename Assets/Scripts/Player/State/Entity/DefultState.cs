@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class DefultState : MainMotionState
 {
-    public override void Motion(InputData inputData)
+    public override void Motion(PlayerInformation playerInformation)
     {
-        Debug.Log("DefultState");
-        if (inputData.moveInput.x == 1)
+        if (m_inputController.GetInputData.MoveInput.x != 0)
         {
-            ChangeMoveState(new TestOne());
-        }else if (inputData.moveInput.x == -1)
-        {
-            ChangeMoveState(new TestTwo());
+            ChangeMoveState(new WalkState(playerInformation));
         }
+        Debug.Log("DefultState");
+    }
+
+    public DefultState(PlayerInformation information) : base(information)
+    {
     }
 }
