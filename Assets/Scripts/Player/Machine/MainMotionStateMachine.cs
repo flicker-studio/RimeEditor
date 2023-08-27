@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class MainMotionStateMachine : MotionStateMachine
 {
-    public MainMotionStateMachine(MotionState playerMoveState) : base(playerMoveState)
-    {
-    }
-
-    protected override void ChangeMotionState(MotionState playerMoveState)
+    public override void ChangeMotionState(MotionState playerMoveState)
     {
         m_playerMoveStates.Clear();
         m_playerMoveStates.Add(playerMoveState);

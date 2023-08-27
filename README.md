@@ -7,6 +7,7 @@ The code naming convention for this project is as follows：
 - Interface                                                   IEat
 - Private Attribute                                     m_robotSpeed
 - Public Attribute                                       RobotSpeed
+- Protected Attribute                                m_robotSpeed
 - Enum Class                                              ROBOT_TYPE
 - Local Parameter                                      robotSpeed
 
@@ -36,7 +37,10 @@ MotionController
 classDiagram
 MotionStateMachine <|-- MainMotionStateMachine
 MotionStateMachine <|-- AdditiveMotionStateMachine
-MotionStateMachine o-- MotionState
+MotionStateMachine *-- MotionState
 MotionController o-- MotionStateMachine
-MotionState <|-- DefultState
+CharacterController *-- MotionController
+MainMotionState <|-- DefultState
+MotionState <|-- MainMotionState
+MotionState <|-- AdditiveMotionState
 ```

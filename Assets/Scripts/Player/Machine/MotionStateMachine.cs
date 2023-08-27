@@ -14,10 +14,10 @@ public abstract class MotionStateMachine
         }
     }
 
-    public MotionStateMachine(MotionState playerMoveState)
+    public MotionStateMachine()
     {
         m_playerMoveStates = new List<MotionState>();
     }
 
-    protected abstract void ChangeMotionState(MotionState playerMoveState);
+    public abstract void ChangeMotionState(MotionState playerMoveState);
 }
