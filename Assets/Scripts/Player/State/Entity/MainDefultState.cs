@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefultState : MainMotionState
+public class MainDefultState : MainMotionState
 {
     public override void Motion(PlayerInformation playerInformation)
     {
@@ -10,10 +10,10 @@ public class DefultState : MainMotionState
         {
             ChangeMoveState(new WalkState(playerInformation));
         }
-        Debug.Log("DefultState");
+        // Debug.Log("DefultState");
     }
 
-    public DefultState(PlayerInformation information) : base(information)
+    public MainDefultState(PlayerInformation information) : base(information)
     {
     }
 }

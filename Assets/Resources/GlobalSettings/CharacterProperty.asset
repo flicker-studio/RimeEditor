@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerMoveProperty:
     PLAYER_MOVE_SPEED: 9.06
+  m_PlayerJumpProperty:
+    PLAYER_JUMP_TIMMER: 3

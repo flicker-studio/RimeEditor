@@ -12,11 +12,10 @@ public class WalkState : MainMotionState
     {
         if (m_inputController.GetInputData.MoveInput.x == 0)
         {
-            ChangeMoveState(new DefultState(playerInformation));
+            ChangeMoveState(new MainDefultState(playerInformation));
         }
         m_componentController.Rigidbody.velocity = 
             m_inputController.GetInputData.MoveInput 
             * m_characterProperty.m_playerMoveProperty.PLAYER_MOVE_SPEED;
-        Debug.Log("WalkState");
     }
 }

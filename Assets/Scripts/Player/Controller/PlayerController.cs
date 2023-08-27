@@ -34,7 +34,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         ControllerInit();
-        m_motionController.ChangeMotionState(new DefultState(m_playerInformation));
+        m_motionController.ChangeMotionState(new MainDefultState(m_playerInformation));
+        m_motionController.ChangeMotionState(new AdditiveDefultState(m_playerInformation));
     }
 
     private void Update()

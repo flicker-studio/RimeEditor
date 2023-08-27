@@ -4,14 +4,16 @@ using UnityEngine;
 
 public abstract class AdditiveMotionState : MotionState
 {
+    protected float m_endTimmer = 0;
+
+    public bool IsEnd = false;
     protected AdditiveMotionState(PlayerInformation information) : base(information)
     {
     }
-
-    public override void Motion(PlayerInformation playerInformation)
+    
+    protected void RemoveState()
     {
-        EndTimmer();
+        IsEnd = true;
+        ChangeMoveState(null);
     }
-
-    protected abstract void EndTimmer();
 }

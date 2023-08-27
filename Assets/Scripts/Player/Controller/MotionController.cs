@@ -16,7 +16,9 @@ public class MotionController
     
     public void Motion(PlayerInformation playerInformation)
     {
-        foreach (var motionStateMachine in m_motionStateMachines)
+        List<MotionStateMachine> tempList = new List<MotionStateMachine>();
+        tempList.AddRange(m_motionStateMachines);
+        foreach (var motionStateMachine in tempList)
         {
             motionStateMachine.Motion(playerInformation);
         }

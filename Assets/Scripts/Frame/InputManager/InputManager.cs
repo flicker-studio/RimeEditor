@@ -22,7 +22,7 @@ public class InputManager : Singleton<InputManager>
             m_jumpInput = true;
         };
 
-        GetPlayerActions.Jump.performed += context =>
+        GetPlayerActions.Jump.canceled += context =>
         {
             m_jumpInput = false;
         };

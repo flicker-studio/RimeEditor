@@ -43,8 +43,10 @@ PlayerController *-- MotionController
 PlayerController *-- InputController
 PlayerController *-- ComponentController
 PlayerController *-- PlayerInformation
-MainMotionState <|-- DefultState
+MainMotionState <|-- MainDefultState
+AdditiveMotionState <|-- AdditiveDefultState
 MainMotionState <|-- WalkState
+AdditiveMotionState <|-- JumpState
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
 ```
