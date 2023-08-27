@@ -13,11 +13,11 @@ public class MotionController
         m_motionStateMachines = new List<MotionStateMachine>();
     }
     
-    public void Motion()
+    public void Motion(InputData inputData)
     {
         foreach (var motionStateMachine in m_motionStateMachines)
         {
-            motionStateMachine.Motion();
+            motionStateMachine.Motion(inputData);
         }
     }
 

@@ -6,11 +6,11 @@ public abstract class MotionStateMachine
 {
     protected List<MotionState> m_playerMoveStates;
 
-    public void Motion()
+    public void Motion(InputData inputData)
     {
         foreach (var motionState in m_playerMoveStates)
         {
-            motionState.Motion();
+            motionState.Motion(inputData);
         }
     }
 

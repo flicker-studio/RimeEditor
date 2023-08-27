@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DefultState : MainMotionState
 {
-    public override void Motion()
+    public override void Motion(InputData inputData)
     {
         Debug.Log("1");
     }

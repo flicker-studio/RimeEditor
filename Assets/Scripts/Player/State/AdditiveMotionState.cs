@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class AdditiveMotionState : MotionState
 {
-    override public void Motion()
+    override public void Motion(InputData inputData)
     {
         EndTimer();
     }

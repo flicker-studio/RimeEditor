@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class MotionState
 {
-    public abstract void Motion();
+    public abstract void Motion(InputData inputData);
     
     protected void ChangeMoveState(MotionState motionState)
     {

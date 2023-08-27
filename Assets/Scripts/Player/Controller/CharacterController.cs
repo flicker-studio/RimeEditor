@@ -7,9 +7,12 @@ public class CharacterController : MonoBehaviour
 {
     private MotionController m_motionController;
 
+    private InputController m_inputController;
+
     private void ControllerInit()
     {
         m_motionController = new MotionController();
+        m_inputController = new InputController();
     }
     
     private void Start()
@@ -20,6 +23,6 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
-        m_motionController.Motion();
+        m_motionController.Motion(m_inputController.GetInputData);
     }
 }
