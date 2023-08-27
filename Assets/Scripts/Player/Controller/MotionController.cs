@@ -11,6 +11,7 @@ public class MotionController
     public MotionController()
     {
         m_motionStateMachines = new List<MotionStateMachine>();
+        EventCenterManager.Instance.AddEventListener<MotionState>(GameEvent.ChangeMoveState,ChangeMotionState);
     }
     
     public void Motion(InputData inputData)

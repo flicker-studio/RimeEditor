@@ -39,8 +39,8 @@ MotionStateMachine <|-- MainMotionStateMachine
 MotionStateMachine <|-- AdditiveMotionStateMachine
 MotionStateMachine *-- MotionState
 MotionController o-- MotionStateMachine
-CharacterController *-- MotionController
-CharacterController *-- InputController
+PlayerController *-- MotionController
+PlayerController *-- InputController
 MainMotionState <|-- DefultState
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState

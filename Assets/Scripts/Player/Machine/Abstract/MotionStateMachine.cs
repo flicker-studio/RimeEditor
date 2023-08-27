@@ -8,7 +8,9 @@ public abstract class MotionStateMachine
 
     public void Motion(InputData inputData)
     {
-        foreach (var motionState in m_playerMoveStates)
+        List<MotionState> tempList = new List<MotionState>();
+        tempList.AddRange(m_playerMoveStates);
+        foreach (var motionState in tempList)
         {
             motionState.Motion(inputData);
         }
