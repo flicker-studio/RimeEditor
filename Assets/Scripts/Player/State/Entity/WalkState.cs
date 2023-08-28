@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WalkState : MainMotionState
 {
+    private float timmer = 0f;
     public WalkState(PlayerInformation information) : base(information)
     {
     }
@@ -14,8 +15,10 @@ public class WalkState : MainMotionState
         {
             ChangeMoveState(new MainDefultState(playerInformation));
         }
-        m_componentController.Rigidbody.velocity = 
-            m_inputController.GetInputData.MoveInput 
-            * m_characterProperty.m_playerMoveProperty.PLAYER_MOVE_SPEED;
+
+        timmer += Time.fixedDeltaTime;
+        m_componentController.Rigidbody.velocity = m_componentController.Rigidbody.velocity.NewX(
+            m_inputController.GetInputData.MoveInput.x
+            * m_characterProperty.m_playerMoveProperty.PLAYER_MOVE_SPEED);
     }
 }

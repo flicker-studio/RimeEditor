@@ -10,6 +10,8 @@ public class MainDefultState : MainMotionState
         {
             ChangeMoveState(new WalkState(playerInformation));
         }
+
+        m_componentController.Rigidbody.velocity = m_componentController.Rigidbody.velocity.NewX(0);
         // Debug.Log("DefultState");
     }
 

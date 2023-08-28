@@ -13,6 +13,66 @@ MonoBehaviour:
   m_Name: CharacterProperty
   m_EditorClassIdentifier: 
   m_playerMoveProperty:
-    PLAYER_MOVE_SPEED: 9.06
+    PLAYER_MOVE_SPEED: 3
+    ACCELERATION_CURVE:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.100000024
+        value: 1
+        inSlope: 17.789753
+        outSlope: 17.789753
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.058333337
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    RETARDATION_CURVE:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: -46.387833
+        outSlope: -46.387833
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.11919089
+      - serializedVersion: 3
+        time: 0.05033143
+        value: 0.000068699475
+        inSlope: -1.4680533
+        outSlope: -1.4680533
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.5745061
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    AIR_ACCELERATION_CURVE:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    AIR_RETARDATION_CURVE:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   m_PlayerJumpProperty:
-    PLAYER_JUMP_TIMMER: 3
+    PLAYER_JUMP_TIMMER: 2.21

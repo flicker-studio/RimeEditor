@@ -40,9 +40,10 @@ MotionStateMachine <|-- AdditiveMotionStateMachine
 MotionStateMachine *-- MotionState
 MotionController o-- MotionStateMachine
 PlayerController *-- MotionController
-PlayerController *-- InputController
-PlayerController *-- ComponentController
+PlayerInformation *-- InputController
+PlayerInformation *-- ComponentController
 PlayerController *-- PlayerInformation
+PlayerInformation *-- CharacterProperty
 MainMotionState <|-- MainDefultState
 AdditiveMotionState <|-- AdditiveDefultState
 MainMotionState <|-- WalkState
