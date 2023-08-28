@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CharacterProperty
   m_EditorClassIdentifier: 
   m_playerMoveProperty:
-    PLAYER_MOVE_SPEED: 3
-    PLAYER_MOVE_RUN_SPEED: 5
+    PLAYER_MOVE_SPEED: 5
+    PLAYER_MOVE_RUN_SPEED: 8
     GROUND_TIME_TO_MAXIMUN_SPEED: 0.1
     GROUND_TIME_TO_STOP: 0.05
     AIR_TIME_TO_MAXIMUN_SPEED: 0.06666667

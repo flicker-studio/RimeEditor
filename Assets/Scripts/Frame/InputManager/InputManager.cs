@@ -26,6 +26,16 @@ public class InputManager : Singleton<InputManager>
         {
             m_jumpInput = false;
         };
+
+        GetPlayerActions.Run.performed += context =>
+        {
+            m_runInput = true;
+        };
+
+        GetPlayerActions.Run.canceled += context =>
+        {
+            m_runInput = false;
+        };
     }
    
     #region PlayerAction
@@ -62,6 +72,8 @@ public class InputManager : Singleton<InputManager>
 
     private bool m_jumpInput;
 
+    private bool m_runInput;
+
     public Vector2 GetMoveInput
     {
         get
@@ -75,6 +87,14 @@ public class InputManager : Singleton<InputManager>
         get
         {
             return m_jumpInput;
+        }
+    }
+    
+    public bool GetRunInput
+    {
+        get
+        {
+            return m_runInput;
         }
     }
     

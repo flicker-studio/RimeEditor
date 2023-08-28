@@ -46,7 +46,7 @@ PlayerController *-- PlayerInformation
 PlayerInformation *-- CharacterProperty
 MainMotionState <|-- MainDefultState
 AdditiveMotionState <|-- AdditiveDefultState
-MainMotionState <|-- WalkState
+MainMotionState <|-- WalkAndRunState
 AdditiveMotionState <|-- JumpState
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
