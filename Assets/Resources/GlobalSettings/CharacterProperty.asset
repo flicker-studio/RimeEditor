@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerMoveProperty:
     PLAYER_MOVE_SPEED: 3
+    PLAYER_MOVE_RUN_SPEED: 5
+    GROUND_TIME_TO_MAXIMUN_SPEED: 0.1
+    GROUND_TIME_TO_STOP: 0.05
+    AIR_TIME_TO_MAXIMUN_SPEED: 0.06666667
+    AIR_TIME_TO_STOP: 0.033333335
     ACCELERATION_CURVE:
       serializedVersion: 2
       m_Curve:
@@ -27,50 +32,14 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.100000024
+        time: 1
         value: 1
-        inSlope: 17.789753
-        outSlope: 17.789753
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.058333337
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    RETARDATION_CURVE:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: -46.387833
-        outSlope: -46.387833
+        inSlope: 2
+        outSlope: 2
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0.11919089
-      - serializedVersion: 3
-        time: 0.05033143
-        value: 0.000068699475
-        inSlope: -1.4680533
-        outSlope: -1.4680533
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.5745061
         outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    AIR_ACCELERATION_CURVE:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    AIR_RETARDATION_CURVE:
-      serializedVersion: 2
-      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

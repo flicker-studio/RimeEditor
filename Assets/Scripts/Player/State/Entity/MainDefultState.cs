@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class MainDefultState : MainMotionState
 {
+    private float timmer = 0;
+
+    private float m_oriSpeed;
     public override void Motion(PlayerInformation playerInformation)
     {
         if (m_inputController.GetInputData.MoveInput.x != 0)
         {
             ChangeMoveState(new WalkState(playerInformation));
         }
-
-        m_componentController.Rigidbody.velocity = m_componentController.Rigidbody.velocity.NewX(0);
-        // Debug.Log("DefultState");
+        
+        timmer += Time.fixedDeltaTime;
+        GetRigidbody.velocity = GetRigidbody.velocity.NewX(m_oriSpeed
+            * (1-GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_STOP)));
+        Debug.Log(GetRigidbody.velocity.x);
     }
 
     public MainDefultState(PlayerInformation information) : base(information)
     {
+        m_oriSpeed = GetRigidbody.velocity.x;
     }
 }

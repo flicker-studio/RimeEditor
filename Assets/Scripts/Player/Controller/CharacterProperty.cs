@@ -12,16 +12,20 @@ public class CharacterProperty : ScriptableObject
     [Serializable]
     public struct PlayerMoveProperty
     {
-        [CustomLabel("玩家最大移动速度"),Range(1,10)] 
+        [CustomLabel("玩家最大水平移动速度"),Range(1,10)] 
         public float PLAYER_MOVE_SPEED;
-        [CustomLabel("地面加速曲线")]
+        [CustomLabel("玩家最大水平疾跑速度"),Range(1,10)] 
+        public float PLAYER_MOVE_RUN_SPEED;
+        [CustomLabel("地面加速到最大水平速度时间"),Range(0,1)]
+        public float GROUND_TIME_TO_MAXIMUN_SPEED;
+        [CustomLabel("地面停止运动减速时间"),Range(0,1)]
+        public float GROUND_TIME_TO_STOP;
+        [CustomLabel("空中加速到最大水平速度时间"),Range(0,1)]
+        public float AIR_TIME_TO_MAXIMUN_SPEED;
+        [CustomLabel("空中停止运动减速时间"),Range(0,1)]
+        public float AIR_TIME_TO_STOP;
+        [CustomLabel("速度变化曲线")]
         public AnimationCurve ACCELERATION_CURVE;
-        [CustomLabel("地面减速曲线")] 
-        public AnimationCurve RETARDATION_CURVE;
-        [CustomLabel("空中加速曲线")]
-        public AnimationCurve AIR_ACCELERATION_CURVE;
-        [CustomLabel("空中减速曲线")] 
-        public AnimationCurve AIR_RETARDATION_CURVE;
     }
     
     [Serializable]

@@ -10,6 +10,20 @@ public abstract class MotionState
 
     protected CharacterProperty m_characterProperty;
 
+    #region GetProperty
+
+    protected CharacterProperty.PlayerMoveProperty GetMoveProperty => m_characterProperty.m_playerMoveProperty;
+    
+    protected CharacterProperty.PlayerJumpProperty GetJumpProperty => m_characterProperty.m_PlayerJumpProperty;
+
+    protected Rigidbody2D GetRigidbody => m_componentController.Rigidbody;
+
+    protected CapsuleCollider2D GetCollider => m_componentController.CapsuleCollider;
+
+    protected InputData GetInputData => m_inputController.GetInputData;
+
+    #endregion
+
     public MotionState(PlayerInformation information)
     {
         m_inputController = information.InputController;
