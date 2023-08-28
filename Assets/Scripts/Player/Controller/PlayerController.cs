@@ -3,22 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInformation
-{
-    public InputController InputController;
-
-    public ComponentController ComponentController;
-
-    public CharacterProperty CharacterProperty;
-
-    public PlayerInformation(Transform transform)
-    {
-        InputController = new InputController();
-        ComponentController = new ComponentController(transform);
-        CharacterProperty = Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
-    }
-}
-
+[RequireComponent(typeof(Rigidbody2D),typeof(CapsuleCollider2D))]
 public class PlayerController : MonoBehaviour
 {
     private MotionController m_motionController;
