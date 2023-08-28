@@ -44,7 +44,7 @@ PlayerInformation *-- InputController
 PlayerInformation *-- ComponentController
 PlayerController *-- PlayerInformation
 PlayerInformation *-- CharacterProperty
-PlayerInformation *-- PlayerCollider
+PlayerInformation *-- PlayerColliding
 MainMotionState <|-- MainDefultState
 AdditiveMotionState <|-- AdditiveDefultState
 MainMotionState <|-- WalkAndRunState
