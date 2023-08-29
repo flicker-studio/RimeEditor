@@ -45,9 +45,11 @@ MonoBehaviour:
       m_RotationOrder: 4
   JumpProperty:
     PLAYER_MAXIMAL_JUMP_SPEED: 8
-    PLAYER_MAXIMAL_JUMP_TIMMER: 0.4
-    PLAYER_SMALLEST_JUMP_TIMMER: 0.15
-    PLAYER_JUMP_FINISH_SPEED_COMPENSATION: -2.5
+    PLAYER_MAXIMAL_JUMP_TIME: 0.4
+    PLAYER_SMALLEST_JUMP_TIME: 0.15
+    PLAYER_JUMP_FINISH_SPEED_COMPENSATION: -5
+    JUMPING_BUFFER_TIME: 0.15
+    COYOTE_TIME: 0.1
     ACCELERATION_CURVE:
       serializedVersion: 2
       m_Curve:
@@ -73,5 +75,5 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   GroundCheckParameter:
-    CHECK_CAPSULE_SIZE: {x: 0.45, y: 0.45, z: 0}
-    CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: -0.8, z: 0}
+    CHECK_CAPSULE_SIZE: {x: 0.55, y: 0.45, z: 0}
+    CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: -0.85, z: 0}

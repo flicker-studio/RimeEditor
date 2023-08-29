@@ -37,12 +37,16 @@ public class CharacterProperty : ScriptableObject
     {
         [CustomLabel("玩家最大跳跃速度"),Range(1,100)]
         public float PLAYER_MAXIMAL_JUMP_SPEED;
-        [CustomLabel("玩家最大跳跃时间"),Range(0,3)] 
-        public float PLAYER_MAXIMAL_JUMP_TIMMER;
-        [CustomLabel("玩家最小跳跃时间"),Range(0,3)] 
-        public float PLAYER_SMALLEST_JUMP_TIMMER;
+        [FormerlySerializedAs("PLAYER_MAXIMAL_JUMP_TIMMER")] [CustomLabel("玩家最大跳跃时间"),Range(0,3)] 
+        public float PLAYER_MAXIMAL_JUMP_TIME;
+        [FormerlySerializedAs("PLAYER_SMALLEST_JUMP_TIMMER")] [CustomLabel("玩家最小跳跃时间"),Range(0,3)] 
+        public float PLAYER_SMALLEST_JUMP_TIME;
         [CustomLabel("玩家跳跃结束速度补正"),Range(-100,0)]
         public float PLAYER_JUMP_FINISH_SPEED_COMPENSATION;
+        [CustomLabel("跳跃缓冲时间"),Range(0,10)]
+        public float JUMPING_BUFFER_TIME;
+        [CustomLabel("土狼时间"),Range(0,1)]
+        public float COYOTE_TIME;
         [CustomLabel("速度变化曲线")]
         public AnimationCurve ACCELERATION_CURVE;
     }
