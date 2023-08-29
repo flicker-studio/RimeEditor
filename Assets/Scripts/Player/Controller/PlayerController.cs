@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D),typeof(CapsuleCollider2D))]
@@ -20,8 +21,16 @@ public class PlayerController : MonoBehaviour
         m_motionController.ChangeMotionState(new AdditiveDefultState(m_playerInformation));
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         m_motionController.Motion(m_playerInformation);
+    }
+
+    private void OnDrawGizmos()
+    {
+        CharacterProperty temp = Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position+temp.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
+            temp.GroundCheckParameter.CHECK_CAPSULE_SIZE.x);
     }
 }

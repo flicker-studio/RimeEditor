@@ -21,14 +21,14 @@ public class WalkAndRunState : MainMotionState
         if (!GetInputData.RunInput)
         {
             GetRigidbody.velocity = GetRigidbody.velocity.NewX(GetInputData.MoveInput.x
-                                                               * GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED) 
-                                                               * GetMoveProperty.PLAYER_MOVE_SPEED);
+            * GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED) 
+            * GetMoveProperty.PLAYER_MOVE_SPEED);
         }
         else
         {
             GetRigidbody.velocity = GetRigidbody.velocity.NewX(GetInputData.MoveInput.x
-                                                               * GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED) 
-                                                               * GetMoveProperty.PLAYER_MOVE_RUN_SPEED);
+            * GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED) 
+            * GetMoveProperty.PLAYER_MOVE_RUN_SPEED);
         }
     }
 }

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 305b9fcb02f96304680c21004b0a6756, type: 3}
   m_Name: CharacterProperty
   m_EditorClassIdentifier: 
-  m_playerMoveProperty:
-    PLAYER_MOVE_SPEED: 5
-    PLAYER_MOVE_RUN_SPEED: 8
+  MoveProperty:
+    PLAYER_MOVE_SPEED: 6
+    PLAYER_MOVE_RUN_SPEED: 10
     GROUND_TIME_TO_MAXIMUN_SPEED: 0.1
     GROUND_TIME_TO_STOP: 0.05
     AIR_TIME_TO_MAXIMUN_SPEED: 0.06666667
@@ -43,5 +43,35 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  m_PlayerJumpProperty:
-    PLAYER_JUMP_TIMMER: 2.21
+  JumpProperty:
+    PLAYER_MAXIMAL_JUMP_SPEED: 8
+    PLAYER_MAXIMAL_JUMP_TIMMER: 0.4
+    PLAYER_SMALLEST_JUMP_TIMMER: 0.15
+    PLAYER_JUMP_FINISH_SPEED_COMPENSATION: -2.5
+    ACCELERATION_CURVE:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  GroundCheckParameter:
+    CHECK_CAPSULE_SIZE: {x: 0.45, y: 0.45, z: 0}
+    CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: -0.8, z: 0}

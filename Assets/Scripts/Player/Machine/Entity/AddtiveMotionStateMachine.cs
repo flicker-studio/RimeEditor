@@ -19,7 +19,7 @@ public class AddtiveMotionStateMachine : MotionStateMachine
             }
             return;
         }
-        if (m_playerMoveStates.Contains(playerMoveState)) m_playerMoveStates.Remove(playerMoveState);
+        if (m_playerMoveStates.Contains(playerMoveState)) return;
         m_playerMoveStates.Add(playerMoveState);
     }
 }

@@ -9,34 +9,40 @@ public class PlayerColliding
 
     private Transform m_playerTransform;
 
+    private CharacterProperty m_characterProperty;
+
     public bool IsGround
     {
         get
         {
+            m_isGround = OverlapRotatedBox(m_playerTransform.position
+                                           + m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION
+                , m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
             return m_isGround;
         }
     }
 
-    PlayerColliding(Transform transform)
+    public PlayerColliding(Transform transform,CharacterProperty characterProperty)
     {
         m_playerTransform = transform;
+        m_characterProperty = characterProperty;
     }
     
-    Collider2D[] OverlapRotatedBox(Vector3 center, Vector3 size, float angle)
+    private bool OverlapRotatedBox(Vector2 center, Vector2 size, float angle)
     {
         int maxColliders = 50;
         Collider2D[] colliderBuffer = new Collider2D[maxColliders];
         int numColliders = Physics2D.OverlapCapsuleNonAlloc(center, 
-            size / 2,CapsuleDirection2D.Vertical, angle,colliderBuffer);
-
-        // Trim the colliderBuffer array
-        Collider2D[] colliders = new Collider2D[numColliders];
+            size,CapsuleDirection2D.Vertical, angle,colliderBuffer);
+        
         for (int i = 0; i < numColliders; i++)
         {
-            colliders[i] = colliderBuffer[i];
-            // Debug.Log($"裁切中枢检测到方块：{colliders[i].gameObject.name}");
+            if (colliderBuffer[i].gameObject.layer == GlobalSetting.LayerMasks.Ground)
+            {
+                return true;
+            }
         }
 
-        return colliders;
+        return false;
     }
 }

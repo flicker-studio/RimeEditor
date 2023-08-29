@@ -10,10 +10,13 @@ public class PlayerInformation
 
     public CharacterProperty CharacterProperty;
 
+    public PlayerColliding PlayerColliding;
+
     public PlayerInformation(Transform transform)
     {
         InputController = new InputController();
         ComponentController = new ComponentController(transform);
         CharacterProperty = Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
+        PlayerColliding = new PlayerColliding(transform,CharacterProperty);
     }
 }

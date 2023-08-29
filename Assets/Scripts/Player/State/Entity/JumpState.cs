@@ -10,10 +10,13 @@ public class JumpState : AdditiveMotionState
 
     public override void Motion(PlayerInformation playerInformation)
     {
-        Debug.Log("JumpState");
         m_endTimmer += Time.fixedDeltaTime;
-        if (m_endTimmer >= m_characterProperty.m_PlayerJumpProperty.PLAYER_JUMP_TIMMER)
+        GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetJumpProperty.PLAYER_MAXIMAL_JUMP_SPEED *
+            (1 - GetJumpProperty.ACCELERATION_CURVE.Evaluate(m_endTimmer / GetJumpProperty.PLAYER_MAXIMAL_JUMP_TIMMER)));
+        if (m_endTimmer >= GetJumpProperty.PLAYER_MAXIMAL_JUMP_TIMMER ||
+            m_endTimmer >= GetJumpProperty.PLAYER_SMALLEST_JUMP_TIMMER && !GetInputData.JumpInput)
         {
+            GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetJumpProperty.PLAYER_JUMP_FINISH_SPEED_COMPENSATION);
             RemoveState();
         }
     }

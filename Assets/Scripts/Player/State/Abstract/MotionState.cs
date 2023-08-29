@@ -10,11 +10,13 @@ public abstract class MotionState
 
     protected CharacterProperty m_characterProperty;
 
+    protected PlayerColliding m_playerColliding;
+
     #region GetProperty
 
-    protected CharacterProperty.PlayerMoveProperty GetMoveProperty => m_characterProperty.m_playerMoveProperty;
+    protected CharacterProperty.PlayerMoveProperty GetMoveProperty => m_characterProperty.MoveProperty;
     
-    protected CharacterProperty.PlayerJumpProperty GetJumpProperty => m_characterProperty.m_PlayerJumpProperty;
+    protected CharacterProperty.PlayerJumpProperty GetJumpProperty => m_characterProperty.JumpProperty;
 
     protected Rigidbody2D GetRigidbody => m_componentController.Rigidbody;
 
@@ -29,6 +31,7 @@ public abstract class MotionState
         m_inputController = information.InputController;
         m_componentController = information.ComponentController;
         m_characterProperty = information.CharacterProperty;
+        m_playerColliding = information.PlayerColliding;
     }
     public abstract void Motion(PlayerInformation playerInformation);
     

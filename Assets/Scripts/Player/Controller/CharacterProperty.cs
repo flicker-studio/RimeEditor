@@ -2,12 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 [CreateAssetMenu(menuName = "CharacterProperty",order = 1,fileName = "CharacterProperty")]
 public class CharacterProperty : ScriptableObject
 {
-    public PlayerMoveProperty m_playerMoveProperty;
+    [FormerlySerializedAs("m_playerMoveProperty")] public PlayerMoveProperty MoveProperty;
 
-    public PlayerJumpProperty m_PlayerJumpProperty;
+    [FormerlySerializedAs("m_PlayerJumpProperty")] public PlayerJumpProperty JumpProperty;
+
+    [FormerlySerializedAs("m_GroundCheckParameter")] public PlayerGroundCheckParameter GroundCheckParameter;
     
     [Serializable]
     public struct PlayerMoveProperty
@@ -31,7 +35,24 @@ public class CharacterProperty : ScriptableObject
     [Serializable]
     public struct PlayerJumpProperty
     {
-        [CustomLabel("玩家最大跳跃时间"),Range(1,3)] 
-        public float PLAYER_JUMP_TIMMER;
+        [CustomLabel("玩家最大跳跃速度"),Range(1,100)]
+        public float PLAYER_MAXIMAL_JUMP_SPEED;
+        [CustomLabel("玩家最大跳跃时间"),Range(0,3)] 
+        public float PLAYER_MAXIMAL_JUMP_TIMMER;
+        [CustomLabel("玩家最小跳跃时间"),Range(0,3)] 
+        public float PLAYER_SMALLEST_JUMP_TIMMER;
+        [CustomLabel("玩家跳跃结束速度补正"),Range(-100,0)]
+        public float PLAYER_JUMP_FINISH_SPEED_COMPENSATION;
+        [CustomLabel("速度变化曲线")]
+        public AnimationCurve ACCELERATION_CURVE;
+    }
+    
+    [Serializable]
+    public struct PlayerGroundCheckParameter
+    {
+        [CustomLabel("地面检测盒子大小")]
+        public Vector3 CHECK_CAPSULE_SIZE;
+        [CustomLabel("地面检测盒相对位置")]
+        public Vector3 CHECK_CAPSULE_RELATIVE_POSITION;
     }
 }
