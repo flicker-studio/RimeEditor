@@ -45,10 +45,14 @@ PlayerInformation *-- ComponentController
 PlayerController *-- PlayerInformation
 PlayerInformation *-- CharacterProperty
 PlayerInformation *-- PlayerColliding
+AdditiveDefultState *-- CoyoteTimer
+AdditiveDefultState *-- JumpBufferTimer
 MainMotionState <|-- MainDefultState
 AdditiveMotionState <|-- AdditiveDefultState
 MainMotionState <|-- WalkAndRunState
 AdditiveMotionState <|-- JumpState
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
+CompensateTimer <|-- CoyoteTimer
+CompensateTimer <|-- JumpBufferTimer
 ```
