@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour
     {
         CharacterProperty temp = Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
         Gizmos.color = Color.green;
-        Gizmos.DrawCube(transform.position+temp.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
+        Gizmos.DrawCube(transform.position+transform.up * temp.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y,
             temp.GroundCheckParameter.CHECK_CAPSULE_SIZE);
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(transform.position+temp.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
+        Gizmos.DrawCube(transform.position+transform.up * temp.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y,
             temp.CeilingCheckParameter.CHECK_CAPSULE_SIZE);
     }
 }

@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class CoyoteTimer : CompensateTimer
+public class CoyoteTimer
 {
-    public override bool CheckTimer(PlayerInformation playerInformation)
+    private float m_timer = 0;
+    public bool CheckTimer(PlayerInformation playerInformation)
     {
         bool check = m_timer < playerInformation.CharacterProperty.JumpProperty.COYOTE_TIME;
         

@@ -51,8 +51,7 @@ MainMotionState <|-- MainDefultState
 AdditiveMotionState <|-- AdditiveDefultState
 MainMotionState <|-- WalkAndRunState
 AdditiveMotionState <|-- JumpState
+AdditiveMotionState <|-- PerpendicularGroundState
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
-CompensateTimer <|-- CoyoteTimer
-CompensateTimer <|-- JumpBufferTimer
 ```

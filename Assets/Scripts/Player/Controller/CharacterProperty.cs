@@ -58,8 +58,8 @@ public class CharacterProperty : ScriptableObject
     {
         [CustomLabel("地面检测盒子大小")]
         public Vector3 CHECK_CAPSULE_SIZE;
-        [CustomLabel("地面检测盒相对位置")]
-        public Vector3 CHECK_CAPSULE_RELATIVE_POSITION;
+        [FormerlySerializedAs("CHECK_CAPSULE_RELATIVE_POSITION")] [CustomLabel("地面检测盒相对位置")]
+        public float CHECK_CAPSULE_RELATIVE_POSITION_Y;
     }
     
     [Serializable]
@@ -67,7 +67,7 @@ public class CharacterProperty : ScriptableObject
     {
         [CustomLabel("顶头检测盒子大小")]
         public Vector3 CHECK_CAPSULE_SIZE;
-        [CustomLabel("顶头检测盒相对位置")]
-        public Vector3 CHECK_CAPSULE_RELATIVE_POSITION;
+        [FormerlySerializedAs("CHECK_CAPSULE_RELATIVE_POSITION")] [CustomLabel("顶头检测盒相对位置")]
+        public float CHECK_CAPSULE_RELATIVE_POSITION_Y;
     }
 }

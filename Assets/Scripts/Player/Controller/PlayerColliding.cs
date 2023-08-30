@@ -18,7 +18,7 @@ public class PlayerColliding
         get
         {
             m_isGround = OverlapRotatedBox(m_playerTransform.position
-                                           + m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION
+                                           + m_playerTransform.up * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
                 , m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
             return m_isGround;
         }
@@ -29,7 +29,7 @@ public class PlayerColliding
         get
         {
             m_isCeiling = OverlapRotatedBox(m_playerTransform.position
-                                            + m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION
+                                            +  m_playerTransform.up * m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
                 , m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
             return m_isCeiling;
         }

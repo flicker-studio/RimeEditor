@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpBufferTimer : CompensateTimer
+public class JumpBufferTimer
 {
+    private float m_timer = 0f;
     private bool m_jumpBufferFlag = false;
     private bool m_lastMoveInput = false;
     
-    public override bool CheckTimer(PlayerInformation playerInformation)
+    public bool CheckTimer(PlayerInformation playerInformation)
     {
         bool checkJumpBuffer = m_timer < playerInformation.CharacterProperty.JumpProperty.JUMPING_BUFFER_TIME 
                                && m_jumpBufferFlag && playerInformation.PlayerColliding.IsGround;
