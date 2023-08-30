@@ -12,13 +12,15 @@ public class CharacterProperty : ScriptableObject
     [FormerlySerializedAs("m_PlayerJumpProperty")] public PlayerJumpProperty JumpProperty;
 
     [FormerlySerializedAs("m_GroundCheckParameter")] public PlayerGroundCheckParameter GroundCheckParameter;
+
+    public PlayerCeilingCheckParameter CeilingCheckParameter;
     
     [Serializable]
     public struct PlayerMoveProperty
     {
-        [CustomLabel("玩家最大水平移动速度"),Range(1,10)] 
+        [CustomLabel("玩家最大水平移动速度"),Range(1,100)] 
         public float PLAYER_MOVE_SPEED;
-        [CustomLabel("玩家最大水平疾跑速度"),Range(1,10)] 
+        [CustomLabel("玩家最大水平疾跑速度"),Range(1,100)] 
         public float PLAYER_MOVE_RUN_SPEED;
         [CustomLabel("地面加速到最大水平速度时间"),Range(0,1)]
         public float GROUND_TIME_TO_MAXIMUN_SPEED;
@@ -57,6 +59,15 @@ public class CharacterProperty : ScriptableObject
         [CustomLabel("地面检测盒子大小")]
         public Vector3 CHECK_CAPSULE_SIZE;
         [CustomLabel("地面检测盒相对位置")]
+        public Vector3 CHECK_CAPSULE_RELATIVE_POSITION;
+    }
+    
+    [Serializable]
+    public struct PlayerCeilingCheckParameter
+    {
+        [CustomLabel("顶头检测盒子大小")]
+        public Vector3 CHECK_CAPSULE_SIZE;
+        [CustomLabel("顶头检测盒相对位置")]
         public Vector3 CHECK_CAPSULE_RELATIVE_POSITION;
     }
 }

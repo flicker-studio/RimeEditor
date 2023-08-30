@@ -32,5 +32,8 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position+temp.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
             temp.GroundCheckParameter.CHECK_CAPSULE_SIZE.x);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position+temp.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
+            temp.CeilingCheckParameter.CHECK_CAPSULE_SIZE.x);
     }
 }

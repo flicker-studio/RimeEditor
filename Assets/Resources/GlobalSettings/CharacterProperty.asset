@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CharacterProperty
   m_EditorClassIdentifier: 
   MoveProperty:
-    PLAYER_MOVE_SPEED: 6
-    PLAYER_MOVE_RUN_SPEED: 10
+    PLAYER_MOVE_SPEED: 10
+    PLAYER_MOVE_RUN_SPEED: 15
     GROUND_TIME_TO_MAXIMUN_SPEED: 0.1
     GROUND_TIME_TO_STOP: 0.05
     AIR_TIME_TO_MAXIMUN_SPEED: 0.06666667
@@ -44,10 +44,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   JumpProperty:
-    PLAYER_MAXIMAL_JUMP_SPEED: 8
+    PLAYER_MAXIMAL_JUMP_SPEED: 16
     PLAYER_MAXIMAL_JUMP_TIME: 0.4
     PLAYER_SMALLEST_JUMP_TIME: 0.15
-    PLAYER_JUMP_FINISH_SPEED_COMPENSATION: -5
+    PLAYER_JUMP_FINISH_SPEED_COMPENSATION: -10
     JUMPING_BUFFER_TIME: 0.15
     COYOTE_TIME: 0.1
     ACCELERATION_CURVE:
@@ -77,3 +77,6 @@ MonoBehaviour:
   GroundCheckParameter:
     CHECK_CAPSULE_SIZE: {x: 0.55, y: 0.45, z: 0}
     CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: -0.85, z: 0}
+  CeilingCheckParameter:
+    CHECK_CAPSULE_SIZE: {x: 0.55, y: 0.45, z: 0}
+    CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: 0.85, z: 0}
