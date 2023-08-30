@@ -45,8 +45,8 @@ public class PlayerColliding
     {
         int maxColliders = 50;
         Collider2D[] colliderBuffer = new Collider2D[maxColliders];
-        int numColliders = Physics2D.OverlapCapsuleNonAlloc(center, 
-            size,CapsuleDirection2D.Vertical, angle,colliderBuffer);
+        int numColliders = Physics2D.OverlapBoxNonAlloc(center, 
+            size, angle,colliderBuffer);
         
         for (int i = 0; i < numColliders; i++)
         {

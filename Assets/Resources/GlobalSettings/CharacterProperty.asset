@@ -75,8 +75,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   GroundCheckParameter:
-    CHECK_CAPSULE_SIZE: {x: 0.55, y: 0.45, z: 0}
-    CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: -0.85, z: 0}
+    CHECK_CAPSULE_SIZE: {x: 0.95, y: 0.05625, z: 0}
+    CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: -0.5, z: 0}
   CeilingCheckParameter:
-    CHECK_CAPSULE_SIZE: {x: 0.55, y: 0.45, z: 0}
-    CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: 0.85, z: 0}
+    CHECK_CAPSULE_SIZE: {x: 0.95, y: 0.05625, z: 0}
+    CHECK_CAPSULE_RELATIVE_POSITION: {x: 0, y: 0.5, z: 0}

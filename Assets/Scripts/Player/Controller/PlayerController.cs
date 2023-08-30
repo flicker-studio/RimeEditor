@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D),typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D),typeof(BoxCollider2D))]
 public class PlayerController : MonoBehaviour
 {
     private MotionController m_motionController;
@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour
     {
         CharacterProperty temp = Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position+temp.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
-            temp.GroundCheckParameter.CHECK_CAPSULE_SIZE.x);
+        Gizmos.DrawCube(transform.position+temp.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
+            temp.GroundCheckParameter.CHECK_CAPSULE_SIZE);
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position+temp.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
-            temp.CeilingCheckParameter.CHECK_CAPSULE_SIZE.x);
+        Gizmos.DrawCube(transform.position+temp.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION,
+            temp.CeilingCheckParameter.CHECK_CAPSULE_SIZE);
     }
 }

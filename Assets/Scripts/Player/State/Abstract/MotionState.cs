@@ -20,7 +20,7 @@ public abstract class MotionState
 
     protected Rigidbody2D GetRigidbody => m_componentController.Rigidbody;
 
-    protected CapsuleCollider2D GetCollider => m_componentController.CapsuleCollider;
+    protected Collider2D GetCollider => m_componentController.Collider;
 
     protected InputData GetInputData => m_inputController.GetInputData;
 
