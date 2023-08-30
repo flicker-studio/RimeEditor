@@ -10,6 +10,9 @@ public class PerpendicularGroundState : AdditiveMotionState
 
     public override void Motion(PlayerInformation playerInformation)
     {
-        throw new System.NotImplementedException();
+        if (m_playerColliding.IsGround)
+        {
+            
+        }
     }
 }

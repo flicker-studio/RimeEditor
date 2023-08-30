@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         CharacterProperty temp = Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
+        
         Gizmos.color = Color.green;
         Gizmos.DrawCube(transform.position+transform.up * temp.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y,
             temp.GroundCheckParameter.CHECK_CAPSULE_SIZE);
