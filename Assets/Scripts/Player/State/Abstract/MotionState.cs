@@ -32,6 +32,10 @@ public abstract class MotionState
 
     protected InputData GetInputData => m_inputController.GetInputData;
 
+    protected bool GetIsGround => m_playerColliding.IsGround;
+
+    protected bool GetIsCeiling => m_playerColliding.IsCeiling;
+
     #endregion
 
     public MotionState(PlayerInformation information)

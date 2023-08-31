@@ -18,17 +18,33 @@ public class WalkAndRunState : MainMotionState
             return;
         }
         timmer += Time.fixedDeltaTime;
+        float angle = Vector2.Angle(Vector2.up, GetRigidbody.transform.up) * Mathf.Deg2Rad;
         if (!GetInputData.RunInput)
         {
-            GetRigidbody.velocity = GetRigidbody.velocity.NewX(GetInputData.MoveInput.x
-            * GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED) 
-            * GetMoveProperty.PLAYER_MOVE_SPEED);
+            SetSpeed(GetInputData.MoveInput.x
+                     * GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer /
+                                                                   GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED)
+                     * GetMoveProperty.PLAYER_MOVE_SPEED,angle);
         }
         else
         {
-            GetRigidbody.velocity = GetRigidbody.velocity.NewX(GetInputData.MoveInput.x
-            * GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED) 
-            * GetMoveProperty.PLAYER_MOVE_RUN_SPEED);
+            SetSpeed(GetInputData.MoveInput.x
+                     * GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer /
+                                                                   GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED)
+                     * GetMoveProperty.PLAYER_MOVE_RUN_SPEED,angle);
+        }
+    }
+
+    private void SetSpeed(float speed,float angle)
+    {
+        if (GetIsGround)
+        {
+            GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed * Mathf.Cos(angle));
+            GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.SLOP_Y_AXIS_SPEED_COMPENSATION);
+        }
+        else
+        {
+            GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed);
         }
     }
 }

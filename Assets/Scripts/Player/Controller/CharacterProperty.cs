@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Range = UnityEngine.SocialPlatforms.Range;
 
 [CreateAssetMenu(menuName = "CharacterProperty",order = 1,fileName = "CharacterProperty")]
 public class CharacterProperty : ScriptableObject
@@ -32,6 +33,8 @@ public class CharacterProperty : ScriptableObject
         public float AIR_TIME_TO_MAXIMUN_SPEED;
         [CustomLabel("空中停止运动减速时间"),Range(0,1)]
         public float AIR_TIME_TO_STOP;
+        [CustomLabel("斜坡Y轴速度补偿"),Range(-20,0)]
+        public float SLOP_Y_AXIS_SPEED_COMPENSATION;
         [CustomLabel("速度变化曲线")]
         public AnimationCurve ACCELERATION_CURVE;
     }
@@ -77,7 +80,7 @@ public class CharacterProperty : ScriptableObject
     [Serializable]
     public struct PlayerOrthogonalOnGround
     {
-        [CustomLabel("检测点数量"),Range(1,10)]
+        [CustomLabel("检测点数量"),Range(1,20)]
         public int CHECK_RAYCAST_POINTS;
         [CustomLabel("检测射线长度"),Range(0,10)]
         public float CHECK_RAYCAST_DISTANCE;

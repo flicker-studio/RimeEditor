@@ -11,7 +11,7 @@ public class PerpendicularGroundState : AdditiveMotionState
 
     public override void Motion(PlayerInformation playerInformation)
     {
-        if (m_playerColliding.IsGround)
+        if (GetIsGround)
         {
             Vector2 startPoint = GetRigidbody.transform.position
                                  + GetRigidbody.transform.up * m_characterProperty.GroundCheckParameter

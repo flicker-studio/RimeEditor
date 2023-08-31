@@ -15,7 +15,7 @@ public class JumpState : AdditiveMotionState
             (1 - GetJumpProperty.ACCELERATION_CURVE.Evaluate(m_endTimmer / GetJumpProperty.PLAYER_MAXIMAL_JUMP_TIME)));
         if (m_endTimmer >= GetJumpProperty.PLAYER_MAXIMAL_JUMP_TIME ||
             m_endTimmer >= GetJumpProperty.PLAYER_SMALLEST_JUMP_TIME && !GetInputData.JumpInput ||
-            m_playerColliding.IsCeiling)
+            GetIsCeiling)
         {
             GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetJumpProperty.PLAYER_JUMP_FINISH_SPEED_COMPENSATION);
             RemoveState();

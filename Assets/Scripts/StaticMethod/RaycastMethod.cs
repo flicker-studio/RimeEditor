@@ -19,7 +19,7 @@ public static class RaycastMethod
             Vector2 rayOrigin = startPoint + i * step * interval;
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin + startPointCompensation, direction, distance, layerMask);
             Debug.DrawRay(rayOrigin + startPointCompensation,direction);
-            if (hit.collider != null)
+            if (hit.collider != null && hit.normal.y > 0 && hit.normal.x > -Mathf.Sqrt(2) && hit.normal.x < Mathf.Sqrt(2))
             {
                 hitPoints.Add(hit.point);
             }

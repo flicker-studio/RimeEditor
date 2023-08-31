@@ -19,7 +19,7 @@ public class AdditiveDefultState : AdditiveMotionState
         }
         if (checkJumpBufferTimer && m_canJump || m_inputController.GetInputData.JumpInput 
             && m_canJump 
-            && (m_playerColliding.IsGround || checkCoyoteTimer))
+            && (GetIsGround || checkCoyoteTimer))
         {
             m_canJump = false;
             ChangeMoveState(new JumpState(playerInformation));
