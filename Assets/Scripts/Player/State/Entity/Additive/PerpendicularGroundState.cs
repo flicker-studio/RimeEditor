@@ -16,11 +16,11 @@ public class PerpendicularGroundState : AdditiveMotionState
             Vector2 startPoint = GetRigidbody.transform.position
                                  + GetRigidbody.transform.up * m_characterProperty.GroundCheckParameter
                                      .CHECK_CAPSULE_RELATIVE_POSITION_Y
-            - GetRigidbody.transform.right * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE.x;
+            - GetRigidbody.transform.right * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE.x / 2;
             Vector2 endPoint = GetRigidbody.transform.position
                                  + GetRigidbody.transform.up * m_characterProperty.GroundCheckParameter
                                      .CHECK_CAPSULE_RELATIVE_POSITION_Y
-                                 + GetRigidbody.transform.right * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE.x;
+                                 + GetRigidbody.transform.right * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE.x / 2;
             m_raycastPoints = RaycastMethod.CastRaysBetweenPoints(startPoint
                 , endPoint, GetOrthogonalOnGround.CHECK_RAYCAST_POINTS,GetOrthogonalOnGround.START_POINT_COMPENSATION,
                 Vector2.down ,GetOrthogonalOnGround.CHECK_RAYCAST_DISTANCE,
