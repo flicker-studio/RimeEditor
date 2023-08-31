@@ -18,6 +18,14 @@ public abstract class MotionState
     
     protected CharacterProperty.PlayerJumpProperty GetJumpProperty => m_characterProperty.JumpProperty;
 
+    protected CharacterProperty.PlayerGroundCheckParameter GetGroundCheck => m_characterProperty.GroundCheckParameter;
+
+    protected CharacterProperty.PlayerCeilingCheckParameter GetCeilingCheck =>
+        m_characterProperty.CeilingCheckParameter;
+
+    protected CharacterProperty.PlayerOrthogonalOnGround GetOrthogonalOnGround =>
+        m_characterProperty.OrthogonalOnGround;
+
     protected Rigidbody2D GetRigidbody => m_componentController.Rigidbody;
 
     protected Collider2D GetCollider => m_componentController.Collider;

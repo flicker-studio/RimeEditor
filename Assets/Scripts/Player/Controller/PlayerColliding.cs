@@ -50,7 +50,7 @@ public class PlayerColliding
         
         for (int i = 0; i < numColliders; i++)
         {
-            if (colliderBuffer[i].gameObject.layer == GlobalSetting.LayerMasks.Ground)
+            if (m_characterProperty.GroundCheckParameter.CHECK_LAYER.ContainsLayer(colliderBuffer[i].gameObject.layer))
             {
                 return true;
             }

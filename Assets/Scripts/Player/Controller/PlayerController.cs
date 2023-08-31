@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
         ControllerInit();
         m_motionController.ChangeMotionState(new MainDefultState(m_playerInformation));
         m_motionController.ChangeMotionState(new AdditiveDefultState(m_playerInformation));
+        m_motionController.ChangeMotionState(new PerpendicularGroundState(m_playerInformation));
     }
 
     private void FixedUpdate()

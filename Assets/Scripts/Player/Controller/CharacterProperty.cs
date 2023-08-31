@@ -8,12 +8,14 @@ using UnityEngine.Serialization;
 public class CharacterProperty : ScriptableObject
 {
     [FormerlySerializedAs("m_playerMoveProperty")] public PlayerMoveProperty MoveProperty;
-
+    
     [FormerlySerializedAs("m_PlayerJumpProperty")] public PlayerJumpProperty JumpProperty;
-
+    
     [FormerlySerializedAs("m_GroundCheckParameter")] public PlayerGroundCheckParameter GroundCheckParameter;
-
+    
     public PlayerCeilingCheckParameter CeilingCheckParameter;
+    
+    public PlayerOrthogonalOnGround OrthogonalOnGround;
     
     [Serializable]
     public struct PlayerMoveProperty
@@ -60,6 +62,8 @@ public class CharacterProperty : ScriptableObject
         public Vector3 CHECK_CAPSULE_SIZE;
         [FormerlySerializedAs("CHECK_CAPSULE_RELATIVE_POSITION")] [CustomLabel("地面检测盒相对位置")]
         public float CHECK_CAPSULE_RELATIVE_POSITION_Y;
+        [CustomLabel("地面检测层级")]
+        public LayerMask CHECK_LAYER;
     }
     
     [Serializable]
@@ -69,5 +73,15 @@ public class CharacterProperty : ScriptableObject
         public Vector3 CHECK_CAPSULE_SIZE;
         [FormerlySerializedAs("CHECK_CAPSULE_RELATIVE_POSITION")] [CustomLabel("顶头检测盒相对位置")]
         public float CHECK_CAPSULE_RELATIVE_POSITION_Y;
+    }
+    [Serializable]
+    public struct PlayerOrthogonalOnGround
+    {
+        [CustomLabel("检测点数量"),Range(1,10)]
+        public int CHECK_RAYCAST_POINTS;
+        [CustomLabel("检测射线长度"),Range(0,10)]
+        public float CHECK_RAYCAST_DISTANCE;
+        [CustomLabel("发射线补偿坐标")]
+        public Vector2 START_POINT_COMPENSATION;
     }
 }

@@ -24,30 +24,6 @@ public static class VectorMethod
         return new Vector3(vector3.x,y,vector3.z);
     }
 
-    public static Vector2 GetNearestLineDirection(this List<Vector2> points, Vector2 linePoint1, Vector2 linePoint2) 
-    {
-        Vector2 nearestDirection = Vector2.zero;
-        float minDistance = float.MaxValue;
-        
-        foreach (Vector2 point in points) 
-        {
-            float distance = Mathf.Abs(
-                                 (linePoint2.y - linePoint1.y) * point.x - 
-                                 (linePoint2.x - linePoint1.x) * point.y + 
-                                 linePoint2.x * linePoint1.y - 
-                                 linePoint2.y * linePoint1.x) / 
-                             Mathf.Sqrt(Mathf.Pow(linePoint2.y - linePoint1.y, 2) + Mathf.Pow(linePoint2.x - linePoint1.x, 2));
-            
-            if (distance < minDistance) 
-            {
-                minDistance = distance;
-                nearestDirection = (point - linePoint1).normalized;
-            }
-        }
-        
-        return nearestDirection;
-    }
-
     public static Vector2 GetOrthogonalVector(this Vector2 vector2)
     {
         Vector2 orthogonalVector;
@@ -67,6 +43,39 @@ public static class VectorMethod
             orthogonalVector = -orthogonalVector;
         }
 
-        return orthogonalVector;
+        return orthogonalVector.normalized;
     }
+    
+    public static Vector2 CalculateBestFitLine(this List<Vector2> points)
+    {
+        float xSum = 0, ySum = 0;
+
+        foreach (var point in points)
+        {
+            xSum += point.x;
+            ySum += point.y;
+        }
+
+        var xMean = xSum / points.Count;
+        var yMean = ySum / points.Count;
+
+        float numerator = 0, denominator = 0;
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            var xDiff = points[i].x  - xMean;
+            var yDiff = points[i].y - yMean;
+
+            numerator += xDiff * yDiff;
+            denominator += xDiff * xDiff;
+        }
+
+        var slope = numerator / denominator;
+        var yIntercept = yMean - slope * xMean;
+        
+        var direction = new Vector2(1, slope).normalized;
+
+        return direction;
+    }
+
 }

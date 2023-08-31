@@ -77,6 +77,13 @@ MonoBehaviour:
   GroundCheckParameter:
     CHECK_CAPSULE_SIZE: {x: 0.95, y: 0.05625, z: 0}
     CHECK_CAPSULE_RELATIVE_POSITION_Y: -0.5
+    CHECK_LAYER:
+      serializedVersion: 2
+      m_Bits: 8
   CeilingCheckParameter:
     CHECK_CAPSULE_SIZE: {x: 0.95, y: 0.05625, z: 0}
     CHECK_CAPSULE_RELATIVE_POSITION_Y: 0.5
+  OrthogonalOnGround:
+    CHECK_RAYCAST_POINTS: 10
+    CHECK_RAYCAST_DISTANCE: 0.45
+    START_POINT_COMPENSATION: {x: 0, y: 0.41}
