@@ -17,7 +17,8 @@ public class CharacterProperty : ScriptableObject
     
     public PlayerCeilingCheckParameter CeilingCheckParameter;
     
-    public PlayerOrthogonalOnGround OrthogonalOnGround;
+    [FormerlySerializedAs("perpendicularOnGround")] [FormerlySerializedAs("OrthogonalOnGround")] 
+    public PlayerPerpendicularOnGround PerpendicularOnGround;
     
     [Serializable]
     public struct PlayerMoveProperty
@@ -81,10 +82,12 @@ public class CharacterProperty : ScriptableObject
         public float CHECK_CAPSULE_RELATIVE_POSITION_Y;
     }
     [Serializable]
-    public struct PlayerOrthogonalOnGround
+    public struct PlayerPerpendicularOnGround
     {
         [CustomLabel("检测点数量"),Range(1,50)]
         public int CHECK_RAYCAST_POINTS;
+        [CustomLabel("忽略点数量"), Range(0, 10)] 
+        public int NEGLECTED_POINTS;
         [CustomLabel("检测射线长度"),Range(0,10)]
         public float CHECK_RAYCAST_DISTANCE;
         [CustomLabel("检测平面最大反射角度"),Range(0,90)]

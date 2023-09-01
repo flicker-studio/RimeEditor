@@ -12,6 +12,8 @@ public abstract class MotionState
 
     protected PlayerColliding m_playerColliding;
 
+    protected PlayerRaycasting m_playerRaycasting;
+
     #region GetProperty
 
     protected CharacterProperty.PlayerMoveProperty GetMoveProperty => m_characterProperty.MoveProperty;
@@ -23,14 +25,16 @@ public abstract class MotionState
     protected CharacterProperty.PlayerCeilingCheckParameter GetCeilingCheck =>
         m_characterProperty.CeilingCheckParameter;
 
-    protected CharacterProperty.PlayerOrthogonalOnGround GetOrthogonalOnGround =>
-        m_characterProperty.OrthogonalOnGround;
+    protected CharacterProperty.PlayerPerpendicularOnGround GetPerpendicularOnGround =>
+        m_characterProperty.PerpendicularOnGround;
 
     protected Rigidbody2D GetRigidbody => m_componentController.Rigidbody;
 
     protected Collider2D GetCollider => m_componentController.Collider;
 
     protected InputData GetInputData => m_inputController.GetInputData;
+
+    protected List<Vector2> GetRaycastPoints => m_playerRaycasting.GetRaycastPoints;
 
     protected bool GetIsGround => m_playerColliding.IsGround;
 
@@ -44,6 +48,7 @@ public abstract class MotionState
         m_componentController = information.ComponentController;
         m_characterProperty = information.CharacterProperty;
         m_playerColliding = information.PlayerColliding;
+        m_playerRaycasting = information.PlayerRaycasting;
     }
     public abstract void Motion(PlayerInformation playerInformation);
     
