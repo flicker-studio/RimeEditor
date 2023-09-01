@@ -45,6 +45,7 @@ PlayerInformation *-- ComponentController
 PlayerController *-- PlayerInformation
 PlayerInformation *-- CharacterProperty
 PlayerInformation *-- PlayerColliding
+PlayerInformation *-- PlayerRaycasting
 AdditiveDefultState *-- CoyoteTimer
 AdditiveDefultState *-- JumpBufferTimer
 MainMotionState <|-- MainDefultState
