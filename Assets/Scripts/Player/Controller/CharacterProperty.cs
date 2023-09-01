@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Range = UnityEngine.SocialPlatforms.Range;
@@ -35,6 +36,8 @@ public class CharacterProperty : ScriptableObject
         public float AIR_TIME_TO_STOP;
         [CustomLabel("斜坡Y轴速度补偿"),Range(-20,0)]
         public float SLOP_Y_AXIS_SPEED_COMPENSATION;
+        [CustomLabel("斜坡Y轴果冻效应补偿"),Range(0,10)]
+        public float JELLY_EFFECT_COMPENSATION;
         [CustomLabel("速度变化曲线")]
         public AnimationCurve ACCELERATION_CURVE;
     }
