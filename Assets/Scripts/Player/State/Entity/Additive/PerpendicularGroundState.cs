@@ -23,7 +23,7 @@ public class PerpendicularGroundState : AdditiveMotionState
                                  + GetRigidbody.transform.right * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE.x / 2;
             m_raycastPoints = RaycastMethod.CastRaysBetweenPoints(startPoint
                 , endPoint, GetOrthogonalOnGround.CHECK_RAYCAST_POINTS,GetOrthogonalOnGround.START_POINT_COMPENSATION,
-                Vector2.down ,GetOrthogonalOnGround.CHECK_RAYCAST_DISTANCE,
+                Vector2.down ,GetOrthogonalOnGround.CHECK_RAYCAST_DISTANCE,GetOrthogonalOnGround.CHECK_POINT_ANGLE,
                 GetGroundCheck.CHECK_LAYER);
             if(m_raycastPoints.Count == 0) return;
             GetRigidbody.transform.up = m_raycastPoints.CalculateBestFitLine().GetOrthogonalVector();

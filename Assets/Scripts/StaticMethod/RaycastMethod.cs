@@ -6,7 +6,7 @@ public static class RaycastMethod
 {
     public static List<Vector2> CastRaysBetweenPoints(Vector2 startPoint, Vector2 endPoint, int rayCount,
                                                         Vector2 startPointCompensation,
-                                                        Vector2 direction,float distance, LayerMask layerMask)
+                                                        Vector2 direction,float distance,float angle ,LayerMask layerMask)
     {
         List<Vector2> hitPoints = new List<Vector2>();
 
@@ -18,10 +18,14 @@ public static class RaycastMethod
         {
             Vector2 rayOrigin = startPoint + i * step * interval;
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin + startPointCompensation, direction, distance, layerMask);
-            Debug.DrawRay(rayOrigin + startPointCompensation,direction);
-            if (hit.collider != null && hit.normal.y > 0 && hit.normal.x > -Mathf.Sqrt(2) && hit.normal.x < Mathf.Sqrt(2))
+            Debug.DrawRay(rayOrigin + startPointCompensation,direction,Color.red);
+            if (hit.collider != null)
             {
-                hitPoints.Add(hit.point);
+                if (hit.normal.y > 0 && hit.normal.y > Mathf.Cos(angle*Mathf.Deg2Rad))
+                {
+                    hitPoints.Add(hit.point);
+                    Debug.DrawRay(hit.point,hit.normal,Color.green);
+                }
             }
         }
 

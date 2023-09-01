@@ -80,10 +80,12 @@ public class CharacterProperty : ScriptableObject
     [Serializable]
     public struct PlayerOrthogonalOnGround
     {
-        [CustomLabel("检测点数量"),Range(1,20)]
+        [CustomLabel("检测点数量"),Range(1,50)]
         public int CHECK_RAYCAST_POINTS;
         [CustomLabel("检测射线长度"),Range(0,10)]
         public float CHECK_RAYCAST_DISTANCE;
+        [CustomLabel("检测平面最大反射角度"),Range(0,90)]
+        public float CHECK_POINT_ANGLE;
         [CustomLabel("发射线补偿坐标")]
         public Vector2 START_POINT_COMPENSATION;
     }
