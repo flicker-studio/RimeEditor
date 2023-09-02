@@ -74,7 +74,6 @@ public static class VectorMethod
         var yIntercept = yMean - slope * xMean;
         
         var direction = new Vector2(1, slope).normalized;
-
         return direction;
     }
 

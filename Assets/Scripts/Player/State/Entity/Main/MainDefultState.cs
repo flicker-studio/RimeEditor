@@ -7,13 +7,14 @@ public class MainDefultState : MainMotionState
     private float timmer = 0;
 
     private float m_oriSpeed;
-
-    private Vector3 m_lastPositionPoint = Vector3.zero;
+    
     public override void Motion(PlayerInformation playerInformation)
     {
         if (m_inputController.GetInputData.MoveInput.x != 0)
         {
+            GetRigidbody.Freeze(FREEZEAXIS.RotZ);
             ChangeMoveState(new WalkAndRunState(playerInformation));
+            return;
         }
         timmer += Time.fixedDeltaTime;
         if (timmer <= GetMoveProperty.GROUND_TIME_TO_STOP)
@@ -23,9 +24,7 @@ public class MainDefultState : MainMotionState
         }
         else
         {
-            if (m_lastPositionPoint != Vector3.zero) GetRigidbody.position = GetRigidbody.position.NewX(m_lastPositionPoint.x);
-            GetRigidbody.velocity = GetRigidbody.velocity.NewX(0);
-            m_lastPositionPoint = GetRigidbody.position;
+            GetRigidbody.Freeze(FREEZEAXIS.PosXAndRotZ);
         }
     }
 

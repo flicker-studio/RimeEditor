@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerRaycasting
 {
     private List<Vector2> m_raycastPoints;
-
+    
     public List<Vector2> GetRaycastPoints
     {
         get
