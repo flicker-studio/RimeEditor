@@ -19,8 +19,16 @@ public class MainDefultState : MainMotionState
         timmer += Time.fixedDeltaTime;
         if (timmer <= GetMoveProperty.GROUND_TIME_TO_STOP)
         {
-            GetRigidbody.velocity = GetRigidbody.velocity.NewX(m_oriSpeed
-                                                               * (1-GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_STOP)));
+            if (GetIsGround)
+            {
+                GetRigidbody.velocity = GetRigidbody.velocity.NewX(m_oriSpeed
+                                                                   * (1-GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.GROUND_TIME_TO_STOP)));
+            }
+            else
+            {
+                GetRigidbody.velocity = GetRigidbody.velocity.NewX(m_oriSpeed
+                                                                   * (1-GetMoveProperty.ACCELERATION_CURVE.Evaluate(timmer/GetMoveProperty.AIR_TIME_TO_STOP)));
+            }
         }
         else
         {

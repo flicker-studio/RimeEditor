@@ -18,9 +18,42 @@ public class WalkAndRunState : MainMotionState
             ChangeMoveState(new MainDefultState(playerInformation));
             return;
         }
+
+        TurnToHorizontalPlaneInAir();
+        WalkAndRun();
+    }
+
+    private void TurnToHorizontalPlaneInAir()
+    {
+        if(GetIsGround) return;
+        if (Mathf.Abs(GetRigidbody.transform.up.x) < Mathf.Sin(GetMoveProperty.AIR_ANGULAR_TOLERANCE_RANGE * Mathf.Deg2Rad))
+        {
+            GetRigidbody.transform.up = Vector3.up;
+            return;
+        }
+        if (GetRigidbody.transform.up.x > 0)
+        {
+            GetRigidbody.transform.Rotate(0,0,GetMoveProperty.AIR_ANGULAR_VELOCITY_Z);
+        }else if (GetRigidbody.transform.up.x < 0)
+        {
+            GetRigidbody.transform.Rotate(0,0,-GetMoveProperty.AIR_ANGULAR_VELOCITY_Z);
+        }
+    }
+    
+    private void WalkAndRun()
+    {
         timmer += Time.fixedDeltaTime;
         float angle = Vector2.Angle(Vector2.up, GetRigidbody.transform.up) * Mathf.Deg2Rad;
-        float magnification = timmer / GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED;
+        float magnification;
+        if (GetIsGround)
+        {
+            magnification = timmer / GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED;
+        }
+        else
+        {
+            magnification = timmer / GetMoveProperty.AIR_TIME_TO_MAXIMUN_SPEED;
+        }
+        
         if (!GetInputData.RunInput)
         {
             SetSpeed(GetInputData.MoveInput.x

@@ -35,6 +35,10 @@ public class CharacterProperty : ScriptableObject
         public float AIR_TIME_TO_MAXIMUN_SPEED;
         [CustomLabel("空中停止运动减速时间"),Range(0,1)]
         public float AIR_TIME_TO_STOP;
+        [CustomLabel("空中恢复直立角速度"),Range(0,10)]
+        public float AIR_ANGULAR_VELOCITY_Z;
+        [CustomLabel("空中角度恢复宽容范围"),Range(0,10)]
+        public float AIR_ANGULAR_TOLERANCE_RANGE;
         [CustomLabel("斜坡Y轴速度补偿"),Range(-20,0)]
         public float SLOP_Y_AXIS_SPEED_COMPENSATION;
         [CustomLabel("斜坡Y轴果冻效应补偿"),Range(0,10)]
