@@ -26,12 +26,9 @@ public class AddtiveMotionStateMachine : MotionStateMachine
         m_playerMoveStates.Add(motionState);
     }
 
-    public AddtiveMotionStateMachine()
+
+    public AddtiveMotionStateMachine(CheckGlobalStatesCallBack checkGlobalStatesCallBack) : base(checkGlobalStatesCallBack)
     {
-        m_playerMoveStates = new List<MotionState>();
-        m_checkStatesCallBack = CheckStates;
         m_motionStateFactory = new AdditiveMotionStateFactory();
     }
-    
-    
 }

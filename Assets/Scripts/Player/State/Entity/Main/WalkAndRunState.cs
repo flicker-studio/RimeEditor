@@ -9,7 +9,10 @@ public class WalkAndRunState : MainMotionState
 
     public override void Motion(PlayerInformation playerInformation)
     {
-        if (m_inputController.GetInputData.MoveInput.x == 0)
+        if (GetInputData.MoveInput.x == 0 
+            || !CheckGlobalStates.Contains(typeof(JumpState)) 
+            && GetRaycastCheckPoints.CalculateBestFitLine().GetOrthogonalVector().y 
+            <= Mathf.Cos(GetPerpendicularOnGround.CHECK_POINT_ANGLE * Mathf.Deg2Rad))
         {
             if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
             ChangeMoveState(MOTIONSTATEENUM.MainDefultState);
@@ -76,6 +79,10 @@ public class WalkAndRunState : MainMotionState
         else
         {
             GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed);
+            if (!CheckGlobalStates.Contains(typeof(JumpState)) && GetRigidbody.velocity.y >= 0)
+            {
+                GetRigidbody.velocity = GetRigidbody.velocity.NewY(0);
+            } 
         }
     }
 

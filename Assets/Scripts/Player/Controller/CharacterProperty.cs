@@ -92,8 +92,10 @@ public class CharacterProperty : ScriptableObject
         public int CHECK_RAYCAST_POINTS;
         [CustomLabel("忽略点数量"), Range(0, 10)] 
         public int NEGLECTED_POINTS;
-        [CustomLabel("检测射线长度"),Range(0,10)]
-        public float CHECK_RAYCAST_DISTANCE;
+        [FormerlySerializedAs("CHECK_RAYCAST_DISTANCE")] [CustomLabel("地形适应检测射线长度"),Range(0,10)]
+        public float CHECK_GROUND_RAYCAST_DISTANCE;
+        [CustomLabel("地形角度检测射线长度"),Range(0,10)]
+        public float CHECK_ANGLE_RAYCAST_DISTANCE;
         [CustomLabel("检测平面最大反射角度"),Range(0,90)]
         public float CHECK_POINT_ANGLE;
         [CustomLabel("发射线补偿坐标")]

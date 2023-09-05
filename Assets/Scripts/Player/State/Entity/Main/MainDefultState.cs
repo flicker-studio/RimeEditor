@@ -10,7 +10,9 @@ public class MainDefultState : MainMotionState
     
     public override void Motion(PlayerInformation playerInformation)
     {
-        if (m_inputController.GetInputData.MoveInput.x != 0)
+        if (GetInputData.MoveInput.x != 0 && !(!CheckGlobalStates.Contains(typeof(JumpState)) 
+                                              && GetRaycastCheckPoints.CalculateBestFitLine().GetOrthogonalVector().y 
+                                              <= Mathf.Cos(GetPerpendicularOnGround.CHECK_POINT_ANGLE * Mathf.Deg2Rad)))
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
             ChangeMoveState(MOTIONSTATEENUM.WalkAndRunState);
@@ -32,7 +34,15 @@ public class MainDefultState : MainMotionState
         }
         else
         {
-            GetRigidbody.Freeze(FREEZEAXIS.PosXAndRotZ);
+            if (GetIsGround)
+            {
+                GetRigidbody.Freeze(FREEZEAXIS.PosXAndRotZ);
+                return;
+            }
+            if (!CheckGlobalStates.Contains(typeof(JumpState)))
+            {
+                GetRigidbody.Freeze(FREEZEAXIS.RotZ);
+            }
         }
     }
 

@@ -1,20 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;using System.Security.Cryptography;
 using UnityEngine;
 
 public abstract class MotionState
 {
-    protected InputController m_inputController;
+    private InputController m_inputController;
 
-    protected ComponentController m_componentController;
+    private ComponentController m_componentController;
 
-    protected CharacterProperty m_characterProperty;
+    private CharacterProperty m_characterProperty;
 
-    protected PlayerColliding m_playerColliding;
+    private PlayerColliding m_playerColliding;
 
-    protected PlayerRaycasting m_playerRaycasting;
+    private PlayerRaycasting m_playerRaycasting;
 
-    protected CheckStatesCallBack m_checkStatesCallBack;
+    private CheckStatesCallBack m_checkStatesCallBack;
 
     #region GetProperty
 
@@ -36,11 +37,17 @@ public abstract class MotionState
 
     protected InputData GetInputData => m_inputController.GetInputData;
 
-    protected List<Vector2> GetRaycastPoints => m_playerRaycasting.GetRaycastPoints;
+    protected List<Vector2> GetRaycastGroundPoints => m_playerRaycasting.GetRaycastPointsGround;
+    
+    protected List<Vector2> GetRaycastCheckPoints => m_playerRaycasting.GetRaycastPointsCheck;
 
     protected bool GetIsGround => m_playerColliding.IsGround;
 
     protected bool GetIsCeiling => m_playerColliding.IsCeiling;
+
+    protected List<Type> CheckStates => m_checkStatesCallBack?.Invoke(false);
+    
+    protected List<Type> CheckGlobalStates => m_checkStatesCallBack?.Invoke(true);
 
     #endregion
 

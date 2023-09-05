@@ -11,7 +11,7 @@ public class PerpendicularGroundState : AdditiveMotionState
     {
         if (GetIsGround)
         {
-            m_raycastPoints = GetRaycastPoints;
+            m_raycastPoints = GetRaycastGroundPoints;
             if(m_raycastPoints == null || m_raycastPoints.Count <= GetPerpendicularOnGround.NEGLECTED_POINTS) return;
             GetRigidbody.transform.up = m_raycastPoints.CalculateBestFitLine().GetOrthogonalVector();
         }

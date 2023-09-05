@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,11 +14,11 @@ public class AdditiveDefultState : AdditiveMotionState
     {
         bool checkCoyoteTimer = m_coyoteTimer.CheckTimer(playerInformation);
         bool checkJumpBufferTimer = m_jumpBufferTimer.CheckTimer(playerInformation);
-        if (!m_inputController.GetInputData.JumpInput)
+        if (!GetInputData.JumpInput)
         {
             m_canJump = true;
         }
-        if (checkJumpBufferTimer && m_canJump || m_inputController.GetInputData.JumpInput 
+        if (checkJumpBufferTimer && m_canJump || GetInputData.JumpInput 
             && m_canJump 
             && (GetIsGround || checkCoyoteTimer))
         {

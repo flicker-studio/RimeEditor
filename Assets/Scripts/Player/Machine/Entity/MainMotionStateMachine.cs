@@ -11,11 +11,9 @@ public class MainMotionStateMachine : MotionStateMachine
         m_playerMoveStates.Add(CreateMotionState(playerMoveState,playerInformation));
     }
 
-    public MainMotionStateMachine()
+
+    public MainMotionStateMachine(CheckGlobalStatesCallBack checkGlobalStatesCallBack) : base(checkGlobalStatesCallBack)
     {
-        m_playerMoveStates = new List<MotionState>();
-        m_checkStatesCallBack = CheckStates;
         m_motionStateFactory = new MainMotionStateFactory();
     }
-    
 }
