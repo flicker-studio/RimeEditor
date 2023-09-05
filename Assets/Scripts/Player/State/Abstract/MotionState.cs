@@ -14,6 +14,8 @@ public abstract class MotionState
 
     protected PlayerRaycasting m_playerRaycasting;
 
+    protected CheckStatesCallBack m_checkStatesCallBack;
+
     #region GetProperty
 
     protected CharacterProperty.PlayerMoveProperty GetMoveProperty => m_characterProperty.MoveProperty;
@@ -42,18 +44,20 @@ public abstract class MotionState
 
     #endregion
 
-    public MotionState(PlayerInformation information)
+    public MotionState(PlayerInformation information,CheckStatesCallBack checkStatesCallBack)
     {
         m_inputController = information.InputController;
         m_componentController = information.ComponentController;
         m_characterProperty = information.CharacterProperty;
         m_playerColliding = information.PlayerColliding;
         m_playerRaycasting = information.PlayerRaycasting;
+        m_checkStatesCallBack = checkStatesCallBack;
     }
+
     public abstract void Motion(PlayerInformation playerInformation);
     
-    protected void ChangeMoveState(MotionState motionState)
+    protected void ChangeMoveState(MOTIONSTATEENUM motionStateEnum)
     {
-        EventCenterManager.Instance.EventTrigger<MotionState>(GameEvent.ChangeMoveState,motionState);
+        EventCenterManager.Instance.EventTrigger<MOTIONSTATEENUM>(GameEvent.ChangeMoveState,motionStateEnum);
     }
 }

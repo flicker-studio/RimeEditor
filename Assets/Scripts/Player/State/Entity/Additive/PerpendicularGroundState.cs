@@ -6,9 +6,6 @@ public class PerpendicularGroundState : AdditiveMotionState
 {
     private List<Vector2> m_raycastPoints;
     
-    public PerpendicularGroundState(PlayerInformation information) : base(information)
-    {
-    }
 
     public override void Motion(PlayerInformation playerInformation)
     {
@@ -18,5 +15,9 @@ public class PerpendicularGroundState : AdditiveMotionState
             if(m_raycastPoints == null || m_raycastPoints.Count <= GetPerpendicularOnGround.NEGLECTED_POINTS) return;
             GetRigidbody.transform.up = m_raycastPoints.CalculateBestFitLine().GetOrthogonalVector();
         }
+    }
+
+    public PerpendicularGroundState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
+    {
     }
 }

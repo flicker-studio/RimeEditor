@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AddtiveMotionStateMachine : MotionStateMachine
 {
-    public override void ChangeMotionState(MotionState playerMoveState)
+    public override void ChangeMotionState(MOTIONSTATEENUM playerMoveState,PlayerInformation playerInformation)
     {
-        if (playerMoveState == null)
+        if (playerMoveState == MOTIONSTATEENUM.None)
         {
             List<MotionState> tempList = new List<MotionState>();
             tempList.AddRange(m_playerMoveStates);
@@ -19,7 +20,18 @@ public class AddtiveMotionStateMachine : MotionStateMachine
             }
             return;
         }
-        if (m_playerMoveStates.Contains(playerMoveState)) return;
-        m_playerMoveStates.Add(playerMoveState);
+        MotionState motionState = CreateMotionState(playerMoveState, playerInformation);
+        
+        if (m_playerMoveStates.Contains(motionState)) return;
+        m_playerMoveStates.Add(motionState);
     }
+
+    public AddtiveMotionStateMachine()
+    {
+        m_playerMoveStates = new List<MotionState>();
+        m_checkStatesCallBack = CheckStates;
+        m_motionStateFactory = new AdditiveMotionStateFactory();
+    }
+    
+    
 }

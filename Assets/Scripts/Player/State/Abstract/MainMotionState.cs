@@ -4,9 +4,7 @@ using UnityEngine;
 
 public abstract class MainMotionState : MotionState
 {
-    protected MainMotionState(PlayerInformation information) : base(information)
+    protected MainMotionState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
     {
     }
-    
-    
 }

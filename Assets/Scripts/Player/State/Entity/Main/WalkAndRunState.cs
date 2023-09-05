@@ -6,16 +6,13 @@ public class WalkAndRunState : MainMotionState
 {
     private float timmer = 0f;
     
-    public WalkAndRunState(PlayerInformation information) : base(information)
-    {
-    }
 
     public override void Motion(PlayerInformation playerInformation)
     {
         if (m_inputController.GetInputData.MoveInput.x == 0)
         {
             if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-            ChangeMoveState(new MainDefultState(playerInformation));
+            ChangeMoveState(MOTIONSTATEENUM.MainDefultState);
             return;
         }
 
@@ -80,5 +77,9 @@ public class WalkAndRunState : MainMotionState
         {
             GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed);
         }
+    }
+
+    public WalkAndRunState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
+    {
     }
 }

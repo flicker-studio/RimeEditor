@@ -22,10 +22,12 @@ public class AdditiveDefultState : AdditiveMotionState
             && (GetIsGround || checkCoyoteTimer))
         {
             m_canJump = false;
-            ChangeMoveState(new JumpState(playerInformation));
+            
+            ChangeMoveState(MOTIONSTATEENUM.JumpState);
         }
     }
-    public AdditiveDefultState(PlayerInformation information) : base(information)
+
+    public AdditiveDefultState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
     {
         m_coyoteTimer = new CoyoteTimer();
         m_jumpBufferTimer = new JumpBufferTimer();

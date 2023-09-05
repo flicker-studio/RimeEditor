@@ -8,10 +8,13 @@ public class MotionController
 {
     private List<MotionStateMachine> m_motionStateMachines;
 
-    public MotionController()
+    private PlayerInformation m_playerInformation;
+
+    public MotionController(PlayerInformation playerInformation)
     {
         m_motionStateMachines = new List<MotionStateMachine>();
-        EventCenterManager.Instance.AddEventListener<MotionState>(GameEvent.ChangeMoveState,ChangeMotionState);
+        EventCenterManager.Instance.AddEventListener<MOTIONSTATEENUM>(GameEvent.ChangeMoveState,ChangeMotionState);
+        m_playerInformation = playerInformation;
     }
     
     public void Motion(PlayerInformation playerInformation)
@@ -24,19 +27,19 @@ public class MotionController
         }
     }
 
-    public void ChangeMotionState(MotionState motionState)
+    public void ChangeMotionState(MOTIONSTATEENUM motionStateEnum)
     {
-        if (motionState as MainMotionState != null)
+        if (motionStateEnum.CheckMotionIsMain())
         {
-            ChangeMotionStateInMainMachine(motionState);
+            ChangeMotionStateInMainMachine(motionStateEnum);
         }
         else
         {
-            ChangeMotionStateInAdditiveMachine(motionState);
+            ChangeMotionStateInAdditiveMachine(motionStateEnum);
         }
     }
 
-    private void ChangeMotionStateInMainMachine(MotionState motionState)
+    private void ChangeMotionStateInMainMachine(MOTIONSTATEENUM motionStateEnum)
     {
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is MainMotionStateMachine);   
         if (motionMachine == null)
@@ -44,10 +47,10 @@ public class MotionController
             motionMachine = new MainMotionStateMachine();
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionState);
+        motionMachine.ChangeMotionState(motionStateEnum,m_playerInformation);
     }
 
-    private void ChangeMotionStateInAdditiveMachine(MotionState motionState)
+    private void ChangeMotionStateInAdditiveMachine(MOTIONSTATEENUM motionStateEnum)
     {
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is AddtiveMotionStateMachine);   
         if (motionMachine == null)
@@ -55,6 +58,6 @@ public class MotionController
             motionMachine = new AddtiveMotionStateMachine();
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionState);
+        motionMachine.ChangeMotionState(motionStateEnum,m_playerInformation);
     }
 }

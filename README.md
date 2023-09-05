@@ -38,6 +38,11 @@ classDiagram
 MotionStateMachine <|-- MainMotionStateMachine
 MotionStateMachine <|-- AdditiveMotionStateMachine
 MotionStateMachine *-- MotionState
+MotionStateMachine *-- MotionStateFactory
+MotionStateFactory ..> MotionState
+MotionStateFactory ..> MotionStateEnum
+MotionStateFactory <|-- MainMotionStateFactory
+MotionStateFactory <|-- AdditiveMotionStateFactory
 MotionController o-- MotionStateMachine
 PlayerController *-- MotionController
 PlayerInformation *-- InputController

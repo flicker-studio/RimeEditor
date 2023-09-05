@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class JumpState : AdditiveMotionState
 {
-    public JumpState(PlayerInformation information) : base(information)
-    {
-    }
 
     public override void Motion(PlayerInformation playerInformation)
     {
@@ -20,5 +17,9 @@ public class JumpState : AdditiveMotionState
             GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetJumpProperty.PLAYER_JUMP_FINISH_SPEED_COMPENSATION);
             RemoveState();
         }
+    }
+
+    public JumpState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
+    {
     }
 }

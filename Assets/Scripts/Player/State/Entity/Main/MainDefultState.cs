@@ -13,7 +13,7 @@ public class MainDefultState : MainMotionState
         if (m_inputController.GetInputData.MoveInput.x != 0)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMoveState(new WalkAndRunState(playerInformation));
+            ChangeMoveState(MOTIONSTATEENUM.WalkAndRunState);
             return;
         }
         timmer += Time.fixedDeltaTime;
@@ -36,7 +36,8 @@ public class MainDefultState : MainMotionState
         }
     }
 
-    public MainDefultState(PlayerInformation information) : base(information)
+
+    public MainDefultState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
     {
         m_oriSpeed = GetRigidbody.velocity.x;
     }

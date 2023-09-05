@@ -10,16 +10,16 @@ public class PlayerController : MonoBehaviour
 
     private void ControllerInit()
     {
-        m_motionController = new MotionController();
         m_playerInformation = new PlayerInformation(transform);
+        m_motionController = new MotionController(m_playerInformation);
     }
     
     private void Start()
     {
         ControllerInit();
-        m_motionController.ChangeMotionState(new MainDefultState(m_playerInformation));
-        m_motionController.ChangeMotionState(new AdditiveDefultState(m_playerInformation));
-        m_motionController.ChangeMotionState(new PerpendicularGroundState(m_playerInformation));
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.MainDefultState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.AdditiveDefultState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.PerpendicularGroundState);
     }
 
     private void FixedUpdate()
