@@ -39,6 +39,12 @@ public class CharacterProperty : ScriptableObject
         public float AIR_ANGULAR_VELOCITY_Z;
         [CustomLabel("空中角度恢复宽容范围"),Range(0,10)]
         public float AIR_ANGULAR_TOLERANCE_RANGE;
+        [CustomLabel("斜坡最大滑动速度"), Range(0, 20)]
+        public float SLIDE_SPEED;
+        [CustomLabel("斜坡加速到最大滑动速度时间"), Range(0, 10)]
+        public float SLICE_TIME_TO_MAXIMUN_SPEED;
+        [CustomLabel("斜坡滑动开始时间补偿"), Range(0, 1)]
+        public float SLOPE_START_TIME_COMPENSATE;
         [CustomLabel("斜坡Y轴速度补偿"),Range(-20,0)]
         public float SLOP_Y_AXIS_SPEED_COMPENSATION;
         [CustomLabel("斜坡Y轴果冻效应补偿"),Range(0,10)]

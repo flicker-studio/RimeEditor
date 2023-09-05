@@ -49,6 +49,9 @@ public abstract class MotionState
     
     protected List<Type> CheckGlobalStates => m_checkStatesCallBack?.Invoke(true);
 
+    protected bool CheckSuitableSlope => GetRaycastCheckPoints.CalculateBestFitLine().GetOrthogonalVector().y
+                                           > Mathf.Cos(GetPerpendicularOnGround.CHECK_POINT_ANGLE * Mathf.Deg2Rad);
+
     #endregion
 
     public MotionState(PlayerInformation information,CheckStatesCallBack checkStatesCallBack)

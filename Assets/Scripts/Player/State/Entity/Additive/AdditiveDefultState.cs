@@ -20,7 +20,8 @@ public class AdditiveDefultState : AdditiveMotionState
         }
         if (checkJumpBufferTimer && m_canJump || GetInputData.JumpInput 
             && m_canJump 
-            && (GetIsGround || checkCoyoteTimer))
+            && (GetIsGround || checkCoyoteTimer)
+            && CheckSuitableSlope)
         {
             m_canJump = false;
             

@@ -54,6 +54,7 @@ PlayerInformation *-- PlayerRaycasting
 AdditiveDefultState *-- CoyoteTimer
 AdditiveDefultState *-- JumpBufferTimer
 MainMotionState <|-- MainDefultState
+MainMotionState <|-- SlideState
 AdditiveMotionState <|-- AdditiveDefultState
 MainMotionState <|-- WalkAndRunState
 AdditiveMotionState <|-- JumpState

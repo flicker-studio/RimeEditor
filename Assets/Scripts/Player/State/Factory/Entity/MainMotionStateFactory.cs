@@ -13,6 +13,8 @@ public class MainMotionStateFactory : MotionStateFactory
                 return new MainDefultState(playerInformation, checkStatesCallBack);
             case MOTIONSTATEENUM.WalkAndRunState:
                 return new WalkAndRunState(playerInformation, checkStatesCallBack);
+            case MOTIONSTATEENUM.SlideState:
+                return new SlideState(playerInformation, checkStatesCallBack);
             default:
                 return null;
         }

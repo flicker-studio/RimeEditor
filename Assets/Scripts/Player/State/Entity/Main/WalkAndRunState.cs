@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class WalkAndRunState : MainMotionState
 {
-    private float timmer = 0f;
+    private float m_timer = 0f;
+
+    private float m_slopetimer = 0f;
     
 
     public override void Motion(PlayerInformation playerInformation)
     {
-        if (GetInputData.MoveInput.x == 0 
-            || !CheckGlobalStates.Contains(typeof(JumpState)) 
-            && GetRaycastCheckPoints.CalculateBestFitLine().GetOrthogonalVector().y 
-            <= Mathf.Cos(GetPerpendicularOnGround.CHECK_POINT_ANGLE * Mathf.Deg2Rad))
+        if (!CheckSuitableSlope)
+        {
+            m_slopetimer += Time.fixedDeltaTime;
+            if (m_slopetimer >= GetMoveProperty.SLOPE_START_TIME_COMPENSATE)
+            {
+                if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
+                ChangeMoveState(MOTIONSTATEENUM.SlideState);
+                return;
+            }
+        }
+        else
+        {
+            m_slopetimer = 0f;
+        }
+        
+        if (GetInputData.MoveInput.x == 0)
         {
             if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
             ChangeMoveState(MOTIONSTATEENUM.MainDefultState);
@@ -42,16 +56,16 @@ public class WalkAndRunState : MainMotionState
     
     private void WalkAndRun()
     {
-        timmer += Time.fixedDeltaTime;
+        m_timer += Time.fixedDeltaTime;
         float angle = Vector2.Angle(Vector2.up, GetRigidbody.transform.up) * Mathf.Deg2Rad;
         float magnification;
         if (GetIsGround)
         {
-            magnification = timmer / GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED;
+            magnification = m_timer / GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED;
         }
         else
         {
-            magnification = timmer / GetMoveProperty.AIR_TIME_TO_MAXIMUN_SPEED;
+            magnification = m_timer / GetMoveProperty.AIR_TIME_TO_MAXIMUN_SPEED;
         }
         
         if (!GetInputData.RunInput)
@@ -79,10 +93,6 @@ public class WalkAndRunState : MainMotionState
         else
         {
             GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed);
-            if (!CheckGlobalStates.Contains(typeof(JumpState)) && GetRigidbody.velocity.y >= 0)
-            {
-                GetRigidbody.velocity = GetRigidbody.velocity.NewY(0);
-            } 
         }
     }
 
