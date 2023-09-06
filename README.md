@@ -59,6 +59,8 @@ AdditiveMotionState <|-- AdditiveDefultState
 MainMotionState <|-- WalkAndRunState
 AdditiveMotionState <|-- JumpState
 AdditiveMotionState <|-- PerpendicularGroundState
+AdditiveMotionState <|-- SliceState
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
 ```
+
