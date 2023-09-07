@@ -1,6 +1,7 @@
 <h3 align="center">
-  <img src="Assets/Resources/Textures/Logo.png?raw=true" alt="ProJect-Moon Logo" width="600">
+  <img src="Assets/Resources/Textures/Logo.png?raw=true" alt="ProJect-Moon Logo" width="1000">
 </h3>
+
 
 # ProJect-Moon
 
