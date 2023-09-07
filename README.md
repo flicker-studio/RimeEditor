@@ -1,4 +1,9 @@
+<h3 align="center">
+  <img src="Assets/Resources/Textures/Logo.png?raw=true" alt="ProJect-Moon Logo" width="600">
+</h3>
+
 # ProJect-Moon
+
 ProJect-Moon development team
 
 The code naming convention for this project is as follows：
@@ -15,7 +20,7 @@ The code naming convention for this project is as follows：
 
 The code method parenthesis specification for this project is as follows：
 
-- ```
+- ```c#
   public void Motion()
   {
       foreach (var motionState in m_playerMoveStates)

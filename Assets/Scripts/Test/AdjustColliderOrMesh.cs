@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-
+[RequireComponent(typeof(PolygonCollider2D))]
 public class AdjustColliderOrMesh : MonoBehaviour
 {
     [SerializeField] bool useMass;

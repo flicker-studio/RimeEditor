@@ -4,13 +4,13 @@ using UnityEngine;
 
 public enum MOTIONSTATEENUM
 {
-    MainDefultState = 2,
-    WalkAndRunState = 4,
-    SlideState = 8,
-    AdditiveDefultState = 16,
-    JumpState = 32,
-    PerpendicularGroundState = 64,
-    None = 128
+    None = 1<<0,
+    MainDefultState = 1<<1,
+    WalkAndRunState = 1<<2,
+    SlideState = 1<<3,
+    AdditiveDefultState = 1<<4,
+    JumpState = 1<<5,
+    PerpendicularGroundState = 1<<6
 }
 
 public abstract class MotionStateFactory
