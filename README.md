@@ -5,21 +5,22 @@
 
 # ProJect-Moon
 
-ProJect-Moon development team
+ProJect-Moon development team.
 
-The code naming convention for this project is as follows：
+**The code naming convention for this project is as follows：**
 
-- Class                                                          Robot
-- Interface                                                   IEat
-- Private Attribute                                     m_robotSpeed
-- Public Attribute                                       RobotSpeed
-- Protected Attribute                                m_robotSpeed
-- Enum Class                                              ROBOT_TYPE
-- Local Parameter                                      robotSpeed
+| Type                | Name         |
+| :------------------ | :----------- |
+| Class               | Robot        |
+| Interface           | IEat         |
+| Private Attribute   | m_robotSpeed |
+| Public Attribute    | RobotSpeed   |
+| Protected Attribute | m_robotSpeed |
+| Enum Class          | ROBOT_TYPE   |
+| Local Parameter     | robotSpeed   |
+|                     |              |
 
-
-
-The code method parenthesis specification for this project is as follows：
+**The code method parenthesis specification for this project is as follows：**
 
 - ```c#
   public void Motion()
@@ -33,11 +34,49 @@ The code method parenthesis specification for this project is as follows：
 
 
 
-The existing architecture class diagram for this project is as follows：
+**The existing architecture class diagram for this project is as follows：**
+
+StaticMethodClass
+
+- These static classes provide methods that other classes extend statically.
+  - Now service classes are: LayerMask, MotionState,Raycast, Rigidbody, Vector2 / Vector3.
 
 
+
+```mermaid
+graph TB
+A(StaticMethodClass)
+B(LayerMaskMethod)
+C(MotionStateMethod)
+D(RaycastMethod)
+E(RigidbodyMethod)
+F(VectorMethod)
+B --> A
+C --> A
+D --> A
+E --> A
+F --> A
+```
+
+Singleton
+
+- A class that inherits from a singleton and acts as a manager for some underlying in-game functionality.
+  - EventManager is the event manager responsible for managing all global events in the game.
+  - InputManager is the input manager and is responsible for detecting all inputs from the player.
+
+```mermaid
+classDiagram
+Singleton <|-- EventManager
+Singleton <|-- InputManager
+```
 
 MotionController
+
+- A role controller designed with state mode and factory mode is used.
+  - The state machine is MotionStateMachine
+  - The state is MotionState
+  - The factory is MotionStateFactory
+  - The data is PlayerInformation
 
 ```mermaid
 classDiagram
