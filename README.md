@@ -18,7 +18,6 @@ ProJect-Moon development team.
 | Protected Attribute | m_robotSpeed |
 | Enum Class          | ROBOT_TYPE   |
 | Local Parameter     | robotSpeed   |
-|                     |              |
 
 **The code method parenthesis specification for this project is as follows：**
 
