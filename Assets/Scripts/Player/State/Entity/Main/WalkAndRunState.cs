@@ -61,11 +61,11 @@ public class WalkAndRunState : MainMotionState
         float magnification;
         if (GetIsGround)
         {
-            magnification = m_timer / GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED;
+            magnification = Mathf.Clamp01(m_timer / GetMoveProperty.GROUND_TIME_TO_MAXIMUN_SPEED);
         }
         else
         {
-            magnification = m_timer / GetMoveProperty.AIR_TIME_TO_MAXIMUN_SPEED;
+            magnification = Mathf.Clamp01(m_timer / GetMoveProperty.AIR_TIME_TO_MAXIMUN_SPEED);
         }
         
         if (!GetInputData.RunInput)
@@ -86,13 +86,14 @@ public class WalkAndRunState : MainMotionState
     {
         if (GetIsGround)
         {
-            GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.SLOP_Y_AXIS_SPEED_COMPENSATION 
-                                                               * Mathf.Clamp(magnification,0,1));
-            GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed * Mathf.Cos(angle));
+            GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed * Mathf.Cos(angle) * magnification);
+            GetRigidbody.velocity = GetRigidbody.velocity.NewY(-Mathf.Abs(speed * Mathf.Sin(angle)) * 
+                                                               GetMoveProperty.SLOP_Y_AXIS_SPEED_COMPENSATION *
+                                                               magnification);
         }
         else
         {
-            GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed);
+            GetRigidbody.velocity = GetRigidbody.velocity.NewX(speed * magnification);
         }
     }
 

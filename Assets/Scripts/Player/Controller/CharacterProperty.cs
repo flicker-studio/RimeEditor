@@ -45,7 +45,7 @@ public class CharacterProperty : ScriptableObject
         public float SLICE_TIME_TO_MAXIMUN_SPEED;
         [CustomLabel("斜坡滑动开始时间补偿"), Range(0, 1)]
         public float SLOPE_START_TIME_COMPENSATE;
-        [CustomLabel("斜坡Y轴速度补偿"),Range(-20,0)]
+        [CustomLabel("斜坡Y轴速度补偿倍率"),Range(0,2)]
         public float SLOP_Y_AXIS_SPEED_COMPENSATION;
         [CustomLabel("斜坡Y轴果冻效应补偿"),Range(0,10)]
         public float JELLY_EFFECT_COMPENSATION;
