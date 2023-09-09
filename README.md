@@ -50,11 +50,11 @@ C(MotionStateMethod)
 D(RaycastMethod)
 E(RigidbodyMethod)
 F(VectorMethod)
-B --> A
-C --> A
-D --> A
-E --> A
-F --> A
+A --> B
+A --> C
+A --> D
+A --> E
+A --> F
 ```
 
 Singleton
