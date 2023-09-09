@@ -9,15 +9,15 @@ ProJect-Moon development team.
 
 **The code naming convention for this project is as follows：**
 
-| Type                | Name         |
-| :------------------ | :----------- |
-| Class               | Robot        |
-| Interface           | IEat         |
-| Private Attribute   | m_robotSpeed |
-| Public Attribute    | RobotSpeed   |
+|        Type         |     Name     |
+| :-----------------: | :----------: |
+|        Class        |    Robot     |
+|      Interface      |     IEat     |
+|  Private Attribute  | m_robotSpeed |
+|  Public Attribute   |  RobotSpeed  |
 | Protected Attribute | m_robotSpeed |
-| Enum Class          | ROBOT_TYPE   |
-| Local Parameter     | robotSpeed   |
+|     Enum Class      |  ROBOT_TYPE  |
+|   Local Parameter   |  robotSpeed  |
 
 **The code method parenthesis specification for this project is as follows：**
 
