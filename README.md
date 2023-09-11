@@ -10,8 +10,11 @@ ProJect-Moon development team.
 
 ## Project milestone
 
-- The algorithm of generating polygoncollider2D mesh based on mesh triangle is completed, and the performance is good, and it supports concave polygon.  ——2023.9.11
-  - The core idea of the algorithm is to find all triangles according to mesh, and remove redundant and intersecting triangles, as well as the vertices that do not form a triangle. Finally, a greedy algorithm is used to generate polygoncollider2D. I am glad that Unity mesh models are already triangulated, which saves me a lot of trouble.
+- The algorithm of generating polygoncollider2D mesh based on mesh triangle is completed, and the performance is good, and it supports concave polygon. 
+
+  - The core idea of the algorithm is to find all triangles according to mesh and make them two-dimensional, and remove redundant, intersecting triangles and vertices that do not form a triangle. Finally, a greedy algorithm is used to generate polygoncollider2D. I am glad that Unity mesh models are already triangulated, which saves me a lot of trouble.
+
+    <p align="right">——2023.9.11</p>
 
 <h3 align="center">
   <img src="Images/Textures/CreatPolygonCollider.png?raw=true" alt="ProJect-Moon Logo" width="1000">
