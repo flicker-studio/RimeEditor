@@ -10,10 +10,6 @@ ProJect-Moon development team.
 
 
 
-------
-
-
-
 ## Project milestone
 
 - The algorithm of generating polygoncollider2D mesh based on mesh triangle is completed, and the performance is good, and it supports concave polygon. 
@@ -25,10 +21,6 @@ ProJect-Moon development team.
 <h3 align="center">
   <img src="Images/Textures/CreatPolygonCollider.png?raw=true" alt="ProJect-Moon Logo" width="1000">
 </h3>
-------
-
-
-
 ## Project structure
 
 **The code naming convention for this project is as follows：**
