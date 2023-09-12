@@ -6,7 +6,9 @@
 
 ProJect-Moon development team.
 
-[![Static Badge](https://img.shields.io/badge/contact-Bilibili-blue)](space.bilibili.com/165762441)
+[![Static Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
+
+
 
 ------
 
