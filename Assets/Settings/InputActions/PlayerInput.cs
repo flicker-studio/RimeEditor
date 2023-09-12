@@ -134,6 +134,34 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerSlice"",
+            ""id"": ""eb5c5125-7db1-4be3-96ae-c5f0f1b20e0d"",
+            ""actions"": [
+                {
+                    ""name"": ""Slice"",
+                    ""type"": ""Button"",
+                    ""id"": ""1db08ffe-ad4a-49d8-bc8e-33a7fd17f56b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""bdc04e24-4fb5-41f0-822f-fd7d47f63d4e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slice"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -143,6 +171,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_PlayerMotion_Move = m_PlayerMotion.FindAction("Move", throwIfNotFound: true);
         m_PlayerMotion_Jump = m_PlayerMotion.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMotion_Run = m_PlayerMotion.FindAction("Run", throwIfNotFound: true);
+        // PlayerSlice
+        m_PlayerSlice = asset.FindActionMap("PlayerSlice", throwIfNotFound: true);
+        m_PlayerSlice_Slice = m_PlayerSlice.FindAction("Slice", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -262,10 +293,60 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         }
     }
     public PlayerMotionActions @PlayerMotion => new PlayerMotionActions(this);
+
+    // PlayerSlice
+    private readonly InputActionMap m_PlayerSlice;
+    private List<IPlayerSliceActions> m_PlayerSliceActionsCallbackInterfaces = new List<IPlayerSliceActions>();
+    private readonly InputAction m_PlayerSlice_Slice;
+    public struct PlayerSliceActions
+    {
+        private @PlayerAction m_Wrapper;
+        public PlayerSliceActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Slice => m_Wrapper.m_PlayerSlice_Slice;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerSlice; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerSliceActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerSliceActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerSliceActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerSliceActionsCallbackInterfaces.Add(instance);
+            @Slice.started += instance.OnSlice;
+            @Slice.performed += instance.OnSlice;
+            @Slice.canceled += instance.OnSlice;
+        }
+
+        private void UnregisterCallbacks(IPlayerSliceActions instance)
+        {
+            @Slice.started -= instance.OnSlice;
+            @Slice.performed -= instance.OnSlice;
+            @Slice.canceled -= instance.OnSlice;
+        }
+
+        public void RemoveCallbacks(IPlayerSliceActions instance)
+        {
+            if (m_Wrapper.m_PlayerSliceActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerSliceActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerSliceActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerSliceActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerSliceActions @PlayerSlice => new PlayerSliceActions(this);
     public interface IPlayerMotionActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+    }
+    public interface IPlayerSliceActions
+    {
+        void OnSlice(InputAction.CallbackContext context);
     }
 }

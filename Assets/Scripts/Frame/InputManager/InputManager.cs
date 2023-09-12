@@ -7,35 +7,53 @@ public class InputManager : Singleton<InputManager>
     
     public InputManager()
     {
-        GetPlayerActions.Move.performed += context =>
+        #region MotionActions
+
+        GetPlayerMotionActions.Move.performed += context =>
         {
             m_moveInput = context.ReadValue<Vector2>();
         };
 
-        GetPlayerActions.Move.canceled += context =>
+        GetPlayerMotionActions.Move.canceled += context =>
         {
             m_moveInput = Vector2.zero;
         };
 
-        GetPlayerActions.Jump.performed += context =>
+        GetPlayerMotionActions.Jump.performed += context =>
         {
             m_jumpInput = true;
         };
 
-        GetPlayerActions.Jump.canceled += context =>
+        GetPlayerMotionActions.Jump.canceled += context =>
         {
             m_jumpInput = false;
         };
 
-        GetPlayerActions.Run.performed += context =>
+        GetPlayerMotionActions.Run.performed += context =>
         {
             m_runInput = true;
         };
 
-        GetPlayerActions.Run.canceled += context =>
+        GetPlayerMotionActions.Run.canceled += context =>
         {
             m_runInput = false;
         };
+
+        #endregion
+
+        #region SliceActions
+
+        GetPlayerSliceActions.Slice.performed += context =>
+        {
+            m_sliceInput = true;
+        };
+        
+        GetPlayerSliceActions.Slice.canceled += context =>
+        {
+            m_sliceInput = false;
+        };
+
+        #endregion
     }
    
     #region PlayerAction
@@ -56,17 +74,25 @@ public class InputManager : Singleton<InputManager>
         }
     }
 
-    private PlayerAction.PlayerMotionActions GetPlayerActions
+    private PlayerAction.PlayerMotionActions GetPlayerMotionActions
     {
         get
         {
             return GetPlayerInputActions.PlayerMotion;
         }
     }
+    
+    private PlayerAction.PlayerSliceActions GetPlayerSliceActions
+    {
+        get
+        {
+            return GetPlayerInputActions.PlayerSlice;
+        }
+    }
 
     #endregion
 
-    #region PlayerInput
+    #region PlayerMotionInput
 
     private Vector2 m_moveInput;
 
@@ -98,5 +124,19 @@ public class InputManager : Singleton<InputManager>
         }
     }
     
+    #endregion
+
+    #region PlayerMotionInput
+
+    private bool m_sliceInput;
+
+    public bool GetSliceInput
+    {
+        get
+        {
+            return m_sliceInput;
+        }
+    }
+
     #endregion
 }

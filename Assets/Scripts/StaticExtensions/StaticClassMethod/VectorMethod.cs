@@ -23,6 +23,11 @@ public static class VectorMethod
     {
         return new Vector3(vector3.x,y,vector3.z);
     }
+    
+    public static Vector2 ToVector2(this Vector3 vector3)
+    {
+        return new Vector2(vector3.x,vector3.y);
+    }
 
     public static Vector2 GetOrthogonalVector(this Vector2 vector2)
     {
@@ -75,6 +80,20 @@ public static class VectorMethod
         
         var direction = new Vector2(1, slope).normalized;
         return direction;
+    }
+    
+    public static Collider2D[] OverlapRotatedBox(this Vector2 center, Vector2 size, float angle)
+    {
+        int maxColliders = 50;
+        Collider2D[] colliderBuffer = new Collider2D[maxColliders];
+        int numColliders = Physics2D.OverlapBoxNonAlloc(center, size,angle, colliderBuffer);
+        
+        Collider2D[] colliders = new Collider2D[numColliders];
+        for (int i = 0; i < numColliders; i++)
+        {
+            colliders[i] = colliderBuffer[i];
+        }
+        return colliders;
     }
 
 }

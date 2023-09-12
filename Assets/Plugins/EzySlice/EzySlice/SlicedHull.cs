@@ -94,6 +94,42 @@ namespace EzySlice {
 
             return newObject;
         }
+        
+        public GameObject CreateUpperHull(Collider2D originalCollider, Material crossSectionMat) {
+            GameObject original = originalCollider.gameObject;
+            GameObject newObject = CreateUpperHull();
+
+            if (newObject != null) {
+                newObject.transform.localPosition = original.transform.localPosition;
+                newObject.transform.localRotation = original.transform.localRotation;
+                newObject.transform.localScale = original.transform.localScale;
+
+                Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
+                Mesh mesh = original.GetComponent<MeshFilter>().sharedMesh;
+
+                // nothing changed in the hierarchy, the cross section must have been batched
+                // with the submeshes, return as is, no need for any changes
+                if (mesh.subMeshCount == upper_hull.subMeshCount) {
+                    // the the material information
+                    newObject.GetComponent<Renderer>().sharedMaterials = shared;
+
+                    return newObject;
+                }
+
+                // otherwise the cross section was added to the back of the submesh array because
+                // it uses a different material. We need to take this into account
+                Material[] newShared = new Material[shared.Length + 1];
+
+                // copy our material arrays across using native copy (should be faster than loop)
+                System.Array.Copy(shared, newShared, shared.Length);
+                newShared[shared.Length] = crossSectionMat;
+
+                // the the material information
+                newObject.GetComponent<Renderer>().sharedMaterials = newShared;
+            }
+
+            return newObject;
+        }
 
         /**
          * Generate a new GameObject from the upper hull of the mesh

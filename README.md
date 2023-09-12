@@ -55,16 +55,16 @@ ProJect-Moon development team.
 
 **The existing architecture class diagram for this project is as follows：**
 
-StaticMethodClass
+StaticExtensions
 
 - These static classes provide methods that other classes extend statically.
-  - Now service classes are: LayerMask, MotionState,Raycast, Rigidbody, Vector2 / Vector3.
+  - Now service classes are: LayerMask, MotionState,Raycast, Rigidbody, Vector2 / Vector3,TrianglePoints,Mesh,Transform.
 
 
 
 ```mermaid
 graph TB
-A(StaticMethodClass)
+A(StaticExtensions)
 B(LayerMaskMethod)
 C(MotionStateMethod)
 D(RaycastMethod)
@@ -72,6 +72,7 @@ E(RigidbodyMethod)
 F(VectorMethod)
 G(TrianglePointsMethod)
 H(MeshMethod)
+I(TransformMethod)
 A --> B
 A --> C
 A --> D
@@ -79,6 +80,7 @@ A --> E
 A --> F
 A --> G
 A --> H
+A --> I
 ```
 
 Singleton
@@ -127,8 +129,11 @@ AdditiveMotionState <|-- AdditiveDefultState
 MainMotionState <|-- WalkAndRunState
 AdditiveMotionState <|-- JumpState
 AdditiveMotionState <|-- PerpendicularGroundState
-AdditiveMotionState <|-- SliceState
+AdditiveMotionState <|-- SliceOffState
+AdditiveMotionState <|-- SliceOnState
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
 ```
+
+
 

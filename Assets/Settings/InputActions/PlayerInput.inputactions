@@ -112,6 +112,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PlayerSlice",
+            "id": "eb5c5125-7db1-4be3-96ae-c5f0f1b20e0d",
+            "actions": [
+                {
+                    "name": "Slice",
+                    "type": "Button",
+                    "id": "1db08ffe-ad4a-49d8-bc8e-33a7fd17f56b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bdc04e24-4fb5-41f0-822f-fd7d47f63d4e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

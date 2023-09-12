@@ -17,8 +17,8 @@ public class PlayerColliding
     {
         get
         {
-            m_isGround = OverlapRotatedBox(m_playerTransform.position
-                                           + m_playerTransform.up * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
+            m_isGround = CheckBox(m_playerTransform.position
+                                  + m_playerTransform.up * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
                 , m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
             return m_isGround;
         }
@@ -28,8 +28,8 @@ public class PlayerColliding
     {
         get
         {
-            m_isCeiling = OverlapRotatedBox(m_playerTransform.position
-                                            +  m_playerTransform.up * m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
+            m_isCeiling = CheckBox(m_playerTransform.position
+                                   +  m_playerTransform.up * m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
                 , m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
             return m_isCeiling;
         }
@@ -40,23 +40,18 @@ public class PlayerColliding
         m_playerTransform = transform;
         m_characterProperty = characterProperty;
     }
-    
-    private bool OverlapRotatedBox(Vector2 center, Vector2 size, float angle)
-    {
-        int maxColliders = 50;
-        Collider2D[] colliderBuffer = new Collider2D[maxColliders];
-        int numColliders = Physics2D.OverlapBoxNonAlloc(center, 
-            size, angle,colliderBuffer);
-        
-        for (int i = 0; i < numColliders; i++)
-        {
-            if (m_characterProperty.GroundCheckParameter.CHECK_LAYER.ContainsLayer(colliderBuffer[i].gameObject.layer))
-            {
-                return true;
-            }
-        }
 
-        return false;
+    private bool CheckBox(Vector2 center, Vector2 size, float angle)
+    {
+        Collider2D[] colliderBuffer = center.OverlapRotatedBox(size, angle);
+         for (int i = 0; i < colliderBuffer.Length; i++)
+         {
+             if (m_characterProperty.GroundCheckParameter.CHECK_LAYER.ContainsLayer(colliderBuffer[i].gameObject.layer))
+             {
+                 return true;
+             }
+         }
+         return false;
     }
     
 }

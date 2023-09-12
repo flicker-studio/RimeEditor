@@ -17,6 +17,10 @@ namespace EzySlice {
         public static SlicedHull Slice(this GameObject obj, Vector3 position, Vector3 direction, Material crossSectionMaterial = null) {
             return Slice(obj, position, direction, new TextureRegion(0.0f, 0.0f, 1.0f, 1.0f), crossSectionMaterial);
         }
+        
+        public static SlicedHull Slice(this Collider2D collider2D, Vector3 position, Vector3 direction, Material crossSectionMaterial = null) {
+            return Slice(collider2D.gameObject, position, direction, new TextureRegion(0.0f, 0.0f, 1.0f, 1.0f), crossSectionMaterial);
+        }
 
         public static SlicedHull Slice(this GameObject obj, Vector3 position, Vector3 direction, TextureRegion textureRegion, Material crossSectionMaterial = null) {
             Plane cuttingPlane = new Plane();
