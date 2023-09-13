@@ -171,101 +171,29 @@ public class InputManager : Singleton<InputManager>
     private InputProperty<bool> m_sliceInput = new InputProperty<bool>();
 
 
-    public Vector2 GetMoveInput
-    {
-        get
-        {
-            return m_moveInput.GetInput;
-        }
-    }
-    
-    public bool GetMoveInputDown
-    {
-        get
-        {
-            return m_moveInput.GetInputDown;
-        }
-    }
-    
-    public bool GetMoveInputUp
-    {
-        get
-        {
-            return m_moveInput.GetInputUp;
-        }
-    }
-    
-    public bool GetJumpInput
-    {
-        get
-        {
-            return m_jumpInput.GetInput;
-        }
-    }
-    
-    public bool GetJumpInputDown
-    {
-        get
-        {
-            return m_jumpInput.GetInputDown;
-        }
-    }
-    
-    public bool GetJumpInputUp
-    {
-        get
-        {
-            return m_jumpInput.GetInputUp;
-        }
-    }
-    
-    public bool GetRunInput
-    {
-        get
-        {
-            return m_runInput.GetInput;
-        }
-    }
-    
-    public bool GetRunInputDown
-    {
-        get
-        {
-            return m_runInput.GetInputDown;
-        }
-    }
-    
-    public bool GetRunInputUp
-    {
-        get
-        {
-            return m_runInput.GetInputUp;
-        }
-    }
+    public Vector2 GetMoveInput => m_moveInput.GetInput;
 
-    public bool GetSliceInput
-    {
-        get
-        {
-            return m_sliceInput.GetInput;
-        }
-    }
+    public bool GetMoveInputDown => m_moveInput.GetInputDown;
+
+    public bool GetMoveInputUp => m_moveInput.GetInputUp;
     
-    public bool GetSliceInputDown
-    {
-        get
-        {
-            return m_sliceInput.GetInputDown;
-        }
-    }
-    
-    public bool GetSliceInputUp
-    {
-        get
-        {
-            return m_sliceInput.GetInputUp;
-        }
-    }
+    public bool GetJumpInput => m_jumpInput.GetInput;
+
+    public bool GetJumpInputDown => m_jumpInput.GetInputDown;
+
+    public bool GetJumpInputUp => m_jumpInput.GetInputUp;
+
+    public bool GetRunInput => m_runInput.GetInput;
+
+    public bool GetRunInputDown => m_runInput.GetInputDown;
+
+    public bool GetRunInputUp => m_runInput.GetInputUp;
+
+    public bool GetSliceInput => m_sliceInput.GetInput;
+
+    public bool GetSliceInputDown => m_sliceInput.GetInputDown;
+
+    public bool GetSliceInputUp => m_sliceInput.GetInputUp;
     
     #endregion
 
@@ -280,86 +208,26 @@ public class InputManager : Singleton<InputManager>
     private InputProperty<bool> m_num4;
 
     private InputProperty<bool> m_num5;
-    
-    public bool GetDebuggerNum1Down
-    {
-        get
-        {
-            return m_num1.GetInputDown;
-        }
-    }
-    
-    public bool GetDebuggerNum1Up
-    {
-        get
-        {
-            return m_num1.GetInputUp;
-        }
-    }
-    
-    public bool GetDebuggerNum2Down
-    {
-        get
-        {
-            return m_num2.GetInputDown;
-        }
-    }
-    
-    public bool GetDebuggerNum2Up
-    {
-        get
-        {
-            return m_num2.GetInputUp;
-        }
-    }
-    
-    public bool GetDebuggerNum3Down
-    {
-        get
-        {
-            return m_num3.GetInputDown;
-        }
-    }
-    
-    public bool GetDebuggerNum3Up
-    {
-        get
-        {
-            return m_num3.GetInputUp;
-        }
-    }
-    
-    public bool GetDebuggerNum4Down
-    {
-        get
-        {
-            return m_num4.GetInputDown;
-        }
-    }
-    
-    public bool GetDebuggerNum4Up
-    {
-        get
-        {
-            return m_num4.GetInputUp;
-        }
-    }
-    
-    public bool GetDebuggerNum5Down
-    {
-        get
-        {
-            return m_num5.GetInputDown;
-        }
-    }
-    
-    public bool GetDebuggerNum5Up
-    {
-        get
-        {
-            return m_num5.GetInputUp;
-        }
-    }
+
+    public bool GetDebuggerNum1Down => m_num1.GetInputDown;
+
+    public bool GetDebuggerNum1Up => m_num1.GetInputUp;
+
+    public bool GetDebuggerNum2Down => m_num2.GetInputDown;
+
+    public bool GetDebuggerNum2Up => m_num2.GetInputUp;
+
+    public bool GetDebuggerNum3Down => m_num3.GetInputDown;
+
+    public bool GetDebuggerNum3Up => m_num3.GetInputUp;
+
+    public bool GetDebuggerNum4Down => m_num4.GetInputDown;
+
+    public bool GetDebuggerNum4Up => m_num4.GetInputUp;
+
+    public bool GetDebuggerNum5Down => m_num5.GetInputDown;
+
+    public bool GetDebuggerNum5Up => m_num5.GetInputUp;
 
     #endregion
 }
