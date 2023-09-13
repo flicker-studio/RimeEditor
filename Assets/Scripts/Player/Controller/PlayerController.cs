@@ -13,13 +13,17 @@ public class PlayerController : MonoBehaviour
         m_playerInformation = new PlayerInformation(transform);
         m_motionController = new MotionController(m_playerInformation);
     }
-    
-    private void Start()
+
+    private void MotionInit()
     {
-        ControllerInit();
         m_motionController.ChangeMotionState(MOTIONSTATEENUM.MainDefultState);
         m_motionController.ChangeMotionState(MOTIONSTATEENUM.AdditiveDefultState);
         m_motionController.ChangeMotionState(MOTIONSTATEENUM.PerpendicularGroundState);
+    }
+    private void Start()
+    {
+        ControllerInit();
+        MotionInit();
     }
 
     private void FixedUpdate()

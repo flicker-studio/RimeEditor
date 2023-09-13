@@ -1,19 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-enum INPUTKEY
-{
-    Move,
-    Jump,
-    Run,
-    Slice,
-    DebuggerNum1,
-    DebuggerNum2,
-    DebuggerNum3,
-    DebuggerNum4,
-    DebuggerNum5
-}
 
 public class InputManager : Singleton<InputManager>
 {

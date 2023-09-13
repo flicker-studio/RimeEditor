@@ -1,12 +1,17 @@
 using EzySlice;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CutSlicer : MonoBehaviour
 {
-    public Vector3 slicerSize;
+    public Vector3 SlicerSize;
 
+    public float CheckBoxThickNess;
+
+    public float LengthCompensation;
+    
     private Material m_material;
-
+    
     private void Start()
     {
         m_material = Resources.Load<Material>("Materials/Test");
@@ -19,12 +24,17 @@ public class CutSlicer : MonoBehaviour
         {
             CutSlice();
         }
+
+        if (InputManager.Instance.GetDebuggerNum2Down)
+        {
+            CheckBox();
+        }
     }
 
     private void CutSlice()
     {
         Collider2D[] colliders = transform.position.ToVector2()
-            .OverlapRotatedBox(slicerSize, transform.rotation.eulerAngles.z);
+            .OverlapRotatedBox(SlicerSize, transform.rotation.eulerAngles.z);
         foreach (var collider in colliders)
         {
             SlicedHull slicedHull = collider.Slice(transform.position, transform.up);
@@ -34,12 +44,35 @@ public class CutSlicer : MonoBehaviour
         }
     }
 
+    private void CheckBox()
+    {
+        Collider2D[] colliders = transform.position.ToVector2()
+            .OverlapRotatedBox(SlicerSize, transform.rotation.eulerAngles.z);
+    }
+
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {
         Gizmos.color = new Color(0, 1, 0, 0.5f);
         Matrix4x4 oldGizmosMatrix = Gizmos.matrix;
-        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, slicerSize);
+        Gizmos.matrix = Matrix4x4.TRS(transform.position,transform.rotation, SlicerSize);
+        Gizmos.DrawCube(Vector3.zero, Vector3.one);
+        Gizmos.color = new Color(1f, 0, 0f, 0.5f);
+        Gizmos.matrix = Matrix4x4.TRS(transform.position - transform.right * (SlicerSize.x/2 + LengthCompensation),
+            Quaternion.AngleAxis(-90, Vector3.forward) * transform.rotation, 
+            SlicerSize.NewX(SlicerSize.y+LengthCompensation).NewY(CheckBoxThickNess));
+        Gizmos.DrawCube(Vector3.zero, Vector3.one);
+        Gizmos.matrix = Matrix4x4.TRS(transform.position + transform.up * (SlicerSize.y/2 + LengthCompensation),
+            Quaternion.AngleAxis(-180, Vector3.forward) * transform.rotation, 
+            SlicerSize.NewY(CheckBoxThickNess).NewX(SlicerSize.x+LengthCompensation));
+        Gizmos.DrawCube(Vector3.zero, Vector3.one);
+        Gizmos.matrix = Matrix4x4.TRS(transform.position + transform.right * (SlicerSize.x/2 + LengthCompensation),
+            Quaternion.AngleAxis(-270, Vector3.forward) * transform.rotation,
+            SlicerSize.NewX(SlicerSize.y+LengthCompensation).NewY(CheckBoxThickNess));
+        Gizmos.DrawCube(Vector3.zero, Vector3.one);
+        Gizmos.matrix = Matrix4x4.TRS(transform.position - transform.up * (SlicerSize.y/2 + LengthCompensation),
+            Quaternion.AngleAxis(0, Vector3.forward) * transform.rotation, 
+            SlicerSize.NewY(CheckBoxThickNess).NewX(SlicerSize.x+LengthCompensation));
         Gizmos.DrawCube(Vector3.zero, Vector3.one);
         Gizmos.matrix = oldGizmosMatrix;
     }
