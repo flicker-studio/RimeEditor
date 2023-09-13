@@ -53,6 +53,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slice"",
+                    ""type"": ""Button"",
+                    ""id"": ""cdf6a16e-de3c-4419-b1c3-1b52a8f15385"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,17 +141,64 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20953cc3-e836-4e8f-a7d1-be657c9752b8"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slice"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""PlayerSlice"",
-            ""id"": ""eb5c5125-7db1-4be3-96ae-c5f0f1b20e0d"",
+            ""name"": ""Debugger"",
+            ""id"": ""4cf33d12-3205-4d8f-babc-c5cae1dc0812"",
             ""actions"": [
                 {
-                    ""name"": ""Slice"",
+                    ""name"": ""Num1"",
+                    ""type"": ""Value"",
+                    ""id"": ""5d717891-86b6-488d-bc63-560d9fdbefa6"",
+                    ""expectedControlType"": ""Integer"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Num2"",
                     ""type"": ""Button"",
-                    ""id"": ""1db08ffe-ad4a-49d8-bc8e-33a7fd17f56b"",
+                    ""id"": ""45f24c21-de1f-4fe7-b0c1-c4964980cfc3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num3"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2adbc1c-23e2-4af3-8066-1095b87298f1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num4"",
+                    ""type"": ""Button"",
+                    ""id"": ""15ad083e-7539-437e-a8ab-06f53e7628bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Num5"",
+                    ""type"": ""Button"",
+                    ""id"": ""673da418-c86f-4073-be0c-13a3e1d04d75"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -152,12 +208,56 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""bdc04e24-4fb5-41f0-822f-fd7d47f63d4e"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""92675584-e303-44a7-b0b8-b787a7bcb926"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Slice"",
+                    ""action"": ""Num1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""393f2e32-309c-4d98-84ac-33cef61c7c81"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb42c541-2b10-4f96-99fd-8e1e662fc51f"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""875b1717-4e88-4e76-9d82-f34562dd053a"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""915b6cf6-44ba-4da8-88ce-eaa81c7ad1cf"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Num5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -171,9 +271,14 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_PlayerMotion_Move = m_PlayerMotion.FindAction("Move", throwIfNotFound: true);
         m_PlayerMotion_Jump = m_PlayerMotion.FindAction("Jump", throwIfNotFound: true);
         m_PlayerMotion_Run = m_PlayerMotion.FindAction("Run", throwIfNotFound: true);
-        // PlayerSlice
-        m_PlayerSlice = asset.FindActionMap("PlayerSlice", throwIfNotFound: true);
-        m_PlayerSlice_Slice = m_PlayerSlice.FindAction("Slice", throwIfNotFound: true);
+        m_PlayerMotion_Slice = m_PlayerMotion.FindAction("Slice", throwIfNotFound: true);
+        // Debugger
+        m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
+        m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
+        m_Debugger_Num2 = m_Debugger.FindAction("Num2", throwIfNotFound: true);
+        m_Debugger_Num3 = m_Debugger.FindAction("Num3", throwIfNotFound: true);
+        m_Debugger_Num4 = m_Debugger.FindAction("Num4", throwIfNotFound: true);
+        m_Debugger_Num5 = m_Debugger.FindAction("Num5", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,6 +343,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMotion_Move;
     private readonly InputAction m_PlayerMotion_Jump;
     private readonly InputAction m_PlayerMotion_Run;
+    private readonly InputAction m_PlayerMotion_Slice;
     public struct PlayerMotionActions
     {
         private @PlayerAction m_Wrapper;
@@ -245,6 +351,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerMotion_Move;
         public InputAction @Jump => m_Wrapper.m_PlayerMotion_Jump;
         public InputAction @Run => m_Wrapper.m_PlayerMotion_Run;
+        public InputAction @Slice => m_Wrapper.m_PlayerMotion_Slice;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMotion; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -263,6 +370,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @Slice.started += instance.OnSlice;
+            @Slice.performed += instance.OnSlice;
+            @Slice.canceled += instance.OnSlice;
         }
 
         private void UnregisterCallbacks(IPlayerMotionActions instance)
@@ -276,6 +386,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @Slice.started -= instance.OnSlice;
+            @Slice.performed -= instance.OnSlice;
+            @Slice.canceled -= instance.OnSlice;
         }
 
         public void RemoveCallbacks(IPlayerMotionActions instance)
@@ -294,59 +407,96 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     }
     public PlayerMotionActions @PlayerMotion => new PlayerMotionActions(this);
 
-    // PlayerSlice
-    private readonly InputActionMap m_PlayerSlice;
-    private List<IPlayerSliceActions> m_PlayerSliceActionsCallbackInterfaces = new List<IPlayerSliceActions>();
-    private readonly InputAction m_PlayerSlice_Slice;
-    public struct PlayerSliceActions
+    // Debugger
+    private readonly InputActionMap m_Debugger;
+    private List<IDebuggerActions> m_DebuggerActionsCallbackInterfaces = new List<IDebuggerActions>();
+    private readonly InputAction m_Debugger_Num1;
+    private readonly InputAction m_Debugger_Num2;
+    private readonly InputAction m_Debugger_Num3;
+    private readonly InputAction m_Debugger_Num4;
+    private readonly InputAction m_Debugger_Num5;
+    public struct DebuggerActions
     {
         private @PlayerAction m_Wrapper;
-        public PlayerSliceActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Slice => m_Wrapper.m_PlayerSlice_Slice;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerSlice; }
+        public DebuggerActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Num1 => m_Wrapper.m_Debugger_Num1;
+        public InputAction @Num2 => m_Wrapper.m_Debugger_Num2;
+        public InputAction @Num3 => m_Wrapper.m_Debugger_Num3;
+        public InputAction @Num4 => m_Wrapper.m_Debugger_Num4;
+        public InputAction @Num5 => m_Wrapper.m_Debugger_Num5;
+        public InputActionMap Get() { return m_Wrapper.m_Debugger; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerSliceActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerSliceActions instance)
+        public static implicit operator InputActionMap(DebuggerActions set) { return set.Get(); }
+        public void AddCallbacks(IDebuggerActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerSliceActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerSliceActionsCallbackInterfaces.Add(instance);
-            @Slice.started += instance.OnSlice;
-            @Slice.performed += instance.OnSlice;
-            @Slice.canceled += instance.OnSlice;
+            if (instance == null || m_Wrapper.m_DebuggerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebuggerActionsCallbackInterfaces.Add(instance);
+            @Num1.started += instance.OnNum1;
+            @Num1.performed += instance.OnNum1;
+            @Num1.canceled += instance.OnNum1;
+            @Num2.started += instance.OnNum2;
+            @Num2.performed += instance.OnNum2;
+            @Num2.canceled += instance.OnNum2;
+            @Num3.started += instance.OnNum3;
+            @Num3.performed += instance.OnNum3;
+            @Num3.canceled += instance.OnNum3;
+            @Num4.started += instance.OnNum4;
+            @Num4.performed += instance.OnNum4;
+            @Num4.canceled += instance.OnNum4;
+            @Num5.started += instance.OnNum5;
+            @Num5.performed += instance.OnNum5;
+            @Num5.canceled += instance.OnNum5;
         }
 
-        private void UnregisterCallbacks(IPlayerSliceActions instance)
+        private void UnregisterCallbacks(IDebuggerActions instance)
         {
-            @Slice.started -= instance.OnSlice;
-            @Slice.performed -= instance.OnSlice;
-            @Slice.canceled -= instance.OnSlice;
+            @Num1.started -= instance.OnNum1;
+            @Num1.performed -= instance.OnNum1;
+            @Num1.canceled -= instance.OnNum1;
+            @Num2.started -= instance.OnNum2;
+            @Num2.performed -= instance.OnNum2;
+            @Num2.canceled -= instance.OnNum2;
+            @Num3.started -= instance.OnNum3;
+            @Num3.performed -= instance.OnNum3;
+            @Num3.canceled -= instance.OnNum3;
+            @Num4.started -= instance.OnNum4;
+            @Num4.performed -= instance.OnNum4;
+            @Num4.canceled -= instance.OnNum4;
+            @Num5.started -= instance.OnNum5;
+            @Num5.performed -= instance.OnNum5;
+            @Num5.canceled -= instance.OnNum5;
         }
 
-        public void RemoveCallbacks(IPlayerSliceActions instance)
+        public void RemoveCallbacks(IDebuggerActions instance)
         {
-            if (m_Wrapper.m_PlayerSliceActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_DebuggerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerSliceActions instance)
+        public void SetCallbacks(IDebuggerActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerSliceActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_DebuggerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerSliceActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_DebuggerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerSliceActions @PlayerSlice => new PlayerSliceActions(this);
+    public DebuggerActions @Debugger => new DebuggerActions(this);
     public interface IPlayerMotionActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
-    }
-    public interface IPlayerSliceActions
-    {
         void OnSlice(InputAction.CallbackContext context);
+    }
+    public interface IDebuggerActions
+    {
+        void OnNum1(InputAction.CallbackContext context);
+        void OnNum2(InputAction.CallbackContext context);
+        void OnNum3(InputAction.CallbackContext context);
+        void OnNum4(InputAction.CallbackContext context);
+        void OnNum5(InputAction.CallbackContext context);
     }
 }

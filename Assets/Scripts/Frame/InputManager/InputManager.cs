@@ -2,6 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum INPUTKEY
+{
+    Move,
+    Jump,
+    Run,
+    Slice,
+    DebuggerNum1,
+    DebuggerNum2,
+    DebuggerNum3,
+    DebuggerNum4,
+    DebuggerNum5
+}
+
 public class InputManager : Singleton<InputManager>
 {
     
@@ -11,51 +24,101 @@ public class InputManager : Singleton<InputManager>
 
         GetPlayerMotionActions.Move.performed += context =>
         {
-            m_moveInput = context.ReadValue<Vector2>();
+            m_moveInput.SetInput = context.ReadValue<Vector2>();
         };
 
         GetPlayerMotionActions.Move.canceled += context =>
         {
-            m_moveInput = Vector2.zero;
+            m_moveInput.SetInput = Vector2.zero;
         };
 
         GetPlayerMotionActions.Jump.performed += context =>
         {
-            m_jumpInput = true;
+            m_jumpInput.SetInput = true;
         };
 
         GetPlayerMotionActions.Jump.canceled += context =>
         {
-            m_jumpInput = false;
+            m_jumpInput.SetInput = false;
         };
 
         GetPlayerMotionActions.Run.performed += context =>
         {
-            m_runInput = true;
+            m_runInput.SetInput = true;
         };
 
         GetPlayerMotionActions.Run.canceled += context =>
         {
-            m_runInput = false;
-        };
-
-        #endregion
-
-        #region SliceActions
-
-        GetPlayerSliceActions.Slice.performed += context =>
-        {
-            m_sliceInput = true;
+            m_runInput.SetInput = false;
         };
         
-        GetPlayerSliceActions.Slice.canceled += context =>
+        GetPlayerMotionActions.Slice.performed += context =>
         {
-            m_sliceInput = false;
+            m_sliceInput.SetInput = true;
+        };
+        
+        GetPlayerMotionActions.Slice.canceled += context =>
+        {
+            m_sliceInput.SetInput = false;
+        };
+        
+        #endregion
+
+        #region Debugger
+
+        GetDebuggerActions.Num1.performed += context =>
+        {
+            m_num1.SetInput = true;
+        };
+        
+        GetDebuggerActions.Num1.canceled += context =>
+        {
+            m_num1.SetInput = false;
+        };
+        
+        GetDebuggerActions.Num2.performed += context =>
+        {
+            m_num2.SetInput = true;
+        };
+        
+        GetDebuggerActions.Num2.canceled += context =>
+        {
+            m_num2.SetInput = false;
+        };
+        
+        GetDebuggerActions.Num3.performed += context =>
+        {
+            m_num3.SetInput = true;
+        };
+        
+        GetDebuggerActions.Num3.canceled += context =>
+        {
+            m_num3.SetInput = false;
+        };
+        
+        GetDebuggerActions.Num4.performed += context =>
+        {
+            m_num4.SetInput = true;
+        };
+        
+        GetDebuggerActions.Num4.canceled += context =>
+        {
+            m_num4.SetInput = false;
+        };
+        
+        GetDebuggerActions.Num5.performed += context =>
+        {
+            m_num5.SetInput = true;
+        };
+        
+        GetDebuggerActions.Num5.canceled += context =>
+        {
+            m_num5.SetInput = false;
         };
 
         #endregion
     }
-   
+    
     #region PlayerAction
 
     private PlayerAction m_playerActions;
@@ -82,11 +145,16 @@ public class InputManager : Singleton<InputManager>
         }
     }
     
-    private PlayerAction.PlayerSliceActions GetPlayerSliceActions
+
+    #endregion
+
+    #region Debugger
+
+    private PlayerAction.DebuggerActions GetDebuggerActions
     {
         get
         {
-            return GetPlayerInputActions.PlayerSlice;
+            return GetPlayerInputActions.Debugger;
         }
     }
 
@@ -94,25 +162,60 @@ public class InputManager : Singleton<InputManager>
 
     #region PlayerMotionInput
 
-    private Vector2 m_moveInput;
+    private InputProperty<Vector2> m_moveInput = new InputProperty<Vector2>();
 
-    private bool m_jumpInput;
+    private InputProperty<bool> m_jumpInput = new InputProperty<bool>();
 
-    private bool m_runInput;
+    private InputProperty<bool> m_runInput = new InputProperty<bool>();
+
+    private InputProperty<bool> m_sliceInput = new InputProperty<bool>();
+
 
     public Vector2 GetMoveInput
     {
         get
         {
-            return m_moveInput;
+            return m_moveInput.GetInput;
         }
     }
-
+    
+    public bool GetMoveInputDown
+    {
+        get
+        {
+            return m_moveInput.GetInputDown;
+        }
+    }
+    
+    public bool GetMoveInputUp
+    {
+        get
+        {
+            return m_moveInput.GetInputUp;
+        }
+    }
+    
     public bool GetJumpInput
     {
         get
         {
-            return m_jumpInput;
+            return m_jumpInput.GetInput;
+        }
+    }
+    
+    public bool GetJumpInputDown
+    {
+        get
+        {
+            return m_jumpInput.GetInputDown;
+        }
+    }
+    
+    public bool GetJumpInputUp
+    {
+        get
+        {
+            return m_jumpInput.GetInputUp;
         }
     }
     
@@ -120,21 +223,141 @@ public class InputManager : Singleton<InputManager>
     {
         get
         {
-            return m_runInput;
+            return m_runInput.GetInput;
         }
     }
     
-    #endregion
-
-    #region PlayerMotionInput
-
-    private bool m_sliceInput;
+    public bool GetRunInputDown
+    {
+        get
+        {
+            return m_runInput.GetInputDown;
+        }
+    }
+    
+    public bool GetRunInputUp
+    {
+        get
+        {
+            return m_runInput.GetInputUp;
+        }
+    }
 
     public bool GetSliceInput
     {
         get
         {
-            return m_sliceInput;
+            return m_sliceInput.GetInput;
+        }
+    }
+    
+    public bool GetSliceInputDown
+    {
+        get
+        {
+            return m_sliceInput.GetInputDown;
+        }
+    }
+    
+    public bool GetSliceInputUp
+    {
+        get
+        {
+            return m_sliceInput.GetInputUp;
+        }
+    }
+    
+    #endregion
+
+    #region Debugger
+
+    private InputProperty<bool> m_num1;
+
+    private InputProperty<bool> m_num2;
+
+    private InputProperty<bool> m_num3;
+
+    private InputProperty<bool> m_num4;
+
+    private InputProperty<bool> m_num5;
+    
+    public bool GetDebuggerNum1Down
+    {
+        get
+        {
+            return m_num1.GetInputDown;
+        }
+    }
+    
+    public bool GetDebuggerNum1Up
+    {
+        get
+        {
+            return m_num1.GetInputUp;
+        }
+    }
+    
+    public bool GetDebuggerNum2Down
+    {
+        get
+        {
+            return m_num2.GetInputDown;
+        }
+    }
+    
+    public bool GetDebuggerNum2Up
+    {
+        get
+        {
+            return m_num2.GetInputUp;
+        }
+    }
+    
+    public bool GetDebuggerNum3Down
+    {
+        get
+        {
+            return m_num3.GetInputDown;
+        }
+    }
+    
+    public bool GetDebuggerNum3Up
+    {
+        get
+        {
+            return m_num3.GetInputUp;
+        }
+    }
+    
+    public bool GetDebuggerNum4Down
+    {
+        get
+        {
+            return m_num4.GetInputDown;
+        }
+    }
+    
+    public bool GetDebuggerNum4Up
+    {
+        get
+        {
+            return m_num4.GetInputUp;
+        }
+    }
+    
+    public bool GetDebuggerNum5Down
+    {
+        get
+        {
+            return m_num5.GetInputDown;
+        }
+    }
+    
+    public bool GetDebuggerNum5Up
+    {
+        get
+        {
+            return m_num5.GetInputUp;
         }
     }
 

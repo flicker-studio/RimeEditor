@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Slice",
+                    "type": "Button",
+                    "id": "cdf6a16e-de3c-4419-b1c3-1b52a8f15385",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -110,17 +119,64 @@
                     "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20953cc3-e836-4e8f-a7d1-be657c9752b8",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "PlayerSlice",
-            "id": "eb5c5125-7db1-4be3-96ae-c5f0f1b20e0d",
+            "name": "Debugger",
+            "id": "4cf33d12-3205-4d8f-babc-c5cae1dc0812",
             "actions": [
                 {
-                    "name": "Slice",
+                    "name": "Num1",
+                    "type": "Value",
+                    "id": "5d717891-86b6-488d-bc63-560d9fdbefa6",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Num2",
                     "type": "Button",
-                    "id": "1db08ffe-ad4a-49d8-bc8e-33a7fd17f56b",
+                    "id": "45f24c21-de1f-4fe7-b0c1-c4964980cfc3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Num3",
+                    "type": "Button",
+                    "id": "b2adbc1c-23e2-4af3-8066-1095b87298f1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Num4",
+                    "type": "Button",
+                    "id": "15ad083e-7539-437e-a8ab-06f53e7628bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Num5",
+                    "type": "Button",
+                    "id": "673da418-c86f-4073-be0c-13a3e1d04d75",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -130,12 +186,56 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "bdc04e24-4fb5-41f0-822f-fd7d47f63d4e",
-                    "path": "<Mouse>/leftButton",
+                    "id": "92675584-e303-44a7-b0b8-b787a7bcb926",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Slice",
+                    "action": "Num1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "393f2e32-309c-4d98-84ac-33cef61c7c81",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Num2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb42c541-2b10-4f96-99fd-8e1e662fc51f",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Num3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "875b1717-4e88-4e76-9d82-f34562dd053a",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Num4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "915b6cf6-44ba-4da8-88ce-eaa81c7ad1cf",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Num5",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

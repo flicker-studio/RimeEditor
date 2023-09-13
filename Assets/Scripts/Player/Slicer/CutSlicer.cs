@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using EzySlice;
 using UnityEngine;
 
 public class CutSlicer : MonoBehaviour
 {
     public Vector3 slicerSize;
-
-    private bool m_canSlice = true;
 
     private Material m_material;
 
@@ -19,23 +14,23 @@ public class CutSlicer : MonoBehaviour
 
     private void Update()
     {
-        if (!InputManager.Instance.GetSliceInput)
+        
+        if (InputManager.Instance.GetDebuggerNum1Down)
         {
-            m_canSlice = true;
+            CutSlice();
         }
+    }
 
-        if (InputManager.Instance.GetSliceInput && m_canSlice)
+    private void CutSlice()
+    {
+        Collider2D[] colliders = transform.position.ToVector2()
+            .OverlapRotatedBox(slicerSize, transform.rotation.eulerAngles.z);
+        foreach (var collider in colliders)
         {
-            m_canSlice = false;
-            Collider2D[] colliders = transform.position.ToVector2()
-                .OverlapRotatedBox(slicerSize, transform.rotation.eulerAngles.z);
-            foreach (var collider in colliders)
-            {
-                SlicedHull slicedHull = collider.Slice(transform.position, transform.up);
-                GameObject gameObject = slicedHull.CreateUpperHull(collider,m_material);
-                gameObject.GetComponent<Renderer>().material = m_material;
-                gameObject.transform.CopyValue(collider.transform);
-            }
+            SlicedHull slicedHull = collider.Slice(transform.position, transform.up);
+            GameObject gameObject = slicedHull.CreateUpperHull(collider,m_material);
+            gameObject.GetComponent<Renderer>().material = m_material;
+            gameObject.transform.CopyValue(collider.transform);
         }
     }
 
