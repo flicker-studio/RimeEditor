@@ -19,6 +19,8 @@ public class CharacterProperty : ScriptableObject
     
     [FormerlySerializedAs("perpendicularOnGround")] [FormerlySerializedAs("OrthogonalOnGround")] 
     public PlayerPerpendicularOnGround PerpendicularOnGround;
+
+    public SlicerPropertyPanel SlicerProperty;
     
     [Serializable]
     public struct PlayerMoveProperty
@@ -106,5 +108,16 @@ public class CharacterProperty : ScriptableObject
         public float CHECK_POINT_ANGLE;
         [CustomLabel("发射线补偿坐标")]
         public Vector2 START_POINT_COMPENSATION;
+    }
+    
+    [Serializable]
+    public struct SlicerPropertyPanel
+    {
+        [CustomLabel("裁切器范围")]
+        public Vector3 RANGE_OF_DETECTION;
+        [CustomLabel("切片厚度"),Range(0,1)]
+        public float SLICE_THICKNESS;
+        [CustomLabel("间距补偿"),Range(-1,1)]
+        public float SLICE_SPACING_COMPENSATION;
     }
 }
