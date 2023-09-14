@@ -10,6 +10,18 @@ ProJect-Moon development team.
 
 
 
+## TODO
+
+- [x] Build the basic framework and design the coding style.
+- [x] Multi-parameter Playercontroller.
+- [x] To generate polygoncollider2D from mesh, we need to support concave polygons.
+- [x] Accurate clipping, and the minimum number of game objects mounted.
+- [ ] The camera controller, based on Cinemachine cameras, requires enough parsimony.
+- [ ] The AI of game NPCS requires high scalability and state-based production.
+- [ ] Optimal handling of physical collisions in which multiple objects physically form an assembly.
+- [ ] Complex collision detection of rigid bodies is not required.
+- [ ] Portal, Total War Simulator like level editor, edit the level while the game is running.
+
 ## Project milestone
 
 - The algorithm of generating polygoncollider2D mesh based on mesh triangle is completed, and the performance is good, and it supports concave polygon. 
