@@ -2,16 +2,18 @@ using EzySlice;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+enum SLICEDIR
+{
+    Left,
+    Up,
+    Right,
+    Down
+}
+
 public class CutSlicer : MonoBehaviour
 {
-    public Vector3 SlicerSize;
-
-    public float CheckBoxThickNess;
-
-    public float LengthCompensation;
-    
     private Material m_material;
-
+    
     private CharacterProperty m_characterProperty 
         => Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
     
@@ -25,7 +27,10 @@ public class CutSlicer : MonoBehaviour
         
         if (InputManager.Instance.GetDebuggerNum1Down)
         {
-            CutSlice();
+            CutSlice(SLICEDIR.Left);
+            CutSlice(SLICEDIR.Up);
+            CutSlice(SLICEDIR.Right);
+            CutSlice(SLICEDIR.Down);
         }
 
         if (InputManager.Instance.GetDebuggerNum2Down)
@@ -34,18 +39,34 @@ public class CutSlicer : MonoBehaviour
         }
     }
 
-    private void CutSlice()
+    private void CutSlice(SLICEDIR slicedir)
     {
-        Collider2D[] colliders = (transform.position - transform.right 
-                * (SlicerSize.x/2 + LengthCompensation)).ToVector2()
-            .OverlapRotatedBox(SlicerSize.NewX(SlicerSize.y+LengthCompensation).NewY(CheckBoxThickNess)
-                , (Quaternion.AngleAxis(-90, Vector3.forward) * transform.rotation).eulerAngles.z);
+        Vector3 pos, size;
+        Quaternion rot;
+        switch (slicedir)
+        {
+            case SLICEDIR.Left:
+                (pos,  size, rot) = m_characterProperty.GetSliceLeftData(transform);
+                break;
+            case SLICEDIR.Up:
+                (pos,  size, rot) = m_characterProperty.GetSliceUpData(transform);
+                break;
+            case SLICEDIR.Right:
+                (pos,  size, rot) = m_characterProperty.GetSliceRightData(transform);
+                break;
+            case SLICEDIR.Down:
+                (pos,  size, rot) = m_characterProperty.GetSliceDownData(transform);
+                break;
+            default:
+                (pos, size, rot) = (Vector3.zero, Vector3.zero, Quaternion.identity);
+                break;
+        }
+        Collider2D[] colliders = (pos).ToVector2().OverlapRotatedBox(size, rot.eulerAngles.z);
+
         foreach (var collider in colliders)
         {
-            SlicedHull slicedHull = collider.Slice((transform.position - transform.right 
-                * (SlicerSize.x/2 + LengthCompensation)), Quaternion.AngleAxis(-90, Vector3.forward) 
-                                                          * transform.rotation
-                                                            * Vector3.up);
+            SlicedHull slicedHull = collider.Slice(pos, rot * Vector3.up);
+            if(slicedHull == null) continue;
             GameObject gameObject = slicedHull.CreateUpperHull(collider,m_material);
             gameObject.GetComponent<Renderer>().material = m_material;
             gameObject.transform.CopyValue(collider.transform);
@@ -58,7 +79,7 @@ public class CutSlicer : MonoBehaviour
     private void CheckBox()
     {
         Collider2D[] colliders = transform.position.ToVector2()
-            .OverlapRotatedBox(SlicerSize, transform.rotation.eulerAngles.z);
+            .OverlapRotatedBox(m_characterProperty.SlicerProperty.RANGE_OF_DETECTION, transform.rotation.eulerAngles.z);
     }
 
 #if UNITY_EDITOR

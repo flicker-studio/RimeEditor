@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 
 public static class VectorMethod
 {
@@ -87,7 +88,6 @@ public static class VectorMethod
         int maxColliders = 50;
         Collider2D[] colliderBuffer = new Collider2D[maxColliders];
         int numColliders = Physics2D.OverlapBoxNonAlloc(center, size,angle, colliderBuffer);
-        
         Collider2D[] colliders = new Collider2D[numColliders];
         for (int i = 0; i < numColliders; i++)
         {
