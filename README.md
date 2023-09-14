@@ -63,6 +63,25 @@ ProJect-Moon development team.
   }
   ```
 
+------
+
+**The custom structs for this project are as follows:**
+
+Structs
+
+- Custom data structures to make the code clearer.
+  - TrianglePoints:  The triangle struct, which contains three Vector2 vertices, simulates a triangle and has a static extension method for it.
+  - InputProperty:  A GENERIC structure THAT stores the input, used to get and set the input, and can get the start input instant, the cancel input instant, and the input status.
+
+```mermaid
+graph TB
+A(Structs)
+B(TrianglePoints)
+C(InputProperty)
+A --> B
+A --> C
+```
+
 
 
 ------
@@ -72,7 +91,7 @@ ProJect-Moon development team.
 StaticExtensions
 
 - These static classes provide methods that other classes extend statically.
-  - Now service classes are: LayerMask, MotionState,Raycast, Rigidbody, Vector2 / Vector3,TrianglePoints,Mesh,Transform.
+  - Now service classes are: LayerMask, MotionState,Raycast, Rigidbody, Vector2 / Vector3,TrianglePoints,Mesh,Transform,CharacterProperty.
 
 
 
@@ -87,6 +106,7 @@ F(VectorMethod)
 G(TrianglePointsMethod)
 H(MeshMethod)
 I(TransformMethod)
+J(CharacterPropertyMethod)
 A --> B
 A --> C
 A --> D
@@ -95,6 +115,7 @@ A --> F
 A --> G
 A --> H
 A --> I
+A --> J
 ```
 
 Singleton
