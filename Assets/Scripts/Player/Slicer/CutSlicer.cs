@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using EzySlice;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 enum SLICEDIR
 {
@@ -20,8 +20,6 @@ public class CutSlicer : MonoBehaviour
 
     private PrefabFactory m_prefabFactory
         => Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
-
-    private Queue<GameObject> m_objQueue = new Queue<GameObject>();
     
     private void Start()
     {
@@ -34,56 +32,49 @@ public class CutSlicer : MonoBehaviour
         if (InputManager.Instance.GetDebuggerNum1Down)
         {
             ObjectPool.Instance.ReturnCacheGameObjects(m_prefabFactory.SLICE_OBJ);
-            CutSlice(SLICEDIR.Left);
-            CutSlice(SLICEDIR.Up);
-            CutSlice(SLICEDIR.Right);
-            CutSlice(SLICEDIR.Down);
+            CutSliceAll(CheckBox());
         }
 
         if (InputManager.Instance.GetDebuggerNum2Down)
         {
             CheckBox();
         }
-
-        if (InputManager.Instance.GetDebuggerNum3Down)
-        {
-            GameObject obj = ObjectPool.Instance.RequestCacheGameObject(m_prefabFactory.SLICE_OBJ);
-            m_objQueue.Enqueue(obj);
-        }
-        
-        if (InputManager.Instance.GetDebuggerNum4Down)
-        {
-            if(m_objQueue.Count <= 0) return;
-            GameObject obj = m_objQueue.Dequeue();
-            ObjectPool.Instance.ReturnCacheGameObject(obj);
-        }
     }
 
-    private void CutSlice(SLICEDIR slicedir)
+    private void CutSliceAll(List<Collider2D> targetColliderList)
     {
-        Vector3 pos, size;
-        Quaternion rot;
+        CutSlice(SLICEDIR.Left,targetColliderList);
+        CutSlice(SLICEDIR.Up,targetColliderList);
+        CutSlice(SLICEDIR.Right,targetColliderList);
+        CutSlice(SLICEDIR.Down,targetColliderList);
+    }
+
+    private (Vector3,Vector3,Quaternion) GetSliceData(SLICEDIR slicedir)
+    {
         switch (slicedir)
         {
             case SLICEDIR.Left:
-                (pos,  size, rot) = m_characterProperty.GetSliceLeftData(transform);
-                break;
+                return m_characterProperty.GetSliceLeftData(transform);
             case SLICEDIR.Up:
-                (pos,  size, rot) = m_characterProperty.GetSliceUpData(transform);
-                break;
+                return m_characterProperty.GetSliceUpData(transform);
             case SLICEDIR.Right:
-                (pos,  size, rot) = m_characterProperty.GetSliceRightData(transform);
-                break;
+                return m_characterProperty.GetSliceRightData(transform);
             case SLICEDIR.Down:
-                (pos,  size, rot) = m_characterProperty.GetSliceDownData(transform);
-                break;
+                return m_characterProperty.GetSliceDownData(transform);
             default:
-                (pos, size, rot) = (Vector3.zero, Vector3.zero, Quaternion.identity);
-                break;
+                return (Vector3.zero, Vector3.zero, Quaternion.identity);
         }
+    }
+    
+    private void CutSlice(SLICEDIR slicedir,List<Collider2D> targetColliderList)
+    {
+        Vector3 pos, size;
+        Quaternion rot;
+        (pos,size,rot) = GetSliceData(slicedir);
         Collider2D[] colliders = (pos).ToVector2().OverlapRotatedBox(size, rot.eulerAngles.z);
         foreach (var collider in colliders)
         {
+            if(!targetColliderList.Contains(collider)) continue;
             SlicedHull slicedHull = collider.Slice(pos, rot * Vector3.up);
             if(slicedHull == null) continue;
             GameObject obj = ObjectPool.Instance.RequestCacheGameObject(m_prefabFactory.SLICE_OBJ);
@@ -97,14 +88,20 @@ public class CutSlicer : MonoBehaviour
             if (ObjectPool.Instance.CompareObj(collider.gameObject, m_prefabFactory.SLICE_OBJ))
             {
                 ObjectPool.Instance.ReturnCacheGameObject(collider.gameObject);
+                targetColliderList.Remove(collider);
+            }
+            else
+            {
+                targetColliderList.Remove(collider);
             }
         }
     }
 
-    private void CheckBox()
+    private List<Collider2D> CheckBox()
     {
-        Collider2D[] colliders = transform.position.ToVector2()
-            .OverlapRotatedBox(m_characterProperty.SlicerProperty.RANGE_OF_DETECTION, transform.rotation.eulerAngles.z);
+        return transform.position.ToVector2()
+            .OverlapRotatedBox(m_characterProperty.SlicerProperty.RANGE_OF_DETECTION
+                , transform.rotation.eulerAngles.z).ToList();
     }
 
 #if UNITY_EDITOR
