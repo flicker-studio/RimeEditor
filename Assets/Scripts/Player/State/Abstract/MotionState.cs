@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class MotionState
 {
-    private InputController m_inputController;
+    private MotionInputController _mMotionInputController;
 
     private ComponentController m_componentController;
 
@@ -35,7 +35,7 @@ public abstract class MotionState
 
     protected Collider2D GetCollider => m_componentController.Collider;
 
-    protected InputData GetInputData => m_inputController.GetInputData;
+    protected MotionInputData GetMotionInputData => _mMotionInputController.GetMotionInputData;
 
     protected List<Vector2> GetRaycastGroundPoints => m_playerRaycasting.GetRaycastPointsGround;
     
@@ -56,7 +56,7 @@ public abstract class MotionState
 
     public MotionState(PlayerInformation information,CheckStatesCallBack checkStatesCallBack)
     {
-        m_inputController = information.InputController;
+        _mMotionInputController = information.MotionInputController;
         m_componentController = information.ComponentController;
         m_characterProperty = information.CharacterProperty;
         m_playerColliding = information.PlayerColliding;

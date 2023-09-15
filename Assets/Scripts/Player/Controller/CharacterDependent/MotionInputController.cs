@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct InputData
+public struct MotionInputData
 {
     public Vector2 MoveInput;
     public bool JumpInput;
@@ -20,19 +20,19 @@ public struct InputData
     public bool SliceInputUp => InputManager.Instance.GetSliceInputUp;
 }
 
-public class InputController
+public class MotionInputController
 {
-    private InputData m_inputData;
+    private MotionInputData m_MotionInputData;
 
-    public InputData GetInputData
+    public MotionInputData GetMotionInputData
     {
         get
         {
-            m_inputData.MoveInput = InputManager.Instance.GetMoveInput;
-            m_inputData.JumpInput = InputManager.Instance.GetJumpInput;
-            m_inputData.RunInput = InputManager.Instance.GetRunInput;
-            m_inputData.SliceInput = InputManager.Instance.GetSliceInput;
-            return m_inputData;
+            m_MotionInputData.MoveInput = InputManager.Instance.GetMoveInput;
+            m_MotionInputData.JumpInput = InputManager.Instance.GetJumpInput;
+            m_MotionInputData.RunInput = InputManager.Instance.GetRunInput;
+            m_MotionInputData.SliceInput = InputManager.Instance.GetSliceInput;
+            return m_MotionInputData;
         }
     }
 }

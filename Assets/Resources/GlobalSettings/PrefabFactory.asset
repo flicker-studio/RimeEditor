@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fbf1f7bf33e9b4f88184dc6fc346ad, type: 3}
+  m_Name: PrefabFactory
+  m_EditorClassIdentifier: 
+  SLICE_OBJ: {fileID: 4279734965208080537, guid: 7a665422660f80240872c1fa237dc54d, type: 3}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInformation
 {
-    public InputController InputController;
+    public MotionInputController MotionInputController;
 
     public ComponentController ComponentController;
 
@@ -16,7 +16,7 @@ public class PlayerInformation
 
     public PlayerInformation(Transform transform)
     {
-        InputController = new InputController();
+        MotionInputController = new MotionInputController();
         ComponentController = new ComponentController(transform);
         CharacterProperty = Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
         PlayerColliding = new PlayerColliding(transform,CharacterProperty);

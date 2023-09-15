@@ -14,11 +14,11 @@ public class AdditiveDefultState : AdditiveMotionState
     {
         bool checkCoyoteTimer = m_coyoteTimer.CheckTimer(playerInformation);
         bool checkJumpBufferTimer = m_jumpBufferTimer.CheckTimer(playerInformation);
-        if (!GetInputData.JumpInput)
+        if (!GetMotionInputData.JumpInput)
         {
             m_canJump = true;
         }
-        if (checkJumpBufferTimer && m_canJump || GetInputData.JumpInput 
+        if (checkJumpBufferTimer && m_canJump || GetMotionInputData.JumpInput 
             && m_canJump 
             && (GetIsGround || checkCoyoteTimer)
             && CheckSuitableSlope)

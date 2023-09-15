@@ -26,7 +26,7 @@ public class WalkAndRunState : MainMotionState
             m_slopetimer = 0f;
         }
         
-        if (GetInputData.MoveInput.x == 0)
+        if (GetMotionInputData.MoveInput.x == 0)
         {
             if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
             ChangeMoveState(MOTIONSTATEENUM.MainDefultState);
@@ -68,15 +68,15 @@ public class WalkAndRunState : MainMotionState
             magnification = Mathf.Clamp01(m_timer / GetMoveProperty.AIR_TIME_TO_MAXIMUN_SPEED);
         }
         
-        if (!GetInputData.RunInput)
+        if (!GetMotionInputData.RunInput)
         {
-            SetSpeed(GetInputData.MoveInput.x
+            SetSpeed(GetMotionInputData.MoveInput.x
                      * GetMoveProperty.ACCELERATION_CURVE.Evaluate(magnification)
                      * GetMoveProperty.PLAYER_MOVE_SPEED,magnification,angle);
         }
         else
         {
-            SetSpeed(GetInputData.MoveInput.x
+            SetSpeed(GetMotionInputData.MoveInput.x
                      * GetMoveProperty.ACCELERATION_CURVE.Evaluate(magnification)
                      * GetMoveProperty.PLAYER_MOVE_RUN_SPEED,magnification,angle);
         }

@@ -7,11 +7,11 @@ public class CoyoteTimer
     {
         bool check = m_timer < playerInformation.CharacterProperty.JumpProperty.COYOTE_TIME;
         
-        if (!playerInformation.PlayerColliding.IsGround && !playerInformation.InputController.GetInputData.JumpInput)
+        if (!playerInformation.PlayerColliding.IsGround && !playerInformation.MotionInputController.GetMotionInputData.JumpInput)
         {
             m_timer += Time.fixedDeltaTime;
         }
-        else if(playerInformation.PlayerColliding.IsGround && !playerInformation.InputController.GetInputData.JumpInput)
+        else if(playerInformation.PlayerColliding.IsGround && !playerInformation.MotionInputController.GetMotionInputData.JumpInput)
         {
             m_timer = 0;
         }

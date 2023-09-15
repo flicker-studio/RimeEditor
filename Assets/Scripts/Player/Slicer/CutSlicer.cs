@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using EzySlice;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,6 +17,11 @@ public class CutSlicer : MonoBehaviour
     
     private CharacterProperty m_characterProperty 
         => Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
+
+    private PrefabFactory m_prefabFactory
+        => Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
+
+    private Queue<GameObject> m_objQueue = new Queue<GameObject>();
     
     private void Start()
     {
@@ -27,6 +33,7 @@ public class CutSlicer : MonoBehaviour
         
         if (InputManager.Instance.GetDebuggerNum1Down)
         {
+            ObjectPool.Instance.ReturnCacheGameObjects(m_prefabFactory.SLICE_OBJ);
             CutSlice(SLICEDIR.Left);
             CutSlice(SLICEDIR.Up);
             CutSlice(SLICEDIR.Right);
@@ -36,6 +43,19 @@ public class CutSlicer : MonoBehaviour
         if (InputManager.Instance.GetDebuggerNum2Down)
         {
             CheckBox();
+        }
+
+        if (InputManager.Instance.GetDebuggerNum3Down)
+        {
+            GameObject obj = ObjectPool.Instance.RequestCacheGameObject(m_prefabFactory.SLICE_OBJ);
+            m_objQueue.Enqueue(obj);
+        }
+        
+        if (InputManager.Instance.GetDebuggerNum4Down)
+        {
+            if(m_objQueue.Count <= 0) return;
+            GameObject obj = m_objQueue.Dequeue();
+            ObjectPool.Instance.ReturnCacheGameObject(obj);
         }
     }
 
@@ -62,17 +82,22 @@ public class CutSlicer : MonoBehaviour
                 break;
         }
         Collider2D[] colliders = (pos).ToVector2().OverlapRotatedBox(size, rot.eulerAngles.z);
-
         foreach (var collider in colliders)
         {
             SlicedHull slicedHull = collider.Slice(pos, rot * Vector3.up);
             if(slicedHull == null) continue;
-            GameObject gameObject = slicedHull.CreateUpperHull(collider,m_material);
-            gameObject.GetComponent<Renderer>().material = m_material;
-            gameObject.transform.CopyValue(collider.transform);
-            PolygonCollider2D polygonCollider2D = gameObject.AddComponent<PolygonCollider2D>();
-            gameObject.GetComponent<MeshFilter>().mesh.CreatePolygonCollider(polygonCollider2D);
-            Destroy(collider.gameObject);
+            GameObject obj = ObjectPool.Instance.RequestCacheGameObject(m_prefabFactory.SLICE_OBJ);
+            obj.GetComponent<MeshFilter>().mesh = slicedHull.upperHull;
+            obj.transform.CopyValue(collider.transform);
+            Material[] shared = collider.GetComponent<MeshRenderer>().sharedMaterials;
+            Material[] newShared = new Material[shared.Length + 1];
+            System.Array.Copy(shared, newShared, shared.Length);
+            newShared[shared.Length] = m_material;
+            obj.GetComponent<Renderer>().sharedMaterials = newShared;
+            if (ObjectPool.Instance.CompareObj(collider.gameObject, m_prefabFactory.SLICE_OBJ))
+            {
+                ObjectPool.Instance.ReturnCacheGameObject(collider.gameObject);
+            }
         }
     }
 

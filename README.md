@@ -123,11 +123,13 @@ Singleton
 - A class that inherits from a singleton and acts as a manager for some underlying in-game functionality.
   - EventManager is the event manager responsible for managing all global events in the game.
   - InputManager is the input manager and is responsible for detecting all inputs from the player.
+  - ObjectPool is the global object pool for the game. It primarily manages the pool of instantiated objects from prefabricated ones.
 
 ```mermaid
 classDiagram
 Singleton <|-- EventManager
 Singleton <|-- InputManager
+Singleton <|-- ObjectPool
 ```
 
 MotionController
@@ -150,7 +152,7 @@ MotionStateFactory <|-- MainMotionStateFactory
 MotionStateFactory <|-- AdditiveMotionStateFactory
 MotionController o-- MotionStateMachine
 PlayerController *-- MotionController
-PlayerInformation *-- InputController
+PlayerInformation *-- MotionInputController
 PlayerInformation *-- ComponentController
 PlayerController *-- PlayerInformation
 PlayerInformation *-- CharacterProperty

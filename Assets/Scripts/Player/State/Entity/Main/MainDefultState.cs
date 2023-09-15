@@ -16,7 +16,7 @@ public class MainDefultState : MainMotionState
             ChangeMoveState(MOTIONSTATEENUM.SlideState);
             return;
         }
-        if (GetInputData.MoveInput.x != 0)
+        if (GetMotionInputData.MoveInput.x != 0)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
             ChangeMoveState(MOTIONSTATEENUM.WalkAndRunState);

@@ -18,7 +18,7 @@ public class JumpBufferTimer
             m_jumpBufferFlag = false;
         }
         
-        if (playerInformation.InputController.GetInputData.JumpInput 
+        if (playerInformation.MotionInputController.GetMotionInputData.JumpInput 
             && !m_lastMoveInput  && !playerInformation.PlayerColliding.IsGround && !m_jumpBufferFlag)
         {
             m_jumpBufferFlag = true;
@@ -33,7 +33,7 @@ public class JumpBufferTimer
         {
             m_timer = playerInformation.CharacterProperty.JumpProperty.JUMPING_BUFFER_TIME;
         }
-        m_lastMoveInput = playerInformation.InputController.GetInputData.JumpInput;
+        m_lastMoveInput = playerInformation.MotionInputController.GetMotionInputData.JumpInput;
 
         return checkJumpBuffer;
     }
