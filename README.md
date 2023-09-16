@@ -181,5 +181,16 @@ MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
 ```
 
+CutSlicer
 
+TODO:A temporary framework.
+
+- Slicer box implementation
+
+```mermaid
+classDiagram
+CutSlicer o-- CharacterProperty
+CutSlicer o-- PrefabFactory
+ObjectPool <.. CutSlicer
+```
 
