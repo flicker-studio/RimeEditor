@@ -31,9 +31,18 @@ ProJect-Moon development team.
     <p align="right">——2023.9.11</p>
 
 <h3 align="center">
-  <img src="Images/Textures/CreatPolygonCollider.png?raw=true" alt="ProJect-Moon Logo" width="1000">
+  <img src="Images/Textures/CreatPolygonCollider.png?raw=true" alt="CreatPolygonCollider" width="1000">
 </h3>
 
+- Very accurate slicer box, and the parameters are very concise, the code logic is good.
+
+  - Based on Ezy-Slice. A slicer box is generated based on some mathematical and linear algebra calculations, and the object pool framework is used. So far, slice is working very well.
+
+    <p align="right">——2023.9.16</p>
+
+    <h3 align="center">
+      <img src="Images/Textures/SlicerBox.png?raw=true" alt="SlicerBox" width="1000">
+    </h3>
 
 ## Project structure
 
