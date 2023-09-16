@@ -36,7 +36,7 @@ ProJect-Moon development team.
 
 - Very accurate slicer box, and the parameters are very concise, the code logic is good.
 
-  - Based on Ezy-Slice. A slicer box is generated based on some mathematical and linear algebra calculations, and the object pool framework is used. So far, slice is working very well.
+  - Based on Ezy-Slice. A slicer box is generated based on some mathematical and linear algebra calculations, and the object pool framework is used. So far, slicer box is working very well.
 
     <p align="right">——2023.9.16</p>
 
