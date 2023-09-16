@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using EzySlice;
@@ -26,7 +28,7 @@ public class CutSlicer : MonoBehaviour
         m_material = Resources.Load<Material>("Materials/Test");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         
         if (InputManager.Instance.GetDebuggerNum1Down)
@@ -43,10 +45,10 @@ public class CutSlicer : MonoBehaviour
 
     private void CutSliceAll(List<Collider2D> targetColliderList)
     {
-        CutSlice(SLICEDIR.Left,targetColliderList);
-        CutSlice(SLICEDIR.Up,targetColliderList);
-        CutSlice(SLICEDIR.Right,targetColliderList);
-        CutSlice(SLICEDIR.Down,targetColliderList);
+        foreach (SLICEDIR dir in Enum.GetValues(typeof(SLICEDIR)))
+        {
+            CutSlice(dir,targetColliderList);
+        }
     }
 
     private (Vector3,Vector3,Quaternion) GetSliceData(SLICEDIR slicedir)
@@ -71,20 +73,23 @@ public class CutSlicer : MonoBehaviour
         Vector3 pos, size;
         Quaternion rot;
         (pos,size,rot) = GetSliceData(slicedir);
-        Collider2D[] colliders = (pos).ToVector2().OverlapRotatedBox(size, rot.eulerAngles.z);
-        foreach (var collider in colliders)
+        List<Collider2D> tempList = new List<Collider2D>();
+        tempList.AddRange(targetColliderList);
+        foreach (var collider in tempList)
         {
             if(!targetColliderList.Contains(collider)) continue;
             SlicedHull slicedHull = collider.Slice(pos, rot * Vector3.up);
             if(slicedHull == null) continue;
             GameObject obj = ObjectPool.Instance.RequestCacheGameObject(m_prefabFactory.SLICE_OBJ);
             obj.GetComponent<MeshFilter>().mesh = slicedHull.upperHull;
+            obj.GetComponent<MeshFilter>().mesh.CreatePolygonCollider(obj.GetComponent<PolygonCollider2D>());
             obj.transform.CopyValue(collider.transform);
             Material[] shared = collider.GetComponent<MeshRenderer>().sharedMaterials;
             Material[] newShared = new Material[shared.Length + 1];
             System.Array.Copy(shared, newShared, shared.Length);
             newShared[shared.Length] = m_material;
             obj.GetComponent<Renderer>().sharedMaterials = newShared;
+            targetColliderList.Add(obj.GetComponent<Collider2D>());
             if (ObjectPool.Instance.CompareObj(collider.gameObject, m_prefabFactory.SLICE_OBJ))
             {
                 ObjectPool.Instance.ReturnCacheGameObject(collider.gameObject);

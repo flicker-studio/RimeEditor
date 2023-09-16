@@ -5,6 +5,8 @@ public class ObjectPool : Singleton<ObjectPool>
 {
     private GameObject m_cachePanel;
 
+    private Dictionary<string, GameObject> m_typeCachePanel = new Dictionary<string, GameObject>();
+
     private Dictionary<string, Queue<GameObject>> m_pool = new Dictionary<string, Queue<GameObject>>();
     
     private Dictionary<string, List<GameObject>> m_outPool = new Dictionary<string, List<GameObject>>();
@@ -59,12 +61,7 @@ public class ObjectPool : Singleton<ObjectPool>
     /// <param name="游戏对象"></param>
     public void ReturnCacheGameObject(GameObject obj)
     {
-        if (m_cachePanel == null)
-        {
-            m_cachePanel = new GameObject();
-            m_cachePanel.name = "CachePanel";
-            GameObject.DontDestroyOnLoad(m_cachePanel);
-        }
+        CheckCachePanel();
         
         if (obj == null)
         {
@@ -74,7 +71,8 @@ public class ObjectPool : Singleton<ObjectPool>
         string tag = CheckTag(obj);
         if (m_pool.ContainsKey(tag))
         {
-            obj.transform.parent = m_cachePanel.transform;
+            CheckTypeCachePanel(tag);
+            obj.transform.parent = m_typeCachePanel[tag].transform;
             obj.SetActive(false);
             m_pool[tag].Enqueue(obj);
             m_outPool[tag].Remove(obj);
@@ -87,12 +85,7 @@ public class ObjectPool : Singleton<ObjectPool>
     /// <param name="游戏对象"></param>
     public void ReturnCacheGameObjects(GameObject obj)
     {
-        if (m_cachePanel == null)
-        {
-            m_cachePanel = new GameObject();
-            m_cachePanel.name = "CachePanel";
-            GameObject.DontDestroyOnLoad(m_cachePanel);
-        }
+        CheckCachePanel();
         
         if (obj == null)
         {
@@ -102,11 +95,12 @@ public class ObjectPool : Singleton<ObjectPool>
         string tag = CheckTag(obj);
         if (m_pool.ContainsKey(tag))
         {
+            CheckTypeCachePanel(tag);
             List<GameObject> tempList = new List<GameObject>();
             tempList.AddRange(m_outPool[tag]);
             foreach (var tempObj in tempList)
             {
-                tempObj.transform.parent = m_cachePanel.transform;
+                tempObj.transform.parent = m_typeCachePanel[tag].transform;
                 tempObj.SetActive(false);
                 m_pool[tag].Enqueue(tempObj);
                 m_outPool[tag].Remove(tempObj);
@@ -131,5 +125,25 @@ public class ObjectPool : Singleton<ObjectPool>
     private string CheckTag(GameObject obj)
     {
         return obj.name.RemoveTrailingNumbers();
+    }
+
+    private void CheckTypeCachePanel(string tag)
+    {
+        if (!m_typeCachePanel.ContainsKey(tag))
+        {
+            m_typeCachePanel[tag] = new GameObject();
+            m_typeCachePanel[tag].name = tag + "CachePanel";
+            m_typeCachePanel[tag].transform.parent = m_cachePanel.transform;
+        }
+    }
+
+    private void CheckCachePanel()
+    {
+        if (m_cachePanel == null)
+        {
+            m_cachePanel = new GameObject();
+            m_cachePanel.name = "CachePanel";
+            GameObject.DontDestroyOnLoad(m_cachePanel);
+        }
     }
 }
