@@ -40,9 +40,9 @@ ProJect-Moon development team.
 
     <p align="right">——2023.9.16</p>
 
-    <h3 align="center">
-      <img src="Images/Textures/SlicerBox.png?raw=true" alt="SlicerBox" width="1000">
-    </h3>
+<h3 align="center">
+  <img src="Images/Textures/SlicerBox.png?raw=true" alt="SlicerBox" width="1000">
+</h3>
 
 ## Project structure
 
