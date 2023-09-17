@@ -84,11 +84,7 @@ public class CutSlicer : MonoBehaviour
             obj.GetComponent<MeshFilter>().mesh = slicedHull.upperHull;
             obj.GetComponent<MeshFilter>().mesh.CreatePolygonCollider(obj.GetComponent<PolygonCollider2D>());
             obj.transform.CopyValue(collider.transform);
-            Material[] shared = collider.GetComponent<MeshRenderer>().sharedMaterials;
-            Material[] newShared = new Material[shared.Length + 1];
-            System.Array.Copy(shared, newShared, shared.Length);
-            newShared[shared.Length] = m_material;
-            obj.GetComponent<Renderer>().sharedMaterials = newShared;
+            AddSliceMaterial(obj, collider.gameObject,m_material);
             targetColliderList.Add(obj.GetComponent<Collider2D>());
             if (ObjectPool.Instance.CompareObj(collider.gameObject, m_prefabFactory.SLICE_OBJ))
             {
@@ -107,6 +103,15 @@ public class CutSlicer : MonoBehaviour
         return transform.position.ToVector2()
             .OverlapRotatedBox(m_characterProperty.SlicerProperty.RANGE_OF_DETECTION
                 , transform.rotation.eulerAngles.z).ToList();
+    }
+
+    private void AddSliceMaterial(GameObject obj,GameObject target,Material material)
+    {
+        Material[] shared = target.GetComponent<MeshRenderer>().sharedMaterials;
+        Material[] newShared = new Material[shared.Length + 1];
+        System.Array.Copy(shared, newShared, shared.Length);
+        newShared[shared.Length] = material;
+        obj.GetComponent<Renderer>().sharedMaterials = newShared;
     }
 
 #if UNITY_EDITOR
