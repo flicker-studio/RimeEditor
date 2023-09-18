@@ -19,6 +19,11 @@ public class MotionController
         m_playerInformation = playerInformation;
         m_checkGlobalStatesCallBack = CheckGlobalStates;
     }
+
+    ~MotionController()
+    {
+        EventCenterManager.Instance.RemoveEventListener<MOTIONSTATEENUM>(GameEvent.ChangeMoveState,ChangeMotionState);
+    }
     
     public void Motion(PlayerInformation playerInformation)
     {

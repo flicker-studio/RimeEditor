@@ -30,7 +30,7 @@ public class ObjectPool : Singleton<ObjectPool>
     /// </summary>
     /// <param name="预制体对象"></param>
     /// <returns>游戏对象</returns>
-    public GameObject RequestCacheGameObject(GameObject prefab)
+    public GameObject OnTake(GameObject prefab)
     {
         string tag = prefab.name;
         if (!m_pool.ContainsKey(tag))
@@ -51,6 +51,7 @@ public class ObjectPool : Singleton<ObjectPool>
         {
             obj = GameObject.Instantiate(prefab);
             obj.name = prefab.name + m_uniqueId++;
+            GameObject.DontDestroyOnLoad(obj);
         }
         m_outPool[tag].Add(obj);
         return obj;
@@ -59,7 +60,7 @@ public class ObjectPool : Singleton<ObjectPool>
     /// 归还对象池对象
     /// </summary>
     /// <param name="游戏对象"></param>
-    public void ReturnCacheGameObject(GameObject obj)
+    public void OnRelease(GameObject obj)
     {
         CheckCachePanel();
         
