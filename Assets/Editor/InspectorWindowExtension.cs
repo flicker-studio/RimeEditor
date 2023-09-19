@@ -19,6 +19,6 @@ public class PolygonCollider2DEditor : Editor
     void CreateColliderAndSetLayer(PolygonCollider2D collider)
     {
         target.GetComponent<MeshFilter>().sharedMesh.CreatePolygonCollider(collider);
-        target.GameObject().layer = GlobalSetting.LayerMasks.Ground;
+        target.GameObject().layer = GlobalSetting.LayerMasks.GROUND;
     }
 }

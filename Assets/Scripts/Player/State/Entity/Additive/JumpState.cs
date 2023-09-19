@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class JumpState : PlayerAdditiveMotionState
 {
+    #region GetProperty
 
+    private Rigidbody2D GetRigidbody => m_playerInformation.GetRigidbody;
+
+    private CharacterProperty.PlayerJumpProperty GetJumpProperty => m_playerInformation.GetJumpProperty;
+
+    private bool GetIsCeiling => m_playerInformation.GetIsCeiling;
+
+    private MotionInputData GetMotionInputData => m_playerInformation.GetMotionInputData;
+
+    #endregion
+    
     public override void Motion(BaseInformation information)
     {
         m_endTimmer += Time.fixedDeltaTime;

@@ -2,11 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMainDefultState : MainPlayerMotionState
+public class MainDefultState : PlayerMainMotionState
 {
     private float timmer = 0;
 
     private float m_oriSpeed;
+
+    #region GetProperty
+
+    private bool CheckSuitableSlope => m_playerInformation.CheckSuitableSlope;
+
+    private Rigidbody2D GetRigidbody => m_playerInformation.GetRigidbody;
+
+    private MotionInputData GetMotionInputData => m_playerInformation.GetMotionInputData;
+
+    private CharacterProperty.PlayerMoveProperty GetMoveProperty => m_playerInformation.GetMoveProperty;
+
+    private bool GetIsGround => m_playerInformation.GetIsGround;
+    #endregion
     
     public override void Motion(BaseInformation information)
     {
@@ -51,7 +64,7 @@ public class PlayerMainDefultState : MainPlayerMotionState
     }
 
 
-    public PlayerMainDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+    public MainDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
         m_oriSpeed = GetRigidbody.velocity.x;
     }

@@ -1,16 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMotionStateFactory : MotionStateFactory
+public class MainMotionStateFactory : PlayerMotionStateFactory
 {
-    public override PlayerMotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
+    public override MotionState CreateMotion(Enum motionStateEnum, BaseInformation information,
         MotionCallBack motionCallBack)
     {
         switch (motionStateEnum)
         {
             case MOTIONSTATEENUM.MainDefultState:
-                return new PlayerMainDefultState(information, motionCallBack);
+                return new MainDefultState(information, motionCallBack);
             case MOTIONSTATEENUM.WalkAndRunState:
                 return new WalkAndRunState(information, motionCallBack);
             case MOTIONSTATEENUM.SlideState:

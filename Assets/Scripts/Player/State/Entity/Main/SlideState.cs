@@ -2,9 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlideState : MainPlayerMotionState
+public class SlideState : PlayerMainMotionState
 {
     private float m_timer = 0f;
+
+    #region GetProperty
+
+    private bool CheckSuitableSlope => m_playerInformation.CheckSuitableSlope;
+
+    private Rigidbody2D GetRigidbody => m_playerInformation.GetRigidbody;
+
+    private CharacterProperty.PlayerMoveProperty GetMoveProperty => m_playerInformation.GetMoveProperty;
+
+    #endregion
     public SlideState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }

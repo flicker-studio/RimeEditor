@@ -8,14 +8,14 @@ public class MotionController
 {
     private List<MotionStateMachine> m_motionStateMachines;
 
-    private BaseInformation m_baseInformation;
+    private BaseInformation m_information;
 
     private MotionCallBack m_motionCallBack;
 
-    public MotionController(BaseInformation baseInformation)
+    public MotionController(BaseInformation information)
     {
         m_motionStateMachines = new List<MotionStateMachine>();
-        m_baseInformation = baseInformation;
+        m_information = information;
         m_motionCallBack = new MotionCallBack
         {
             CheckGlobalStatesCallBack = CheckGlobalStates,
@@ -44,6 +44,18 @@ public class MotionController
             ChangeMotionStateInAdditiveMachine(motionStateEnum);
         }
     }
+    
+    public void ChangeMotionState(bool isMain,MOTIONSTATEENUM motionStateEnum)
+    {
+        if (isMain)
+        {
+            ChangeMotionStateInMainMachine(motionStateEnum);
+        }
+        else
+        {
+            ChangeMotionStateInAdditiveMachine(motionStateEnum);
+        }
+    }
 
     private void ChangeMotionStateInMainMachine(MOTIONSTATEENUM motionStateEnum)
     {
@@ -53,7 +65,7 @@ public class MotionController
             motionMachine = new MainMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionStateEnum,m_baseInformation);
+        motionMachine.ChangeMotionState(motionStateEnum,m_information);
     }
 
     private void ChangeMotionStateInAdditiveMachine(MOTIONSTATEENUM motionStateEnum)
@@ -64,7 +76,7 @@ public class MotionController
             motionMachine = new AddtiveMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionStateEnum,m_baseInformation);
+        motionMachine.ChangeMotionState(motionStateEnum,m_information);
     }
 
     private List<Type> CheckGlobalStates()

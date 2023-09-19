@@ -2,13 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkAndRunState : MainPlayerMotionState
+public class WalkAndRunState : PlayerMainMotionState
 {
     private float m_timer = 0f;
 
     private float m_slopetimer = 0f;
-    
 
+    #region GetProperty
+
+    private bool CheckSuitableSlope => m_playerInformation.CheckSuitableSlope;
+
+    private CharacterProperty.PlayerMoveProperty GetMoveProperty => m_playerInformation.GetMoveProperty;
+
+    private bool GetIsGround => m_playerInformation.GetIsGround;
+
+    private Rigidbody2D GetRigidbody => m_playerInformation.GetRigidbody;
+
+    private MotionInputData GetMotionInputData => m_playerInformation.GetMotionInputData;
+
+    #endregion
+    
     public override void Motion(BaseInformation playerInformation)
     {
         if (!CheckSuitableSlope)

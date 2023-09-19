@@ -9,21 +9,21 @@ public class AddtiveMotionStateMachine : MotionStateMachine
     {
         if (playerMoveState == MOTIONSTATEENUM.None)
         {
-            List<PlayerMotionState> tempList = new List<PlayerMotionState>();
-            tempList.AddRange(m_playerMoveStates);
+            List<MotionState> tempList = new List<MotionState>();
+            tempList.AddRange(m_motionStates);
             foreach (var state in tempList)
             {
-                if ((state as PlayerAdditiveMotionState).IsEnd)
+                if ((state as AdditiveMotionState).IsEnd)
                 {
-                    m_playerMoveStates.Remove(state);
+                    m_motionStates.Remove(state);
                 }
             }
             return;
         }
-        PlayerMotionState playerMotionState = CreateMotionState(playerMoveState, information);
+        MotionState motionState = CreateMotionState(playerMoveState, information);
         
-        if (m_playerMoveStates.Contains(playerMotionState)) return;
-        m_playerMoveStates.Add(playerMotionState);
+        if (m_motionStates.Contains(motionState)) return;
+        m_motionStates.Add(motionState);
     }
 
 

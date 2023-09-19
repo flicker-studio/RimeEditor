@@ -5,7 +5,7 @@ public delegate List<Type> CheckStatesCallBack();
 
 public delegate List<Type> CheckGlobalStatesCallBack();
 
-public delegate void ChangeMotionStateCallBack(MOTIONSTATEENUM motionstateenum);
+public delegate void ChangeMotionStateCallBack(MOTIONSTATEENUM motionStateEnum);
 
 public class MotionCallBack
 {

@@ -7,8 +7,8 @@ public class MainMotionStateMachine : MotionStateMachine
 {
     public override void ChangeMotionState(MOTIONSTATEENUM playerMoveState,BaseInformation baseInformation)
     {
-        m_playerMoveStates.Clear();
-        m_playerMoveStates.Add(CreateMotionState(playerMoveState,baseInformation));
+        m_motionStates.Clear();
+        m_motionStates.Add(CreateMotionState(playerMoveState,baseInformation));
     }
 
 

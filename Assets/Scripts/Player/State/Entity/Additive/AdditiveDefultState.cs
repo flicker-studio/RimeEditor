@@ -3,12 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAdditiveDefultState : PlayerAdditiveMotionState
+public class AdditiveDefultState : PlayerAdditiveMotionState
 {
     private bool m_canJump = true;
 
     private CoyoteTimer m_coyoteTimer;
     private JumpBufferTimer m_jumpBufferTimer;
+
+    #region GetProperty
+
+    private MotionInputData GetMotionInputData => m_playerInformation.GetMotionInputData;
+
+    private bool GetIsGround => m_playerInformation.GetIsGround;
+
+    private bool CheckSuitableSlope => m_playerInformation.CheckSuitableSlope;
+
+    #endregion
     
     public override void Motion(BaseInformation information)
     {
@@ -29,7 +39,7 @@ public class PlayerAdditiveDefultState : PlayerAdditiveMotionState
         }
     }
 
-    public PlayerAdditiveDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+    public AdditiveDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
         m_coyoteTimer = new CoyoteTimer();
         m_jumpBufferTimer = new JumpBufferTimer();

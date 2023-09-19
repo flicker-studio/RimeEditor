@@ -2,19 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerAdditiveMotionState : PlayerMotionState
+public abstract class PlayerAdditiveMotionState : AdditiveMotionState
 {
-    protected float m_endTimmer = 0;
+    protected PlayerInformation m_playerInformation;
+    public PlayerAdditiveMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+    {
+        m_playerInformation = information as PlayerInformation;
+    }
 
-    public bool IsEnd = false;
-    
-    protected void RemoveState()
+    protected override void RemoveState()
     {
         IsEnd = true;
         ChangeMotionState(MOTIONSTATEENUM.None);
-    }
-
-    protected PlayerAdditiveMotionState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
-    {
     }
 }

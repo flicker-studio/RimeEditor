@@ -8,8 +8,8 @@ public static class MotionStateMethod
         | MOTIONSTATEENUM.SlideState;
 
     private static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.AdditiveDefultState |
-                                                  MOTIONSTATEENUM.PerpendicularGroundState | MOTIONSTATEENUM.JumpState |
-                                                  MOTIONSTATEENUM.None;
+                                                         MOTIONSTATEENUM.PerpendicularGroundState | MOTIONSTATEENUM.JumpState |
+                                                         MOTIONSTATEENUM.None;
     
     public static bool CheckMotionIsMain(this MOTIONSTATEENUM motionStateEnum)
     {

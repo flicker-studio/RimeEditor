@@ -143,19 +143,38 @@ Singleton <|-- ObjectPool
 
 MotionController
 
-- A role controller designed with state mode and factory mode is used.
+- A state controller designed with state mode and factory mode is used.
   - The state machine is MotionStateMachine
   - The state is MotionState
   - The factory is MotionStateFactory
-  - The data is PlayerInformation
+  - The data is BaseInformation
+
+```mermaid
+classDiagram
+MotionController o-- MotionStateMachine
+MotionController *-- BaseInformation
+MotionController *-- MotionCallBack
+MotionStateMachine <|-- AddtiveMotionStateMachine
+MotionStateMachine <|-- MainMotionStateMachine
+MotionStateMachine *-- MotionState
+MotionStateMachine *-- MotionStateFactory
+MotionState <|-- AdditiveMotionState
+MotionState <|-- MainMotionState
+MotionStateFactory <|-- AddtiveMotionStateFactory
+MotionStateFactory <|-- MainMotionStateFactory
+```
+
+
+
+PlayerMotionController
 
 ```mermaid
 classDiagram
 MotionStateMachine <|-- MainMotionStateMachine
 MotionStateMachine <|-- AdditiveMotionStateMachine
-MotionStateMachine *-- PlayerMotionState
+MotionStateMachine *-- MotionState
 MotionStateMachine *-- MotionStateFactory
-MotionStateFactory ..> PlayerMotionState
+MotionStateFactory ..> MotionState
 MotionStateFactory ..> MotionStateEnum
 MotionStateFactory <|-- MainMotionStateFactory
 MotionStateFactory <|-- AdditiveMotionStateFactory
@@ -179,6 +198,7 @@ PlayerAdditiveMotionState <|-- SliceOffState
 PlayerAdditiveMotionState <|-- SliceOnState
 PlayerMotionState <|-- PlayerMainMotionState
 PlayerMotionState <|-- PlayerAdditiveMotionState
+MotionState <|-- PlayerMotionState
 ```
 
 CutSlicer
