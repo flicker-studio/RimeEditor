@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class MainMotionStateMachine : MotionStateMachine
 {
-    public override void ChangeMotionState(MOTIONSTATEENUM playerMoveState,PlayerInformation playerInformation)
+    public override void ChangeMotionState(MOTIONSTATEENUM playerMoveState,BaseInformation baseInformation)
     {
         m_playerMoveStates.Clear();
-        m_playerMoveStates.Add(CreateMotionState(playerMoveState,playerInformation));
+        m_playerMoveStates.Add(CreateMotionState(playerMoveState,baseInformation));
     }
 
 
-    public MainMotionStateMachine(CheckGlobalStatesCallBack checkGlobalStatesCallBack) : base(checkGlobalStatesCallBack)
+    public MainMotionStateMachine(MotionCallBack motionCallBack): base(motionCallBack)
     {
         m_motionStateFactory = new MainMotionStateFactory();
     }

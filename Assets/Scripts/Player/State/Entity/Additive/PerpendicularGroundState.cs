@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PerpendicularGroundState : AdditiveMotionState
+public class PerpendicularGroundState : PlayerAdditiveMotionState
 {
     private List<Vector2> m_raycastPoints;
     
 
-    public override void Motion(PlayerInformation playerInformation)
+    public override void Motion(BaseInformation information)
     {
         if (GetIsGround)
         {
@@ -17,7 +17,7 @@ public class PerpendicularGroundState : AdditiveMotionState
         }
     }
 
-    public PerpendicularGroundState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
+    public PerpendicularGroundState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }
 }

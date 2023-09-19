@@ -1,47 +1,25 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-public delegate List<Type> CheckStatesCallBack(bool isGlobal);
+
 public abstract class MotionStateMachine
 {
-    
-    protected List<MotionState> m_playerMoveStates;
-    
-    protected CheckStatesCallBack m_checkStatesCallBack;
+    protected List<PlayerMotionState> m_playerMoveStates;
 
-    protected CheckGlobalStatesCallBack m_checkGlobalStatesCallBack;
+    protected MotionCallBack m_motionCallBack;
 
     protected MotionStateFactory m_motionStateFactory;
 
-    public void Motion(PlayerInformation playerInformation)
+    public void Motion(BaseInformation baseInformation)
     {
-        List<MotionState> tempList = new List<MotionState>();
+        List<PlayerMotionState> tempList = new List<PlayerMotionState>();
         tempList.AddRange(m_playerMoveStates);
         foreach (var motionState in tempList)
         {
-            motionState.Motion(playerInformation);
+            motionState.Motion(baseInformation);
         }
     }
 
-    public abstract void ChangeMotionState(MOTIONSTATEENUM playerMoveState,PlayerInformation playerInformation);
-
-    protected List<Type> CheckStates(bool isGlobal)
-    {
-        if (isGlobal)
-        {
-            return m_checkGlobalStatesCallBack?.Invoke();
-        }
-        else
-        {
-            List<Type> tempList = new List<Type>();
-            foreach (var motionState in m_playerMoveStates)
-            {
-                tempList.Add(motionState.GetType());
-            }
-            return tempList;
-        }
-    }
+    public abstract void ChangeMotionState(MOTIONSTATEENUM playerMoveState,BaseInformation baseInformation);
     
     public List<Type> CheckStates()
     {
@@ -53,15 +31,15 @@ public abstract class MotionStateMachine
         return tempList;
     }
 
-    protected MotionState CreateMotionState(MOTIONSTATEENUM motionStateEnum, PlayerInformation playerInformation)
+    protected PlayerMotionState CreateMotionState(MOTIONSTATEENUM motionStateEnum, BaseInformation information)
     {
-        return m_motionStateFactory.CreateMotion(motionStateEnum,playerInformation,m_checkStatesCallBack);
+        return m_motionStateFactory.CreateMotion(motionStateEnum,information, m_motionCallBack);
     }
 
-    public MotionStateMachine(CheckGlobalStatesCallBack checkGlobalStatesCallBack)
+    public MotionStateMachine(MotionCallBack motionCallBack)
     {
-        m_playerMoveStates = new List<MotionState>();
-        m_checkStatesCallBack = CheckStates;
-        m_checkGlobalStatesCallBack = checkGlobalStatesCallBack;
+        m_playerMoveStates = new List<PlayerMotionState>();
+        m_motionCallBack = motionCallBack;
+        m_motionCallBack.CheckStatesCallBack = CheckStates;
     }
 }

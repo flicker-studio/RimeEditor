@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;using System.Security.Cryptography;
 using UnityEngine;
 
-public abstract class MotionState
+public abstract class PlayerMotionState : MotionState
 {
-    private MotionInputController _mMotionInputController;
+    private MotionInputController m_MotionInputController;
 
     private ComponentController m_componentController;
 
@@ -15,7 +14,7 @@ public abstract class MotionState
 
     private PlayerRaycasting m_playerRaycasting;
 
-    private CheckStatesCallBack m_checkStatesCallBack;
+    private MotionCallBack m_motionCallBack;
 
     #region GetProperty
 
@@ -35,7 +34,7 @@ public abstract class MotionState
 
     protected Collider2D GetCollider => m_componentController.Collider;
 
-    protected MotionInputData GetMotionInputData => _mMotionInputController.GetMotionInputData;
+    protected MotionInputData GetMotionInputData => m_MotionInputController.GetMotionInputData;
 
     protected List<Vector2> GetRaycastGroundPoints => m_playerRaycasting.GetRaycastPointsGround;
     
@@ -45,29 +44,23 @@ public abstract class MotionState
 
     protected bool GetIsCeiling => m_playerColliding.IsCeiling;
 
-    protected List<Type> CheckStates => m_checkStatesCallBack?.Invoke(false);
+    protected List<Type> CheckStates => m_motionCallBack.CheckStatesCallBack?.Invoke();
     
-    protected List<Type> CheckGlobalStates => m_checkStatesCallBack?.Invoke(true);
+    protected List<Type> CheckGlobalStates => m_motionCallBack.CheckGlobalStatesCallBack?.Invoke();
 
     protected bool CheckSuitableSlope => GetRaycastCheckPoints.CalculateBestFitLine().GetOrthogonalVector().y
                                            > Mathf.Cos(GetPerpendicularOnGround.CHECK_POINT_ANGLE * Mathf.Deg2Rad);
 
     #endregion
 
-    public MotionState(PlayerInformation information,CheckStatesCallBack checkStatesCallBack)
+    public PlayerMotionState(BaseInformation information,MotionCallBack motionCallBack) : base(information,motionCallBack)
     {
-        _mMotionInputController = information.MotionInputController;
-        m_componentController = information.ComponentController;
-        m_characterProperty = information.CharacterProperty;
-        m_playerColliding = information.PlayerColliding;
-        m_playerRaycasting = information.PlayerRaycasting;
-        m_checkStatesCallBack = checkStatesCallBack;
-    }
-
-    public abstract void Motion(PlayerInformation playerInformation);
-    
-    protected void ChangeMoveState(MOTIONSTATEENUM motionStateEnum)
-    {
-        EventCenterManager.Instance.EventTrigger<MOTIONSTATEENUM>(GameEvent.ChangeMoveState,motionStateEnum);
+        PlayerInformation playerInformation = information as PlayerInformation;
+        m_MotionInputController = playerInformation.MotionInputController;
+        m_componentController = playerInformation.ComponentController;
+        m_characterProperty = playerInformation.CharacterProperty;
+        m_playerColliding = playerInformation.PlayerColliding;
+        m_playerRaycasting = playerInformation.PlayerRaycasting;
+        m_motionCallBack = motionCallBack;
     }
 }

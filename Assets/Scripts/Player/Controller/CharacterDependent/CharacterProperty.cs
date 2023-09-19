@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(menuName = "CharacterProperty",order = 1,fileName = "CharacterProperty")]
+[CreateAssetMenu(menuName = "CustomProperty/CharacterProperty",order = 3,fileName = "CharacterProperty")]
 public class CharacterProperty : ScriptableObject
 {
     [FormerlySerializedAs("m_playerMoveProperty")] public PlayerMoveProperty MoveProperty;
@@ -15,8 +15,6 @@ public class CharacterProperty : ScriptableObject
     
     [FormerlySerializedAs("perpendicularOnGround")] [FormerlySerializedAs("OrthogonalOnGround")] 
     public PlayerPerpendicularOnGround PerpendicularOnGround;
-
-    public SlicerPropertyPanel SlicerProperty;
     
     [Serializable]
     public struct PlayerMoveProperty
@@ -106,14 +104,4 @@ public class CharacterProperty : ScriptableObject
         public Vector2 START_POINT_COMPENSATION;
     }
     
-    [Serializable]
-    public struct SlicerPropertyPanel
-    {
-        [CustomLabel("裁切器范围")]
-        public Vector3 RANGE_OF_DETECTION;
-        [CustomLabel("切片厚度"),Range(0,1)]
-        public float SLICE_THICKNESS;
-        [CustomLabel("间距补偿"),Range(-1,1)]
-        public float SLICE_SPACING_COMPENSATION;
-    }
 }

@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class AdditiveMotionStateFactory : MotionStateFactory
 {
-    public override MotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, PlayerInformation playerInformation,
-        CheckStatesCallBack checkStatesCallBack)
+    public override PlayerMotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
+        MotionCallBack motionCallBack)
     {
         switch (motionStateEnum)
         {
             case MOTIONSTATEENUM.AdditiveDefultState:
-                return new AdditiveDefultState(playerInformation, checkStatesCallBack);
+                return new PlayerAdditiveDefultState(information,motionCallBack);
             case MOTIONSTATEENUM.JumpState:
-                return new JumpState(playerInformation, checkStatesCallBack);
+                return new JumpState(information, motionCallBack);
             case MOTIONSTATEENUM.PerpendicularGroundState:
-                return new PerpendicularGroundState(playerInformation, checkStatesCallBack);
+                return new PerpendicularGroundState(information, motionCallBack);
             default:
                 return null;
         }

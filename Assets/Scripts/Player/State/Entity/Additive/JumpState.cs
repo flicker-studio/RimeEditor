@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpState : AdditiveMotionState
+public class JumpState : PlayerAdditiveMotionState
 {
 
-    public override void Motion(PlayerInformation playerInformation)
+    public override void Motion(BaseInformation information)
     {
         m_endTimmer += Time.fixedDeltaTime;
         GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetJumpProperty.PLAYER_MAXIMAL_JUMP_SPEED *
@@ -19,7 +19,7 @@ public class JumpState : AdditiveMotionState
         }
     }
 
-    public JumpState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
+    public JumpState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }
 }

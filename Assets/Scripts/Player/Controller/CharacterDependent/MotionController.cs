@@ -3,35 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-public delegate List<Type> CheckGlobalStatesCallBack();
+
 public class MotionController
 {
     private List<MotionStateMachine> m_motionStateMachines;
 
-    private PlayerInformation m_playerInformation;
+    private BaseInformation m_baseInformation;
 
-    private CheckGlobalStatesCallBack m_checkGlobalStatesCallBack;
+    private MotionCallBack m_motionCallBack;
 
-    public MotionController(PlayerInformation playerInformation)
+    public MotionController(BaseInformation baseInformation)
     {
         m_motionStateMachines = new List<MotionStateMachine>();
-        EventCenterManager.Instance.AddEventListener<MOTIONSTATEENUM>(GameEvent.ChangeMoveState,ChangeMotionState);
-        m_playerInformation = playerInformation;
-        m_checkGlobalStatesCallBack = CheckGlobalStates;
-    }
-
-    ~MotionController()
-    {
-        EventCenterManager.Instance.RemoveEventListener<MOTIONSTATEENUM>(GameEvent.ChangeMoveState,ChangeMotionState);
+        m_baseInformation = baseInformation;
+        m_motionCallBack = new MotionCallBack
+        {
+            CheckGlobalStatesCallBack = CheckGlobalStates,
+            ChangeMotionStateCallBack = ChangeMotionState
+        };
     }
     
-    public void Motion(PlayerInformation playerInformation)
+    public void Motion(BaseInformation baseInformation)
     {
         List<MotionStateMachine> tempList = new List<MotionStateMachine>();
         tempList.AddRange(m_motionStateMachines);
         foreach (var motionStateMachine in tempList)
         {
-            motionStateMachine.Motion(playerInformation);
+            motionStateMachine.Motion(baseInformation);
         }
     }
 
@@ -52,10 +50,10 @@ public class MotionController
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is MainMotionStateMachine);   
         if (motionMachine == null)
         {
-            motionMachine = new MainMotionStateMachine(m_checkGlobalStatesCallBack);
+            motionMachine = new MainMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionStateEnum,m_playerInformation);
+        motionMachine.ChangeMotionState(motionStateEnum,m_baseInformation);
     }
 
     private void ChangeMotionStateInAdditiveMachine(MOTIONSTATEENUM motionStateEnum)
@@ -63,10 +61,10 @@ public class MotionController
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is AddtiveMotionStateMachine);   
         if (motionMachine == null)
         {
-            motionMachine = new AddtiveMotionStateMachine(m_checkGlobalStatesCallBack);
+            motionMachine = new AddtiveMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionStateEnum,m_playerInformation);
+        motionMachine.ChangeMotionState(motionStateEnum,m_baseInformation);
     }
 
     private List<Type> CheckGlobalStates()

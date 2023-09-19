@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainDefultState : MainMotionState
+public class PlayerMainDefultState : MainPlayerMotionState
 {
     private float timmer = 0;
 
     private float m_oriSpeed;
     
-    public override void Motion(PlayerInformation playerInformation)
+    public override void Motion(BaseInformation information)
     {
         if (!CheckSuitableSlope)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMoveState(MOTIONSTATEENUM.SlideState);
+            ChangeMotionState(MOTIONSTATEENUM.SlideState);
             return;
         }
         if (GetMotionInputData.MoveInput.x != 0)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMoveState(MOTIONSTATEENUM.WalkAndRunState);
+            ChangeMotionState(MOTIONSTATEENUM.WalkAndRunState);
             return;
         }
         timmer += Time.fixedDeltaTime;
@@ -51,7 +51,7 @@ public class MainDefultState : MainMotionState
     }
 
 
-    public MainDefultState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
+    public PlayerMainDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
         m_oriSpeed = GetRigidbody.velocity.x;
     }

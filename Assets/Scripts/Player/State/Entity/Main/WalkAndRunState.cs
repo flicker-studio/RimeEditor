@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkAndRunState : MainMotionState
+public class WalkAndRunState : MainPlayerMotionState
 {
     private float m_timer = 0f;
 
     private float m_slopetimer = 0f;
     
 
-    public override void Motion(PlayerInformation playerInformation)
+    public override void Motion(BaseInformation playerInformation)
     {
         if (!CheckSuitableSlope)
         {
@@ -17,7 +17,7 @@ public class WalkAndRunState : MainMotionState
             if (m_slopetimer >= GetMoveProperty.SLOPE_START_TIME_COMPENSATE)
             {
                 if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-                ChangeMoveState(MOTIONSTATEENUM.SlideState);
+                ChangeMotionState(MOTIONSTATEENUM.SlideState);
                 return;
             }
         }
@@ -29,7 +29,7 @@ public class WalkAndRunState : MainMotionState
         if (GetMotionInputData.MoveInput.x == 0)
         {
             if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-            ChangeMoveState(MOTIONSTATEENUM.MainDefultState);
+            ChangeMotionState(MOTIONSTATEENUM.MainDefultState);
             return;
         }
 
@@ -97,7 +97,8 @@ public class WalkAndRunState : MainMotionState
         }
     }
 
-    public WalkAndRunState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
+    public WalkAndRunState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }
+    
 }

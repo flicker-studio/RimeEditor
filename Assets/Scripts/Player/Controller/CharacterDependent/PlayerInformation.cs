@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInformation
+public class PlayerInformation : BaseInformation
 {
     public MotionInputController MotionInputController;
 

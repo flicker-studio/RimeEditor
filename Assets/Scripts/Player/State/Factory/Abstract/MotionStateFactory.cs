@@ -15,6 +15,6 @@ public enum MOTIONSTATEENUM
 
 public abstract class MotionStateFactory
 {
-    public abstract MotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, PlayerInformation playerInformation,
-        CheckStatesCallBack checkStatesCallBack);
+    public abstract PlayerMotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
+        MotionCallBack motionCallBack);
 }

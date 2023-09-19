@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlideState : MainMotionState
+public class SlideState : MainPlayerMotionState
 {
     private float m_timer = 0f;
-    public SlideState(PlayerInformation information, CheckStatesCallBack checkStatesCallBack) : base(information, checkStatesCallBack)
+    public SlideState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }
 
-    public override void Motion(PlayerInformation playerInformation)
+    public override void Motion(BaseInformation information)
     {
         if (CheckSuitableSlope)
         {
-            ChangeMoveState(MOTIONSTATEENUM.MainDefultState);
+            ChangeMotionState(MOTIONSTATEENUM.MainDefultState);
             return;
         }
 

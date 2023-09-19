@@ -13,34 +13,28 @@ enum SLICEDIR
     Down
 }
 
-public class CutSlicer : MonoBehaviour
+public class CutSlicer
 {
     private Material m_material;
     
-    private CharacterProperty m_characterProperty 
-        => Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
+    private SlicerProperty m_slicerProperty;
 
-    private PrefabFactory m_prefabFactory
-        => Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
-    
-    private void Start()
+    private PrefabFactory m_prefabFactory;
+
+    private Transform m_transform;
+
+    public void Update()
     {
-        m_material = Resources.Load<Material>("Materials/Test");
+        ObjectPool.Instance.ReturnCacheGameObjects(m_prefabFactory.SLICE_OBJ);
+        CutSliceAll(CheckBox());
     }
-
-    private void FixedUpdate()
+    
+    public CutSlicer(Transform transform,SlicerProperty slicerProperty,PrefabFactory prefabFactory)
     {
-        
-        if (InputManager.Instance.GetDebuggerNum1Down)
-        {
-            ObjectPool.Instance.ReturnCacheGameObjects(m_prefabFactory.SLICE_OBJ);
-            CutSliceAll(CheckBox());
-        }
-
-        if (InputManager.Instance.GetDebuggerNum2Down)
-        {
-            CheckBox();
-        }
+        m_slicerProperty = slicerProperty;
+        m_prefabFactory = prefabFactory;
+        m_transform = transform;
+        m_material = Resources.Load<Material>("Materials/Test");
     }
 
     private List<Collider2D> CutSliceAll(List<Collider2D> targetColliderList)
@@ -85,9 +79,9 @@ public class CutSlicer : MonoBehaviour
 
     private List<Collider2D> CheckBox()
     {
-        return transform.position.ToVector2()
-            .OverlapRotatedBox(m_characterProperty.SlicerProperty.RANGE_OF_DETECTION
-                , transform.rotation.eulerAngles.z).ToList();
+        return m_transform.position.ToVector2()
+            .OverlapRotatedBox(m_slicerProperty.SlicerSize.RANGE_OF_DETECTION
+                , m_transform.rotation.eulerAngles.z).ToList();
     }
     
     private (Vector3,Vector3,Quaternion) GetSliceData(SLICEDIR slicedir)
@@ -95,13 +89,13 @@ public class CutSlicer : MonoBehaviour
         switch (slicedir)
         {
             case SLICEDIR.Left:
-                return m_characterProperty.GetSliceLeftData(transform);
+                return m_slicerProperty.GetSliceLeftData(m_transform);
             case SLICEDIR.Up:
-                return m_characterProperty.GetSliceUpData(transform);
+                return m_slicerProperty.GetSliceUpData(m_transform);
             case SLICEDIR.Right:
-                return m_characterProperty.GetSliceRightData(transform);
+                return m_slicerProperty.GetSliceRightData(m_transform);
             case SLICEDIR.Down:
-                return m_characterProperty.GetSliceDownData(transform);
+                return m_slicerProperty.GetSliceDownData(m_transform);
             default:
                 return (Vector3.zero, Vector3.zero, Quaternion.identity);
         }
@@ -111,37 +105,37 @@ public class CutSlicer : MonoBehaviour
     {
         Material[] shared = target.GetComponent<MeshRenderer>().sharedMaterials;
         Material[] newShared = new Material[shared.Length + 1];
-        System.Array.Copy(shared, newShared, shared.Length);
+        Array.Copy(shared, newShared, shared.Length);
         newShared[shared.Length] = material;
         obj.GetComponent<Renderer>().sharedMaterials = newShared;
     }
 
-#if UNITY_EDITOR
-    void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(0, 1, 0, 0.5f);
-        Matrix4x4 oldGizmosMatrix = Gizmos.matrix;
-        Gizmos.matrix = Matrix4x4.TRS(transform.position,transform.rotation, m_characterProperty.SlicerProperty.RANGE_OF_DETECTION);
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
-        Gizmos.color = new Color(1f, 0, 0f, 0.5f);
-        (Vector3 pos, Vector3 size, Quaternion rot) = m_characterProperty.GetSliceLeftData(transform);
-        Gizmos.matrix = Matrix4x4.TRS(pos,rot, size);
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
-        
-        (pos, size, rot) = m_characterProperty.GetSliceUpData(transform);
-        Gizmos.matrix = Matrix4x4.TRS(pos,rot, size);
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
-        
-        (pos, size, rot) = m_characterProperty.GetSliceRightData(transform);
-        Gizmos.matrix = Matrix4x4.TRS(pos,rot, size);
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
-        
-        (pos, size, rot) = m_characterProperty.GetSliceDownData(transform);
-        Gizmos.matrix = Matrix4x4.TRS(pos,rot, size);
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
-        
-        Gizmos.matrix = oldGizmosMatrix;
-    }
-#endif
+// #if UNITY_EDITOR
+//     void OnDrawGizmos()
+//     {
+//         Gizmos.color = new Color(0, 1, 0, 0.5f);
+//         Matrix4x4 oldGizmosMatrix = Gizmos.matrix;
+//         Gizmos.matrix = Matrix4x4.TRS(transform.position,transform.rotation, m_characterProperty.SlicerProperty.RANGE_OF_DETECTION);
+//         Gizmos.DrawCube(Vector3.zero, Vector3.one);
+//         Gizmos.color = new Color(1f, 0, 0f, 0.5f);
+//         (Vector3 pos, Vector3 size, Quaternion rot) = m_characterProperty.GetSliceLeftData(transform);
+//         Gizmos.matrix = Matrix4x4.TRS(pos,rot, size);
+//         Gizmos.DrawCube(Vector3.zero, Vector3.one);
+//         
+//         (pos, size, rot) = m_characterProperty.GetSliceUpData(transform);
+//         Gizmos.matrix = Matrix4x4.TRS(pos,rot, size);
+//         Gizmos.DrawCube(Vector3.zero, Vector3.one);
+//         
+//         (pos, size, rot) = m_characterProperty.GetSliceRightData(transform);
+//         Gizmos.matrix = Matrix4x4.TRS(pos,rot, size);
+//         Gizmos.DrawCube(Vector3.zero, Vector3.one);
+//         
+//         (pos, size, rot) = m_characterProperty.GetSliceDownData(transform);
+//         Gizmos.matrix = Matrix4x4.TRS(pos,rot, size);
+//         Gizmos.DrawCube(Vector3.zero, Vector3.one);
+//         
+//         Gizmos.matrix = oldGizmosMatrix;
+//     }
+// #endif
 
 }
