@@ -153,9 +153,9 @@ MotionController
 classDiagram
 MotionStateMachine <|-- MainMotionStateMachine
 MotionStateMachine <|-- AdditiveMotionStateMachine
-MotionStateMachine *-- MotionState
+MotionStateMachine *-- PlayerMotionState
 MotionStateMachine *-- MotionStateFactory
-MotionStateFactory ..> MotionState
+MotionStateFactory ..> PlayerMotionState
 MotionStateFactory ..> MotionStateEnum
 MotionStateFactory <|-- MainMotionStateFactory
 MotionStateFactory <|-- AdditiveMotionStateFactory
@@ -169,16 +169,16 @@ PlayerInformation *-- PlayerColliding
 PlayerInformation *-- PlayerRaycasting
 AdditiveDefultState *-- CoyoteTimer
 AdditiveDefultState *-- JumpBufferTimer
-MainMotionState <|-- MainDefultState
-MainMotionState <|-- SlideState
-AdditiveMotionState <|-- AdditiveDefultState
-MainMotionState <|-- WalkAndRunState
-AdditiveMotionState <|-- JumpState
-AdditiveMotionState <|-- PerpendicularGroundState
-AdditiveMotionState <|-- SliceOffState
-AdditiveMotionState <|-- SliceOnState
-MotionState <|-- MainMotionState
-MotionState <|-- AdditiveMotionState
+PlayerMainMotionState <|-- MainDefultState
+PlayerMainMotionState <|-- SlideState
+PlayerAdditiveMotionState <|-- AdditiveDefultState
+PlayerMainMotionState <|-- WalkAndRunState
+PlayerAdditiveMotionState <|-- JumpState
+PlayerAdditiveMotionState <|-- PerpendicularGroundState
+PlayerAdditiveMotionState <|-- SliceOffState
+PlayerAdditiveMotionState <|-- SliceOnState
+PlayerMotionState <|-- PlayerMainMotionState
+PlayerMotionState <|-- PlayerAdditiveMotionState
 ```
 
 CutSlicer
