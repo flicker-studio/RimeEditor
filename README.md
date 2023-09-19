@@ -194,11 +194,25 @@ PlayerAdditiveMotionState <|-- AdditiveDefultState
 PlayerMainMotionState <|-- WalkAndRunState
 PlayerAdditiveMotionState <|-- JumpState
 PlayerAdditiveMotionState <|-- PerpendicularGroundState
-PlayerAdditiveMotionState <|-- SliceOffState
-PlayerAdditiveMotionState <|-- SliceOnState
 PlayerMotionState <|-- PlayerMainMotionState
 PlayerMotionState <|-- PlayerAdditiveMotionState
 MotionState <|-- PlayerMotionState
+```
+
+CutMotionController
+
+```mermaid
+classDiagram
+MotionController o-- MotionStateMachine
+MotionController *-- BaseInformation
+MotionController *-- MotionCallBack
+MotionStateMachine <|-- AddtiveMotionStateMachine
+MotionStateMachine <|-- MainMotionStateMachine
+MotionStateMachine *-- MotionState
+MotionStateMachine *-- MotionStateFactory
+MotionState <|-- MainMotionState
+MotionStateFactory <|-- AddtiveMotionStateFactory
+MotionStateFactory <|-- MainMotionStateFactory
 ```
 
 CutSlicer

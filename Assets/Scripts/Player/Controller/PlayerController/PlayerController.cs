@@ -16,9 +16,9 @@ public class PlayerController : MonoBehaviour
 
     private void MotionInit()
     {
-        m_motionController.ChangeMotionState(true,MOTIONSTATEENUM.MainDefultState);
-        m_motionController.ChangeMotionState(false,MOTIONSTATEENUM.AdditiveDefultState);
-        m_motionController.ChangeMotionState(false,MOTIONSTATEENUM.PerpendicularGroundState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.MainDefultState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.AdditiveDefultState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.PerpendicularGroundState);
     }
     private void Start()
     {

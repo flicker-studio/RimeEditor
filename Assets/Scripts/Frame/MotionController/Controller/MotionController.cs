@@ -44,18 +44,6 @@ public class MotionController
             ChangeMotionStateInAdditiveMachine(motionStateEnum);
         }
     }
-    
-    public void ChangeMotionState(bool isMain,MOTIONSTATEENUM motionStateEnum)
-    {
-        if (isMain)
-        {
-            ChangeMotionStateInMainMachine(motionStateEnum);
-        }
-        else
-        {
-            ChangeMotionStateInAdditiveMachine(motionStateEnum);
-        }
-    }
 
     private void ChangeMotionStateInMainMachine(MOTIONSTATEENUM motionStateEnum)
     {
