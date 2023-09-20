@@ -72,6 +72,45 @@ ProJect-Moon development team.
   }
   ```
 
+
+
+------
+
+**The commit message specification for this project is as follows：**
+
+[![Static Badge](https://img.shields.io/badge/explain-Commit-green)](https://www.conventionalcommits.org/en/v1.0.0/#:~:text=feat%3A%20a%20commit%20of%20the,with%20MAJOR%20in%20Semantic%20Versioning)
+
+| Type of change |                         Description                          |      |
+| :------------: | :----------------------------------------------------------: | ---- |
+|      feat      |                      A new featurefix.                       |      |
+|      fix       |                        A bug fixdocs.                        |      |
+|      docs      |                 Documentation only changes.                  |      |
+|     style      | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc). |      |
+|    refactor    |  A code change that neither fixes a bug nor adds a feature.  |      |
+|      perf      |           A code change that improves performance.           |      |
+|      test      |      Adding missing tests or correcting existing tests.      |      |
+|     build      | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm). |      |
+|       ci       | Changes to our Cl configuration files and scripts (example scopes: Travis, Circle, BrowserStack, Saucelabs). |      |
+|     chore      |      Other changes that don't modify src or test files.      |      |
+|     revert     |                  Reverts a previous commit.                  |      |
+|                |                                                              |      |
+
+**Example**
+
+```tex
+docs: Readme Update
+
+Update readme file.
+```
+
+```tex
+fix: Fix a bug
+
+Fix the jump bug.
+```
+
+
+
 ------
 
 **The custom structs for this project are as follows:**
@@ -166,7 +205,7 @@ MotionStateFactory <|-- MainMotionStateFactory
 
 
 
-PlayerMotionController
+PlayerController
 
 ```mermaid
 classDiagram

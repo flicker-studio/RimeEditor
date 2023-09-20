@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class SlicerOpenState : SlicerAdditiveMotionState
 {
     public SlicerOpenState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
