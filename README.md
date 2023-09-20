@@ -93,7 +93,6 @@ ProJect-Moon development team.
 |       ci       | Changes to our Cl configuration files and scripts (example scopes: Travis, Circle, BrowserStack, Saucelabs). |
 |     chore      |      Other changes that don't modify src or test files.      |
 |     revert     |                  Reverts a previous commit.                  |
-|                |                                                              |
 
 **Example**
 
