@@ -11,10 +11,7 @@ public class SlicerCopyState : SlicerAdditiveMotionState
 
     public override void Motion(BaseInformation information)
     {
-        if (GetFirstExecute)
-        {
-            m_sliceCommand.Execute();
-        }
+        base.Motion(information);
         if (m_slicerInformation.GetNum1Down)
         {
             ChangeMotionState(MOTIONSTATEENUM.SlicerReleaseState);

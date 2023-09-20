@@ -38,6 +38,10 @@ public class CopySlicer : ICommand
             CutSlice(dir,targetColliderList);
         }
 
+        foreach (var collider in targetColliderList)
+        {
+            collider.transform.parent = m_slicerInformation.GetTransform;
+        }
         return targetColliderList;
     }
     

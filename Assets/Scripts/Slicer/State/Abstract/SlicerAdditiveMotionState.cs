@@ -23,7 +23,15 @@ public abstract class SlicerAdditiveMotionState : AdditiveMotionState
             return false;
         }
     }
-    
+
+    public override void Motion(BaseInformation information)
+    {
+        if (m_sliceCommand != null && GetFirstExecute)
+        {
+            m_sliceCommand.Execute();
+        }
+    }
+
     public SlicerAdditiveMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
     {
         m_slicerInformation = information as SlicerInformation;

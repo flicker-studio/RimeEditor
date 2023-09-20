@@ -7,6 +7,7 @@ public class SlicerCloseState : SlicerAdditiveMotionState
 
     public override void Motion(BaseInformation information)
     {
+        base.Motion(information);
         if (m_slicerInformation.GetNum1Down)
         {
             ChangeMotionState(MOTIONSTATEENUM.SlicerOpenState);

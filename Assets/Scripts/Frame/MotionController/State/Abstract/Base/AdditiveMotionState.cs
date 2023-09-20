@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AdditiveMotionState : MotionState
+public abstract class AdditiveMotionState : MotionState 
 {
     protected float m_endTimmer = 0;
 
