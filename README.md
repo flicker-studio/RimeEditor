@@ -166,7 +166,7 @@ MotionStateFactory <|-- MainMotionStateFactory
 
 
 
-PlayerMotionController
+PlayerController
 
 ```mermaid
 classDiagram
