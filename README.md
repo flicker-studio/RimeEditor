@@ -199,7 +199,7 @@ PlayerMotionState <|-- PlayerAdditiveMotionState
 MotionState <|-- PlayerMotionState
 ```
 
-CutMotionController
+SlicerController
 
 ```mermaid
 classDiagram
@@ -224,17 +224,3 @@ MotionStateFactory <|-- AddtiveMotionStateFactory
 MotionStateFactory <|-- MainMotionStateFactory
 
 ```
-
-CutSlicer
-
-TODO:A temporary framework.
-
-- Slicer box implementation
-
-```mermaid
-classDiagram
-CutSlicer o-- CharacterProperty
-CutSlicer o-- PrefabFactory
-ObjectPool <.. CutSlicer
-```
-
