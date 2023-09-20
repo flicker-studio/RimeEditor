@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlideState : PlayerMainMotionState
+public class PlayerSlideState : PlayerMainMotionState
 {
     private float m_timer = 0f;
 
@@ -15,7 +15,7 @@ public class SlideState : PlayerMainMotionState
     private CharacterProperty.PlayerMoveProperty GetMoveProperty => m_playerInformation.GetMoveProperty;
 
     #endregion
-    public SlideState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+    public PlayerSlideState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }
 
@@ -23,7 +23,7 @@ public class SlideState : PlayerMainMotionState
     {
         if (CheckSuitableSlope)
         {
-            ChangeMotionState(MOTIONSTATEENUM.MainDefultState);
+            ChangeMotionState(MOTIONSTATEENUM.PlyerMainDefultState);
             return;
         }
 

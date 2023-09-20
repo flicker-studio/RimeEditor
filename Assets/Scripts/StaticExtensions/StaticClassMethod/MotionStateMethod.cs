@@ -4,11 +4,11 @@ using UnityEngine;
 
 public static class MotionStateMethod
 {
-    private static MOTIONSTATEENUM MainMotionType => MOTIONSTATEENUM.MainDefultState | MOTIONSTATEENUM.WalkAndRunState 
-        | MOTIONSTATEENUM.SlideState;
+    private static MOTIONSTATEENUM MainMotionType => MOTIONSTATEENUM.PlyerMainDefultState | MOTIONSTATEENUM.PlayerWalkAndRunState 
+        | MOTIONSTATEENUM.PlayerSlideState;
 
-    private static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.AdditiveDefultState |
-                                                         MOTIONSTATEENUM.PerpendicularGroundState | MOTIONSTATEENUM.JumpState |
+    private static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.PlayerAdditiveDefultState |
+                                                         MOTIONSTATEENUM.PlayerPerpendicularGroundState | MOTIONSTATEENUM.PlayerJumpState |
                                                          MOTIONSTATEENUM.None;
     
     public static bool CheckMotionIsMain(this MOTIONSTATEENUM motionStateEnum)

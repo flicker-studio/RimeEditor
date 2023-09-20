@@ -3,21 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMotionStateFactory : PlayerMotionStateFactory
+public class MainMotionStateFactory : MotionStateFactory
 {
-    public override MotionState CreateMotion(Enum motionStateEnum, BaseInformation information,
+    public override MotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
         MotionCallBack motionCallBack)
     {
-        switch (motionStateEnum)
+        if (information as PlayerInformation != null)
         {
-            case MOTIONSTATEENUM.MainDefultState:
-                return new MainDefultState(information, motionCallBack);
-            case MOTIONSTATEENUM.WalkAndRunState:
-                return new WalkAndRunState(information, motionCallBack);
-            case MOTIONSTATEENUM.SlideState:
-                return new SlideState(information, motionCallBack);
-            default:
-                return null;
+            switch (motionStateEnum)
+            {
+                case MOTIONSTATEENUM.PlyerMainDefultState:
+                    return new PlayerMainDefultState(information, motionCallBack);
+                case MOTIONSTATEENUM.PlayerWalkAndRunState:
+                    return new PlayerWalkAndRunState(information, motionCallBack);
+                case MOTIONSTATEENUM.PlayerSlideState:
+                    return new PlayerSlideState(information, motionCallBack);
+                default:
+                    return null;
+            }
         }
+
+        return null;
     }
 }

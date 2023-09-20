@@ -9,10 +9,4 @@ public abstract class PlayerAdditiveMotionState : AdditiveMotionState
     {
         m_playerInformation = information as PlayerInformation;
     }
-
-    protected override void RemoveState()
-    {
-        IsEnd = true;
-        ChangeMotionState(MOTIONSTATEENUM.None);
-    }
 }

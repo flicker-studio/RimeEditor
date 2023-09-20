@@ -9,11 +9,11 @@ public static class GlobalSetting
     
     public struct PlayerMotionStateType
     {
-        public static MOTIONSTATEENUM MainMotionType => MOTIONSTATEENUM.MainDefultState | MOTIONSTATEENUM.WalkAndRunState 
-            | MOTIONSTATEENUM.SlideState;
+        public static MOTIONSTATEENUM MainMotionType => MOTIONSTATEENUM.PlyerMainDefultState | MOTIONSTATEENUM.PlayerWalkAndRunState 
+            | MOTIONSTATEENUM.PlayerSlideState;
 
-        public static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.AdditiveDefultState |
-                                                                  MOTIONSTATEENUM.PerpendicularGroundState | MOTIONSTATEENUM.JumpState |
+        public static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.PlayerAdditiveDefultState |
+                                                                  MOTIONSTATEENUM.PlayerPerpendicularGroundState | MOTIONSTATEENUM.PlayerJumpState |
                                                                   MOTIONSTATEENUM.None;
     }
 }

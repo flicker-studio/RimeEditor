@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AdditiveDefultState : PlayerAdditiveMotionState
+public class PlayerAdditiveDefultState : PlayerAdditiveMotionState
 {
     private bool m_canJump = true;
 
@@ -35,11 +35,11 @@ public class AdditiveDefultState : PlayerAdditiveMotionState
         {
             m_canJump = false;
             
-            ChangeMotionState(MOTIONSTATEENUM.JumpState);
+            ChangeMotionState(MOTIONSTATEENUM.PlayerJumpState);
         }
     }
 
-    public AdditiveDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+    public PlayerAdditiveDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
         m_coyoteTimer = new CoyoteTimer();
         m_jumpBufferTimer = new JumpBufferTimer();

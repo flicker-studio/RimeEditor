@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkAndRunState : PlayerMainMotionState
+public class PlayerWalkAndRunState : PlayerMainMotionState
 {
     private float m_timer = 0f;
 
@@ -30,7 +30,7 @@ public class WalkAndRunState : PlayerMainMotionState
             if (m_slopetimer >= GetMoveProperty.SLOPE_START_TIME_COMPENSATE)
             {
                 if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-                ChangeMotionState(MOTIONSTATEENUM.SlideState);
+                ChangeMotionState(MOTIONSTATEENUM.PlayerSlideState);
                 return;
             }
         }
@@ -42,7 +42,7 @@ public class WalkAndRunState : PlayerMainMotionState
         if (GetMotionInputData.MoveInput.x == 0)
         {
             if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-            ChangeMotionState(MOTIONSTATEENUM.MainDefultState);
+            ChangeMotionState(MOTIONSTATEENUM.PlyerMainDefultState);
             return;
         }
 
@@ -110,7 +110,7 @@ public class WalkAndRunState : PlayerMainMotionState
         }
     }
 
-    public WalkAndRunState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+    public PlayerWalkAndRunState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }
     

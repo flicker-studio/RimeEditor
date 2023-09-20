@@ -8,7 +8,11 @@ public abstract class AdditiveMotionState : MotionState
 
     public bool IsEnd = false;
 
-    protected abstract void RemoveState();
+    protected virtual void RemoveState()
+    {
+        IsEnd = true;
+        ChangeMotionState(MOTIONSTATEENUM.None);
+    }
 
     protected AdditiveMotionState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {

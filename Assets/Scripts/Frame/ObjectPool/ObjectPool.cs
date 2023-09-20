@@ -84,7 +84,7 @@ public class ObjectPool : Singleton<ObjectPool>
     /// 归还对象池同一类的所有对象
     /// </summary>
     /// <param name="游戏对象"></param>
-    public void ReturnCacheGameObjects(GameObject obj)
+    public void OnReleaseAll(GameObject obj)
     {
         CheckCachePanel();
         

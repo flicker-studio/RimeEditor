@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PerpendicularGroundState : PlayerAdditiveMotionState
+public class PlayerPerpendicularGroundState : PlayerAdditiveMotionState
 {
     private List<Vector2> m_raycastPoints;
 
@@ -29,7 +29,7 @@ public class PerpendicularGroundState : PlayerAdditiveMotionState
         }
     }
 
-    public PerpendicularGroundState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+    public PlayerPerpendicularGroundState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }
 }

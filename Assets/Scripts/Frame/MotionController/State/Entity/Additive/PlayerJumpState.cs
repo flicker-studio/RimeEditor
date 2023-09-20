@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpState : PlayerAdditiveMotionState
+public class PlayerJumpState : PlayerAdditiveMotionState
 {
     #region GetProperty
 
@@ -30,7 +30,7 @@ public class JumpState : PlayerAdditiveMotionState
         }
     }
 
-    public JumpState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+    public PlayerJumpState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
     }
 }

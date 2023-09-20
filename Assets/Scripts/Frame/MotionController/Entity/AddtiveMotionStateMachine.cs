@@ -21,7 +21,7 @@ public class AddtiveMotionStateMachine : MotionStateMachine
             return;
         }
         MotionState motionState = CreateMotionState(playerMoveState, information);
-        
+        if(motionState == null) return;
         if (m_motionStates.Contains(motionState)) return;
         m_motionStates.Add(motionState);
     }

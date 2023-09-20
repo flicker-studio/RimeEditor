@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainDefultState : PlayerMainMotionState
+public class PlayerMainDefultState : PlayerMainMotionState
 {
     private float timmer = 0;
 
@@ -26,13 +26,13 @@ public class MainDefultState : PlayerMainMotionState
         if (!CheckSuitableSlope)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMotionState(MOTIONSTATEENUM.SlideState);
+            ChangeMotionState(MOTIONSTATEENUM.PlayerSlideState);
             return;
         }
         if (GetMotionInputData.MoveInput.x != 0)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMotionState(MOTIONSTATEENUM.WalkAndRunState);
+            ChangeMotionState(MOTIONSTATEENUM.PlayerWalkAndRunState);
             return;
         }
         timmer += Time.fixedDeltaTime;
@@ -56,7 +56,7 @@ public class MainDefultState : PlayerMainMotionState
                 GetRigidbody.Freeze(FREEZEAXIS.PosXAndRotZ);
                 return;
             }
-            if (!CheckGlobalStates.Contains(typeof(JumpState)))
+            if (!CheckGlobalStates.Contains(typeof(PlayerJumpState)))
             {
                 GetRigidbody.Freeze(FREEZEAXIS.RotZ);
             }
@@ -64,7 +64,7 @@ public class MainDefultState : PlayerMainMotionState
     }
 
 
-    public MainDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+    public PlayerMainDefultState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
     {
         m_oriSpeed = GetRigidbody.velocity.x;
     }
