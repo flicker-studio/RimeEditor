@@ -204,6 +204,8 @@ CutMotionController
 ```mermaid
 classDiagram
 MotionController o-- MotionStateMachine
+SlicerController *-- SlicerInformation
+SlicerController *-- MotionController
 MotionController *-- BaseInformation
 MotionController *-- MotionCallBack
 MotionStateMachine <|-- AddtiveMotionStateMachine
@@ -211,8 +213,16 @@ MotionStateMachine <|-- MainMotionStateMachine
 MotionStateMachine *-- MotionState
 MotionStateMachine *-- MotionStateFactory
 MotionState <|-- MainMotionState
+MotionState <|-- AdditiveMotionState
+MainMotionState <|-- SlicerMainMotionState
+AdditiveMotionState <|-- SlicerAdditiveMotionState
+SlicerAdditiveMotionState <|-- SlicerCloseState
+SlicerAdditiveMotionState <|-- SlicerOpenState
+SlicerAdditiveMotionState <|-- SlicerCopyState
+SlicerAdditiveMotionState <|-- SlicerReleaseState
 MotionStateFactory <|-- AddtiveMotionStateFactory
 MotionStateFactory <|-- MainMotionStateFactory
+
 ```
 
 CutSlicer
