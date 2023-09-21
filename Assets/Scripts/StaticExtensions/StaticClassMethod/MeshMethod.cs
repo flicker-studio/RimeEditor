@@ -8,10 +8,9 @@ public static class MeshMethod
     private static Vector3[] vertices;
     private static int[] triangles;
     private static Vector2[] vertices2D;
-    private static List<TrianglePoints> trianglePointsList = new List<TrianglePoints>();
-    
     public static void CreatePolygonCollider(this Mesh mesh,PolygonCollider2D polygonCollider2D)
     {
+        List<TrianglePoints> trianglePointsList = new List<TrianglePoints>();
         vertices = mesh.vertices;
         triangles = mesh.triangles;
         vertices2D = new Vector2[vertices.Length];

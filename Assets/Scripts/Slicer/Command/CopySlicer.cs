@@ -23,6 +23,25 @@ public class CopySlicer : ICommand
         {
             ObjectPool.Instance.OnRelease(collider.gameObject);
         }
+        
+        foreach (var parent in m_slicerInformation.ParentList)
+        {
+            List<Transform> childs = parent.transform.GetChilds();
+            foreach (var child in childs)
+            {
+                if (child.name.Contains(GlobalSetting.ObjNameTag.rigidbodyTag))
+                {
+                    GameObject newParent = ObjectPool.Instance.OnTake(m_slicerInformation.GetRigidbodyParentPrefab);
+                    child.parent = newParent.transform;
+                }
+                else
+                {
+                    child.SetParent(null);
+                }
+            }
+            ObjectPool.Instance.OnRelease(parent);
+        }
+        m_slicerInformation.ParentList.Clear();
         m_slicerInformation.TargetList = CutSliceAll(CheckBox());
     }
     
@@ -37,9 +56,10 @@ public class CopySlicer : ICommand
         {
             CutSlice(dir,targetColliderList);
         }
-
+        
         foreach (var collider in targetColliderList)
         {
+            collider.enabled = false;
             collider.transform.parent = m_slicerInformation.GetTransform;
         }
         return targetColliderList;

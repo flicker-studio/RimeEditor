@@ -253,6 +253,8 @@ MotionStateMachine *-- MotionStateFactory
 MotionState <|-- MainMotionState
 MotionState <|-- AdditiveMotionState
 MainMotionState <|-- SlicerMainMotionState
+SlicerMainMotionState <|-- SlicerTranslationFollowState
+SlicerMainMotionState <|-- SlicerRotationFollowState
 AdditiveMotionState <|-- SlicerAdditiveMotionState
 SlicerAdditiveMotionState <|-- SlicerCloseState
 SlicerAdditiveMotionState <|-- SlicerOpenState

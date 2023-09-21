@@ -12,14 +12,24 @@ public class SlicerInformation : BaseInformation
     private Transform m_transform;
 
     public List<Collider2D> TargetList = new List<Collider2D>();
+
+    public List<GameObject> ParentList = new List<GameObject>();
     
     public GameObject GetProductPrefab => m_prefabFactory.SLICE_OBJ;
+
+    public GameObject GetCombinationRigidbodyParentPrefab => m_prefabFactory.COMBINATION_COLLIDES_RIGIDBODY_PARENT;
+    
+    public GameObject GetCombinationNotRigidbodyParentPrefab => m_prefabFactory.COMBINATION_COLLIDES_NOT_RIGIDBODY_PARENT;
+    
+    public GameObject GetRigidbodyParentPrefab => m_prefabFactory.RIGIDBODY_PARENT;
 
     public Material GetCutSurfaceMaterial => m_cutMaterial;
 
     public Transform GetTransform => m_transform;
 
     public Vector3 GetDetectionRange => m_slicerProperty.SlicerSize.RANGE_OF_DETECTION;
+
+    public Vector3 GetDetectionCompensationScale => m_slicerProperty.ConnectedObject.DETECTION_COMPENSATIONS_SCALE;
 
     public float GetSliceThinckNess => m_slicerProperty.SlicerSize.SLICE_THICKNESS;
 

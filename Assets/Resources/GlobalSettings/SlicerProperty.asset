@@ -16,3 +16,5 @@ MonoBehaviour:
     RANGE_OF_DETECTION: {x: 7.55, y: 5.2, z: 4.02}
     SLICE_THICKNESS: 0.01
     SLICE_SPACING_COMPENSATION: 0.01
+  ConnectedObject:
+    DETECTION_COMPENSATIONS_SCALE: {x: 0.98, y: 0.98, z: 0.98}

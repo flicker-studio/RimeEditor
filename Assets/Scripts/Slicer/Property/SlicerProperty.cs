@@ -6,6 +6,8 @@ using UnityEngine.Serialization;
 public class SlicerProperty : ScriptableObject
 {
     public SlicerSizePanel SlicerSize;
+
+    public ConnectedObjectPanel ConnectedObject;
     [Serializable]
     public struct SlicerSizePanel
     {
@@ -15,5 +17,11 @@ public class SlicerProperty : ScriptableObject
         public float SLICE_THICKNESS;
         [CustomLabel("间距补偿"),Range(-1,1)]
         public float SLICE_SPACING_COMPENSATION;
+    }
+    [Serializable]
+    public struct ConnectedObjectPanel
+    {
+        [CustomLabel("连通物体检测缩放补偿")]
+        public Vector3 DETECTION_COMPENSATIONS_SCALE;
     }
 }

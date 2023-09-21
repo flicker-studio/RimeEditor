@@ -2,6 +2,7 @@ public class SlicerReleaseState : SlicerAdditiveMotionState
 {
     public SlicerReleaseState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
     {
+        m_sliceCommand = new ReleaseSlicer(m_slicerInformation);
     }
 
     public override void Motion(BaseInformation information)

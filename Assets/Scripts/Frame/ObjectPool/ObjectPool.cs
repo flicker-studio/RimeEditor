@@ -81,6 +81,34 @@ public class ObjectPool : Singleton<ObjectPool>
     }
     
     /// <summary>
+    /// 归还对象池对象并初始化对象池
+    /// </summary>
+    /// <param name="游戏对象"></param>
+    /// <param name="预制体"></param>
+    public void OnRelease(GameObject obj,GameObject prefab)
+    {
+        CheckCachePanel();
+        
+        if (obj == null)
+        {
+            return;
+        }
+
+        string tag = CheckTag(obj);
+        if (!m_pool.ContainsKey(tag))
+        {
+            m_objTag.Add(prefab,tag);
+            m_pool[tag] = new Queue<GameObject>();
+            m_outPool[tag] = new List<GameObject>();
+        }
+        CheckTypeCachePanel(tag);
+        obj.transform.parent = m_typeCachePanel[tag].transform;
+        obj.SetActive(false);
+        m_pool[tag].Enqueue(obj);
+        m_outPool[tag].Remove(obj);
+    }
+    
+    /// <summary>
     /// 归还对象池同一类的所有对象
     /// </summary>
     /// <param name="游戏对象"></param>
