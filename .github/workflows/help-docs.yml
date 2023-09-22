@@ -2,7 +2,7 @@ name: Help Docs
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
     paths: ['moon-dev/**','docs/**','README.md']
   schedule:
     - cron: '0 0 * * 0'
