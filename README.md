@@ -1,14 +1,9 @@
-<h3 align="center">
-  <img src="Images/Logo/Logo.png?raw=true" alt="ProJect-Moon Logo" width="1000">
-</h3>
-
-# ProJect-Moon
-
-ProJect-Moon development team.
+<h1 align="center">
+  <img src="docs/Images/Logo/Logo.png?raw=true" alt="ProJect-Moon Logo" width="1000">
+ProJect-Moon
+</h1>
 
 [![Static Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
-
-
 
 ## TODO
 
@@ -24,24 +19,24 @@ ProJect-Moon development team.
 
 ## Project milestone
 
-- The algorithm of generating polygoncollider2D mesh based on mesh triangle is completed, and the performance is good, and it supports concave polygon. 
+- The algorithm of generating polygoncollider2D mesh based on mesh triangle is completed, and the performance is good, and it supports concave polygon.
 
-  - The core idea of the algorithm is to find all triangles according to mesh and make them two-dimensional, and remove redundant, intersecting triangles and vertices that do not form a triangle. Finally, a greedy algorithm is used to generate polygoncollider2D. I am glad that Unity mesh models are already triangulated, which saves me a lot of trouble.
+  - The core idea of the algorithm is to find all triangles according to mesh and make them two-dimensional, and remove redundant,       intersecting triangles and vertices that do not form a triangle. Finally, a greedy algorithm is used to generate polygoncollider2D. I am glad that Unity mesh models are already triangulated, which saves me a lot of trouble.
 
-    <p align="right">——2023.9.11</p>
+  <p align="right">——2023.9.11</p>
 
 <h3 align="center">
-  <img src="Images/Textures/CreatPolygonCollider.png?raw=true" alt="CreatPolygonCollider" width="1000">
+  <img src="docs/Images/Textures/CreatPolygonCollider.png?raw=true" alt="CreatPolygonCollider" width="1000">
 </h3>
 
 - Very accurate slicer box, and the parameters are very concise, the code logic is good.
 
   - Based on Ezy-Slice. A slicer box is generated based on some mathematical and linear algebra calculations, and the object pool framework is used. So far, slicer box is working very well.
 
-    <p align="right">——2023.9.16</p>
+  <p align="right">——2023.9.16</p>
 
 <h3 align="center">
-  <img src="Images/Textures/SlicerBox.png?raw=true" alt="SlicerBox" width="1000">
+  <img src="docs/Images/Textures/SlicerBox.png?raw=true" alt="SlicerBox" width="1000">
 </h3>
 
 ## Project structure
@@ -71,8 +66,6 @@ ProJect-Moon development team.
       }
   }
   ```
-
-
 
 ------
 
@@ -108,8 +101,6 @@ fix: Fix a bug
 Fix the jump bug.
 ```
 
-
-
 ------
 
 **The custom structs for this project are as follows:**
@@ -129,8 +120,6 @@ A --> B
 A --> C
 ```
 
-
-
 ------
 
 **The existing architecture class diagram for this project is as follows：**
@@ -139,8 +128,6 @@ StaticExtensions
 
 - These static classes provide methods that other classes extend statically.
   - Now service classes are: LayerMask, MotionState,Raycast, Rigidbody, Vector2 / Vector3,TrianglePoints,Mesh,Transform,CharacterProperty.
-
-
 
 ```mermaid
 graph TB
@@ -201,8 +188,6 @@ MotionState <|-- MainMotionState
 MotionStateFactory <|-- AddtiveMotionStateFactory
 MotionStateFactory <|-- MainMotionStateFactory
 ```
-
-
 
 PlayerController
 
