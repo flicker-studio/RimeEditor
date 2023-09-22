@@ -109,7 +109,7 @@ public class ObjectPool : Singleton<ObjectPool>
     }
     
     /// <summary>
-    /// 归还对象池同一类的所有对象
+    /// 归还对象池同一类的所有对象，不归还拥有子物体的对象
     /// </summary>
     /// <param name="游戏对象"></param>
     public void OnReleaseAll(GameObject obj)
@@ -129,6 +129,7 @@ public class ObjectPool : Singleton<ObjectPool>
             tempList.AddRange(m_outPool[tag]);
             foreach (var tempObj in tempList)
             {
+                if(tempObj.transform.childCount > 0) continue;
                 tempObj.transform.parent = m_typeCachePanel[tag].transform;
                 tempObj.SetActive(false);
                 m_pool[tag].Enqueue(tempObj);

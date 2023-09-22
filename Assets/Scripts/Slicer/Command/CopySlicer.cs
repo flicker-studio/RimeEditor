@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using EzySlice;
@@ -16,32 +15,51 @@ enum SLICEDIR
 public class CopySlicer : ICommand
 {
     private SlicerInformation m_slicerInformation;
+    
+    private List<List<Collider2D>> m_colliderListGroup = new List<List<Collider2D>>();
 
+    private GameObject GetCombinationRigidbodyParentPrefab =>
+        m_slicerInformation.GetCombinationRigidbodyParentPrefab;
+
+    private GameObject GetCombinationNotRigidbodyParentPrefab =>
+        m_slicerInformation.GetCombinationNotRigidbodyParentPrefab;
+
+    //TODO:多个裁切器重置复制时会有明显BUG.待修复.
     public void Execute()
     {
+        m_colliderListGroup = m_slicerInformation.TargetList.CheckColliderConnectivity(
+            m_slicerInformation.GetDetectionCompensationScale
+            , GlobalSetting.LayerMasks.GROUND);
+        
         foreach (var collider in m_slicerInformation.TargetList)
         {
             ObjectPool.Instance.OnRelease(collider.gameObject);
         }
+
+        ObjectPool.Instance.OnReleaseAll(GetCombinationRigidbodyParentPrefab);
         
-        foreach (var parent in m_slicerInformation.ParentList)
+        ObjectPool.Instance.OnReleaseAll(GetCombinationNotRigidbodyParentPrefab);
+        
+        List<Collider2D> tempList = new List<Collider2D>();
+        
+        foreach (var colliderList in m_colliderListGroup)
         {
-            List<Transform> childs = parent.transform.GetChilds();
-            foreach (var child in childs)
-            {
-                if (child.name.Contains(GlobalSetting.ObjNameTag.rigidbodyTag))
-                {
-                    GameObject newParent = ObjectPool.Instance.OnTake(m_slicerInformation.GetRigidbodyParentPrefab);
-                    child.parent = newParent.transform;
-                }
-                else
-                {
-                    child.SetParent(null);
-                }
-            }
-            ObjectPool.Instance.OnRelease(parent);
+            tempList.AddRange(colliderList);
         }
-        m_slicerInformation.ParentList.Clear();
+
+        tempList = tempList.Distinct().ToList();
+
+        foreach (var collider in m_slicerInformation.TargetList)
+        {
+            tempList.Remove(collider);
+        }
+
+        m_colliderListGroup = tempList.CheckColliderConnectivity(
+            m_slicerInformation.GetDetectionCompensationScale
+            , GlobalSetting.LayerMasks.GROUND);
+
+        m_colliderListGroup.GetCombinationConnectivity(m_slicerInformation.GetPrefabFactory);
+        
         m_slicerInformation.TargetList = CutSliceAll(CheckBox());
     }
     
@@ -52,9 +70,12 @@ public class CopySlicer : ICommand
 
     private List<Collider2D> CutSliceAll(List<Collider2D> targetColliderList)
     {
+        List<Collider2D> oriColliderList = new List<Collider2D>();
+        oriColliderList.AddRange(targetColliderList);
+        
         foreach (SLICEDIR dir in Enum.GetValues(typeof(SLICEDIR)))
         {
-            CutSlice(dir,targetColliderList);
+            CutSlice(dir,targetColliderList,oriColliderList);
         }
         
         foreach (var collider in targetColliderList)
@@ -65,7 +86,7 @@ public class CopySlicer : ICommand
         return targetColliderList;
     }
     
-    private void CutSlice(SLICEDIR slicedir,List<Collider2D> targetColliderList)
+    private void CutSlice(SLICEDIR slicedir,List<Collider2D> targetColliderList,List<Collider2D> oriColliderList)
     {
         Vector3 pos, size;
         Quaternion rot;
@@ -83,7 +104,8 @@ public class CopySlicer : ICommand
             obj.transform.CopyValue(collider.transform);
             AddSliceMaterial(obj, collider.gameObject,m_slicerInformation.GetCutSurfaceMaterial);
             targetColliderList.Add(obj.GetComponent<Collider2D>());
-            if (ObjectPool.Instance.CompareObj(collider.gameObject, m_slicerInformation.GetProductPrefab))
+            if (ObjectPool.Instance.CompareObj(collider.gameObject, m_slicerInformation.GetProductPrefab)
+                && !oriColliderList.Contains(collider))
             {
                 ObjectPool.Instance.OnRelease(collider.gameObject);
                 targetColliderList.Remove(collider);
@@ -97,9 +119,20 @@ public class CopySlicer : ICommand
 
     private List<Collider2D> CheckBox()
     {
-        return m_slicerInformation.GetTransform.position.ToVector2()
+        List<Collider2D> overlapColliderList = m_slicerInformation.GetTransform.position.ToVector2()
             .OverlapRotatedBox(m_slicerInformation.GetDetectionRange
                 , m_slicerInformation.GetTransform.rotation.eulerAngles.z).ToList();
+        List<Collider2D> tempList = new List<Collider2D>();
+        tempList.AddRange(overlapColliderList);
+        foreach (var collider in overlapColliderList)
+        {
+            if (ObjectPool.Instance.CompareObj(collider.gameObject, m_slicerInformation.GetProductPrefab))
+            {
+                tempList.Remove(collider);
+            }
+        }
+
+        return tempList;
     }
     
     private (Vector3,Vector3,Quaternion) GetSliceData(SLICEDIR slicedir)
