@@ -254,8 +254,6 @@ MotionStateFactory <|-- MainMotionStateFactory
 
 - <a id="Add-move-following-and-rotation-following-states-to-the-SlicerController.">Add move following and rotation following states to the SlicerController.</a>
 
-  [VideoExample](docs/Videos/SlicerFollow.mp4)
-
   [![Static Badge](https://img.shields.io/badge/example-video-pink)](docs/Videos/SlicerFollow.mp4)
 
   - Add two states to SlicerController: SlicerTranslationFollowState and SlicerRotationFollowState. Both are inherited from SlicerMainMotionState.
