@@ -2,7 +2,6 @@
   <img src="docs/Images/Logo/Logo.png?raw=true" alt="ProJect-Moon Logo" width="1000">
 ProJect-Moon
 </h1>
-
 [![Static Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
 
 ## TODO
@@ -254,6 +253,11 @@ MotionStateFactory <|-- MainMotionStateFactory
 **TODO Details**
 
 - <a id="Add-move-following-and-rotation-following-states-to-the-SlicerController.">Add move following and rotation following states to the SlicerController.</a>
+
+  [VideoExample](docs/Videos/SlicerFollow.mp4)
+
+  [![Static Badge](https://img.shields.io/badge/example-video-pink)](docs/Videos/SlicerFollow.mp4)
+
   - Add two states to SlicerController: SlicerTranslationFollowState and SlicerRotationFollowState. Both are inherited from SlicerMainMotionState.
   - To maintain a horizontal distance while following a positon, an adjustable distance parameter needs to be provided. This parameter should be written to the SlicerProperty, and SlicerInformation should be used to retrieve the parameter.
   - During the follow movement, the screen position of the mouse is captured from the previous frame to the current one. If the threshold is exceeded, the SlicerBox enters the rotation state and rotates 180 degrees.
