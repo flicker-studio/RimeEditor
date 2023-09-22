@@ -13,7 +13,7 @@ public class SlicerInformation : BaseInformation
 
     public List<Collider2D> TargetList = new List<Collider2D>();
 
-    public List<GameObject> ParentList = new List<GameObject>();
+    public PrefabFactory GetPrefabFactory => m_prefabFactory;
     
     public GameObject GetProductPrefab => m_prefabFactory.SLICE_OBJ;
 

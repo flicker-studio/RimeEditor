@@ -3,7 +3,9 @@
 ProJect-Moon
 </h1>
 
-[![Static Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
+
+
+[![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
 
 ## TODO
 
@@ -11,6 +13,7 @@ ProJect-Moon
 - [x] Multi-parameter player controller.
 - [x] Polygoncollider2D needs to be generated from the mesh, and concave polygons need to be supported.
 - [x] Accurate clipping, and the minimum number of game objects mounted.
+- [ ] [Add move following and rotation following states to the SlicerController.](#Add-move-following-and-rotation-following-states-to-the-SlicerController.)
 - [ ] The camera controller, based on Cinemachine cameras, requires enough pithy.
 - [ ] The AI of game NPCS requires high scalability and state-based production.
 - [ ] Optimal handling of physical collisions in which multiple objects physically form an assembly.
@@ -71,7 +74,7 @@ ProJect-Moon
 
 **The commit message specification for this project is as follows：**
 
-[![Static Badge](https://img.shields.io/badge/explain-Commit-green)](https://www.conventionalcommits.org/en/v1.0.0/#:~:text=feat%3A%20a%20commit%20of%20the,with%20MAJOR%20in%20Semantic%20Versioning)
+[![Static-Badge](https://img.shields.io/badge/explain-Commit-green)](https://www.conventionalcommits.org/en/v1.0.0/#:~:text=feat%3A%20a%20commit%20of%20the,with%20MAJOR%20in%20Semantic%20Versioning)
 
 | Type of change |                         Description                          |
 | :------------: | :----------------------------------------------------------: |
@@ -249,3 +252,13 @@ MotionStateFactory <|-- AddtiveMotionStateFactory
 MotionStateFactory <|-- MainMotionStateFactory
 
 ```
+
+**TODO Details**
+
+- <a id="Add-move-following-and-rotation-following-states-to-the-SlicerController.">Add move following and rotation following states to the SlicerController.</a>
+
+  [![Static-Badge](https://img.shields.io/badge/example-video-pink)](docs/Videos/SlicerFollow.mp4)
+
+  - Add two states to SlicerController: SlicerTranslationFollowState and SlicerRotationFollowState. Both are inherited from SlicerMainMotionState.
+  - To maintain a horizontal distance while following a positon, an adjustable distance parameter needs to be provided. This parameter should be written to the SlicerProperty, and SlicerInformation should be used to retrieve the parameter.
+  - During the follow movement, the screen position of the mouse is captured from the previous frame to the current one. If the threshold is exceeded, the SlicerBox enters the rotation state and rotates 180 degrees.
