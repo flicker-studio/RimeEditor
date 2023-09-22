@@ -11,7 +11,7 @@ ProJect-Moon
 - [x] Multi-parameter player controller.
 - [x] Polygoncollider2D needs to be generated from the mesh, and concave polygons need to be supported.
 - [x] Accurate clipping, and the minimum number of game objects mounted.
-- [ ] [Add move following and rotation following states to the SlicerController.](#TODO particulars)
+- [ ] [Add move following and rotation following states to the SlicerController.](#Add move following and rotation following states to the SlicerController.)
 - [ ] The camera controller, based on Cinemachine cameras, requires enough pithy.
 - [ ] The AI of game NPCS requires high scalability and state-based production.
 - [ ] Optimal handling of physical collisions in which multiple objects physically form an assembly.
@@ -253,7 +253,7 @@ MotionStateFactory <|-- MainMotionStateFactory
 
 **TODO Details**
 
-- <a id="TODO particulars">Add move following and rotation following states to the SlicerController.</a>
+- <a id="Add move following and rotation following states to the SlicerController.">Add move following and rotation following states to the SlicerController.</a>
   - Add two states to SlicerController: SlicerTranslationFollowState and SlicerRotationFollowState. Both are inherited from SlicerMainMotionState.
   - To maintain a horizontal distance while following a positon, an adjustable distance parameter needs to be provided. This parameter should be written to the SlicerProperty, and SlicerInformation should be used to retrieve the parameter.
   - During the follow movement, the screen position of the mouse is captured from the previous frame to the current one. If the threshold is exceeded, the SlicerBox enters the rotation state and rotates 180 degrees.
