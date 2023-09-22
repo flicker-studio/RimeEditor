@@ -2,7 +2,7 @@
   <img src="docs/Images/Logo/Logo.png?raw=true" alt="ProJect-Moon Logo" width="1000">
 ProJect-Moon
 </h1>
-[![Static Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
+[![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
 
 ## TODO
 
@@ -71,7 +71,7 @@ ProJect-Moon
 
 **The commit message specification for this project is as follows：**
 
-[![Static Badge](https://img.shields.io/badge/explain-Commit-green)](https://www.conventionalcommits.org/en/v1.0.0/#:~:text=feat%3A%20a%20commit%20of%20the,with%20MAJOR%20in%20Semantic%20Versioning)
+[![Static-Badge](https://img.shields.io/badge/explain-Commit-green)](https://www.conventionalcommits.org/en/v1.0.0/#:~:text=feat%3A%20a%20commit%20of%20the,with%20MAJOR%20in%20Semantic%20Versioning)
 
 | Type of change |                         Description                          |
 | :------------: | :----------------------------------------------------------: |
@@ -254,7 +254,7 @@ MotionStateFactory <|-- MainMotionStateFactory
 
 - <a id="Add-move-following-and-rotation-following-states-to-the-SlicerController.">Add move following and rotation following states to the SlicerController.</a>
 
-  [![Static Badge](https://img.shields.io/badge/example-video-pink)](docs/Videos/SlicerFollow.mp4)
+  [![Static-Badge](https://img.shields.io/badge/example-video-pink)](docs/Videos/SlicerFollow.mp4)
 
   - Add two states to SlicerController: SlicerTranslationFollowState and SlicerRotationFollowState. Both are inherited from SlicerMainMotionState.
   - To maintain a horizontal distance while following a positon, an adjustable distance parameter needs to be provided. This parameter should be written to the SlicerProperty, and SlicerInformation should be used to retrieve the parameter.
