@@ -1,5 +1,7 @@
-
-public abstract class BaseInformation
+namespace Frame.StateMachine
 {
+    public abstract class BaseInformation
+    {
     
+    }
 }

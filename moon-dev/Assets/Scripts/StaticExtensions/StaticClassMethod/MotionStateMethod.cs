@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Frame.StateMachine;
 using UnityEngine;
 
-public static class MotionStateMethod
+namespace Frame.Static.Extensions
 {
-    private static MOTIONSTATEENUM MainMotionType => MOTIONSTATEENUM.PlyerMainDefultState | MOTIONSTATEENUM.PlayerWalkAndRunState 
-        | MOTIONSTATEENUM.PlayerSlideState;
-
-    private static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.PlayerAdditiveDefultState |
-                                                         MOTIONSTATEENUM.PlayerPerpendicularGroundState | MOTIONSTATEENUM.PlayerJumpState |
-                                                         MOTIONSTATEENUM.None;
-    
-    public static bool CheckMotionIsMain(this MOTIONSTATEENUM motionStateEnum)
+    public static class MotionStateMethod
     {
-        if (MainMotionType.HasFlag(motionStateEnum)) return true;
-        else return false;
-    }
+        private static MOTIONSTATEENUM MainMotionType => MOTIONSTATEENUM.PlyerMainDefultState | MOTIONSTATEENUM.PlayerWalkAndRunState 
+            | MOTIONSTATEENUM.PlayerSlideState;
+
+        private static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.PlayerAdditiveDefultState |
+                                                             MOTIONSTATEENUM.PlayerPerpendicularGroundState | MOTIONSTATEENUM.PlayerJumpState |
+                                                             MOTIONSTATEENUM.None;
     
+        public static bool CheckMotionIsMain(this MOTIONSTATEENUM motionStateEnum)
+        {
+            if (MainMotionType.HasFlag(motionStateEnum)) return true;
+            else return false;
+        }
+    
+    }
 }

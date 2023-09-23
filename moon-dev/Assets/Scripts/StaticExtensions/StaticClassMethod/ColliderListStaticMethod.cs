@@ -1,8 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using Data.ScriptableObject;
 using UnityEngine;
+using Frame.Static.Global;
+using Frame.Tool.Pool;
 
-public static class ColliderListStaticMethod
+namespace Frame.Static.Extensions
+{
+    public static class ColliderListStaticMethod
 {
     private static PrefabFactory m_prefabFactory;
 
@@ -111,4 +116,5 @@ public static class ColliderListStaticMethod
         return ObjectPool.Instance.CompareObj(collider.gameObject,GetSlicerObj) ||
                collider.name.Contains(GlobalSetting.ObjNameTag.rigidbodyTag);
     }
+}
 }

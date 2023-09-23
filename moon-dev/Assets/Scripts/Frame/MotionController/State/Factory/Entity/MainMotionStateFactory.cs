@@ -1,28 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Character.Information;
+using Character.State;
 
-public class MainMotionStateFactory : MotionStateFactory
+namespace Frame.StateMachine
 {
-    public override MotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
-        MotionCallBack motionCallBack)
+    public class MainMotionStateFactory : MotionStateFactory
     {
-        if (information as PlayerInformation != null)
+        public override MotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
+            MotionCallBack motionCallBack)
         {
-            switch (motionStateEnum)
+            if (information as PlayerInformation != null)
             {
-                case MOTIONSTATEENUM.PlyerMainDefultState:
-                    return new PlayerMainDefultState(information, motionCallBack);
-                case MOTIONSTATEENUM.PlayerWalkAndRunState:
-                    return new PlayerWalkAndRunState(information, motionCallBack);
-                case MOTIONSTATEENUM.PlayerSlideState:
-                    return new PlayerSlideState(information, motionCallBack);
-                default:
-                    return null;
+                switch (motionStateEnum)
+                {
+                    case MOTIONSTATEENUM.PlyerMainDefultState:
+                        return new PlayerMainDefultState(information, motionCallBack);
+                    case MOTIONSTATEENUM.PlayerWalkAndRunState:
+                        return new PlayerWalkAndRunState(information, motionCallBack);
+                    case MOTIONSTATEENUM.PlayerSlideState:
+                        return new PlayerSlideState(information, motionCallBack);
+                    default:
+                        return null;
+                }
             }
-        }
 
-        return null;
+            return null;
+        }
     }
 }

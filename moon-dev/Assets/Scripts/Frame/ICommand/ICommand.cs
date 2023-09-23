@@ -1,4 +1,7 @@
-public interface ICommand
+namespace Frame.Tool
 {
-    public void Execute();
+    public interface ICommand
+    {
+        public void Execute();
+    }
 }

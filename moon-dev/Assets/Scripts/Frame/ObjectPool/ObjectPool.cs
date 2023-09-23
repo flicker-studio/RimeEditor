@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using Frame.Static.Extensions;
 using UnityEngine;
 
-public class ObjectPool : Singleton<ObjectPool>
+namespace Frame.Tool.Pool
+{
+    public class ObjectPool : Singleton<ObjectPool>
 {
     private GameObject m_cachePanel;
 
@@ -176,4 +179,6 @@ public class ObjectPool : Singleton<ObjectPool>
             GameObject.DontDestroyOnLoad(m_cachePanel);
         }
     }
+}
+
 }

@@ -1,9 +1,16 @@
-public abstract class SlicerMainMotionState : MainMotionState
+using Frame.StateMachine;
+using Slicer.Information;
+
+namespace Slicer.State
 {
-    protected SlicerInformation m_slicerInformation;
-    
-    protected SlicerMainMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+    public abstract class SlicerMainMotionState : MainMotionState
     {
-        m_slicerInformation = information as SlicerInformation;
+        protected SlicerInformation m_slicerInformation;
+    
+        protected SlicerMainMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+        {
+            m_slicerInformation = information as SlicerInformation;
+        }
     }
+
 }

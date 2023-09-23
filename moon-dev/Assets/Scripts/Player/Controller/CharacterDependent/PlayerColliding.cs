@@ -1,57 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
+using Character.Data;
+using Frame.Static.Extensions;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerColliding
+namespace Character.Information
 {
-    private bool m_isGround;
-
-    private bool m_isCeiling;
-
-    private Transform m_playerTransform;
-
-    private CharacterProperty m_characterProperty;
-
-    public bool IsGround
+    public class PlayerColliding
     {
-        get
-        {
-            m_isGround = CheckBox(m_playerTransform.position
-                                  + m_playerTransform.up * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
-                , m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
-            return m_isGround;
-        }
-    }
+        private bool m_isGround;
     
-    public bool IsCeiling
-    {
-        get
+        private bool m_isCeiling;
+    
+        private Transform m_playerTransform;
+    
+        private CharacterProperty m_characterProperty;
+    
+        public bool IsGround
         {
-            m_isCeiling = CheckBox(m_playerTransform.position
-                                   +  m_playerTransform.up * m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
-                , m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
-            return m_isCeiling;
+            get
+            {
+                m_isGround = CheckBox(m_playerTransform.position
+                                      + m_playerTransform.up * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
+                    , m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
+                return m_isGround;
+            }
         }
-    }
-
-    public PlayerColliding(Transform transform,CharacterProperty characterProperty)
-    {
-        m_playerTransform = transform;
-        m_characterProperty = characterProperty;
-    }
-
-    private bool CheckBox(Vector2 center, Vector2 size, float angle)
-    {
-        Collider2D[] colliderBuffer = center.OverlapRotatedBox(size, angle);
-         for (int i = 0; i < colliderBuffer.Length; i++)
-         {
-             if (m_characterProperty.GroundCheckParameter.CHECK_LAYER.ContainsLayer(colliderBuffer[i].gameObject.layer))
+        
+        public bool IsCeiling
+        {
+            get
+            {
+                m_isCeiling = CheckBox(m_playerTransform.position
+                                       +  m_playerTransform.up * m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_RELATIVE_POSITION_Y
+                    , m_characterProperty.CeilingCheckParameter.CHECK_CAPSULE_SIZE,m_playerTransform.rotation.eulerAngles.z);
+                return m_isCeiling;
+            }
+        }
+    
+        public PlayerColliding(Transform transform,CharacterProperty characterProperty)
+        {
+            m_playerTransform = transform;
+            m_characterProperty = characterProperty;
+        }
+    
+        private bool CheckBox(Vector2 center, Vector2 size, float angle)
+        {
+            Collider2D[] colliderBuffer = center.OverlapRotatedBox(size, angle);
+             for (int i = 0; i < colliderBuffer.Length; i++)
              {
-                 return true;
+                 if (m_characterProperty.GroundCheckParameter.CHECK_LAYER.ContainsLayer(colliderBuffer[i].gameObject.layer))
+                 {
+                     return true;
+                 }
              }
-         }
-         return false;
+             return false;
+        }
+        
     }
-    
 }

@@ -1,6 +1,10 @@
 using System.Collections.Generic;
+using Struct;
 using UnityEngine;
 
+namespace Frame.Static.Extensions
+{
+    
 public static class TrianglePointsMethod
 {
     /// <summary>
@@ -98,4 +102,6 @@ public static class TrianglePointsMethod
     {
         return v1.x * v2.y - v1.y * v2.x;
     }
+}
+
 }

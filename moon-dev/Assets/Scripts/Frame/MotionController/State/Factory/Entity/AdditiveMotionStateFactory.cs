@@ -1,45 +1,48 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Character.Information;
+using Character.State;
+using Slicer.Information;
+using Slicer.State;
 
-public class AdditiveMotionStateFactory : MotionStateFactory
+namespace Frame.StateMachine
 {
-    public override MotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
-        MotionCallBack motionCallBack)
+    public class AdditiveMotionStateFactory : MotionStateFactory
     {
-        if (information as PlayerInformation != null)
+        public override MotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
+            MotionCallBack motionCallBack)
         {
-            switch (motionStateEnum)
+            if (information as PlayerInformation != null)
             {
-                case MOTIONSTATEENUM.PlayerAdditiveDefultState:
-                    return new PlayerAdditiveDefultState(information,motionCallBack);
-                case MOTIONSTATEENUM.PlayerJumpState:
-                    return new PlayerJumpState(information, motionCallBack);
-                case MOTIONSTATEENUM.PlayerPerpendicularGroundState:
-                    return new PlayerPerpendicularGroundState(information, motionCallBack);
-                default:
-                    return null;
+                switch (motionStateEnum)
+                {
+                    case MOTIONSTATEENUM.PlayerAdditiveDefultState:
+                        return new PlayerAdditiveDefultState(information,motionCallBack);
+                    case MOTIONSTATEENUM.PlayerJumpState:
+                        return new PlayerJumpState(information, motionCallBack);
+                    case MOTIONSTATEENUM.PlayerPerpendicularGroundState:
+                        return new PlayerPerpendicularGroundState(information, motionCallBack);
+                    default:
+                        return null;
+                }
             }
-        }
 
-        if (information as SlicerInformation != null)
-        {
-            switch (motionStateEnum)
+            if (information as SlicerInformation != null)
             {
-                case MOTIONSTATEENUM.SlicerCloseState:
-                    return new SlicerCloseState(information,motionCallBack);
-                case MOTIONSTATEENUM.SlicerOpenState:
-                    return new SlicerOpenState(information,motionCallBack);
-                case MOTIONSTATEENUM.SlicerCopyState:
-                    return new SlicerCopyState(information,motionCallBack);
-                case MOTIONSTATEENUM.SlicerReleaseState:
-                    return new SlicerReleaseState(information,motionCallBack);
-                default:
-                    return null;
+                switch (motionStateEnum)
+                {
+                    case MOTIONSTATEENUM.SlicerCloseState:
+                        return new SlicerCloseState(information,motionCallBack);
+                    case MOTIONSTATEENUM.SlicerOpenState:
+                        return new SlicerOpenState(information,motionCallBack);
+                    case MOTIONSTATEENUM.SlicerCopyState:
+                        return new SlicerCopyState(information,motionCallBack);
+                    case MOTIONSTATEENUM.SlicerReleaseState:
+                        return new SlicerReleaseState(information,motionCallBack);
+                    default:
+                        return null;
+                }
             }
-        }
 
-        return null;
+            return null;
+        }
     }
 }

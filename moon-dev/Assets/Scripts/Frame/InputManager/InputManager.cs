@@ -1,6 +1,9 @@
+using Struct;
 using UnityEngine;
 
-public class InputManager : Singleton<InputManager>
+namespace Frame.Tool
+{
+    public class InputManager : Singleton<InputManager>
 {
     
     public InputManager()
@@ -215,4 +218,5 @@ public class InputManager : Singleton<InputManager>
     public bool GetDebuggerNum5Up => m_num5.GetInputUp;
 
     #endregion
+}
 }

@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public static class StringMethod
+namespace Frame.Static.Extensions
 {
-    public static string RemoveTrailingNumbers(this string input) {
-        return Regex.Replace(input, @"\d+$", "");
+    public static class StringMethod
+    {
+        public static string RemoveTrailingNumbers(this string input) {
+            return Regex.Replace(input, @"\d+$", "");
+        }
     }
 }
+

@@ -1,31 +1,38 @@
 using System.Collections.Generic;
-using System.Linq;
+using Frame.Static.Extensions;
+using Frame.Static.Global;
+using Frame.Tool;
+using Slicer.Information;
 using UnityEngine;
 
-public class ReleaseSlicer : ICommand
+namespace Slicer.Command
 {
-    private SlicerInformation m_slicerInformation;
+    public class ReleaseSlicer : ICommand
+    {
+        private SlicerInformation m_slicerInformation;
 
-    private List<List<Collider2D>> m_colliderListGroup = new List<List<Collider2D>>();
+        private List<List<Collider2D>> m_colliderListGroup = new List<List<Collider2D>>();
     
-    public ReleaseSlicer(SlicerInformation slicerInformation)
-    {
-        m_slicerInformation = slicerInformation;
-    }
-
-    public void Execute()
-    {
-        List<Collider2D> targetColliderList = m_slicerInformation.TargetList;
-        foreach (var collider in targetColliderList)
+        public ReleaseSlicer(SlicerInformation slicerInformation)
         {
-            collider.enabled = true;
+            m_slicerInformation = slicerInformation;
         }
-        m_colliderListGroup = targetColliderList.CheckColliderConnectivity(
-            m_slicerInformation.GetDetectionCompensationScale
-            , GlobalSetting.LayerMasks.GROUND);
+
+        public void Execute()
+        {
+            List<Collider2D> targetColliderList = m_slicerInformation.TargetList;
+            foreach (var collider in targetColliderList)
+            {
+                collider.enabled = true;
+            }
+            m_colliderListGroup = targetColliderList.CheckColliderConnectivity(
+                m_slicerInformation.GetDetectionCompensationScale
+                , GlobalSetting.LayerMasks.GROUND);
         
-        m_colliderListGroup.GetCombinationConnectivity(m_slicerInformation.GetPrefabFactory);
+            m_colliderListGroup.GetCombinationConnectivity(m_slicerInformation.GetPrefabFactory);
+        }
     }
+
+
+
 }
-
-

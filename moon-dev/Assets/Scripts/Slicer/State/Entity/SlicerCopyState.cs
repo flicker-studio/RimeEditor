@@ -1,17 +1,23 @@
-public class SlicerCopyState : SlicerAdditiveMotionState
-{
-    public SlicerCopyState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
-    {
-        m_sliceCommand = new CopySlicer(m_slicerInformation);
-    }
+using Frame.StateMachine;
+using Slicer.Command;
 
-    public override void Motion(BaseInformation information)
+namespace Slicer.State
+{
+    public class SlicerCopyState : SlicerAdditiveMotionState
     {
-        base.Motion(information);
-        if (m_slicerInformation.GetNum1Down)
+        public SlicerCopyState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
-            ChangeMotionState(MOTIONSTATEENUM.SlicerReleaseState);
-            RemoveState();
+            m_sliceCommand = new CopySlicer(m_slicerInformation);
+        }
+
+        public override void Motion(BaseInformation information)
+        {
+            base.Motion(information);
+            if (m_slicerInformation.GetNum1Down)
+            {
+                ChangeMotionState(MOTIONSTATEENUM.SlicerReleaseState);
+                RemoveState();
+            }
         }
     }
 }

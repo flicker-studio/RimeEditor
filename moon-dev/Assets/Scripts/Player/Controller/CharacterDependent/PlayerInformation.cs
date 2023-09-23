@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Character.Data;
+using Frame.StateMachine;
+using Frame.Static.Extensions;
 using UnityEngine;
 
-public class PlayerInformation : BaseInformation
+namespace Character.Information
+{
+    public class PlayerInformation : BaseInformation
 {
     public MotionInputController MotionInputController;
 
@@ -55,4 +60,5 @@ public class PlayerInformation : BaseInformation
         PlayerColliding = new PlayerColliding(transform,CharacterProperty);
         PlayerRaycasting = new PlayerRaycasting(CharacterProperty,ComponentController);
     }
+}
 }
