@@ -23,8 +23,7 @@ public class CopySlicer : ICommand
 
     private GameObject GetCombinationNotRigidbodyParentPrefab =>
         m_slicerInformation.GetCombinationNotRigidbodyParentPrefab;
-
-    //TODO:多个裁切器重置复制时会有明显BUG.待修复.
+    
     public void Execute()
     {
         m_colliderListGroup = m_slicerInformation.TargetList.CheckColliderConnectivity(
@@ -114,6 +113,27 @@ public class CopySlicer : ICommand
             {
                 targetColliderList.Remove(collider);
             }
+        }
+        foreach (var collider in tempList)
+        {
+            if(!targetColliderList.Contains(collider)) continue;
+            if(ObjectPool.Instance.CompareObj(collider.gameObject, m_slicerInformation.GetProductPrefab)) continue;
+            if(!oriColliderList.Contains(collider))continue;
+            GameObject obj = ObjectPool.Instance.OnTake(m_slicerInformation.GetProductPrefab);
+            obj.GetComponent<MeshFilter>().mesh = collider.GetComponent<MeshFilter>().mesh;
+            PolygonCollider2D targetPolygonCollider2D = collider.GetComponent<PolygonCollider2D>();
+            if (targetPolygonCollider2D != null)
+            {
+                obj.GetComponent<PolygonCollider2D>().CopyComponent(targetPolygonCollider2D);
+            }
+            else
+            {
+                obj.GetComponent<MeshFilter>().mesh.CreatePolygonCollider(obj.GetComponent<PolygonCollider2D>());
+            }
+            obj.transform.CopyValue(collider.transform);
+            obj.GetComponent<Renderer>().sharedMaterials = collider.GetComponent<MeshRenderer>().sharedMaterials;
+            targetColliderList.Add(obj.GetComponent<Collider2D>());
+            targetColliderList.Remove(collider);
         }
     }
 

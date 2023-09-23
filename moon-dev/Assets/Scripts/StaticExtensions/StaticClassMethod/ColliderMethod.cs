@@ -4,14 +4,12 @@ using UnityEngine;
 public static class ColliderMethod
 {
     private static ContactFilter2D m_contactFilter2D = new ContactFilter2D();
-    private static HashSet<Collider2D> m_visited = new HashSet<Collider2D>();
     
     public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider,Vector3 scale,LayerMask layerMask)
     {
         m_contactFilter2D.SetLayerMask(~layerMask);
         List<Collider2D> m_connectCollider = new List<Collider2D>();
-        m_visited.Clear();
-        m_connectCollider.Clear();
+        HashSet<Collider2D> m_visited = new HashSet<Collider2D>();
         Stack<Collider2D> stack = new Stack<Collider2D>();
         stack.Push(targetCollider);
         while (stack.Count > 0)
