@@ -1,26 +1,29 @@
 using Character.Information;
 using UnityEngine;
 
-public class CoyoteTimer
+namespace Character.State.Timer
 {
-    private float m_timer = 0;
-    public bool CheckTimer(PlayerInformation playerInformation)
+    public class CoyoteTimer
     {
-        bool check = m_timer < playerInformation.CharacterProperty.JumpProperty.COYOTE_TIME;
+        private float m_timer = 0;
+        public bool CheckTimer(PlayerInformation playerInformation)
+        {
+            bool check = m_timer < playerInformation.CharacterProperty.JumpProperty.COYOTE_TIME;
         
-        if (!playerInformation.PlayerColliding.IsGround && !playerInformation.MotionInputController.GetMotionInputData.JumpInput)
-        {
-            m_timer += Time.fixedDeltaTime;
-        }
-        else if(playerInformation.PlayerColliding.IsGround && !playerInformation.MotionInputController.GetMotionInputData.JumpInput)
-        {
-            m_timer = 0;
-        }
-        else
-        {
-            m_timer = playerInformation.CharacterProperty.JumpProperty.COYOTE_TIME;
-        }
+            if (!playerInformation.PlayerColliding.IsGround && !playerInformation.MotionInputController.GetMotionInputData.JumpInput)
+            {
+                m_timer += Time.fixedDeltaTime;
+            }
+            else if(playerInformation.PlayerColliding.IsGround && !playerInformation.MotionInputController.GetMotionInputData.JumpInput)
+            {
+                m_timer = 0;
+            }
+            else
+            {
+                m_timer = playerInformation.CharacterProperty.JumpProperty.COYOTE_TIME;
+            }
 
-        return check;
+            return check;
+        }
     }
 }

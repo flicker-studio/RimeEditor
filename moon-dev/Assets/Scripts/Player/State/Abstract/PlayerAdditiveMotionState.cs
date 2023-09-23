@@ -4,11 +4,14 @@ using Character.Information;
 using Frame.StateMachine;
 using UnityEngine;
 
-public abstract class PlayerAdditiveMotionState : AdditiveMotionState
+namespace Character.State
 {
-    protected PlayerInformation m_playerInformation;
-    public PlayerAdditiveMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+    public abstract class PlayerAdditiveMotionState : AdditiveMotionState
     {
-        m_playerInformation = information as PlayerInformation;
+        protected PlayerInformation m_playerInformation;
+        public PlayerAdditiveMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+        {
+            m_playerInformation = information as PlayerInformation;
+        }
     }
 }
