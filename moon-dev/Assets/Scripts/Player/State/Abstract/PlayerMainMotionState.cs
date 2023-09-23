@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using Character.Information;
 using Frame.StateMachine;
-using UnityEngine;
 
-public abstract class PlayerMainMotionState : MainMotionState
+namespace Character.State
 {
-    protected PlayerInformation m_playerInformation;
-    public PlayerMainMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+    public abstract class PlayerMainMotionState : MainMotionState
     {
-        m_playerInformation = information as PlayerInformation;
+        protected PlayerInformation m_playerInformation;
+        public PlayerMainMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+        {
+            m_playerInformation = information as PlayerInformation;
+        }
     }
+
 }
