@@ -1,0 +1,34 @@
+name: Help Docs
+
+on:
+  push:
+    branches: [main]
+    paths: ['moon-dev/**','docs/**','README.md']
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  Docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Self
+        uses: actions/checkout@v3
+
+      # Use the Readme.md as the first page
+      - name: Set first page
+        run: cp README.md docs/index.md
+      
+      - name: Build site
+        uses: nikeee/docfx-action@v1.0.0
+        with:
+          args: docs/docfx.json
+
+      - name: Azure Deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: "upload"
+          app_location: "docs/_site"  
+          skip_app_build: true
+          skip_api_build: true
