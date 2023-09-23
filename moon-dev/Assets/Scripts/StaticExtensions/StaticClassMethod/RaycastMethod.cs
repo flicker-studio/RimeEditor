@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class RaycastMethod
+namespace Frame.Static.Extensions
+{
+    public static class RaycastMethod
 {
     public static List<Vector2> CastRaysBetweenPoints(Vector2 startPoint, Vector2 endPoint, int rayCount,
                                                         Vector2 startPointCompensation,
@@ -60,3 +62,6 @@ public static class RaycastMethod
         return hitPoints;
     }
 }
+
+}
+

@@ -2,9 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EzySlice;
+using Frame.Static.Extensions;
+using Frame.Static.Global;
+using Frame.Tool;
+using Frame.Tool.Pool;
+using Slicer.Information;
 using UnityEngine;
 
-enum SLICEDIR
+namespace Slicer.Command
+{
+    enum SLICEDIR
 {
     Left,
     Up,
@@ -180,4 +187,6 @@ public class CopySlicer : ICommand
         newShared[shared.Length] = m_slicerInformation.GetCutSurfaceMaterial;
         obj.GetComponent<Renderer>().sharedMaterials = newShared;
     }
+}
+
 }

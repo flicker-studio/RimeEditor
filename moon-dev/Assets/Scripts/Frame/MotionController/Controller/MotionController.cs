@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Frame.Static.Extensions;
 using UnityEngine;
 
-public class MotionController
+namespace Frame.StateMachine
+{
+    public class MotionController
 {
     private List<MotionStateMachine> m_motionStateMachines;
 
@@ -77,4 +80,6 @@ public class MotionController
 
         return tempList;
     }
+}
+
 }

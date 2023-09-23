@@ -1,3 +1,4 @@
+using Character.Information;
 using UnityEngine;
 
 public class CoyoteTimer

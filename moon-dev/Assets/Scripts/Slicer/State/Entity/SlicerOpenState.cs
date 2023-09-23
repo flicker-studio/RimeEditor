@@ -1,16 +1,21 @@
-public class SlicerOpenState : SlicerAdditiveMotionState
-{
-    public SlicerOpenState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
-    {
-    }
+using Frame.StateMachine;
 
-    public override void Motion(BaseInformation information)
+namespace Slicer.State
+{
+    public class SlicerOpenState : SlicerAdditiveMotionState
     {
-        base.Motion(information);
-        if (m_slicerInformation.GetNum1Down)
+        public SlicerOpenState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
-            ChangeMotionState(MOTIONSTATEENUM.SlicerCopyState);
-            RemoveState();
+        }
+
+        public override void Motion(BaseInformation information)
+        {
+            base.Motion(information);
+            if (m_slicerInformation.GetNum1Down)
+            {
+                ChangeMotionState(MOTIONSTATEENUM.SlicerCopyState);
+                RemoveState();
+            }
         }
     }
 }

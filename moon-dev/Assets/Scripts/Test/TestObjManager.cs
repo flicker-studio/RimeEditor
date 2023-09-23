@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestObjManager : MonoBehaviour
+namespace Test
 {
-    public List<GameObject> m_canCopyObjs;
+    public class TestObjManager : MonoBehaviour
+    {
+        public List<GameObject> m_canCopyObjs;
 
-    public List<GameObject> m_canPushObjs;
+        public List<GameObject> m_canPushObjs;
+    }
 }

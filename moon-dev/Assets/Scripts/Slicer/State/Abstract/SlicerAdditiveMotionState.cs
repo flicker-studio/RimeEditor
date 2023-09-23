@@ -1,35 +1,42 @@
-public abstract class SlicerAdditiveMotionState : AdditiveMotionState
+using Frame.StateMachine;
+using Frame.Tool;
+using Slicer.Information;
+
+namespace Slicer.State
 {
-    protected SlicerInformation m_slicerInformation;
+    public abstract class SlicerAdditiveMotionState : AdditiveMotionState
+    {
+        protected SlicerInformation m_slicerInformation;
 
-    protected ICommand m_sliceCommand;
+        protected ICommand m_sliceCommand;
     
-    private bool m_firstExecute = true;
+        private bool m_firstExecute = true;
 
-    protected bool GetFirstExecute
-    {
-        get
+        protected bool GetFirstExecute
         {
-            if (m_firstExecute)
+            get
             {
-                m_firstExecute = false;
-                return true;
+                if (m_firstExecute)
+                {
+                    m_firstExecute = false;
+                    return true;
+                }
+
+                return false;
             }
-
-            return false;
         }
-    }
 
-    public override void Motion(BaseInformation information)
-    {
-        if (m_sliceCommand != null && GetFirstExecute)
+        public override void Motion(BaseInformation information)
         {
-            m_sliceCommand.Execute();
+            if (m_sliceCommand != null && GetFirstExecute)
+            {
+                m_sliceCommand.Execute();
+            }
         }
-    }
 
-    public SlicerAdditiveMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
-    {
-        m_slicerInformation = information as SlicerInformation;
+        public SlicerAdditiveMotionState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+        {
+            m_slicerInformation = information as SlicerInformation;
+        }
     }
 }

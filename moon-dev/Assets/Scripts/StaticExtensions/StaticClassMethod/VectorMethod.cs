@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Android;
 
-public static class VectorMethod
+namespace Frame.Static.Extensions
+{
+    public static class VectorMethod
 {
     public static Vector2 NewX(this Vector2 vector2,float x)
     {
@@ -95,5 +95,7 @@ public static class VectorMethod
         }
         return colliders;
     }
+
+}
 
 }

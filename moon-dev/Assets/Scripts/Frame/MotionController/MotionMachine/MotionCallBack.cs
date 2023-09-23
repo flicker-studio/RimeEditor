@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
 
-public delegate List<Type> CheckStatesCallBack();
-
-public delegate List<Type> CheckGlobalStatesCallBack();
-
-public delegate void ChangeMotionStateCallBack(MOTIONSTATEENUM motionStateEnum);
-
-public class MotionCallBack
+namespace Frame.StateMachine
 {
-    public CheckStatesCallBack CheckStatesCallBack;
+    public delegate List<Type> CheckStatesCallBack();
 
-    public CheckGlobalStatesCallBack CheckGlobalStatesCallBack;
+    public delegate List<Type> CheckGlobalStatesCallBack();
 
-    public ChangeMotionStateCallBack ChangeMotionStateCallBack;
+    public delegate void ChangeMotionStateCallBack(MOTIONSTATEENUM motionStateEnum);
+
+    public class MotionCallBack
+    {
+        public CheckStatesCallBack CheckStatesCallBack;
+
+        public CheckGlobalStatesCallBack CheckGlobalStatesCallBack;
+
+        public ChangeMotionStateCallBack ChangeMotionStateCallBack;
+    }
+
 }

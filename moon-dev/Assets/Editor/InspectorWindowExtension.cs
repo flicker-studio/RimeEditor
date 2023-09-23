@@ -1,9 +1,12 @@
+using Data.ScriptableObject;
+using Frame.Static.Extensions;
+using Frame.Static.Global;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(PolygonCollider2D))]
-public class PolygonCollider2DEditor : Editor
+public class PolygonCollider2DEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {

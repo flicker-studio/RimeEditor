@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ComponentMethod
+namespace Frame.Static.Extensions
 {
-    public static void CopyComponent(this Component original, Component target)
+    public static class ComponentMethod
     {
-        System.Type type = target.GetType();
-        System.Reflection.FieldInfo[] fields = type.GetFields();
-        foreach (System.Reflection.FieldInfo field in fields)
+        public static void CopyComponent(this Component original, Component target)
         {
-            field.SetValue(original, field.GetValue(target));
+            System.Type type = target.GetType();
+            System.Reflection.FieldInfo[] fields = type.GetFields();
+            foreach (System.Reflection.FieldInfo field in fields)
+            {
+                field.SetValue(original, field.GetValue(target));
+            }
         }
-    }
 
+    }
 }

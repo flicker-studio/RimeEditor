@@ -3,32 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddtiveMotionStateMachine : MotionStateMachine
+namespace Frame.StateMachine
 {
-    public override void ChangeMotionState(MOTIONSTATEENUM playerMoveState,BaseInformation information)
+    public class AddtiveMotionStateMachine : MotionStateMachine
     {
-        if (playerMoveState == MOTIONSTATEENUM.None)
+        public override void ChangeMotionState(MOTIONSTATEENUM playerMoveState,BaseInformation information)
         {
-            List<MotionState> tempList = new List<MotionState>();
-            tempList.AddRange(m_motionStates);
-            foreach (var state in tempList)
+            if (playerMoveState == MOTIONSTATEENUM.None)
             {
-                if ((state as AdditiveMotionState).IsEnd)
+                List<MotionState> tempList = new List<MotionState>();
+                tempList.AddRange(m_motionStates);
+                foreach (var state in tempList)
                 {
-                    m_motionStates.Remove(state);
+                    if ((state as AdditiveMotionState).IsEnd)
+                    {
+                        m_motionStates.Remove(state);
+                    }
                 }
+                return;
             }
-            return;
+            MotionState motionState = CreateMotionState(playerMoveState, information);
+            if(motionState == null) return;
+            if (m_motionStates.Contains(motionState)) return;
+            m_motionStates.Add(motionState);
         }
-        MotionState motionState = CreateMotionState(playerMoveState, information);
-        if(motionState == null) return;
-        if (m_motionStates.Contains(motionState)) return;
-        m_motionStates.Add(motionState);
-    }
 
 
-    public AddtiveMotionStateMachine(MotionCallBack motionCallBack): base(motionCallBack)
-    {
-        m_motionStateFactory = new AdditiveMotionStateFactory();
+        public AddtiveMotionStateMachine(MotionCallBack motionCallBack): base(motionCallBack)
+        {
+            m_motionStateFactory = new AdditiveMotionStateFactory();
+        }
     }
+
 }

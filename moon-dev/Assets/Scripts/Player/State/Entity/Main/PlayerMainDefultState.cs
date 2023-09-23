@@ -1,8 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Character.Data;
+using Character.Information;
+using Frame.StateMachine;
+using Frame.Static.Extensions;
 using UnityEngine;
 
-public class PlayerMainDefultState : PlayerMainMotionState
+namespace Character.State
+{
+    public class PlayerMainDefultState : PlayerMainMotionState
 {
     private float timmer = 0;
 
@@ -68,4 +74,5 @@ public class PlayerMainDefultState : PlayerMainMotionState
     {
         m_oriSpeed = GetRigidbody.velocity.x;
     }
+}
 }
