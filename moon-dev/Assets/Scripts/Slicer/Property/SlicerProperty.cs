@@ -11,6 +11,22 @@ namespace Slicer.Data
         public SlicerSizePanel SlicerSize;
 
         public ConnectedObjectPanel ConnectedObject;
+
+        public SlicerMotionPanel SlicerMotion;
+
+        [Serializable]
+        public struct SlicerMotionPanel
+        {
+            [CustomLabel("裁切器偏移量")] 
+            public Vector2 SLICE_OFFSET;
+
+            [CustomLabel("旋转速度")] 
+            public float ROTATION_SPEED;
+
+            [CustomLabel("裁切器转向阈值")] 
+            public int ROTATION_THRESHOLD;
+        }
+        
         [Serializable]
         public struct SlicerSizePanel
         {

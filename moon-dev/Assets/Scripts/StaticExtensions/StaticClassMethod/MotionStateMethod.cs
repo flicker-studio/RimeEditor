@@ -8,7 +8,7 @@ namespace Frame.Static.Extensions
     public static class MotionStateMethod
     {
         private static MOTIONSTATEENUM MainMotionType => MOTIONSTATEENUM.PlyerMainDefultState | MOTIONSTATEENUM.PlayerWalkAndRunState 
-            | MOTIONSTATEENUM.PlayerSlideState;
+            | MOTIONSTATEENUM.PlayerSlideState | MOTIONSTATEENUM.SlicerMoveFollowState | MOTIONSTATEENUM.SlicerRotationFollowState;
 
         private static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.PlayerAdditiveDefultState |
                                                              MOTIONSTATEENUM.PlayerPerpendicularGroundState | MOTIONSTATEENUM.PlayerJumpState |

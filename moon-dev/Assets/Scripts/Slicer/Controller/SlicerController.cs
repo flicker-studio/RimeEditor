@@ -9,11 +9,12 @@ namespace Slicer.Controller
         private MotionController m_motionController;
     
         private SlicerInformation m_slicerInformation;
+
+        [SerializeField] private Transform m_playerTransform;
         
-    
         void ControllerInit()
         {
-            m_slicerInformation = new SlicerInformation(transform);
+            m_slicerInformation = new SlicerInformation(transform, m_playerTransform);
             m_motionController = new MotionController(m_slicerInformation);
         }
         
@@ -37,7 +38,7 @@ namespace Slicer.Controller
     #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            if(m_slicerInformation == null) m_slicerInformation = new SlicerInformation(transform);
+            if(m_slicerInformation == null) m_slicerInformation = new SlicerInformation(transform, m_playerTransform);
             Gizmos.color = new Color(0, 1, 0, 0.5f);
             Matrix4x4 oldGizmosMatrix = Gizmos.matrix;
             Gizmos.matrix = Matrix4x4.TRS(transform.position,transform.rotation, m_slicerInformation.GetDetectionRange);

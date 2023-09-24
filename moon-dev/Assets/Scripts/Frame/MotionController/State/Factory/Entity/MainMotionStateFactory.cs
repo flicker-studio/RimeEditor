@@ -31,6 +31,8 @@ namespace Frame.StateMachine
                 {
                     case MOTIONSTATEENUM.SlicerMoveFollowState:
                         return new SlicerMoveFollowState(information, motionCallBack);
+                    case MOTIONSTATEENUM.SlicerRotationFollowState:
+                        return new SlicerRotationFollowState(information, motionCallBack);
                     default:
                         return null;
                 }
