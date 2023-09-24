@@ -21,7 +21,8 @@ namespace Frame.StateMachine
         SlicerCloseState = 1<<7,
         SlicerOpenState = 1<<8,
         SlicerCopyState = 1<<9,
-        SlicerReleaseState = 1<<10
+        SlicerReleaseState = 1<<10,
+        SlicerMoveFollowState = 1<<11
 
         #endregion
     }

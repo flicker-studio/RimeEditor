@@ -20,6 +20,7 @@ namespace Slicer.Controller
         private void MotionInit()
         {
             m_motionController.ChangeMotionState(MOTIONSTATEENUM.SlicerCloseState);
+            m_motionController.ChangeMotionState(MOTIONSTATEENUM.SlicerMoveFollowState);
         }
         
         private void Start()

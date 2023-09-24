@@ -1,5 +1,7 @@
 using Character.Information;
 using Character.State;
+using Slicer.Information;
+using Slicer.State;
 
 namespace Frame.StateMachine
 {
@@ -18,6 +20,17 @@ namespace Frame.StateMachine
                         return new PlayerWalkAndRunState(information, motionCallBack);
                     case MOTIONSTATEENUM.PlayerSlideState:
                         return new PlayerSlideState(information, motionCallBack);
+                    default:
+                        return null;
+                }
+            }
+            
+            if (information as SlicerInformation != null)
+            {
+                switch (motionStateEnum)
+                {
+                    case MOTIONSTATEENUM.SlicerMoveFollowState:
+                        return new SlicerMoveFollowState(information, motionCallBack);
                     default:
                         return null;
                 }
