@@ -1,0 +1,35 @@
+name: Tracking feature
+about: Use this template for tracking new features.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        这个模版用来跟踪一个新功能
+  - type: input
+    id: title
+    attributes:
+      label: 功能简述
+      description: 简短的描述功能情况
+      placeholder: 例如：为角色添加转身逻辑
+    validations:
+      required: true
+  - type: textarea
+    id: how-to-make
+    attributes:
+      label: 实现方案
+      description: 简述实现思路，如没有成熟想法，可以暂空
+      placeholder: 1. 使用四元数硬编码旋转
+      value: "暂无思路，待添加"
+      render: markdown
+    validations:
+      required: false
+  - type: checkboxes
+    id: urgent
+    attributes:
+      label: 急需实现
+      description: 当功能属于核心玩法或高优先级时，请勾选此项
+      options:
+        - label: 该功能急需实现！
+          required: true
