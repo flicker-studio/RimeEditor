@@ -1,6 +1,6 @@
 name: Tracking feature
 description: Use this template for tracking new features.
-title: "[Feature]: "
+title: "[Feature]: <title> "
 labels: ["enhancement"]
 projects: ["Moon"]
 body:
@@ -22,16 +22,8 @@ body:
       label: 实现方案
       description: 简述实现思路，如没有成熟想法，可以暂空
       placeholder: |
-        [x] 使用四元数硬编码旋转
-        [ ] 对控制器暴露接口  
+        1. 使用四元数硬编码旋转
+        2. 对控制器暴露接口  
       value: "暂无思路，待添加"
-      render: markdown
     validations:
       required: false
-  - type: checkboxes
-    id: urgent
-    attributes:
-      label: 急需实现
-      description: 当功能属于核心玩法或高优先级时，请勾选此项
-      options:
-        - label: 该功能急需实现！
