@@ -10,6 +10,7 @@ on:
 
 jobs:
   Docs:
+    if: github.repository_owner == 'fictional-vision'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Self
