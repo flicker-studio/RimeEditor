@@ -1,7 +1,8 @@
 name: Tracking feature
-about: Use this template for tracking new features.
+description: Use this template for tracking new features.
 title: "[Feature]: "
 labels: ["enhancement"]
+projects: ["Moon"]
 body:
   - type: markdown
     attributes:
