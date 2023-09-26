@@ -9,7 +9,7 @@ body:
       value: |
         这个模版用来跟踪一个新功能
   - type: input
-    id: title
+    id: short-description
     attributes:
       label: 功能简述
       description: 简短的描述功能情况
@@ -17,11 +17,13 @@ body:
     validations:
       required: true
   - type: textarea
-    id: how-to-make
+    id: todo-list
     attributes:
       label: 实现方案
       description: 简述实现思路，如没有成熟想法，可以暂空
-      placeholder: 1. 使用四元数硬编码旋转
+      placeholder: |
+        [x] 使用四元数硬编码旋转
+        [ ] 对控制器暴露接口  
       value: "暂无思路，待添加"
       render: markdown
     validations:
@@ -33,4 +35,3 @@ body:
       description: 当功能属于核心玩法或高优先级时，请勾选此项
       options:
         - label: 该功能急需实现！
-          required: true
