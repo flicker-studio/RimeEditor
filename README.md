@@ -253,6 +253,29 @@ MotionStateFactory <|-- MainMotionStateFactory
 
 ```
 
+LevelEditor
+
+```mermaid
+classDiagram
+LevelEditor *-- LevelManager
+LevelEditor *-- EditorUIManager
+LevelEditor *-- EditorCameraController
+LevelManager *-- CommandHistory
+LevelManager *-- Level
+CommandHistory *-- ICommand
+EditorUIManager *-- ItemUI
+EditorUIManager *-- ActionUI
+ItemUI *-- ItemBagUI
+ItemUI *-- ItemBottomListUI
+ItemUI *-- ItemDetailPanel
+ActionUI *-- PlayAndStopButtonUI
+ActionUI *-- UndoButtonUI
+ActionUI *-- RedoButtonUI
+ActionUI *-- BuildButtonUI
+ActionUI *-- ItemSelectorActionPanel
+EditorCameraController *-- MotionController
+```
+
 **TODO Details**
 
 - <a id="Add-move-following-and-rotation-following-states-to-the-SlicerController.">Add move following and rotation following states to the SlicerController.</a>
