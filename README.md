@@ -2,7 +2,6 @@
   <img src="docs/resources/images/Logo/Logo.png?raw=true" alt="ProJect-Moon Logo" width="1000">
 ProJect-Moon
 </h1>
-
 [![Help Docs](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/help-docs.yml/badge.svg)](https://orange-cliff-0c5466300.3.azurestaticapps.net)
 [![Unit Test](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml/badge.svg)](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml)
 [![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
@@ -253,35 +252,41 @@ MotionStateFactory <|-- MainMotionStateFactory
 
 ```
 
+LevelEditorCameraController
+
+```mermaid
+classDiagram
+MotionController o-- MotionStateMachine
+LevelEditorCameraController *-- MotionController
+LevelEditorCameraController *-- LevelEditorCameraInformation
+MotionController *-- BaseInformation
+MotionController *-- MotionCallBack
+MotionStateMachine <|-- AddtiveMotionStateMachine
+MotionStateMachine <|-- MainMotionStateMachine
+MotionStateMachine *-- MotionState
+MotionStateMachine *-- MotionStateFactory
+MotionState <|-- MainMotionState
+MotionState <|-- AdditiveMotionState
+MainMotionState <|-- LevelEditorCameraMainState
+AdditiveMotionState <|-- LevelEditorCameraAdditiveState
+MotionStateFactory <|-- AdditiveMotionStateFactory
+MotionStateFactory <|-- MainMotionStateFactory
+LevelEditorCameraAdditiveState <|-- LevelEditorCameraAdditiveDefultState
+LevelEditorCameraAdditiveState <|-- LevelEditorCameraMoveState
+LevelEditorCameraAdditiveState <|-- LevelEditorCameraChangeFovState
+```
+
+
+
 LevelEditor
 
 ```mermaid
 classDiagram
-LevelEditor *-- LevelManager
-LevelEditor *-- EditorUIManager
-LevelEditor *-- EditorCameraController
-LevelManager *-- CommandHistory
-LevelManager *-- Level
-CommandHistory *-- ICommand
-EditorUIManager *-- ItemUI
-EditorUIManager *-- ActionUI
-ItemUI *-- ItemBagUI
-ItemUI *-- ItemBottomListUI
-ItemUI *-- ItemDetailPanel
-ActionUI *-- PlayAndStopButtonUI
-ActionUI *-- UndoButtonUI
-ActionUI *-- RedoButtonUI
-ActionUI *-- BuildButtonUI
-ActionUI *-- ItemSelectorActionPanel
-EditorCameraController *-- MotionController
+LevelEditorCommand <|-- ItemPositionCommand
+LevelEditorCommand <|-- ItemRotationCommand
+LevelEditorCommand <|-- ItemScaleCommand
+LevelEditorCommand <|-- ItemRectCommand
+LevelEditorCommandManager *-- LevelEditorCommand
+LevelEditorCommandManager *-- LevelEditorCameraController
+LevelData *-- ItemData
 ```
-
-**TODO Details**
-
-- <a id="Add-move-following-and-rotation-following-states-to-the-SlicerController.">Add move following and rotation following states to the SlicerController.</a>
-
-  [![Static-Badge](https://img.shields.io/badge/example-video-pink)](docs/Videos/SlicerFollow.mp4)
-
-  - Add two states to SlicerController: SlicerTranslationFollowState and SlicerRotationFollowState. Both are inherited from SlicerMainMotionState.
-  - To maintain a horizontal distance while following a positon, an adjustable distance parameter needs to be provided. This parameter should be written to the SlicerProperty, and SlicerInformation should be used to retrieve the parameter.
-  - During the follow movement, the screen position of the mouse is captured from the previous frame to the current one. If the threshold is exceeded, the SlicerBox enters the rotation state and rotates 180 degrees.

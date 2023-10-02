@@ -42,6 +42,21 @@ namespace Frame.StateMachine
                 }
             }
 
+            if (information as LevelEditorCameraInformation != null)
+            {
+                switch (motionStateEnum)
+                {
+                    case MOTIONSTATEENUM.LevelEditorCameraAdditiveDefultState:
+                        return new LevelEditorCameraAdditiveDefultState(information, motionCallBack);
+                    case MOTIONSTATEENUM.LevelEditorCameraMoveState:
+                        return new LevelEditorCameraMoveState(information, motionCallBack);
+                    case MOTIONSTATEENUM.LevelEditorCameraChangeFovState:
+                        return new LevelEditorCameraChangeFovState(information, motionCallBack);
+                    default:
+                        return null;
+                }
+            }
+
             return null;
         }
     }

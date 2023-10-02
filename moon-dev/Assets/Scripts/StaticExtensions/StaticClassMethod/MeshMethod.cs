@@ -37,6 +37,7 @@ namespace Frame.Static.Extensions
             trianglePointsList = trianglePointsList.Where(triangle => triangle.Judge() == false).ToList();
             //去掉相交的三角形
             trianglePointsList = trianglePointsList.GetMaxTrianglePointsIndependentSet();
+            
             //设置三角形数组长度
             polygonCollider2D.pathCount = trianglePointsList.Count;
             //设置碰撞

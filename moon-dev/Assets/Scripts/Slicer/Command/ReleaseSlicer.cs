@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Slicer.Command
 {
-    public class ReleaseSlicer : ICommand
+    public class ReleaseSlicer : SliceCommand
     {
         private SlicerInformation m_slicerInformation;
 
@@ -18,7 +18,7 @@ namespace Slicer.Command
             m_slicerInformation = slicerInformation;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             List<Collider2D> targetColliderList = m_slicerInformation.TargetList;
             foreach (var collider in targetColliderList)

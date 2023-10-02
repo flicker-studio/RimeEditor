@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad25aacf383a3a4db34c7b012477ef4, type: 3}
+  m_Name: LevelEditorCameraProperty
+  m_EditorClassIdentifier: 
+  FovProperty:
+    CAMERA_Z_CHANGE_SPEED: 20
+    CAMERA_MIN_Z: 100
+    CAMERA_MAX_Z: -500
