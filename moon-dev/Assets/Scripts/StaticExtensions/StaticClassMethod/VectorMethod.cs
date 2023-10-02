@@ -25,6 +25,11 @@ namespace Frame.Static.Extensions
         return new Vector3(vector3.x,y,vector3.z);
     }
     
+    public static Vector3 NewZ(this Vector3 vector3,float z)
+    {
+        return new Vector3(vector3.x,vector3.y,z);
+    }
+    
     public static Vector2 ToVector2(this Vector3 vector3)
     {
         return new Vector2(vector3.x,vector3.y);

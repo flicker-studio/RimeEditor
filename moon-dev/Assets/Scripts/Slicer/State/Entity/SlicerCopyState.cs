@@ -7,7 +7,7 @@ namespace Slicer.State
     {
         public SlicerCopyState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
-            m_sliceCommand = new CopySlicer(m_slicerInformation);
+            MSliceDoCommand = new CopySlicer(m_slicerInformation);
         }
 
         public override void Motion(BaseInformation information)

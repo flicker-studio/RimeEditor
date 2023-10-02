@@ -19,7 +19,7 @@ namespace Slicer.Command
     Down
 }
 
-public class CopySlicer : ICommand
+public class CopySlicer : SliceCommand
 {
     private SlicerInformation m_slicerInformation;
     
@@ -31,7 +31,7 @@ public class CopySlicer : ICommand
     private GameObject GetCombinationNotRigidbodyParentPrefab =>
         m_slicerInformation.GetCombinationNotRigidbodyParentPrefab;
     
-    public void Execute()
+    public override void Execute()
     {
         m_colliderListGroup = m_slicerInformation.TargetList.CheckColliderConnectivity(
             m_slicerInformation.GetDetectionCompensationScale

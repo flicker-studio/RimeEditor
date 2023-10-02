@@ -10,48 +10,92 @@ namespace Frame.Tool
     {
         #region MotionActions
 
-        GetPlayerMotionActions.Move.performed += context =>
+        GetPlayerActions.Move.performed += context =>
         {
             m_moveInput.SetInput = context.ReadValue<Vector2>();
         };
 
-        GetPlayerMotionActions.Move.canceled += context =>
+        GetPlayerActions.Move.canceled += context =>
         {
             m_moveInput.SetInput = Vector2.zero;
         };
 
-        GetPlayerMotionActions.Jump.performed += context =>
+        GetPlayerActions.Jump.performed += context =>
         {
             m_jumpInput.SetInput = true;
         };
 
-        GetPlayerMotionActions.Jump.canceled += context =>
+        GetPlayerActions.Jump.canceled += context =>
         {
             m_jumpInput.SetInput = false;
         };
 
-        GetPlayerMotionActions.Run.performed += context =>
+        GetPlayerActions.Run.performed += context =>
         {
             m_runInput.SetInput = true;
         };
 
-        GetPlayerMotionActions.Run.canceled += context =>
+        GetPlayerActions.Run.canceled += context =>
         {
             m_runInput.SetInput = false;
         };
         
-        GetPlayerMotionActions.Slice.performed += context =>
+        GetPlayerActions.Slice.performed += context =>
         {
             m_sliceInput.SetInput = true;
         };
         
-        GetPlayerMotionActions.Slice.canceled += context =>
+        GetPlayerActions.Slice.canceled += context =>
         {
             m_sliceInput.SetInput = false;
         };
         
         #endregion
 
+        #region LevelEditor
+
+        GetLevelEditorActions.MouseLeftButton.performed += context =>
+        {
+            m_mouseLeftButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.MouseLeftButton.canceled += context =>
+        {
+            m_mouseLeftButton.SetInput = false;
+        };
+
+        GetLevelEditorActions.MouseRightButton.performed += context =>
+        {
+            m_mouseRightButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.MouseRightButton.canceled += context =>
+        {
+            m_mouseRightButton.SetInput = false;
+        };
+
+        GetLevelEditorActions.MouseMiddleButton.performed += context =>
+        {
+            m_mouseMiddleButton.SetInput = true;
+        };
+
+        GetLevelEditorActions.MouseMiddleButton.canceled += context =>
+        {
+            m_mouseMiddleButton.SetInput = false;
+        };
+        
+        GetLevelEditorActions.MouseScroll.performed += context =>
+        {
+            m_mouseScroll.SetInput = context.ReadValue<float>();
+        };
+        
+        GetLevelEditorActions.MouseScroll.canceled += context =>
+        {
+            m_mouseScroll.SetInput = 0;
+        };
+        
+        #endregion
+        
         #region Debugger
 
         GetDebuggerActions.Num1.performed += context =>
@@ -125,11 +169,19 @@ namespace Frame.Tool
         }
     }
 
-    private PlayerAction.PlayerMotionActions GetPlayerMotionActions
+    private PlayerAction.PlayerActions GetPlayerActions
     {
         get
         {
-            return GetPlayerInputActions.PlayerMotion;
+            return GetPlayerInputActions.Player;
+        }
+    }
+
+    private PlayerAction.LevelEditorActions GetLevelEditorActions
+    {
+        get
+        {
+            return GetPlayerInputActions.LevelEditor;
         }
     }
     
@@ -183,6 +235,42 @@ namespace Frame.Tool
 
     public bool GetSliceInputUp => m_sliceInput.GetInputUp;
     
+    #endregion
+
+    #region LevelEditor
+
+    private InputProperty<bool> m_mouseLeftButton = new InputProperty<bool>();
+
+    private InputProperty<bool> m_mouseRightButton = new InputProperty<bool>();
+
+    private InputProperty<bool> m_mouseMiddleButton = new InputProperty<bool>();
+    
+    private InputProperty<float> m_mouseScroll = new InputProperty<float>();
+
+    public bool GetMouseLeftButton => m_mouseLeftButton.GetInput;
+    
+    public bool GetMouseLeftButtonDown => m_mouseLeftButton.GetInputDown;
+    
+    public bool GetMouseLeftButtonUp => m_mouseLeftButton.GetInputUp;
+
+    public bool GetMouseRightButton => m_mouseRightButton.GetInput;
+    
+    public bool GetMouseRightButtonDown => m_mouseRightButton.GetInputDown;
+    
+    public bool GetMouseRightButtonUp => m_mouseRightButton.GetInputUp;
+    
+    public bool GetMouseMiddleButton => m_mouseMiddleButton.GetInput;
+    
+    public bool GetMouseMiddleButtonDown => m_mouseMiddleButton.GetInputDown;
+    
+    public bool GetMouseMiddleButtonUp => m_mouseMiddleButton.GetInputUp;
+
+    public float GetMouseScroll => m_mouseScroll.GetInput;
+    
+    public bool GetMouseScrollDown => m_mouseScroll.GetInputDown;
+    
+    public bool GetMouseScrollUp => m_mouseScroll.GetInputUp;
+
     #endregion
 
     #region Debugger

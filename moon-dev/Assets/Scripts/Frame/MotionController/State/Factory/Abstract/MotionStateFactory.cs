@@ -21,8 +21,16 @@ namespace Frame.StateMachine
         SlicerCloseState = 1<<7,
         SlicerOpenState = 1<<8,
         SlicerCopyState = 1<<9,
-        SlicerReleaseState = 1<<10
+        SlicerReleaseState = 1<<10,
 
+        #endregion
+
+        #region LevelEditorCamera
+
+        LevelEditorCameraAdditiveDefultState = 1<<11,
+        LevelEditorCameraMoveState = 1<<12,
+        LevelEditorCameraChangeFovState = 1 << 13
+            
         #endregion
     }
 

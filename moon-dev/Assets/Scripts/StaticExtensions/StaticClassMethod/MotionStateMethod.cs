@@ -12,6 +12,10 @@ namespace Frame.Static.Extensions
 
         private static MOTIONSTATEENUM AdditiveMotionType => MOTIONSTATEENUM.PlayerAdditiveDefultState |
                                                              MOTIONSTATEENUM.PlayerPerpendicularGroundState | MOTIONSTATEENUM.PlayerJumpState |
+                                                             MOTIONSTATEENUM.SlicerCloseState | MOTIONSTATEENUM.PlayerJumpState |
+                                                             MOTIONSTATEENUM.SlicerCopyState | MOTIONSTATEENUM.SlicerOpenState |
+                                                             MOTIONSTATEENUM.LevelEditorCameraMoveState | MOTIONSTATEENUM.LevelEditorCameraAdditiveDefultState |
+                                                             MOTIONSTATEENUM.LevelEditorCameraChangeFovState |
                                                              MOTIONSTATEENUM.None;
     
         public static bool CheckMotionIsMain(this MOTIONSTATEENUM motionStateEnum)
