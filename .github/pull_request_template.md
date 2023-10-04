@@ -21,6 +21,7 @@
 > 使用下列语法和issue序号来关闭和链接issue
 
 Closed #1
+
 Resolve #2
 
 ## 注释

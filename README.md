@@ -2,6 +2,7 @@
   <img src="docs/resources/images/Logo/Logo.png?raw=true" alt="ProJect-Moon Logo" width="1000">
 ProJect-Moon
 </h1>
+
 [![Help Docs](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/help-docs.yml/badge.svg)](https://orange-cliff-0c5466300.3.azurestaticapps.net)
 [![Unit Test](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml/badge.svg)](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml)
 [![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
@@ -41,23 +42,9 @@ ProJect-Moon
   <img src="docs/resources/images/Textures/SlicerBox.png?raw=true" alt="SlicerBox" width="1000">
 </h3>
 
-## Project structure
+## 代码样式规则
 
-**The code naming convention for this project is as follows：**
-
-|        Type         |     Name     |
-| :-----------------: | :----------: |
-|        Class        |    Robot     |
-|      Interface      |     IEat     |
-|  Private Attribute  | m_robotSpeed |
-|  Public Attribute   |  RobotSpeed  |
-| Protected Attribute | m_robotSpeed |
-|     Enum Class      |  ROBOT_TYPE  |
-|   Local Parameter   |  robotSpeed  |
-
-------
-
-**The code method parenthesis specification for this project is as follows：**
+ 本项目使用`EditorConfig`来约定代码样式，你可以按照教程在[VS](https://learn.microsoft.com/zh-cn/visualstudio/ide/code-styles-and-code-cleanup?view=vs-2022)和[Rider](https://www.jetbrains.com/help/rider/Using_EditorConfig.html)中轻松配置代码样式并启用智能提醒。
 
 - ```c#
   public void Motion()
@@ -275,8 +262,6 @@ LevelEditorCameraAdditiveState <|-- LevelEditorCameraAdditiveDefultState
 LevelEditorCameraAdditiveState <|-- LevelEditorCameraMoveState
 LevelEditorCameraAdditiveState <|-- LevelEditorCameraChangeFovState
 ```
-
-
 
 LevelEditor
 
