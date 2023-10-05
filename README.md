@@ -4,7 +4,7 @@ ProJect-Moon
 </h1>
 [![Help Docs](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/help-docs.yml/badge.svg)](https://orange-cliff-0c5466300.3.azurestaticapps.net)
 [![Unit Test](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml/badge.svg)](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml)
-[![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
+![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
 
 ## TODO
 
@@ -274,6 +274,8 @@ MotionStateFactory <|-- MainMotionStateFactory
 LevelEditorCameraAdditiveState <|-- LevelEditorCameraAdditiveDefultState
 LevelEditorCameraAdditiveState <|-- LevelEditorCameraMoveState
 LevelEditorCameraAdditiveState <|-- LevelEditorCameraChangeFovState
+LevelEditorCameraAdditiveState <|-- MouseSelecteState
+MouseSelecteState *-- OutlinePrinter
 ```
 
 
@@ -289,4 +291,6 @@ LevelEditorCommand <|-- ItemRectCommand
 LevelEditorCommandManager *-- LevelEditorCommand
 LevelEditorCommandManager *-- LevelEditorCameraController
 LevelData *-- ItemData
+LevelEditor *-- LevelEditorCommandManager
+LevelEditor *-- LevelEditorCameraConroller
 ```

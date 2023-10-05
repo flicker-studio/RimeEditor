@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data.ScriptableObject;
 using Frame.StateMachine;
 using Frame.Tool;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelEditorCameraInformation : BaseInformation
 {
@@ -10,17 +12,41 @@ public class LevelEditorCameraInformation : BaseInformation
 
     private Camera m_camera;
 
-    private LevelEditorCameraProperty m_cameraProperty;
+    private LevelEditorProperty m_property;
+
+    private RectTransform m_selectionUIRect;
+
+    private Image m_selectionImage;
+
+    private PrefabFactory m_prefabFactory;
+
+    public List<GameObject> TargetList = new List<GameObject>();
 
     public Transform GetCameraTransform => m_cameraTransform;
 
+    public RectTransform GetSelectionUIRect => m_selectionUIRect;
+
+    public Image GetSelectionImage => m_selectionImage;
+
     public Camera GetCamera => m_camera;
 
-    public float GetCameraMaxZ => m_cameraProperty.FovProperty.CAMERA_MAX_Z;
+    public GameObject GetEmptyGameObject => m_prefabFactory.EMPTY_GAMEOBJECT;
+
+    public float GetCameraMaxZ => m_property.GetCameraMotionProperty.CAMERA_MAX_Z;
     
-    public float GetCameraMinZ => m_cameraProperty.FovProperty.CAMERA_MIN_Z;
+    public float GetCameraMinZ => m_property.GetCameraMotionProperty.CAMERA_MIN_Z;
     
-    public float GetCameraZChangeSpeed => m_cameraProperty.FovProperty.CAMERA_Z_CHANGE_SPEED;
+    public float GetCameraZChangeSpeed => m_property.GetCameraMotionProperty.CAMERA_Z_CHANGE_SPEED;
+
+    public OUTLINEMODE GetOutlineMode => m_property.GetOutlineProperty.OUTLINE_MODE;
+
+    public Color GetOutlineColor => m_property.GetOutlineProperty.OUTLINE_COLOR;
+
+    public float GetOutlineWidth => m_property.GetOutlineProperty.OUTLINE_WIDTH;
+
+    public Vector2 GetSelectionMinSize => m_property.GetSelectionProperty.SELECTION_MIN_SIZE;
+
+    public Color GetSelectionColor => m_property.GetSelectionProperty.SELECTION_COLOR;
     
     public bool GetMouseLeftButton => InputManager.Instance.GetMouseLeftButton;
     
@@ -47,11 +73,18 @@ public class LevelEditorCameraInformation : BaseInformation
     
     public bool GetMouseMiddleButtonUp => InputManager.Instance.GetMouseMiddleButtonUp;
 
+    public bool GetShiftButton => InputManager.Instance.GetShiftButton;
 
-    public LevelEditorCameraInformation(Transform cameraTransform)
+    public bool GetCtrlButton => InputManager.Instance.GetCtrlButton;
+
+
+    public LevelEditorCameraInformation(RectTransform selectionUIRect)
     {
-        m_cameraTransform = cameraTransform;
-        m_camera = cameraTransform.GetComponent<Camera>();
-        m_cameraProperty = Resources.Load<LevelEditorCameraProperty>("GlobalSettings/LevelEditorCameraProperty");
+        m_cameraTransform = Camera.main.transform;
+        m_camera = m_cameraTransform.GetComponent<Camera>();
+        m_selectionUIRect = selectionUIRect;
+        m_selectionImage = selectionUIRect.GetComponent<Image>();
+        m_property = Resources.Load<LevelEditorProperty>("GlobalSettings/LevelEditorCameraProperty");
+        m_prefabFactory = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
     }
 }

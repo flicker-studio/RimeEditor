@@ -29,8 +29,8 @@ namespace Frame.StateMachine
 
         LevelEditorCameraAdditiveDefultState = 1<<11,
         LevelEditorCameraMoveState = 1<<12,
-        LevelEditorCameraChangeFovState = 1 << 13
-            
+        LevelEditorCameraChangeFovState = 1 << 13,
+        MouseSelecteState = 1 << 14
         #endregion
     }
 

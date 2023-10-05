@@ -17,6 +17,9 @@ namespace Data.ScriptableObject
     
         [CustomLabel("刚体组件父节点")] 
         public GameObject RIGIDBODY_PARENT;
+        
+        [CustomLabel("空物体节点")] 
+        public GameObject EMPTY_GAMEOBJECT;
     }
 }
 

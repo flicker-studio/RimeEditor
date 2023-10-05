@@ -52,6 +52,8 @@ namespace Frame.StateMachine
                         return new LevelEditorCameraMoveState(information, motionCallBack);
                     case MOTIONSTATEENUM.LevelEditorCameraChangeFovState:
                         return new LevelEditorCameraChangeFovState(information, motionCallBack);
+                    case MOTIONSTATEENUM.MouseSelecteState:
+                        return new MouseSelecteState(information, motionCallBack);
                     default:
                         return null;
                 }

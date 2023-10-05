@@ -15,7 +15,7 @@ namespace Frame.Static.Extensions
                                                              MOTIONSTATEENUM.SlicerCloseState | MOTIONSTATEENUM.PlayerJumpState |
                                                              MOTIONSTATEENUM.SlicerCopyState | MOTIONSTATEENUM.SlicerOpenState |
                                                              MOTIONSTATEENUM.LevelEditorCameraMoveState | MOTIONSTATEENUM.LevelEditorCameraAdditiveDefultState |
-                                                             MOTIONSTATEENUM.LevelEditorCameraChangeFovState |
+                                                             MOTIONSTATEENUM.LevelEditorCameraChangeFovState | MOTIONSTATEENUM.MouseSelecteState |
                                                              MOTIONSTATEENUM.None;
     
         public static bool CheckMotionIsMain(this MOTIONSTATEENUM motionStateEnum)
