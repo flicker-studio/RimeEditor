@@ -11,7 +11,7 @@ public class LevelEditorCameraMoveState : LevelEditorCameraAdditiveState
     private Transform GetTransform => m_cameraInformation.GetCameraTransform;
 
     private Vector3 MouseWorldPoint =>
-        Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Camera.main.farClipPlane * .5f));
+        Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Mathf.Abs(GetTransform.position.z)));
     
     public LevelEditorCameraMoveState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
     {
@@ -25,7 +25,9 @@ public class LevelEditorCameraMoveState : LevelEditorCameraAdditiveState
             RemoveState();
             return;
         }
-        Vector3 different = MouseWorldPoint - GetTransform.position;
-        GetTransform.position = m_originMousePosition - different;
+        
+        Vector3 different = m_originMousePosition - MouseWorldPoint;
+
+        GetTransform.position += different;
     }
 }

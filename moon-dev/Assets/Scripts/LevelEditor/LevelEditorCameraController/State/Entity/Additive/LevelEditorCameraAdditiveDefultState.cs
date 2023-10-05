@@ -24,5 +24,13 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
                 ChangeMotionState(MOTIONSTATEENUM.LevelEditorCameraChangeFovState);
             }
         }
+
+        if (m_cameraInformation.GetMouseLeftButtonDown)
+        {
+            if (!CheckStates.Contains(typeof(MouseSelecteState)))
+            {
+                ChangeMotionState(MOTIONSTATEENUM.MouseSelecteState);
+            }
+        }
     }
 }

@@ -194,6 +194,24 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ShiftButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""799fdf90-8207-4541-9b7c-32adda34045c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CtrlButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2aa88f7-dfa8-4be0-8686-305030f30d45"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -238,6 +256,28 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad9aba12-9d0b-4993-807d-fba5e3aa92cb"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShiftButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b6d4f76-839e-4277-b42c-234159d240e3"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CtrlButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -366,6 +406,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_LevelEditor_MouseRightButton = m_LevelEditor.FindAction("MouseRightButton", throwIfNotFound: true);
         m_LevelEditor_MouseMiddleButton = m_LevelEditor.FindAction("MouseMiddleButton", throwIfNotFound: true);
         m_LevelEditor_MouseScroll = m_LevelEditor.FindAction("MouseScroll", throwIfNotFound: true);
+        m_LevelEditor_ShiftButton = m_LevelEditor.FindAction("ShiftButton", throwIfNotFound: true);
+        m_LevelEditor_CtrlButton = m_LevelEditor.FindAction("CtrlButton", throwIfNotFound: true);
         // Debugger
         m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
         m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
@@ -508,6 +550,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_LevelEditor_MouseRightButton;
     private readonly InputAction m_LevelEditor_MouseMiddleButton;
     private readonly InputAction m_LevelEditor_MouseScroll;
+    private readonly InputAction m_LevelEditor_ShiftButton;
+    private readonly InputAction m_LevelEditor_CtrlButton;
     public struct LevelEditorActions
     {
         private @PlayerAction m_Wrapper;
@@ -516,6 +560,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @MouseRightButton => m_Wrapper.m_LevelEditor_MouseRightButton;
         public InputAction @MouseMiddleButton => m_Wrapper.m_LevelEditor_MouseMiddleButton;
         public InputAction @MouseScroll => m_Wrapper.m_LevelEditor_MouseScroll;
+        public InputAction @ShiftButton => m_Wrapper.m_LevelEditor_ShiftButton;
+        public InputAction @CtrlButton => m_Wrapper.m_LevelEditor_CtrlButton;
         public InputActionMap Get() { return m_Wrapper.m_LevelEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -537,6 +583,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @MouseScroll.started += instance.OnMouseScroll;
             @MouseScroll.performed += instance.OnMouseScroll;
             @MouseScroll.canceled += instance.OnMouseScroll;
+            @ShiftButton.started += instance.OnShiftButton;
+            @ShiftButton.performed += instance.OnShiftButton;
+            @ShiftButton.canceled += instance.OnShiftButton;
+            @CtrlButton.started += instance.OnCtrlButton;
+            @CtrlButton.performed += instance.OnCtrlButton;
+            @CtrlButton.canceled += instance.OnCtrlButton;
         }
 
         private void UnregisterCallbacks(ILevelEditorActions instance)
@@ -553,6 +605,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @MouseScroll.started -= instance.OnMouseScroll;
             @MouseScroll.performed -= instance.OnMouseScroll;
             @MouseScroll.canceled -= instance.OnMouseScroll;
+            @ShiftButton.started -= instance.OnShiftButton;
+            @ShiftButton.performed -= instance.OnShiftButton;
+            @ShiftButton.canceled -= instance.OnShiftButton;
+            @CtrlButton.started -= instance.OnCtrlButton;
+            @CtrlButton.performed -= instance.OnCtrlButton;
+            @CtrlButton.canceled -= instance.OnCtrlButton;
         }
 
         public void RemoveCallbacks(ILevelEditorActions instance)
@@ -661,6 +719,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnMouseRightButton(InputAction.CallbackContext context);
         void OnMouseMiddleButton(InputAction.CallbackContext context);
         void OnMouseScroll(InputAction.CallbackContext context);
+        void OnShiftButton(InputAction.CallbackContext context);
+        void OnCtrlButton(InputAction.CallbackContext context);
     }
     public interface IDebuggerActions
     {

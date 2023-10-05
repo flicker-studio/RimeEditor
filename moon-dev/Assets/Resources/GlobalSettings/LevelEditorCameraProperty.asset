@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad25aacf383a3a4db34c7b012477ef4, type: 3}
   m_Name: LevelEditorCameraProperty
   m_EditorClassIdentifier: 
-  FovProperty:
-    CAMERA_Z_CHANGE_SPEED: 20
-    CAMERA_MIN_Z: 100
-    CAMERA_MAX_Z: -500
+  GetCameraMotionProperty:
+    CAMERA_Z_CHANGE_SPEED: 2
+    CAMERA_MIN_Z: -5
+    CAMERA_MAX_Z: -50
+  GetOutlineProperty:
+    OUTLINE_MODE: 0
+    OUTLINE_COLOR: {r: 1, g: 0.9371726, b: 0, a: 1}
+    OUTLINE_WIDTH: 3.5
+  GetSelectionProperty:
+    SELECTION_MIN_SIZE: {x: 0.01, y: 0.01}
+    SELECTION_COLOR: {r: 0.56078434, g: 0.9411765, b: 1, a: 0.2}

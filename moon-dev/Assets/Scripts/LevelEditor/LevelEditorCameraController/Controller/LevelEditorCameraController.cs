@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using Frame.StateMachine;
 using UnityEngine;
 
-public class LevelEditorCameraController : MonoBehaviour
+public class LevelEditorCameraController
 {
     private MotionController m_motionController;
 
     private LevelEditorCameraInformation m_cameraInformation;
-    
-    void ControllerInit()
+
+    public LevelEditorCameraController(RectTransform selectionUI)
     {
-        m_cameraInformation = new LevelEditorCameraInformation(transform);
+        ControllerInit(selectionUI);
+        MotionInit();
+    }
+    
+    void ControllerInit(RectTransform selectionUI)
+    {
+        m_cameraInformation = new LevelEditorCameraInformation(selectionUI);
         m_motionController = new MotionController(m_cameraInformation);
     }
     
@@ -19,14 +25,8 @@ public class LevelEditorCameraController : MonoBehaviour
     {
         m_motionController.ChangeMotionState(MOTIONSTATEENUM.LevelEditorCameraAdditiveDefultState);
     }
-        
-    private void Start()
-    {
-        ControllerInit();
-        MotionInit();
-    }
     
-    private void LateUpdate()
+    public void LateUpdate()
     {
         m_motionController.Motion(m_cameraInformation);
     }
