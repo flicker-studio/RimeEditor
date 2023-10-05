@@ -62,7 +62,7 @@ ProJect-Moon
 
 Commit Message规范如下，参考于[Conventional Commits](<https://www.conventionalcommits.org/en/v1.0.0/#:~:text=feat%3A%20a%20commit%20of%20the,with%20MAJOR%20in%20Semantic%20Versioning>)
 
-```#bash
+```text
 <type>(<scope>): <subject>
 
 <body>
