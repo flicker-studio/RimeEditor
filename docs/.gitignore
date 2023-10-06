@@ -1,3 +1,5 @@
-# doc temp
+# Docfx website
+_site
 _site/*
+api
 api/*
