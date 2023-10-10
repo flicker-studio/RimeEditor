@@ -101,6 +101,16 @@ namespace Frame.Static.Extensions
         return colliders;
     }
 
+    public static Vector3 GetCenterPoint(this List<Vector3> points)
+    {
+        Vector3 sum = Vector3.zero;
+        foreach (var point in points)
+        {
+            sum += point;
+        }
+        return sum / points.Count;
+    }
+
 }
 
 }

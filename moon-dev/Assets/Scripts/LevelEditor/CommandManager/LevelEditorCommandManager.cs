@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 
+public delegate void LevelEditorCommandExcute(LevelEditorCommand command);
 public class LevelEditorCommandManager
 {
     private Stack<LevelEditorCommand> m_undoCommands = new Stack<LevelEditorCommand>();

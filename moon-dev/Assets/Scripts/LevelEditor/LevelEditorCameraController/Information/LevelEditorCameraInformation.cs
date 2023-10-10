@@ -1,10 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using Data.ScriptableObject;
 using Frame.StateMachine;
-using Frame.Tool;
+using Frame.Static.Extensions;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+
+public enum LEVELEDITORACTIONTYPE
+{
+    UndoButton,
+    RedoButton,
+    ViewButton,
+    PositionAxisButton,
+    RotationAxisButton,
+    ScaleButton,
+    RectButton
+}
+
+public class LevelEditorAction
+{
+    public LEVELEDITORACTIONTYPE LevelEditorActionType = LEVELEDITORACTIONTYPE.PositionAxisButton;
+}
 
 public class LevelEditorCameraInformation : BaseInformation
 {
@@ -14,6 +30,8 @@ public class LevelEditorCameraInformation : BaseInformation
 
     private LevelEditorProperty m_property;
 
+    private LevelEditorInputController m_inputController;
+
     private RectTransform m_selectionUIRect;
 
     private Image m_selectionImage;
@@ -21,6 +39,12 @@ public class LevelEditorCameraInformation : BaseInformation
     private PrefabFactory m_prefabFactory;
 
     public List<GameObject> TargetList = new List<GameObject>();
+    
+    public RectTransform GetPositionAxisRectTransform => m_inputController.GetPositionAxisRectTransform;
+
+    public RectTransform GetRotationAxisRectTransform => m_inputController.GetRotationAxisRectTransform;
+
+    public LevelEditorInputController GetInput => m_inputController;
 
     public Transform GetCameraTransform => m_cameraTransform;
 
@@ -29,8 +53,26 @@ public class LevelEditorCameraInformation : BaseInformation
     public Image GetSelectionImage => m_selectionImage;
 
     public Camera GetCamera => m_camera;
+    
+    private LevelEditorCommandExcute m_commandExcute;
+
+    private LEVELEDITORACTIONTYPE m_levelEditorActionType;
+    
+    
+    public Vector3 GetMousePosition => Mouse.current.position.ReadValue();
+    
+    public Vector3 GetMouseWorldPoint =>
+        Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Mathf.Abs(GetCameraTransform.position.z)));
+
+    private LevelEditorAction m_levelEditorAction = new LevelEditorAction();
+    
+    public LevelEditorAction GetLevelEditorAction => m_levelEditorAction;
 
     public GameObject GetEmptyGameObject => m_prefabFactory.EMPTY_GAMEOBJECT;
+
+    public LevelEditorProperty.UIProperty GetUIProperty => m_property.GetUIProperty;
+
+    public float GetRotationSpeed => m_property.GetRotationDragProperty.ROTATION_SPEED;
 
     public float GetCameraMaxZ => m_property.GetCameraMotionProperty.CAMERA_MAX_Z;
     
@@ -47,44 +89,23 @@ public class LevelEditorCameraInformation : BaseInformation
     public Vector2 GetSelectionMinSize => m_property.GetSelectionProperty.SELECTION_MIN_SIZE;
 
     public Color GetSelectionColor => m_property.GetSelectionProperty.SELECTION_COLOR;
-    
-    public bool GetMouseLeftButton => InputManager.Instance.GetMouseLeftButton;
-    
-    public bool GetMouseLeftButtonDown => InputManager.Instance.GetMouseLeftButtonDown;
-    
-    public bool GetMouseLeftButtonUp => InputManager.Instance.GetMouseLeftButtonUp;
-    
-    public bool GetMouseRightButton => InputManager.Instance.GetMouseRightButton;
-    
-    public bool GetMouseRightButtonDown => InputManager.Instance.GetMouseRightButtonDown;
-    
-    public bool GetMouseRightButtonUp => InputManager.Instance.GetMouseRightButtonUp;
 
+    public LevelEditorCommandExcute GetLevelEditorCommandExcute => m_commandExcute;
     
-    public bool GetMouseMiddleButton => InputManager.Instance.GetMouseMiddleButton;
-
-    public float GetMouseSroll => InputManager.Instance.GetMouseScroll;
-    
-    public bool GetMouseSrollDown => InputManager.Instance.GetMouseScrollDown;
-    
-    public bool GetMouseSrollUp => InputManager.Instance.GetMouseScrollUp;
-    
-    public bool GetMouseMiddleButtonDown => InputManager.Instance.GetMouseMiddleButtonDown;
-    
-    public bool GetMouseMiddleButtonUp => InputManager.Instance.GetMouseMiddleButtonUp;
-
-    public bool GetShiftButton => InputManager.Instance.GetShiftButton;
-
-    public bool GetCtrlButton => InputManager.Instance.GetCtrlButton;
-
-
-    public LevelEditorCameraInformation(RectTransform selectionUIRect)
+    public LevelEditorCameraInformation(RectTransform levelEditorTransform,LevelEditorCommandExcute levelEditorCommandExcute)
     {
-        m_cameraTransform = Camera.main.transform;
-        m_camera = m_cameraTransform.GetComponent<Camera>();
-        m_selectionUIRect = selectionUIRect;
-        m_selectionImage = selectionUIRect.GetComponent<Image>();
+        InitComponent(levelEditorTransform,levelEditorCommandExcute);
+    }
+
+    private void InitComponent(RectTransform levelEditorTransform,LevelEditorCommandExcute levelEditorCommandExcute)
+    {
+        m_commandExcute = levelEditorCommandExcute;
         m_property = Resources.Load<LevelEditorProperty>("GlobalSettings/LevelEditorCameraProperty");
         m_prefabFactory = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
+        m_cameraTransform = Camera.main.transform;
+        m_camera = m_cameraTransform.GetComponent<Camera>();
+        m_selectionUIRect = levelEditorTransform.Find(GetUIProperty.SELECTION_UI_NAME) as RectTransform;
+        m_selectionImage = m_selectionUIRect.GetComponent<Image>();
+        m_inputController = new LevelEditorInputController(levelEditorTransform, m_property);
     }
 }

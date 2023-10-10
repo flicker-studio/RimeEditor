@@ -275,6 +275,8 @@ LevelEditorCameraAdditiveState <|-- LevelEditorCameraAdditiveDefultState
 LevelEditorCameraAdditiveState <|-- LevelEditorCameraMoveState
 LevelEditorCameraAdditiveState <|-- LevelEditorCameraChangeFovState
 LevelEditorCameraAdditiveState <|-- MouseSelecteState
+LevelEditorCameraAdditiveState <|-- MouseDragPositionState
+LevelEditorCameraAdditiveState <|-- PositionAxisDragState
 MouseSelecteState *-- OutlinePrinter
 ```
 
@@ -288,6 +290,8 @@ LevelEditorCommand <|-- ItemPositionCommand
 LevelEditorCommand <|-- ItemRotationCommand
 LevelEditorCommand <|-- ItemScaleCommand
 LevelEditorCommand <|-- ItemRectCommand
+LevelEditorCommand <|-- ItemSelecteCommand
+LevelEditorCommand <|-- LevelEditorActionChangeCommand
 LevelEditorCommandManager *-- LevelEditorCommand
 LevelEditorCommandManager *-- LevelEditorCameraController
 LevelData *-- ItemData

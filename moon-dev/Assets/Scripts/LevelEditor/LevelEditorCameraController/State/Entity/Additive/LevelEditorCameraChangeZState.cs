@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class LevelEditorCameraChangeFovState : LevelEditorCameraAdditiveState
+public class LevelEditorCameraChangeZState : LevelEditorCameraAdditiveState
 {
-    private float GetMouseScroll => m_cameraInformation.GetMouseSroll;
+    private float GetMouseScroll => m_cameraInformation.GetInput.GetMouseSroll;
 
-    private bool GetMouseScrollUp => m_cameraInformation.GetMouseSrollUp;
+    private bool GetMouseScrollUp => m_cameraInformation.GetInput.GetMouseSrollUp;
 
     private Transform GetCameraTransform => m_cameraInformation.GetCameraTransform;
 
@@ -17,25 +18,31 @@ public class LevelEditorCameraChangeFovState : LevelEditorCameraAdditiveState
     private float GetCameraMinZ => m_cameraInformation.GetCameraMinZ;
 
     private float GetCameraZChangeSpeed => m_cameraInformation.GetCameraZChangeSpeed;
+
+    private Vector3 GetMouseWorldPoint => m_cameraInformation.GetMouseWorldPoint;
+
+    private Vector3 m_originMousePosition;
+
+    private Vector3 m_currentMousePositon;
     
-    public LevelEditorCameraChangeFovState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+    public LevelEditorCameraChangeZState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
     {
-        ChangeFovValue();
+        m_originMousePosition = GetMouseWorldPoint;
+        ChangeZValue();
     }
 
     public override void Motion(BaseInformation information)
     {
-        
         if (GetMouseScrollUp)
         {
             RemoveState();
             return;
         }
 
-        ChangeFovValue();
+        ChangeZValue();
     }
 
-    private void ChangeFovValue()
+    private void ChangeZValue()
     {
         if (GetMouseScroll < 0)
         {
@@ -55,5 +62,10 @@ public class LevelEditorCameraChangeFovState : LevelEditorCameraAdditiveState
 
         GetCameraTransform.position = GetCameraTransform.position
             .NewZ(Mathf.Clamp(GetCameraTransform.position.z, GetCameraMaxZ, GetCameraMinZ));
+        
+        m_currentMousePositon = GetMouseWorldPoint;
+        
+        Vector3 moveDir = m_originMousePosition - m_currentMousePositon;
+        GetCameraTransform.position += moveDir;
     }
 }

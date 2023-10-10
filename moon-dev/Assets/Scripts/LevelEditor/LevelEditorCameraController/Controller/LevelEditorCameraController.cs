@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Frame.StateMachine;
 using UnityEngine;
 
@@ -9,15 +7,15 @@ public class LevelEditorCameraController
 
     private LevelEditorCameraInformation m_cameraInformation;
 
-    public LevelEditorCameraController(RectTransform selectionUI)
+    public LevelEditorCameraController(RectTransform levelEditorTransform,LevelEditorCommandExcute levelEditorCommandExcute)
     {
-        ControllerInit(selectionUI);
+        ControllerInit(levelEditorTransform,levelEditorCommandExcute);
         MotionInit();
     }
     
-    void ControllerInit(RectTransform selectionUI)
+    void ControllerInit(RectTransform levelEditorTransform,LevelEditorCommandExcute levelEditorCommandExcute)
     {
-        m_cameraInformation = new LevelEditorCameraInformation(selectionUI);
+        m_cameraInformation = new LevelEditorCameraInformation(levelEditorTransform,levelEditorCommandExcute);
         m_motionController = new MotionController(m_cameraInformation);
     }
     
