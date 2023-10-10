@@ -3,7 +3,7 @@ name: Unit Test
 on:
   pull_request:
   push:
-    branches: [develop]
+    branches: [main]
     paths: ['moon-dev/**']
   schedule:
     - cron: '0 0 * * 0'
@@ -11,6 +11,7 @@ on:
 
 jobs:
   Test:
+    if: github.repository_owner == 'fictional-vision'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Self
