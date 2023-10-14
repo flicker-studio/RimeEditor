@@ -2,6 +2,7 @@ name: Unit Test
 
 on:
   pull_request:
+    branches: [main]
   push:
     branches: [main]
     paths: ['moon-dev/**']
@@ -27,11 +28,3 @@ jobs:
         with:
           projectPath: moon-dev/
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+my.assembly.*'
-
-      - name: Upload Results
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: Coverage results
-          path: ${{ steps.Tests.outputs.coveragePath }}
