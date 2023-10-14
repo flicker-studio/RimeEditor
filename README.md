@@ -2,6 +2,7 @@
   <img src="docs/resources/images/Logo/Logo.png?raw=true" alt="ProJect-Moon Logo" width="1000">
 ProJect-Moon
 </h1>
+
 [![Help Docs](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/help-docs.yml/badge.svg)](https://orange-cliff-0c5466300.3.azurestaticapps.net)
 [![Unit Test](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml/badge.svg)](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml)
 ![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
@@ -41,25 +42,13 @@ ProJect-Moon
   <img src="docs/resources/images/Textures/SlicerBox.png?raw=true" alt="SlicerBox" width="1000">
 </h3>
 
-## Project structure
+## 代码样式规则
 
-**The code naming convention for this project is as follows：**
+本项目使用`EditorConfig`来约定代码样式，你可以按照教程在[VS](https://learn.microsoft.com/zh-cn/visualstudio/ide/code-styles-and-code-cleanup?view=vs-2022)和[Rider](https://www.jetbrains.com/help/rider/Using_EditorConfig.html)中轻松配置代码样式并启用智能提醒。
 
-|        Type         |     Name     |
-| :-----------------: | :----------: |
-|        Class        |    Robot     |
-|      Interface      |     IEat     |
-|  Private Attribute  | m_robotSpeed |
-|  Public Attribute   |  RobotSpeed  |
-| Protected Attribute | m_robotSpeed |
-|     Enum Class      |  ROBOT_TYPE  |
-|   Local Parameter   |  robotSpeed  |
+例如：
 
-------
-
-**The code method parenthesis specification for this project is as follows：**
-
-- ```c#
+```c#
   public void Motion()
   {
       foreach (var motionState in m_playerMoveStates)
@@ -67,41 +56,55 @@ ProJect-Moon
           motionState.Motion();
       }
   }
-  ```
-
-------
-
-**The commit message specification for this project is as follows：**
-
-[![Static-Badge](https://img.shields.io/badge/explain-Commit-green)](https://www.conventionalcommits.org/en/v1.0.0/#:~:text=feat%3A%20a%20commit%20of%20the,with%20MAJOR%20in%20Semantic%20Versioning)
-
-| Type of change |                         Description                          |
-| :------------: | :----------------------------------------------------------: |
-|      feat      |                      A new featurefix.                       |
-|      fix       |                        A bug fixdocs.                        |
-|      docs      |                 Documentation only changes.                  |
-|     style      | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc). |
-|    refactor    |  A code change that neither fixes a bug nor adds a feature.  |
-|      perf      |           A code change that improves performance.           |
-|      test      |      Adding missing tests or correcting existing tests.      |
-|     build      | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm). |
-|       ci       | Changes to our Cl configuration files and scripts (example scopes: Travis, Circle, BrowserStack, Saucelabs). |
-|     chore      |      Other changes that don't modify src or test files.      |
-|     revert     |                  Reverts a previous commit.                  |
-
-**Example**
-
-```tex
-docs: Readme Update
-
-Update readme file.
 ```
 
-```tex
-fix: Fix a bug
+## Git Commit规范
 
-Fix the jump bug.
+Commit Message规范如下，参考于[Conventional Commits](<https://www.conventionalcommits.org/en/v1.0.0/#:~:text=feat%3A%20a%20commit%20of%20the,with%20MAJOR%20in%20Semantic%20Versioning>)
+
+```text
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
 ```
+
+关键字解释如下：
+
+- `type`，必选项
+
+> commit的类型，各项含义如下表.
+
+| Type of change |            Description             |
+|:--------------:|:----------------------------------:|
+|  feat/feature  |            新功能的添加            |
+|      fix       |             BUG的修复              |
+|      docs      |             仅文档更改             |
+|     style      |        不影响代码含义的更改        |
+|    refactor    | 既不修复错误也不添加功能的代码更改 |
+|      perf      |         提高性能的代码更改         |
+|      test      |    添加缺少的测试或更正现有测试    |
+|     build      |   影响生成系统或外部依赖项的更改   |
+|       ci       |      更改的 Cl 配置文件和脚本      |
+|     chore      |   不修改代码或测试文件的其他更改   |
+|     revert     |           还原以前的提交           |
+
+- `scope`，可选项
+
+> commit 影响的范围, 比如: route, component, utils, build...
+
+- `subject`，必选项
+
+> commit 的概述.
+
+- `body`，必选项
+
+> commit 具体修改内容, 可以分为多行.
+
+- `footer`，必选项
+
+> 一些备注, 通常是[SKIP CI]或Closed #2.
 
 ------
 
@@ -279,8 +282,6 @@ LevelEditorCameraAdditiveState <|-- MouseDragPositionState
 LevelEditorCameraAdditiveState <|-- PositionAxisDragState
 MouseSelecteState *-- OutlinePrinter
 ```
-
-
 
 LevelEditor
 

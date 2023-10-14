@@ -1,0 +1,27 @@
+name: Track
+description: 使用这个模板来跟踪工作
+title: "[Type]: <Title>"
+projects: ["Moon"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        你可以使用这个模版用来跟踪工作
+  - type: input
+    id: short-description
+    attributes:
+      label: 问题简述
+      description: 简短的描述问题情况
+      placeholder: 例如：为角色添加转身逻辑
+    validations:
+      required: true
+  - type: textarea
+    id: todo-list
+    attributes:
+      label: 实现方案
+      description: 可在此处用Markdown语法自由编写,建议使用示例语法来拆分任务。
+      placeholder: |
+        - [ ] 使用四元数硬编码旋转
+        - [ ] 对控制器暴露接口  
+    validations:
+      required: false

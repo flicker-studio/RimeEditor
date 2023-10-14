@@ -18,6 +18,7 @@
                 }
             ],
             "dest": "api",
+            "filter": "filter.yml",
             "disableGitFeatures": false,
             "globalNamespaceId": "Global"
         }
