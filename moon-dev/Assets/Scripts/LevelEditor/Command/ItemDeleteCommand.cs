@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class ItemDeleteCommand : LevelEditorCommand
 {
-    private GameObject m_gameObject;
+    private List<GameObject> m_gameobjects = new List<GameObject>();
 
-    public ItemDeleteCommand(GameObject gameObject)
+    public ItemDeleteCommand(List<GameObject> gameobjects)
     {
-        m_gameObject = gameObject;
+        m_gameobjects.AddRange(gameobjects);
     }
     
     public override void Execute()
     {
-        m_gameObject.SetActive(false);
+        foreach (var obj in m_gameobjects)
+        {
+            obj.SetActive(false);
+        }
     }
 
     public override void Undo()
     {
-        m_gameObject.SetActive(true);
+        foreach (var obj in m_gameobjects)
+        {
+            obj.SetActive(true);
+        }
     }
 }

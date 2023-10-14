@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20986d441bbf9f742a52a98133d4ffa2, type: 3}
+  m_Name: LevelEditorUIProperty
+  m_EditorClassIdentifier: 
+  <GetControlHandleUI>k__BackingField:
+    <GetControlHandleUIName>k__BackingField:
+      <SELECTION_UI_NAME>k__BackingField: ControlHandlePanel/SelectionUI
+      <POSITION_AXIS>k__BackingField: ControlHandlePanel/PositionUI
+      <POSITION_AXIS_X>k__BackingField: ControlHandlePanel/PositionUI/XAxis
+      <POSITION_AXIS_Y>k__BackingField: ControlHandlePanel/PositionUI/YAxis
+      <POSITION_AXIS_XY>k__BackingField: ControlHandlePanel/PositionUI/XYAxis
+      <ROTATION_AXIS>k__BackingField: ControlHandlePanel/RotationUI
+    <GetSelectionProperty>k__BackingField:
+      <SELECTION_MIN_SIZE>k__BackingField: {x: 0.01, y: 0.01}
+      <SELECTION_COLOR>k__BackingField: {r: 0, g: 0.8638129, b: 1, a: 0.3019608}
+    <GetRotationDragProperty>k__BackingField:
+      <ROTATION_SPEED>k__BackingField: 0.25
+    <GetOutlineProperty>k__BackingField:
+      <OUTLINE_MODE>k__BackingField: 0
+      <OUTLINE_COLOR>k__BackingField: {r: 1, g: 0.87176263, b: 0, a: 1}
+      <OUTLINE_WIDTH>k__BackingField: 7.5
+  <GetActionPanelUI>k__BackingField:
+    <GetActionPanelUIName>k__BackingField:
+      <UNDO_BUTTON>k__BackingField: TopPanel/ActionPanel/UndoButton
+      <REDO_BUTTON>k__BackingField: TopPanel/ActionPanel/RedoButton
+      <VIEW_BUTTON>k__BackingField: TopPanel/ActionPanel/ViewButton
+      <POSITON_BUTTON>k__BackingField: TopPanel/ActionPanel/PositonButton
+      <ROTATION_BUTTON>k__BackingField: TopPanel/ActionPanel/RotationButton
+      <SCALE_BUTTON>k__BackingField: TopPanel/ActionPanel/ScaleButton
+      <RECT_BUTTON>k__BackingField: TopPanel/ActionPanel/RectButton
+  <GetItemTransformPanelUI>k__BackingField:
+    <GetItemTransformPanelUIName>k__BackingField:
+      <EDIT_BUTTON>k__BackingField: RightPanel/ItemTransformPanel/EditButton
+      <POSITION_INPUT_X>k__BackingField: RightPanel/ItemTransformPanel/Position/PositionInputX/InputField
+      <POSITION_INPUT_Y>k__BackingField: RightPanel/ItemTransformPanel/Position/PositionInputY/InputField
+      <POSITION_INPUT_Z>k__BackingField: RightPanel/ItemTransformPanel/Position/PositionInputZ/InputField
+      <ROTATION_INPUT_X>k__BackingField: RightPanel/ItemTransformPanel/Rotation/RotationInputX/InputField
+      <ROTATION_INPUT_Y>k__BackingField: RightPanel/ItemTransformPanel/Rotation/RotationInputY/InputField
+      <ROTATION_INPUT_Z>k__BackingField: RightPanel/ItemTransformPanel/Rotation/RotationInputZ/InputField
+      <SCALE_INPUT_X>k__BackingField: RightPanel/ItemTransformPanel/Scale/ScaleInputX/InputField
+      <SCALE_INPUT_Y>k__BackingField: RightPanel/ItemTransformPanel/Scale/ScaleInputY/InputField
+      <SCALE_INPUT_Z>k__BackingField: RightPanel/ItemTransformPanel/Scale/ScaleInputZ/InputField

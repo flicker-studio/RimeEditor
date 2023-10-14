@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract class LevelEditorCameraMainState : MainMotionState
 {
-    protected LevelEditorCameraInformation m_cameraInformation;
+    protected LevelEditorInformation MInformation;
     
     protected LevelEditorCameraMainState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
     {
-        m_cameraInformation = information as LevelEditorCameraInformation;
+        MInformation = information as LevelEditorInformation;
     }
 }

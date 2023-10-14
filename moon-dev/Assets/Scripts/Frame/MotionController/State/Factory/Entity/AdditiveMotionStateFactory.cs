@@ -42,7 +42,7 @@ namespace Frame.StateMachine
                 }
             }
 
-            if (information as LevelEditorCameraInformation != null)
+            if (information as LevelEditorInformation != null)
             {
                 switch (motionStateEnum)
                 {
@@ -50,10 +50,14 @@ namespace Frame.StateMachine
                         return new LevelEditorCameraAdditiveDefultState(information, motionCallBack);
                     case MOTIONSTATEENUM.LevelEditorCameraMoveState:
                         return new LevelEditorCameraMoveState(information, motionCallBack);
-                    case MOTIONSTATEENUM.LevelEditorCameraChangeFovState:
-                        return new LevelEditorCameraChangeFovState(information, motionCallBack);
+                    case MOTIONSTATEENUM.LevelEditorCameraChangeZState:
+                        return new LevelEditorCameraChangeZState(information, motionCallBack);
                     case MOTIONSTATEENUM.MouseSelecteState:
                         return new MouseSelecteState(information, motionCallBack);
+                    case MOTIONSTATEENUM.PositionAxisDragState:
+                        return new PositionAxisDragState(information, motionCallBack);
+                    case MOTIONSTATEENUM.RotationAxisDragState:
+                        return new RotationAxisDragState(information, motionCallBack);
                     default:
                         return null;
                 }

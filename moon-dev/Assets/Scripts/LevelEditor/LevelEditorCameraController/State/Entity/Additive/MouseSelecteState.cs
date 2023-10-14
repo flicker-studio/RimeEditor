@@ -3,43 +3,43 @@ using System.Linq;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using Frame.Tool.Pool;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MouseSelecteState : LevelEditorCameraAdditiveState
 {
-    private RectTransform GetSelectionUIRect => m_cameraInformation.GetSelectionUIRect;
+    private RectTransform GetSelectionUIRect => m_information.GetUI.GetControlHandlePanel.GetSelectionRect;
 
-    private Image GetSelectionImage => m_cameraInformation.GetSelectionImage;
-    private Transform GetCameraTransform => m_cameraInformation.GetCameraTransform;
+    private Image GetSelectionImage => m_information.GetUI.GetControlHandlePanel.GetSelectionImage;
+    private Transform GetCameraTransform => Camera.main.transform;
 
-    private OUTLINEMODE GetOutlineMode => m_cameraInformation.GetOutlineMode;
+    private OUTLINEMODE GetOutlineMode => m_information.GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_MODE;
 
-    private Color GetOutlineColor => m_cameraInformation.GetOutlineColor;
+    private Color GetOutlineColor => m_information.GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_COLOR;
 
-    private float GetOutlineWidth => m_cameraInformation.GetOutlineWidth;
+    private float GetOutlineWidth => m_information.GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_WIDTH;
 
-    private Vector2 GetSelectionMinSize => m_cameraInformation.GetSelectionMinSize;
+    private Vector2 GetSelectionMinSize => m_information.GetUI.GetControlHandlePanel.GetSelectionProperty.SELECTION_MIN_SIZE;
 
-    private Color GetSelectionColor => m_cameraInformation.GetSelectionColor;
+    private Color GetSelectionColor => m_information.GetUI.GetControlHandlePanel.GetSelectionProperty.SELECTION_COLOR;
 
-    private bool GetShiftButton => m_cameraInformation.GetShiftButton;
+    private bool GetShiftButton => m_information.GetInput.GetShiftButton;
 
-    private bool GetCtrlButton => m_cameraInformation.GetCtrlButton;
+    private bool GetCtrlButton => m_information.GetInput.GetCtrlButton;
 
     private GameObject m_emptyObj;
 
     private BoxCollider2D m_selectCollider;
-    private Vector3 GetMousePosition => Mouse.current.position.ReadValue()
+    private Vector3 GetMousePosition => m_information.GetMousePosition
         .NewX(Mathf.Clamp(Mouse.current.position.ReadValue().x, 0, Screen.width))
         .NewY(Mathf.Clamp(Mouse.current.position.ReadValue().y, 0, Screen.height));
 
-    private List<GameObject> TargetList => m_cameraInformation.TargetList;
+    private List<GameObject> TargetList => m_information.TargetList;
 
     private List<GameObject> m_selectList = new List<GameObject>();
+
+    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
     
     private Vector2 m_originMousePositon;
 
@@ -63,7 +63,7 @@ public class MouseSelecteState : LevelEditorCameraAdditiveState
 
     public override void Motion(BaseInformation information)
     {
-        if (m_cameraInformation.GetMouseLeftButtonUp)
+        if (m_information.GetInput.GetMouseLeftButtonUp)
         {
             ReturnTargetList();
             StateDestroy();
@@ -118,7 +118,7 @@ public class MouseSelecteState : LevelEditorCameraAdditiveState
         OutlineInit();
         GetSelectionImage.color = GetSelectionColor;
         m_originMousePositon = GetMousePosition;
-        m_emptyObj = ObjectPool.Instance.OnTake(m_cameraInformation.GetEmptyGameObject);
+        m_emptyObj = ObjectPool.Instance.OnTake(m_information.GetEmptyGameObject);
         m_selectCollider = m_emptyObj.GetComponent<BoxCollider2D>() == null
             ? m_emptyObj.AddComponent<BoxCollider2D>()
             : m_emptyObj.GetComponent<BoxCollider2D>();
@@ -190,7 +190,6 @@ public class MouseSelecteState : LevelEditorCameraAdditiveState
         }
         tempList = tempList.Distinct().ToList();
         m_outlinePainter.SetTargetObj = tempList;
-        TargetList.Clear();
-        TargetList.AddRange(m_outlinePainter.GetTargetObj);
+        GetExcute?.Invoke(new ItemSelectCommand(TargetList,tempList,m_outlinePainter));
     }
 }
