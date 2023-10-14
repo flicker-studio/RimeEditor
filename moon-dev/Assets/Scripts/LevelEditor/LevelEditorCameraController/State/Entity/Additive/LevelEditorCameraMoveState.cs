@@ -6,12 +6,10 @@ using UnityEngine.InputSystem;
 public class LevelEditorCameraMoveState : LevelEditorCameraAdditiveState
 {
     private Vector3 m_originMousePosition;
-    private Vector3 GetMousePosition => Mouse.current.position.ReadValue();
 
-    private Transform GetTransform => m_cameraInformation.GetCameraTransform;
+    private Transform GetTransform => Camera.main.transform;
 
-    private Vector3 MouseWorldPoint =>
-        Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Camera.main.farClipPlane * .5f));
+    private Vector3 MouseWorldPoint => m_information.GetMouseWorldPoint;
     
     public LevelEditorCameraMoveState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
     {
@@ -20,12 +18,14 @@ public class LevelEditorCameraMoveState : LevelEditorCameraAdditiveState
 
     public override void Motion(BaseInformation information)
     {
-        if (m_cameraInformation.GetMouseMiddleButtonUp)
+        if (m_information.GetInput.GetMouseMiddleButtonUp)
         {
             RemoveState();
             return;
         }
-        Vector3 different = MouseWorldPoint - GetTransform.position;
-        GetTransform.position = m_originMousePosition - different;
+        
+        Vector3 different = m_originMousePosition - MouseWorldPoint;
+
+        GetTransform.position += different;
     }
 }

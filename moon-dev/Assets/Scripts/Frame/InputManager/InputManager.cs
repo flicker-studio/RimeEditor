@@ -93,7 +93,27 @@ namespace Frame.Tool
         {
             m_mouseScroll.SetInput = 0;
         };
+
+        GetLevelEditorActions.ShiftButton.performed += context =>
+        {
+            m_shiftButton.SetInput = true;
+        };
         
+        GetLevelEditorActions.ShiftButton.canceled += context =>
+        {
+            m_shiftButton.SetInput = false;
+        };
+        
+        GetLevelEditorActions.CtrlButton.performed += context =>
+        {
+            m_ctrlButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.CtrlButton.canceled += context =>
+        {
+            m_ctrlButton.SetInput = false;
+        };
+
         #endregion
         
         #region Debugger
@@ -247,6 +267,10 @@ namespace Frame.Tool
     
     private InputProperty<float> m_mouseScroll = new InputProperty<float>();
 
+    private InputProperty<bool> m_shiftButton = new InputProperty<bool>();
+
+    private InputProperty<bool> m_ctrlButton = new InputProperty<bool>();
+
     public bool GetMouseLeftButton => m_mouseLeftButton.GetInput;
     
     public bool GetMouseLeftButtonDown => m_mouseLeftButton.GetInputDown;
@@ -270,6 +294,18 @@ namespace Frame.Tool
     public bool GetMouseScrollDown => m_mouseScroll.GetInputDown;
     
     public bool GetMouseScrollUp => m_mouseScroll.GetInputUp;
+
+    public bool GetShiftButton => m_shiftButton.GetInput;
+
+    public bool GetShiftButtonDown => m_shiftButton.GetInputDown;
+
+    public bool GetShiftButtonUp => m_shiftButton.GetInputUp;
+
+    public bool GetCtrlButton => m_ctrlButton.GetInput;
+    
+    public bool GetCtrlButtonDown => m_ctrlButton.GetInputDown;
+
+    public bool GetCtrlButtonUp => m_ctrlButton.GetInputUp;
 
     #endregion
 

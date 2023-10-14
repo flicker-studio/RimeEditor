@@ -13,7 +13,7 @@ namespace Frame.StateMachine
             ChangeMotionState(MOTIONSTATEENUM.None);
         }
 
-        protected AdditiveMotionState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+        protected AdditiveMotionState(BaseInformation baseInformation,MotionCallBack motionCallBack):base(baseInformation, motionCallBack)
         {
         }
     }

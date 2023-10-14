@@ -1,9 +1,8 @@
 apiRules:
 - exclude:
-    uidRegex: ^System
+    uidRegex: ^EzySlice
+    type: Namespace
 - exclude:
-    uidRegex: ^UnityEngine
-- exclude:
-    uidRegex: ^UnityEditor
+    uidRegex: ^Test
     type: Namespace
  

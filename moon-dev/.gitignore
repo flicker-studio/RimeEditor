@@ -75,3 +75,8 @@ crashlytics-build.properties
 #Code coverage cache
 /[Cc]odeCoverage/*
 /[Cc]odeCoverage/
+
+## Docfx release folder
+/[Bb]in
+/[Bb]in/*
+
