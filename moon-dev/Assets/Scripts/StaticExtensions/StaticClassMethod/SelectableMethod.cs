@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public static class SelectableMethod
 {
-    public static EventTrigger AddTriggersEvents(this Selectable theSelectable, EventTriggerType eventTriggerType, Action<BaseEventData> onTriggerAction = null)
+    public static EventTrigger AddTriggerEvent(this Selectable theSelectable, EventTriggerType eventTriggerType, Action<BaseEventData> onTriggerAction = null)
     {
         EventTrigger eventrTrigger = theSelectable.gameObject.AddComponent<EventTrigger>();
         if (onTriggerAction != null)

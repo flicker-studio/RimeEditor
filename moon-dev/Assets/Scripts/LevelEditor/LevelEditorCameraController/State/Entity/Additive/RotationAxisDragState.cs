@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class RotationAxisDragState : LevelEditorCameraAdditiveState
 {
-    private List<GameObject> TagetList => m_cameraInformation.TargetList;
-
-    private RectTransform GetRotationAxisRectTransform => m_cameraInformation.GetRotationAxisRectTransform;
+    private List<GameObject> TagetList => m_information.TargetList;
     
-    private Vector3 GetMousePosition => m_cameraInformation.GetMousePosition;
-
-    private bool GetMouseLeftButtonUp => m_cameraInformation.GetInput.GetMouseLeftButtonUp;
+    private RectTransform GetRotationAxisRectTransform => m_information.GetUI.GetControlHandlePanel.GetRotationRect;
     
-    private LevelEditorCommandExcute GetExcute => m_cameraInformation.GetLevelEditorCommandExcute;
+    private Vector3 GetMousePosition => m_information.GetMousePosition;
+
+    private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
+    
+    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
     
     private Vector3 m_originPosition;
 
@@ -21,9 +21,9 @@ public class RotationAxisDragState : LevelEditorCameraAdditiveState
 
     private Vector3 m_originDir;
 
-    private float GetRotationSpeed => m_cameraInformation.GetRotationSpeed;
+    private float GetRotationSpeed => m_information.GetUI.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
 
-    private Transform GetCameraTransform => m_cameraInformation.GetCameraTransform;
+    private Transform GetCameraTransform => Camera.main.transform;
 
     private Vector3 GetRotationAxisScreenPosition => GetRotationAxisRectTransform.anchoredPosition;
 

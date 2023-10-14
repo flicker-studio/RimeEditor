@@ -1,24 +1,24 @@
 public class LevelEditorActionChangeCommand : LevelEditorCommand
 {
-    private LevelEditorAction m_levelEditorAction;
+    private ControlHandleAction _mControlHandleAction;
     
-    private LEVELEDITORACTIONTYPE m_lastActionType;
+    private CONTROLHANDLEACTIONTYPE m_lastActionType;
 
-    private LEVELEDITORACTIONTYPE m_nextActionType;
+    private CONTROLHANDLEACTIONTYPE m_nextActionType;
 
-    public LevelEditorActionChangeCommand(LevelEditorAction levelEditorAction,LEVELEDITORACTIONTYPE nextActionType)
+    public LevelEditorActionChangeCommand(ControlHandleAction controlHandleAction,CONTROLHANDLEACTIONTYPE nextActionType)
     {
-        m_levelEditorAction = levelEditorAction;
-        m_lastActionType = m_levelEditorAction.LevelEditorActionType;
+        _mControlHandleAction = controlHandleAction;
+        m_lastActionType = _mControlHandleAction.ControlHandleActionType;
         m_nextActionType = nextActionType;
     }
     public override void Execute()
     {
-        m_levelEditorAction.LevelEditorActionType = m_nextActionType;
+        _mControlHandleAction.ControlHandleActionType = m_nextActionType;
     }
 
     public override void Undo()
     {
-        m_levelEditorAction.LevelEditorActionType = m_lastActionType;
+        _mControlHandleAction.ControlHandleActionType = m_lastActionType;
     }
 }

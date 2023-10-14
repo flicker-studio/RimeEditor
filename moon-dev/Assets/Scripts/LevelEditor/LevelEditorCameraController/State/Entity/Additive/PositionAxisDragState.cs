@@ -14,13 +14,13 @@ public class PositionAxisDragState : LevelEditorCameraAdditiveState
 
     private POSITIONDRAGTYPE m_positionDragType;
 
-    private List<GameObject> TagetList => m_cameraInformation.TargetList;
+    private List<GameObject> TagetList => m_information.TargetList;
     
-    private Vector3 GetMouseWorldPoint => m_cameraInformation.GetMouseWorldPoint;
+    private Vector3 GetMouseWorldPoint => m_information.GetMouseWorldPoint;
 
-    private bool GetMouseLeftButtonUp => m_cameraInformation.GetInput.GetMouseLeftButtonUp;
+    private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
 
-    private LevelEditorCommandExcute GetExcute => m_cameraInformation.GetLevelEditorCommandExcute;
+    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
 
     private Vector3 m_originPosition;
 
@@ -52,13 +52,13 @@ public class PositionAxisDragState : LevelEditorCameraAdditiveState
 
     private void StateInit()
     {
-        if (m_cameraInformation.GetInput.GetPositionAxisXButton)
+        if (m_information.GetUI.GetControlHandlePanel.GetPositionInputX)
         {
             m_positionDragType = POSITIONDRAGTYPE.XAxis;
-        }else if (m_cameraInformation.GetInput.GetPositionAxisYButton)
+        }else if (m_information.GetUI.GetControlHandlePanel.GetPositionInputY)
         {
             m_positionDragType = POSITIONDRAGTYPE.YAxis;
-        }else if (m_cameraInformation.GetInput.GetPositionAxisXYButton)
+        }else if (m_information.GetUI.GetControlHandlePanel.GetPositionInputXY)
         {
             m_positionDragType = POSITIONDRAGTYPE.XYAxis;
         }

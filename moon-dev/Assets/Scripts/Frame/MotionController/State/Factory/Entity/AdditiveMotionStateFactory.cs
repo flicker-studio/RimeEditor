@@ -42,7 +42,7 @@ namespace Frame.StateMachine
                 }
             }
 
-            if (information as LevelEditorCameraInformation != null)
+            if (information as LevelEditorInformation != null)
             {
                 switch (motionStateEnum)
                 {

@@ -6,54 +6,54 @@ using UnityEngine;
 
 public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveState
 {
-    private List<GameObject> TargetList => m_cameraInformation.TargetList;
+    private List<GameObject> TargetList => m_information.TargetList;
 
-    private LevelEditorCommandExcute GetExcute => m_cameraInformation.GetLevelEditorCommandExcute;
+    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
 
-    private LevelEditorAction GetLevelEditorAction => m_cameraInformation.GetLevelEditorAction;
+    private ControlHandleAction GetControlHandleAction => m_information.GetUI.GetControlHandlePanel.GetControlHandleAction;
 
-    private GameObject GetPositionAxisObj => m_cameraInformation.GetPositionAxisRectTransform.gameObject;
+    private GameObject GetPositionAxisObj => m_information.GetUI.GetControlHandlePanel.GetPositionRect.gameObject;
 
-    private GameObject GetRotationAxisObj => m_cameraInformation.GetRotationAxisRectTransform.gameObject;
+    private GameObject GetRotationAxisObj => m_information.GetUI.GetControlHandlePanel.GetRotationRect.gameObject;
 
-    private bool GetPositionAxisXButtonDown => m_cameraInformation.GetInput.GetPositionAxisXButtonDown;
+    private bool GetPositionAxisXButtonDown => m_information.GetUI.GetControlHandlePanel.GetPositionInputXDown;
     
-    private bool GetPositionAxisYButtonDown => m_cameraInformation.GetInput.GetPositionAxisYButtonDown;
+    private bool GetPositionAxisYButtonDown => m_information.GetUI.GetControlHandlePanel.GetPositionInputYDown;
     
-    private bool GetPositionAxisXYButtonDown => m_cameraInformation.GetInput.GetPositionAxisXYButtonDown;
+    private bool GetPositionAxisXYButtonDown => m_information.GetUI.GetControlHandlePanel.GetPositionInputXYDown;
 
     private bool GetPositionAxisButtonDown => GetPositionAxisXYButtonDown || GetPositionAxisXButtonDown || GetPositionAxisYButtonDown;
 
-    private bool GetRotationAxisZButtonDown => m_cameraInformation.GetInput.GetRotationAxisZButtonDown;
+    private bool GetRotationAxisZButtonDown => m_information.GetUI.GetControlHandlePanel.GetRotationInputZDown;
 
-    private bool GetUndoButtonDown => m_cameraInformation.GetInput.GetUndoButtonDown;
+    private bool GetUndoButtonDown => m_information.GetUI.GetActionPanel.GetUndoInputDown;
     
-    private bool GetRedoButtonDown => m_cameraInformation.GetInput.GetRedoButtonDown;
+    private bool GetRedoButtonDown => m_information.GetUI.GetActionPanel.GetRedoInputDown;
 
-    private bool GetViewButtonDown => m_cameraInformation.GetInput.GetViewButtonDown;
+    private bool GetViewButtonDown => m_information.GetUI.GetActionPanel.GetViewInputDown;
 
-    private bool GetPositionButtonDown => m_cameraInformation.GetInput.GetPositionButtonDown;
+    private bool GetPositionButtonDown => m_information.GetUI.GetActionPanel.GetPositionInputDown;
 
-    private bool GetRotationButtonDown => m_cameraInformation.GetInput.GetRotationButtonDown;
+    private bool GetRotationButtonDown => m_information.GetUI.GetActionPanel.GetRotationInputDown;
 
-    private bool GetScaleButtonDown => m_cameraInformation.GetInput.GetScaleButtonDown;
+    private bool GetScaleButtonDown => m_information.GetUI.GetActionPanel.GetScaleInputDown;
 
-    private bool GetRectButtonDown => m_cameraInformation.GetInput.GetRectButtonDown;
+    private bool GetRectButtonDown => m_information.GetUI.GetActionPanel.GetRectInputDown;
     
     
-    public LevelEditorCameraAdditiveDefultState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+    public LevelEditorCameraAdditiveDefultState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
     }
 
     public override void Motion(BaseInformation information)
     {
-        ShowActionView(GetLevelEditorAction.LevelEditorActionType);
+        ShowActionView(GetControlHandleAction.ControlHandleActionType);
         ButtonDetection();
     }
     
     private void ButtonDetection()
     {
-        if (m_cameraInformation.GetInput.GetMouseMiddleButtonDown)
+        if (m_information.GetInput.GetMouseMiddleButtonDown)
         {
             if(!CheckStates.Contains(typeof(LevelEditorCameraMoveState)))
             {
@@ -61,7 +61,7 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
             }
         }
 
-        if (m_cameraInformation.GetInput.GetMouseSrollDown)
+        if (m_information.GetInput.GetMouseSrollDown)
         {
             if(!CheckStates.Contains(typeof(LevelEditorCameraChangeZState)))
             {
@@ -69,7 +69,7 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
             }
         }
 
-        if (m_cameraInformation.GetInput.GetMouseLeftButtonDown && !UIMethod.IsPointerOverUIElement())
+        if (m_information.GetInput.GetMouseLeftButtonDown && !UIMethod.IsPointerOverUIElement())
         {
             if (!CheckStates.Contains(typeof(MouseSelecteState)))
             {
@@ -95,10 +95,13 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
 
         if (GetPositionButtonDown)
         {
-            GetExcute?.Invoke(new LevelEditorActionChangeCommand(GetLevelEditorAction,LEVELEDITORACTIONTYPE.PositionAxisButton));
+            GetExcute?.Invoke(new LevelEditorActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.PositionAxisButton));
         }else if (GetRotationButtonDown)
         {
-            GetExcute?.Invoke(new LevelEditorActionChangeCommand(GetLevelEditorAction,LEVELEDITORACTIONTYPE.RotationAxisButton));
+            GetExcute?.Invoke(new LevelEditorActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RotationAxisButton));
+        }else if (GetViewButtonDown)
+        {
+            GetExcute?.Invoke(new LevelEditorActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ViewButton));
         }
     }
     
@@ -113,11 +116,11 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
         return vector3List;
     }
     
-    private void ShowActionView(LEVELEDITORACTIONTYPE levelEditorActionType)
+    private void ShowActionView(CONTROLHANDLEACTIONTYPE levelEditorActionType)
     {
         switch (levelEditorActionType)
         {
-            case LEVELEDITORACTIONTYPE.PositionAxisButton:
+            case CONTROLHANDLEACTIONTYPE.PositionAxisButton:
                 GetRotationAxisObj.SetActive(false);
                 GetPositionAxisObj.transform.position = Camera.main
                     .WorldToScreenPoint(GetVector3ListFromGameObjectList(TargetList).GetCenterPoint());
@@ -130,7 +133,7 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
                     GetPositionAxisObj.SetActive(false);
                 }
                 break;
-            case LEVELEDITORACTIONTYPE.RotationAxisButton:
+            case CONTROLHANDLEACTIONTYPE.RotationAxisButton:
                 GetPositionAxisObj.SetActive(false);
                 GetRotationAxisObj.transform.position = Camera.main
                     .WorldToScreenPoint(GetVector3ListFromGameObjectList(TargetList).GetCenterPoint());
@@ -142,6 +145,10 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
                 {
                     GetRotationAxisObj.SetActive(false);
                 }
+                break;
+            case CONTROLHANDLEACTIONTYPE.ViewButton:
+                GetPositionAxisObj.SetActive(false);
+                GetRotationAxisObj.SetActive(false);
                 break;
         }
     }

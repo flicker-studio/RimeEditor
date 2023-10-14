@@ -22,6 +22,19 @@ namespace Frame.Static.Extensions
 
             return childs;
         }
+
+        public static Transform FindPath(this Transform transform,string path)
+        {
+            string[] pashs = path.Replace(" ","").Split("/");
+            Transform childTransform = transform;
+            for (var i = 0; i < pashs.Length; i++)
+            {
+                childTransform = childTransform.Find(pashs[i]);
+                if (childTransform == null) return null;
+            }
+
+            return childTransform;
+        }
     }
 }
 

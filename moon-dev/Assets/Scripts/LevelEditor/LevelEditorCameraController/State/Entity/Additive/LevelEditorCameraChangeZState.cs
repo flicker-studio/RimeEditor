@@ -7,19 +7,19 @@ using UnityEngine.InputSystem;
 
 public class LevelEditorCameraChangeZState : LevelEditorCameraAdditiveState
 {
-    private float GetMouseScroll => m_cameraInformation.GetInput.GetMouseSroll;
+    private float GetMouseScroll => m_information.GetInput.GetMouseSroll;
 
-    private bool GetMouseScrollUp => m_cameraInformation.GetInput.GetMouseSrollUp;
+    private bool GetMouseScrollUp => m_information.GetInput.GetMouseSrollUp;
 
-    private Transform GetCameraTransform => m_cameraInformation.GetCameraTransform;
+    private Transform GetCameraTransform => Camera.main.transform;
 
-    private float GetCameraMaxZ => m_cameraInformation.GetCameraMaxZ;
+    private float GetCameraMaxZ => m_information.GetCameraProperty.GetCameraMotionProperty.CAMERA_MAX_Z;
 
-    private float GetCameraMinZ => m_cameraInformation.GetCameraMinZ;
+    private float GetCameraMinZ => m_information.GetCameraProperty.GetCameraMotionProperty.CAMERA_MIN_Z;
 
-    private float GetCameraZChangeSpeed => m_cameraInformation.GetCameraZChangeSpeed;
+    private float GetCameraZChangeSpeed => m_information.GetCameraProperty.GetCameraMotionProperty.CAMERA_Z_CHANGE_SPEED;
 
-    private Vector3 GetMouseWorldPoint => m_cameraInformation.GetMouseWorldPoint;
+    private Vector3 GetMouseWorldPoint => m_information.GetMouseWorldPoint;
 
     private Vector3 m_originMousePosition;
 

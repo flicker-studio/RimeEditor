@@ -1,13 +1,13 @@
 using Frame.StateMachine;
 using UnityEngine;
 
-public class LevelEditorCameraController
+public class LevelEditorController
 {
     private MotionController m_motionController;
 
-    private LevelEditorCameraInformation m_cameraInformation;
+    private LevelEditorInformation m_information;
 
-    public LevelEditorCameraController(RectTransform levelEditorTransform,LevelEditorCommandExcute levelEditorCommandExcute)
+    public LevelEditorController(RectTransform levelEditorTransform,LevelEditorCommandExcute levelEditorCommandExcute)
     {
         ControllerInit(levelEditorTransform,levelEditorCommandExcute);
         MotionInit();
@@ -15,8 +15,8 @@ public class LevelEditorCameraController
     
     void ControllerInit(RectTransform levelEditorTransform,LevelEditorCommandExcute levelEditorCommandExcute)
     {
-        m_cameraInformation = new LevelEditorCameraInformation(levelEditorTransform,levelEditorCommandExcute);
-        m_motionController = new MotionController(m_cameraInformation);
+        m_information = new LevelEditorInformation(levelEditorTransform,levelEditorCommandExcute);
+        m_motionController = new MotionController(m_information);
     }
     
     private void MotionInit()
@@ -26,6 +26,6 @@ public class LevelEditorCameraController
     
     public void LateUpdate()
     {
-        m_motionController.Motion(m_cameraInformation);
+        m_motionController.Motion(m_information);
     }
 }

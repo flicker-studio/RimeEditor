@@ -7,7 +7,7 @@ namespace Frame.StateMachine
 {
     public abstract class MotionState
     {
-        protected BaseInformation m_information;
+        protected BaseInformation m_baseInformation;
 
         protected MotionCallBack m_motionCallBack;
     
@@ -21,9 +21,9 @@ namespace Frame.StateMachine
             m_motionCallBack.ChangeMotionStateCallBack.Invoke(motionStateEnum);
         }
     
-        public MotionState(BaseInformation information,MotionCallBack motionCallBack)
+        public MotionState(BaseInformation baseInformation,MotionCallBack motionCallBack)
         {
-            m_information = information;
+            m_baseInformation = baseInformation;
             m_motionCallBack = motionCallBack;
         }
     }
