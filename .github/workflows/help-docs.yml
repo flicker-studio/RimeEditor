@@ -3,7 +3,7 @@ name: Help Docs
 on:
   push:
     branches: [main]
-    paths: ['moon-dev/**','docs/**','README.md']
+    paths: ['moon-dev/Assets/**','docs/**','README.md']
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
