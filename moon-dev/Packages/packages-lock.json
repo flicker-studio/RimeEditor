@@ -8,14 +8,14 @@
       "hash": "cfe509a55602ba5be6df7fa0468b10298b8a053d"
     },
     "com.fictional-vision.slice": {
-      "version": "https://github.com/fictional-vision/Slice.git#1.0.3",
+      "version": "https://github.com/fictional-vision/Slice.git?path=src/Assets/Slice#1.0.4",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4096cf3decc16a0b54f91d9a261c26fba8a0ecaa"
+      "hash": "c0d31601bc2e225b0bb75b14b5f1acb340b8b478"
     },
     "com.unity.ai.navigation": {
-      "version": "1.1.4",
+      "version": "1.1.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -80,7 +80,7 @@
       }
     },
     "com.unity.ide.rider": {
-      "version": "3.0.25",
+      "version": "3.0.26",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -89,7 +89,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.18",
+      "version": "2.0.22",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -214,7 +214,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.7.5",
+      "version": "1.7.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
