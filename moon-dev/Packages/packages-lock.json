@@ -8,11 +8,11 @@
       "hash": "cfe509a55602ba5be6df7fa0468b10298b8a053d"
     },
     "com.fictional-vision.slice": {
-      "version": "https://github.com/fictional-vision/Slice.git#1.0.2",
+      "version": "https://github.com/fictional-vision/Slice.git#1.0.3",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "b0c9c6d3aabecbc9f8bcbb0eb994b3a9d0b8f224"
+      "hash": "4096cf3decc16a0b54f91d9a261c26fba8a0ecaa"
     },
     "com.unity.ai.navigation": {
       "version": "1.1.4",
