@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "cfe509a55602ba5be6df7fa0468b10298b8a053d"
     },
+    "com.fictional-vision.slice": {
+      "version": "https://github.com/fictional-vision/Slice.git#1.0.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "b0c9c6d3aabecbc9f8bcbb0eb994b3a9d0b8f224"
+    },
     "com.unity.ai.navigation": {
       "version": "1.1.4",
       "depth": 0,
