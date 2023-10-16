@@ -3,6 +3,7 @@ name: Meta Check
 on:
   push:
     branches: [main]
+    paths: [moon-dev/Assets]
   pull_request:
   workflow_dispatch:
 
