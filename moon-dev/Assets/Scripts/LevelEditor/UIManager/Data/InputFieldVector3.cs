@@ -5,9 +5,25 @@ using UnityEngine;
 public class InputFieldVector3
 {
     public Vector3 GetVector3 => new(m_inputPropertyX.GetInput, m_inputPropertyY.GetInput, m_inputPropertyZ.GetInput);
+    
+    public (string,string,string) GetVector3Field => (m_inputFieldX.text,m_inputFieldY.text,m_inputFieldZ.text);
+    
+    public Vector3 SetVector3
+    {
+        set
+        {
+            SetInputField(
+                float.IsNaN(value.x) ? "-" : value.x.ToString(),
+                float.IsNaN(value.y) ? "-" : value.y.ToString(),
+                float.IsNaN(value.z) ? "-" : value.z.ToString());
+            ReSetPosition = new(value.x,value.y,value.z);
+        }
+    }
 
     public bool GetVector3Change =>
         m_inputPropertyX.GetInputDown || m_inputPropertyY.GetInputDown || m_inputPropertyZ.GetInputDown;
+
+    public bool OnSelect => m_selectX || m_selectY || m_selectZ;
     
     private TMP_InputField m_inputFieldX;
 
@@ -20,6 +36,12 @@ public class InputFieldVector3
     private InputProperty<float> m_inputPropertyY;
     
     private InputProperty<float> m_inputPropertyZ;
+
+    private bool m_selectX;
+
+    private bool m_selectY;
+
+    private bool m_selectZ;
 
     public InputFieldVector3(TMP_InputField inputFieldX,TMP_InputField inputFieldY,TMP_InputField inputFieldZ)
     {
@@ -60,13 +82,44 @@ public class InputFieldVector3
             if (canChange) SetPosition = newInput;
             else SetInputField(GetVector3);
         });
+        m_inputFieldX.onSelect.AddListener((data) =>
+        {
+            m_selectX = true;
+        });
+        m_inputFieldX.onEndEdit.AddListener((data) =>
+        {
+            m_selectX = false;
+        });
+        m_inputFieldY.onSelect.AddListener((data) =>
+        {
+            m_selectY = true;
+        });
+        m_inputFieldY.onEndEdit.AddListener((data) =>
+        {
+            m_selectY = false;
+        });
+        m_inputFieldZ.onSelect.AddListener((data) =>
+        {
+            m_selectZ = true;
+        });
+        m_inputFieldZ.onEndEdit.AddListener((data) =>
+        {
+            m_selectZ = false;
+        });
     }
     
     private void SetInputField(Vector3 input)
     {
-        m_inputFieldX.text = input.x.ToString().Replace(" ","");
-        m_inputFieldY.text = input.y.ToString().Replace(" ","");
-        m_inputFieldZ.text = input.z.ToString().Replace(" ","");
+        m_inputFieldX.text = float.IsNaN(input.x) ? "-" : input.x.ToString().Replace(" ","");
+        m_inputFieldY.text = float.IsNaN(input.y) ? "-" : input.y.ToString().Replace(" ","");
+        m_inputFieldZ.text = float.IsNaN(input.z) ? "-" : input.z.ToString().Replace(" ","");
+    }
+    
+    private void SetInputField(string x,string y,string z)
+    {
+        m_inputFieldX.text = x.Replace(" ","");
+        m_inputFieldY.text = y.Replace(" ","");
+        m_inputFieldZ.text = z.Replace(" ","");
     }
     
     private Vector3 SetPosition
@@ -79,11 +132,25 @@ public class InputFieldVector3
         }
     }
     
+    private Vector3 ReSetPosition
+    {
+        set
+        {
+            m_inputPropertyX.ResetInput = value.x;
+            m_inputPropertyY.ResetInput = value.y;
+            m_inputPropertyZ.ResetInput = value.z;
+        }
+    }
+    
     private (bool,Vector3) StringToVector3(string x,string y,string z)
     {
-        if (!float.TryParse(x, out float floatX)) return (false, Vector3.zero);
-        if (!float.TryParse(y, out float floatY)) return (false, Vector3.zero);
-        if (!float.TryParse(z, out float floatZ)) return (false, Vector3.zero);
+        float floatX, floatY, floatZ;
+        if (x == "-") floatX = float.NaN;
+        else if (!float.TryParse(x, out floatX)) return (false, Vector3.zero);
+        if (y == "-") floatY = float.NaN;
+        else if (!float.TryParse(y, out floatY)) return (false, Vector3.zero);
+        if (z == "-") floatZ = float.NaN;
+        else if (!float.TryParse(z, out floatZ)) return (false, Vector3.zero);
         return (true, new Vector3(floatX, floatY, floatZ));
     }
 }

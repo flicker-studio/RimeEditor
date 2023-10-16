@@ -27,12 +27,15 @@ namespace Frame.StateMachine
 
         #region LevelEditorCamera
 
-        LevelEditorCameraAdditiveDefultState = 1<<11,
+        LevelEditorCameraDefultState = 1<<11,
         LevelEditorCameraMoveState = 1<<12,
         LevelEditorCameraChangeZState = 1 << 13,
         MouseSelecteState = 1 << 14,
         PositionAxisDragState = 1 << 15,
-        RotationAxisDragState = 1 << 16
+        RotationAxisDragState = 1 << 16,
+        ItemTransformPanelShowState = 1 << 17,
+        ActionPanelShowState = 1 << 18,
+        ControlHandlePanelShowState = 1 << 19
         #endregion
     }
 

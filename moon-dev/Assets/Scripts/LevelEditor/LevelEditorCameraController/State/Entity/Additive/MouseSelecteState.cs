@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class MouseSelecteState : LevelEditorCameraAdditiveState
+public class MouseSelecteState : LevelEditorAdditiveState
 {
     private RectTransform GetSelectionUIRect => m_information.GetUI.GetControlHandlePanel.GetSelectionRect;
 
@@ -27,6 +27,8 @@ public class MouseSelecteState : LevelEditorCameraAdditiveState
     private bool GetShiftButton => m_information.GetInput.GetShiftButton;
 
     private bool GetCtrlButton => m_information.GetInput.GetCtrlButton;
+
+    private ItemTransformPanel GetItemTransformPanel => m_information.GetUI.GetItemTransformPanel;
 
     private GameObject m_emptyObj;
 

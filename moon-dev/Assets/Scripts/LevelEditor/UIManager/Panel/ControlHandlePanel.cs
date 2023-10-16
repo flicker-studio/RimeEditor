@@ -1,4 +1,5 @@
 using Frame.Static.Extensions;
+using Frame.Tool;
 using Struct;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -81,6 +82,8 @@ public class ControlHandlePanel
     private ControlHandleAction _mControlHandleAction = new ControlHandleAction();
 
     private LevelEditorUIProperty.ControlHandleUI m_property;
+
+    private bool GetMouseLeftButton => InputManager.Instance.GetMouseLeftButton;
     
     public ControlHandlePanel(RectTransform levelEditorCanvasRect,LevelEditorUIProperty levelEditorUIProperty)
     {
@@ -101,20 +104,32 @@ public class ControlHandlePanel
         m_positionButtonXY = levelEditorCanvasRect.FindPath(uiName.POSITION_AXIS_XY).GetComponent<Button>();
         m_rotationButtonZ = levelEditorCanvasRect.FindPath(uiName.ROTATION_AXIS).GetComponent<Button>();
     }
-
+    
     private void InitEvent()
     {
         m_positionButtonX.AddTriggerEvent(EventTriggerType.PointerDown,
-            data => m_positionInputX.SetInput = true);
+            data =>
+            {
+                if (GetMouseLeftButton) m_positionInputX.SetInput = true;
+            });
         
         m_positionButtonY.AddTriggerEvent(EventTriggerType.PointerDown,
-            data => m_positionInputY.SetInput = true);
+            data =>
+            {
+                if (GetMouseLeftButton) m_positionInputY.SetInput = true;
+            });
         
         m_positionButtonXY.AddTriggerEvent(EventTriggerType.PointerDown,
-            data => m_positionInputXY.SetInput = true);
+            data =>
+            {
+                if (GetMouseLeftButton) m_positionInputXY.SetInput = true;
+            });
 
         m_rotationButtonZ.AddTriggerEvent(EventTriggerType.PointerDown,
-            data => m_rotationInputZ.SetInput = true);
+            data =>
+            {
+                if (GetMouseLeftButton) m_rotationInputZ.SetInput = true;
+            });
         
         m_positionButtonX.AddTriggerEvent(EventTriggerType.PointerUp,
             data => m_positionInputX.SetInput = false);

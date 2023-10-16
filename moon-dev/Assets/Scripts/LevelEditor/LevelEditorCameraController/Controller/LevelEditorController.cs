@@ -21,7 +21,10 @@ public class LevelEditorController
     
     private void MotionInit()
     {
-        m_motionController.ChangeMotionState(MOTIONSTATEENUM.LevelEditorCameraAdditiveDefultState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.LevelEditorCameraDefultState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.ItemTransformPanelShowState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.ActionPanelShowState);
+        m_motionController.ChangeMotionState(MOTIONSTATEENUM.ControlHandlePanelShowState);
     }
     
     public void LateUpdate()

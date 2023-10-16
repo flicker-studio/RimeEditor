@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-public class PositionAxisDragState : LevelEditorCameraAdditiveState
+public class PositionAxisDragState : LevelEditorAdditiveState
 {
     public enum POSITIONDRAGTYPE
     {
@@ -93,6 +94,10 @@ public class PositionAxisDragState : LevelEditorCameraAdditiveState
                 default:
                     continue;
             }
+
+            TagetList[i].transform.position = TagetList[i]
+                .transform.position.NewX((float)Math.Round(TagetList[i].transform.position.x,2))
+                                    .NewY((float)Math.Round(TagetList[i].transform.position.y,2));
         }
     }
 }

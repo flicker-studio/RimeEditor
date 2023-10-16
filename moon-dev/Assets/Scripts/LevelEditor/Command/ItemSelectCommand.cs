@@ -31,48 +31,4 @@ public class ItemSelectCommand : LevelEditorCommand
         m_targetList.AddRange(m_lastList);
         m_outlinePainter.SetTargetObj = m_targetList;
     }
-    
-    // private void ShowActionView(EXCUTEORDER excuteOrder)
-    // {
-    //     switch (excuteOrder)
-    //     {
-    //         case EXCUTEORDER.last:
-    //             m_nextActionUI.SetActive(false);
-    //             if (m_targetList.Count > 0)
-    //             {
-    //                 m_lastActionUI.transform.position = Camera.main
-    //                     .WorldToScreenPoint(GetVector3ListFromGameObjectList(m_targetList).GetCenterPoint());
-    //                 m_lastActionUI.SetActive(true);
-    //             }
-    //             else
-    //             {
-    //                 m_lastActionUI.SetActive(false);
-    //             }
-    //             break;
-    //         case EXCUTEORDER.next:
-    //             m_lastActionUI.SetActive(false);
-    //             if (m_targetList.Count > 0)
-    //             {
-    //                 m_nextActionUI.transform.position = Camera.main
-    //                     .WorldToScreenPoint(GetVector3ListFromGameObjectList(m_targetList).GetCenterPoint());
-    //                 m_nextActionUI.SetActive(true);
-    //             }
-    //             else
-    //             {
-    //                 m_nextActionUI.SetActive(false);
-    //             }
-    //             break;
-    //     }
-    // }
-    //
-    // private List<Vector3> GetVector3ListFromGameObjectList(List<GameObject> gameobjectList)
-    // {
-    //     List<Vector3> vector3List = new List<Vector3>();
-    //     foreach (var obj in gameobjectList)
-    //     {
-    //         vector3List.Add(obj.transform.position);
-    //     }
-    //
-    //     return vector3List;
-    // }
 }

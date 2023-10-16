@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
-using UnityEditor;
 using UnityEngine;
 
-public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveState
+public class ControlHandlePanelShowState : LevelEditorAdditiveState
 {
     private List<GameObject> TargetList => m_information.TargetList;
-
-    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
 
     private ControlHandleAction GetControlHandleAction => m_information.GetUI.GetControlHandlePanel.GetControlHandleAction;
 
@@ -25,50 +22,20 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
     private bool GetPositionAxisButtonDown => GetPositionAxisXYButtonDown || GetPositionAxisXButtonDown || GetPositionAxisYButtonDown;
 
     private bool GetRotationAxisZButtonDown => m_information.GetUI.GetControlHandlePanel.GetRotationInputZDown;
-
-    private bool GetUndoButtonDown => m_information.GetUI.GetActionPanel.GetUndoInputDown;
     
-    private bool GetRedoButtonDown => m_information.GetUI.GetActionPanel.GetRedoInputDown;
-
-    private bool GetViewButtonDown => m_information.GetUI.GetActionPanel.GetViewInputDown;
-
-    private bool GetPositionButtonDown => m_information.GetUI.GetActionPanel.GetPositionInputDown;
-
-    private bool GetRotationButtonDown => m_information.GetUI.GetActionPanel.GetRotationInputDown;
-
-    private bool GetScaleButtonDown => m_information.GetUI.GetActionPanel.GetScaleInputDown;
-
-    private bool GetRectButtonDown => m_information.GetUI.GetActionPanel.GetRectInputDown;
-    
-    
-    public LevelEditorCameraAdditiveDefultState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
+    public ControlHandlePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
     }
 
     public override void Motion(BaseInformation information)
     {
         ShowActionView(GetControlHandleAction.ControlHandleActionType);
-        ButtonDetection();
+
+        CheckButton();
     }
-    
-    private void ButtonDetection()
+
+    private void CheckButton()
     {
-        if (m_information.GetInput.GetMouseMiddleButtonDown)
-        {
-            if(!CheckStates.Contains(typeof(LevelEditorCameraMoveState)))
-            {
-                ChangeMotionState(MOTIONSTATEENUM.LevelEditorCameraMoveState);
-            }
-        }
-
-        if (m_information.GetInput.GetMouseSrollDown)
-        {
-            if(!CheckStates.Contains(typeof(LevelEditorCameraChangeZState)))
-            {
-                ChangeMotionState(MOTIONSTATEENUM.LevelEditorCameraChangeZState);
-            }
-        }
-
         if (m_information.GetInput.GetMouseLeftButtonDown && !UIMethod.IsPointerOverUIElement())
         {
             if (!CheckStates.Contains(typeof(MouseSelecteState)))
@@ -92,28 +59,6 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
                 ChangeMotionState(MOTIONSTATEENUM.RotationAxisDragState);
             }
         }
-
-        if (GetPositionButtonDown)
-        {
-            GetExcute?.Invoke(new LevelEditorActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.PositionAxisButton));
-        }else if (GetRotationButtonDown)
-        {
-            GetExcute?.Invoke(new LevelEditorActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RotationAxisButton));
-        }else if (GetViewButtonDown)
-        {
-            GetExcute?.Invoke(new LevelEditorActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ViewButton));
-        }
-    }
-    
-    private List<Vector3> GetVector3ListFromGameObjectList(List<GameObject> gameobjectList)
-    {
-        List<Vector3> vector3List = new List<Vector3>();
-        foreach (var obj in gameobjectList)
-        {
-            vector3List.Add(obj.transform.position);
-        }
-
-        return vector3List;
     }
     
     private void ShowActionView(CONTROLHANDLEACTIONTYPE levelEditorActionType)
@@ -123,7 +68,7 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
             case CONTROLHANDLEACTIONTYPE.PositionAxisButton:
                 GetRotationAxisObj.SetActive(false);
                 GetPositionAxisObj.transform.position = Camera.main
-                    .WorldToScreenPoint(GetVector3ListFromGameObjectList(TargetList).GetCenterPoint());
+                    .WorldToScreenPoint(GetPositionListFromGameObjectList(TargetList).GetCenterPoint());
                 if (TargetList.Count > 0)
                 {
                     GetPositionAxisObj.SetActive(true);
@@ -136,7 +81,7 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
             case CONTROLHANDLEACTIONTYPE.RotationAxisButton:
                 GetPositionAxisObj.SetActive(false);
                 GetRotationAxisObj.transform.position = Camera.main
-                    .WorldToScreenPoint(GetVector3ListFromGameObjectList(TargetList).GetCenterPoint());
+                    .WorldToScreenPoint(GetPositionListFromGameObjectList(TargetList).GetCenterPoint());
                 if (TargetList.Count > 0)
                 {
                     GetRotationAxisObj.SetActive(true);
@@ -151,5 +96,16 @@ public class LevelEditorCameraAdditiveDefultState : LevelEditorCameraAdditiveSta
                 GetRotationAxisObj.SetActive(false);
                 break;
         }
+    }
+    
+    private List<Vector3> GetPositionListFromGameObjectList(List<GameObject> gameobjectList)
+    {
+        List<Vector3> positionList = new List<Vector3>();
+        foreach (var obj in gameobjectList)
+        {
+            positionList.Add(obj.transform.position);
+        }
+
+        return positionList;
     }
 }

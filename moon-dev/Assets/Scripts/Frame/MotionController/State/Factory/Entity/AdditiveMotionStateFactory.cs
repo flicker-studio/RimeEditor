@@ -46,18 +46,24 @@ namespace Frame.StateMachine
             {
                 switch (motionStateEnum)
                 {
-                    case MOTIONSTATEENUM.LevelEditorCameraAdditiveDefultState:
-                        return new LevelEditorCameraAdditiveDefultState(information, motionCallBack);
+                    case MOTIONSTATEENUM.LevelEditorCameraDefultState:
+                        return new LevelEditorCameraDefultState(information, motionCallBack);
                     case MOTIONSTATEENUM.LevelEditorCameraMoveState:
-                        return new LevelEditorCameraMoveState(information, motionCallBack);
+                        return new LevelEditorMoveState(information, motionCallBack);
                     case MOTIONSTATEENUM.LevelEditorCameraChangeZState:
-                        return new LevelEditorCameraChangeZState(information, motionCallBack);
+                        return new LevelEditorChangeZState(information, motionCallBack);
                     case MOTIONSTATEENUM.MouseSelecteState:
                         return new MouseSelecteState(information, motionCallBack);
                     case MOTIONSTATEENUM.PositionAxisDragState:
                         return new PositionAxisDragState(information, motionCallBack);
                     case MOTIONSTATEENUM.RotationAxisDragState:
                         return new RotationAxisDragState(information, motionCallBack);
+                    case MOTIONSTATEENUM.ItemTransformPanelShowState:
+                        return new ItemTransformPanelShowState(information, motionCallBack);
+                    case MOTIONSTATEENUM.ActionPanelShowState:
+                        return new ActionPanelShowState(information, motionCallBack);
+                    case MOTIONSTATEENUM.ControlHandlePanelShowState:
+                        return new ControlHandlePanelShowState(information, motionCallBack);
                     default:
                         return null;
                 }

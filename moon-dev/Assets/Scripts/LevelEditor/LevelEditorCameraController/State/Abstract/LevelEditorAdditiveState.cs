@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Frame.StateMachine;
 using UnityEngine;
 
-public abstract class LevelEditorCameraAdditiveState : AdditiveMotionState
+public abstract class LevelEditorAdditiveState : AdditiveMotionState
 {
     protected LevelEditorInformation m_information;
     
-    protected LevelEditorCameraAdditiveState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
+    protected LevelEditorAdditiveState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
         m_information = baseInformation as LevelEditorInformation;
     }

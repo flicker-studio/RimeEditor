@@ -114,6 +114,16 @@ namespace Frame.Tool
             m_ctrlButton.SetInput = false;
         };
 
+        GetLevelEditorActions.ZButton.performed += context =>
+        {
+            m_zButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.ZButton.canceled += context =>
+        {
+            m_zButton.SetInput = false;
+        };
+
         #endregion
         
         #region Debugger
@@ -270,6 +280,7 @@ namespace Frame.Tool
     private InputProperty<bool> m_shiftButton = new InputProperty<bool>();
 
     private InputProperty<bool> m_ctrlButton = new InputProperty<bool>();
+    private InputProperty<bool> m_zButton = new InputProperty<bool>();
 
     public bool GetMouseLeftButton => m_mouseLeftButton.GetInput;
     
@@ -306,6 +317,12 @@ namespace Frame.Tool
     public bool GetCtrlButtonDown => m_ctrlButton.GetInputDown;
 
     public bool GetCtrlButtonUp => m_ctrlButton.GetInputUp;
+
+    public bool GetZButton => m_zButton.GetInput;
+    
+    public bool GetZButtonDown => m_zButton.GetInputDown;
+    public bool GetZButtonUp => m_zButton.GetInputUp;
+    
 
     #endregion
 

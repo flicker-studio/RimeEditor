@@ -9,6 +9,14 @@ namespace Struct
 
         private bool m_inputUp;
 
+        public T ResetInput
+        {
+            set
+            {
+                m_input = value;
+            }
+        }
+        
         public T SetInput
         {
             set

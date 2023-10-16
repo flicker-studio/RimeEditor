@@ -5,7 +5,7 @@ using Frame.Static.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LevelEditorCameraChangeZState : LevelEditorCameraAdditiveState
+public class LevelEditorChangeZState : LevelEditorAdditiveState
 {
     private float GetMouseScroll => m_information.GetInput.GetMouseSroll;
 
@@ -25,7 +25,7 @@ public class LevelEditorCameraChangeZState : LevelEditorCameraAdditiveState
 
     private Vector3 m_currentMousePositon;
     
-    public LevelEditorCameraChangeZState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+    public LevelEditorChangeZState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
     {
         m_originMousePosition = GetMouseWorldPoint;
         ChangeZValue();

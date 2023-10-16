@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-public class RotationAxisDragState : LevelEditorCameraAdditiveState
+public class RotationAxisDragState : LevelEditorAdditiveState
 {
     private List<GameObject> TagetList => m_information.TargetList;
     
@@ -61,7 +62,7 @@ public class RotationAxisDragState : LevelEditorCameraAdditiveState
         UpdateRotation();
     }
 
-    //TODO:旋转拖动会有值突然非常大的情况，目前还不知道造成这个BUG的原因
+    //TODO:旋转拖动会有值突然非常大的情况，初步判断是GetRotationAxisRectTransform.anchoredPosition特别大引起的，但还不知道原因
     private void UpdateRotation()
     {
         m_currentPosition = GetMousePosition;
@@ -69,7 +70,8 @@ public class RotationAxisDragState : LevelEditorCameraAdditiveState
         float mouseDis = (m_currentPosition - m_originPosition).magnitude;
         Vector3 dirCross = Vector3.Cross(m_originDir, mouseDir);
         float rotationDirAndMultiplying= dirCross.z;
-        Quaternion rotationQuaternion = Quaternion.Euler(0, 0, mouseDis * rotationDirAndMultiplying * GetRotationSpeed);
+        Quaternion rotationQuaternion = Quaternion
+            .Euler(0, 0, (float)Math.Round(mouseDis * rotationDirAndMultiplying * GetRotationSpeed,2));
         GetRotationAxisRectTransform.rotation = rotationQuaternion;
         
         for (var i = 0; i < TagetList.Count; i++)

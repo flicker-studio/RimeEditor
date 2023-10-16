@@ -3,7 +3,7 @@ using Frame.Static.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LevelEditorCameraMoveState : LevelEditorCameraAdditiveState
+public class LevelEditorMoveState : LevelEditorAdditiveState
 {
     private Vector3 m_originMousePosition;
 
@@ -11,7 +11,7 @@ public class LevelEditorCameraMoveState : LevelEditorCameraAdditiveState
 
     private Vector3 MouseWorldPoint => m_information.GetMouseWorldPoint;
     
-    public LevelEditorCameraMoveState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+    public LevelEditorMoveState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
     {
         m_originMousePosition = MouseWorldPoint;
     }
