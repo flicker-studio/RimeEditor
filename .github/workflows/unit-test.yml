@@ -5,7 +5,7 @@ on:
     branches: [main]
   push:
     branches: [main]
-    paths: ['moon-dev/**']
+    paths: ['moon-dev/**.cs']
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
