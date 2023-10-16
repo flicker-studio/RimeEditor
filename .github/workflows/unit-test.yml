@@ -3,8 +3,7 @@ name: Unit Test
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
+    types: [closed]
     paths: ['moon-dev/**.cs']
   schedule:
     - cron: '0 0 * * 0'
@@ -12,7 +11,7 @@ on:
 
 jobs:
   Test:
-    if: github.repository_owner == 'fictional-vision'
+    if: github.repository_owner == 'fictional-vision' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Self
