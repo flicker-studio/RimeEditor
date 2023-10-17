@@ -5,7 +5,7 @@ using Frame.Static.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LevelEditorCameraChangeZState : LevelEditorCameraAdditiveState
+public class LevelEditorCameraChangeZState : LevelEditorAdditiveState
 {
     private float GetMouseScroll => m_information.GetInput.GetMouseSroll;
 
