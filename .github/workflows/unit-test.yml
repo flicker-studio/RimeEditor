@@ -5,8 +5,6 @@ on:
     branches: [main]
     types: [closed]
     paths: ['moon-dev/**.cs']
-  schedule:
-    - cron: '0 0 * * 0'
   workflow_dispatch:
 
 jobs:
@@ -17,10 +15,19 @@ jobs:
       - name: Checkout Self
         uses: actions/checkout@v3
 
+      - uses: actions/cache@v2
+        with:
+          path: moon-dev/Library
+          key: Library-Moon
+          restore-keys: |
+            Library-
+
       - name: Unit test
         id: Tests 
         uses: game-ci/unity-test-runner@v3
         env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
           projectPath: moon-dev/
