@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Struct;
 using UnityEngine;
 
-namespace Frame.Static.Extensions
+namespace Slicer
 {
     public static class MeshMethod
     {

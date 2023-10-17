@@ -1,4 +1,3 @@
-using Frame.Static.Extensions;
 using UnityEngine;
 
 public class MeshTest : MonoBehaviour

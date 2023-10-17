@@ -1,9 +1,8 @@
-using Character.Information;
-using Character.State;
+using Frame.StateMachine;
 
-namespace Frame.StateMachine
+namespace Character
 {
-    public class MainMotionStateFactory : MotionStateFactory
+    public class MainStateFactory : MainMotionStateFactory
     {
         public override MotionState CreateMotion(MOTIONSTATEENUM motionStateEnum, BaseInformation information,
             MotionCallBack motionCallBack)

@@ -1,10 +1,8 @@
-using Character.Data;
-using Character.Information;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-namespace Character.State
+namespace Character
 {
     public class PlayerMainDefultState : PlayerMainMotionState
 {

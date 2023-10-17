@@ -1,7 +1,7 @@
-using Slicer.Data;
+using Frame.Static.Extensions;
 using UnityEngine;
 
-namespace Frame.Static.Extensions
+namespace Slicer
 {
     public static class SlicerPropertyMethod
     {

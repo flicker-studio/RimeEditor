@@ -18,7 +18,7 @@ namespace LevelEditor
         void ControllerInit(RectTransform levelEditorTransform,CommandExcute levelEditorCommandExcute)
         {
             m_information = new Information(levelEditorTransform,levelEditorCommandExcute);
-            m_motionController = new MotionController(m_information);
+            m_motionController = new MotionController(m_information,new AdditiveStateFactory());
         }
     
         private void MotionInit()

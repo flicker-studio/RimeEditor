@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Struct;
 using UnityEngine;
 
-namespace Frame.Static.Extensions
+namespace Slicer
 {
     
 public static class TrianglePointsMethod

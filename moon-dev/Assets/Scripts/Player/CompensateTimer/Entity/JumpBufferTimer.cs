@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Character.Information;
 using UnityEngine;
 
-namespace Character.State.Timer
+namespace Character
 {
     public class JumpBufferTimer
     {

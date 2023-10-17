@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Character.Information
+namespace Character
 {
     public class ComponentController
     {

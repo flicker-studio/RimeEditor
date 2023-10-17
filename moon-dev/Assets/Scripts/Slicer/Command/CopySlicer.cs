@@ -5,10 +5,9 @@ using EzySlice;
 using Frame.Static.Extensions;
 using Frame.Static.Global;
 using Frame.Tool.Pool;
-using Slicer.Information;
 using UnityEngine;
 
-namespace Slicer.Command
+namespace Slicer
 {
     enum SLICEDIR
     {

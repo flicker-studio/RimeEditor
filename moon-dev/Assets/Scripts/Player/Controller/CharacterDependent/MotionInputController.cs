@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Frame.Tool;
 using UnityEngine;
 
-namespace Character.Information
+namespace Character
 {
     public struct MotionInputData
     {
