@@ -1,5 +1,6 @@
 using Character.Information;
 using Character.State;
+using LevelEditor;
 using Slicer.Information;
 using Slicer.State;
 
@@ -42,16 +43,16 @@ namespace Frame.StateMachine
                 }
             }
 
-            if (information as LevelEditorInformation != null)
+            if (information as Information != null)
             {
                 switch (motionStateEnum)
                 {
-                    case MOTIONSTATEENUM.LevelEditorCameraDefultState:
-                        return new LevelEditorCameraDefultState(information, motionCallBack);
-                    case MOTIONSTATEENUM.LevelEditorCameraMoveState:
-                        return new LevelEditorMoveState(information, motionCallBack);
-                    case MOTIONSTATEENUM.LevelEditorCameraChangeZState:
-                        return new LevelEditorChangeZState(information, motionCallBack);
+                    case MOTIONSTATEENUM.CameraDefultState:
+                        return new CameraDefultState(information, motionCallBack);
+                    case MOTIONSTATEENUM.CameraMoveState:
+                        return new CameraMoveState(information, motionCallBack);
+                    case MOTIONSTATEENUM.CameraChangeZState:
+                        return new CameraChangeZState(information, motionCallBack);
                     case MOTIONSTATEENUM.MouseSelecteState:
                         return new MouseSelecteState(information, motionCallBack);
                     case MOTIONSTATEENUM.PositionAxisDragState:

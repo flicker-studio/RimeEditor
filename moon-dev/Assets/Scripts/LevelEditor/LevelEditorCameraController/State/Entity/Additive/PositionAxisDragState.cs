@@ -4,7 +4,9 @@ using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-public class PositionAxisDragState : LevelEditorAdditiveState
+namespace LevelEditor
+{
+    public class PositionAxisDragState : AdditiveState
 {
     public enum POSITIONDRAGTYPE
     {
@@ -21,7 +23,7 @@ public class PositionAxisDragState : LevelEditorAdditiveState
 
     private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
 
-    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
 
     private Vector3 m_originPosition;
 
@@ -100,4 +102,5 @@ public class PositionAxisDragState : LevelEditorAdditiveState
                                     .NewY((float)Math.Round(TagetList[i].transform.position.y,2));
         }
     }
+}
 }

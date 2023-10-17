@@ -4,7 +4,9 @@ using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-public class RotationAxisDragState : LevelEditorAdditiveState
+namespace LevelEditor
+{
+    public class RotationAxisDragState : AdditiveState
 {
     private List<GameObject> TagetList => m_information.TargetList;
     
@@ -14,7 +16,7 @@ public class RotationAxisDragState : LevelEditorAdditiveState
 
     private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
     
-    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
     
     private Vector3 m_originPosition;
 
@@ -94,4 +96,6 @@ public class RotationAxisDragState : LevelEditorAdditiveState
             m_targetOriginPosition.Add(TagetList[i].transform.position);
         }
     }
+}
+
 }

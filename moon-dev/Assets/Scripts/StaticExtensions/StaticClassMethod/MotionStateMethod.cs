@@ -14,8 +14,8 @@ namespace Frame.Static.Extensions
                                                              MOTIONSTATEENUM.PlayerPerpendicularGroundState | MOTIONSTATEENUM.PlayerJumpState |
                                                              MOTIONSTATEENUM.SlicerCloseState | MOTIONSTATEENUM.PlayerJumpState |
                                                              MOTIONSTATEENUM.SlicerCopyState | MOTIONSTATEENUM.SlicerOpenState |
-                                                             MOTIONSTATEENUM.LevelEditorCameraMoveState | MOTIONSTATEENUM.LevelEditorCameraDefultState |
-                                                             MOTIONSTATEENUM.LevelEditorCameraChangeZState | MOTIONSTATEENUM.MouseSelecteState |
+                                                             MOTIONSTATEENUM.CameraMoveState | MOTIONSTATEENUM.CameraDefultState |
+                                                             MOTIONSTATEENUM.CameraChangeZState | MOTIONSTATEENUM.MouseSelecteState |
                                                              MOTIONSTATEENUM.PositionAxisDragState | MOTIONSTATEENUM.RotationAxisDragState |
                                                              MOTIONSTATEENUM.ItemTransformPanelShowState | MOTIONSTATEENUM.ActionPanelShowState |
                                                              MOTIONSTATEENUM.ControlHandlePanelShowState |

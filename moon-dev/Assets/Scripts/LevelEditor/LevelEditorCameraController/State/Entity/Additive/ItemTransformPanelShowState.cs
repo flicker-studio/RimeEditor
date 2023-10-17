@@ -4,11 +4,13 @@ using Frame.StateMachine;
 using Frame.Tool;
 using UnityEngine;
 
-public class ItemTransformPanelShowState : LevelEditorAdditiveState
+namespace LevelEditor
+{
+    public class ItemTransformPanelShowState : AdditiveState
 {
     private List<GameObject> TargetList => m_information.TargetList;
 
-    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
 
     private ItemTransformPanel GetItemTransformPanel => m_information.GetUI.GetItemTransformPanel;
 
@@ -190,4 +192,6 @@ public class ItemTransformPanelShowState : LevelEditorAdditiveState
                 chnParseZ ? valueZ : target.transform.localScale.z);
         }
     }
+}
+
 }
