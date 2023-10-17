@@ -1,9 +1,8 @@
 using System;
 using Editor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Slicer.Data
+namespace Slicer
 {
     [CreateAssetMenu(menuName = "CustomProperty/SlicerProperty",order = 2,fileName = "SlicerProperty")]
     public class SlicerProperty : ScriptableObject

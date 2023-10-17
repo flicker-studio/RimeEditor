@@ -1,7 +1,6 @@
-using Character.Information;
 using Frame.StateMachine;
 
-namespace Character.State
+namespace Character
 {
     public abstract class PlayerMainMotionState : MainMotionState
     {

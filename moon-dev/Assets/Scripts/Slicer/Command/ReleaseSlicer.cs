@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using Frame.Static.Extensions;
 using Frame.Static.Global;
 using Frame.Tool;
-using Slicer.Information;
 using UnityEngine;
 
-namespace Slicer.Command
+namespace Slicer
 {
     public class ReleaseSlicer : SliceCommand
     {

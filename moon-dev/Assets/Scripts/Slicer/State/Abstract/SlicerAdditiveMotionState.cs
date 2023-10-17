@@ -1,8 +1,6 @@
 using Frame.StateMachine;
-using Frame.Tool;
-using Slicer.Information;
 
-namespace Slicer.State
+namespace Slicer
 {
     public abstract class SlicerAdditiveMotionState : AdditiveMotionState
     {

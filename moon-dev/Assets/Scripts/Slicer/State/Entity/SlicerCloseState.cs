@@ -1,7 +1,7 @@
 
 using Frame.StateMachine;
 
-namespace Slicer.State
+namespace Slicer
 {
     public class SlicerCloseState : SlicerAdditiveMotionState
     {

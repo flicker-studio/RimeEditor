@@ -1,7 +1,6 @@
-using Character.Information;
 using UnityEngine;
 
-namespace Character.State.Timer
+namespace Character
 {
     public class CoyoteTimer
     {

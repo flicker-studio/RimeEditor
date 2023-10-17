@@ -7,7 +7,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class MouseSelecteState : LevelEditorCameraAdditiveState
+namespace LevelEditor
+{
+    public class MouseSelecteState : AdditiveState
 {
     private RectTransform GetSelectionUIRect => m_information.GetUI.GetControlHandlePanel.GetSelectionRect;
 
@@ -28,6 +30,8 @@ public class MouseSelecteState : LevelEditorCameraAdditiveState
 
     private bool GetCtrlButton => m_information.GetInput.GetCtrlButton;
 
+    private ItemTransformPanel GetItemTransformPanel => m_information.GetUI.GetItemTransformPanel;
+
     private GameObject m_emptyObj;
 
     private BoxCollider2D m_selectCollider;
@@ -39,7 +43,7 @@ public class MouseSelecteState : LevelEditorCameraAdditiveState
 
     private List<GameObject> m_selectList = new List<GameObject>();
 
-    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
     
     private Vector2 m_originMousePositon;
 
@@ -192,4 +196,6 @@ public class MouseSelecteState : LevelEditorCameraAdditiveState
         m_outlinePainter.SetTargetObj = tempList;
         GetExcute?.Invoke(new ItemSelectCommand(TargetList,tempList,m_outlinePainter));
     }
+}
+
 }

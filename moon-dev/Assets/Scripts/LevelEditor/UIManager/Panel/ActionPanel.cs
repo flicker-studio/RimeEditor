@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ActionPanel
+namespace LevelEditor
+{
+    public class ActionPanel
 {
     private Button m_undoButton;
 
@@ -48,15 +50,15 @@ public class ActionPanel
 
     public bool GetRectInputDown => m_rectInputProperty.GetInputDown;
 
-    public ActionPanel(RectTransform levelEditorCanvasRect,LevelEditorUIProperty levelEditorUIProperty)
+    public ActionPanel(RectTransform levelEditorCanvasRect,UIProperty levelEditorUIProperty)
     {
         InitComponent(levelEditorCanvasRect, levelEditorUIProperty);
         InitEvent();
     }
 
-    private void InitComponent(RectTransform levelEditorCanvasRect,LevelEditorUIProperty levelEditorUIProperty)
+    private void InitComponent(RectTransform levelEditorCanvasRect,UIProperty levelEditorUIProperty)
     {
-        LevelEditorUIProperty.ActionPanelUIName property = levelEditorUIProperty.GetActionPanelUI.GetActionPanelUIName;
+        UIProperty.ActionPanelUIName property = levelEditorUIProperty.GetActionPanelUI.GetActionPanelUIName;
         m_undoButton = levelEditorCanvasRect.FindPath(property.UNDO_BUTTON).GetComponent<Button>();
         m_redoButton = levelEditorCanvasRect.FindPath(property.REDO_BUTTON).GetComponent<Button>();
         m_viewButton = levelEditorCanvasRect.FindPath(property.VIEW_BUTTON).GetComponent<Button>();
@@ -83,4 +85,5 @@ public class ActionPanel
         m_rectButton.AddTriggerEvent(EventTriggerType.PointerClick,
             data => m_redoInputProperty.SetInput = true);
     }
+}
 }

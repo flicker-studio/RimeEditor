@@ -15,7 +15,12 @@ namespace Frame.StateMachine
 
     private MotionCallBack m_motionCallBack;
 
-    public MotionController(BaseInformation information)
+    private MainMotionStateFactory m_mainMotionStateFactory;
+
+    private AdditiveMotionStateFactory m_additiveMotionStateFactory;
+
+    public MotionController(BaseInformation information,MainMotionStateFactory mainMotionStateFactory
+        ,AdditiveMotionStateFactory additiveMotionStateFactory)
     {
         m_motionStateMachines = new List<MotionStateMachine>();
         m_information = information;
@@ -24,6 +29,32 @@ namespace Frame.StateMachine
             CheckGlobalStatesCallBack = CheckGlobalStates,
             ChangeMotionStateCallBack = ChangeMotionState
         };
+        m_mainMotionStateFactory = mainMotionStateFactory;
+        m_additiveMotionStateFactory = additiveMotionStateFactory;
+    }
+    
+    public MotionController(BaseInformation information,AdditiveMotionStateFactory additiveMotionStateFactory)
+    {
+        m_motionStateMachines = new List<MotionStateMachine>();
+        m_information = information;
+        m_motionCallBack = new MotionCallBack
+        {
+            CheckGlobalStatesCallBack = CheckGlobalStates,
+            ChangeMotionStateCallBack = ChangeMotionState
+        };
+        m_additiveMotionStateFactory = additiveMotionStateFactory;
+    }
+    
+    public MotionController(BaseInformation information,MainMotionStateFactory mainMotionStateFactory)
+    {
+        m_motionStateMachines = new List<MotionStateMachine>();
+        m_information = information;
+        m_motionCallBack = new MotionCallBack
+        {
+            CheckGlobalStatesCallBack = CheckGlobalStates,
+            ChangeMotionStateCallBack = ChangeMotionState
+        };
+        m_mainMotionStateFactory = mainMotionStateFactory;
     }
     
     public void Motion(BaseInformation baseInformation)
@@ -53,7 +84,7 @@ namespace Frame.StateMachine
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is MainMotionStateMachine);   
         if (motionMachine == null)
         {
-            motionMachine = new MainMotionStateMachine(m_motionCallBack);
+            motionMachine = new MainMotionStateMachine(m_mainMotionStateFactory,m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
         motionMachine.ChangeMotionState(motionStateEnum,m_information);
@@ -64,7 +95,7 @@ namespace Frame.StateMachine
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is AddtiveMotionStateMachine);   
         if (motionMachine == null)
         {
-            motionMachine = new AddtiveMotionStateMachine(m_motionCallBack);
+            motionMachine = new AddtiveMotionStateMachine(m_additiveMotionStateFactory,m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
         motionMachine.ChangeMotionState(motionStateEnum,m_information);

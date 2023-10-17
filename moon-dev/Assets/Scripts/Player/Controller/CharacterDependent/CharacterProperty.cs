@@ -3,7 +3,7 @@ using Editor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Character.Data
+namespace Character
 {
     [CreateAssetMenu(menuName = "CustomProperty/CharacterProperty",order = 3,fileName = "CharacterProperty")]
     public class CharacterProperty : ScriptableObject

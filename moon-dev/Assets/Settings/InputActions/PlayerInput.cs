@@ -212,6 +212,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ZButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""8717c785-5f1d-4701-a017-277ff0cc177e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -278,6 +287,17 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CtrlButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81f23e94-4f93-4fc3-a37e-c8086864ce22"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -408,6 +428,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_LevelEditor_MouseScroll = m_LevelEditor.FindAction("MouseScroll", throwIfNotFound: true);
         m_LevelEditor_ShiftButton = m_LevelEditor.FindAction("ShiftButton", throwIfNotFound: true);
         m_LevelEditor_CtrlButton = m_LevelEditor.FindAction("CtrlButton", throwIfNotFound: true);
+        m_LevelEditor_ZButton = m_LevelEditor.FindAction("ZButton", throwIfNotFound: true);
         // Debugger
         m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
         m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
@@ -552,6 +573,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_LevelEditor_MouseScroll;
     private readonly InputAction m_LevelEditor_ShiftButton;
     private readonly InputAction m_LevelEditor_CtrlButton;
+    private readonly InputAction m_LevelEditor_ZButton;
     public struct LevelEditorActions
     {
         private @PlayerAction m_Wrapper;
@@ -562,6 +584,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @MouseScroll => m_Wrapper.m_LevelEditor_MouseScroll;
         public InputAction @ShiftButton => m_Wrapper.m_LevelEditor_ShiftButton;
         public InputAction @CtrlButton => m_Wrapper.m_LevelEditor_CtrlButton;
+        public InputAction @ZButton => m_Wrapper.m_LevelEditor_ZButton;
         public InputActionMap Get() { return m_Wrapper.m_LevelEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -589,6 +612,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @CtrlButton.started += instance.OnCtrlButton;
             @CtrlButton.performed += instance.OnCtrlButton;
             @CtrlButton.canceled += instance.OnCtrlButton;
+            @ZButton.started += instance.OnZButton;
+            @ZButton.performed += instance.OnZButton;
+            @ZButton.canceled += instance.OnZButton;
         }
 
         private void UnregisterCallbacks(ILevelEditorActions instance)
@@ -611,6 +637,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @CtrlButton.started -= instance.OnCtrlButton;
             @CtrlButton.performed -= instance.OnCtrlButton;
             @CtrlButton.canceled -= instance.OnCtrlButton;
+            @ZButton.started -= instance.OnZButton;
+            @ZButton.performed -= instance.OnZButton;
+            @ZButton.canceled -= instance.OnZButton;
         }
 
         public void RemoveCallbacks(ILevelEditorActions instance)
@@ -721,6 +750,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnMouseScroll(InputAction.CallbackContext context);
         void OnShiftButton(InputAction.CallbackContext context);
         void OnCtrlButton(InputAction.CallbackContext context);
+        void OnZButton(InputAction.CallbackContext context);
     }
     public interface IDebuggerActions
     {

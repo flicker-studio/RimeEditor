@@ -1,10 +1,7 @@
-using System;
-using Character.Data;
-using Character.Information;
 using Frame.StateMachine;
 using UnityEngine;
 
-namespace Character.Controller
+namespace Character
 {
     [RequireComponent(typeof(Rigidbody2D),typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
@@ -16,7 +13,7 @@ namespace Character.Controller
         private void ControllerInit()
         {
             m_playerInformation = new PlayerInformation(transform);
-            m_motionController = new MotionController(m_playerInformation);
+            m_motionController = new MotionController(m_playerInformation,new MainStateFactory(),new AdditiveStateFactory());
         }
 
         private void MotionInit()
