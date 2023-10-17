@@ -1,0 +1,78 @@
+{
+    "metadata": [
+        {
+            "references": [
+                {
+                    "src": "../moon-dev",
+                    "files": [
+                        "Assets/Plugins/**.dll"
+                    ]
+                }
+            ],
+            "src": [
+                {
+                    "src": "../moon-dev",
+                    "files": [
+                        "Assembly-CSharp.csproj"
+                    ]
+                }
+            ],
+            "dest": "api",
+            "filter": "filter.yml",
+            "disableGitFeatures": false,
+            "globalNamespaceId": "Global"
+        }
+    ],
+    "build": {
+        "globalMetadata": {
+            "_appTitle": "Moon Manual",
+            "_appFooter": "Made with <a href=\"https://dotnet.github.io/docfx\">docfx</a> <br> Supported by the <a href=\"https: //dotnetfoundation.org\">.NET Foundation</a>",
+            "_copyrightFooter": "Copyright © 2023 SEQHORE-SLICE, All rights reserved.",
+            "_disableContribution": false,
+            "_disableAffix": false,
+            "_enableSearch": true
+        },
+        "postProcessors": [
+            "ExtractSearchIndex"
+        ],
+        "content": [
+            {
+                "files": [
+                    "toc.yml",
+                    "index.md"
+                ]
+            },
+            {
+                "src": "api",
+                "files": [
+                    "**.yml"
+                ],
+                "dest": "api"
+            },
+            {
+                "src": "manual",
+                "files": [
+                    "toc.yml",
+                    "**.md"
+                ],
+                "dest": "manual"
+            }
+        ],
+        "resource": [
+            {
+                "files": "resources/**"
+            }
+        ],
+        "template": [
+            "default",
+            "templates/singulinkfx"
+        ],
+        "xref": [
+            "https://nicoco007.github.io/UnityXRefMap/2022.3/xrefmap.yml"
+        ],
+        "xrefService": [
+            "https://xref.docs.microsoft.com/query?uid={uid}"
+        ],
+        "dest": "_site"
+    }
+}
