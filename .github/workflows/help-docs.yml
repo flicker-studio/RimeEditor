@@ -1,9 +1,9 @@
 name: Help Docs
 
 on:
-  push:
-    branches: [main]
-    paths: ['moon-dev/**','docs/**','README.md']
+  workflow_run:
+    workflows: [Unit Test]
+    types: [completed]
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:

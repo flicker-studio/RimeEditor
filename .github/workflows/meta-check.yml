@@ -3,6 +3,7 @@ name: Meta Check
 on:
   push:
     branches: [main]
+    paths: [moon-dev/Assets]
   pull_request:
   workflow_dispatch:
 
@@ -10,7 +11,6 @@ jobs:
   meta-check:
     name: "Check all .meta"
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
       - name: Check out
         uses: actions/checkout@v3
@@ -21,8 +21,6 @@ jobs:
           target_path: moon-dev/Assets
           enable_junit: true
           junit_xml_path: junit.xml
-        env:
-          GITHUB_TOKEN: "${{ secrets.YOUR_GITHUB_TOKEN }}"
 
       - name: Report  
         uses: mikepenz/action-junit-report@v2

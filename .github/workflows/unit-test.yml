@@ -2,26 +2,25 @@ name: Unit Test
 
 on:
   pull_request:
-  push:
     branches: [main]
-    paths: ['moon-dev/**']
+    types: [closed]
+    paths: ['moon-dev/**.cs']
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
 
 jobs:
   Test:
-    if: github.repository_owner == 'fictional-vision'
+    if: github.repository_owner == 'fictional-vision' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Self
         uses: actions/checkout@v3
 
       - name: Unit test
+        id: Tests 
         uses: game-ci/unity-test-runner@v3
         env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
           projectPath: moon-dev/
