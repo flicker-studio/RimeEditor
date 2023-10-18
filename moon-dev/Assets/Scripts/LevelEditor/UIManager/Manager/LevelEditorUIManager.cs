@@ -1,3 +1,4 @@
+using LevelEditor;
 using UnityEngine;
 
 public class LevelEditorUIManager
@@ -14,7 +15,7 @@ public class LevelEditorUIManager
     
     private ItemTransformPanel m_itemTransformPanel;
 
-    public LevelEditorUIManager(RectTransform levelEditorCanvasRect, LevelEditorUIProperty levelEditorUIProperty)
+    public LevelEditorUIManager(RectTransform levelEditorCanvasRect, UIProperty levelEditorUIProperty)
     {
         m_actionPanel = new ActionPanel(levelEditorCanvasRect, levelEditorUIProperty);
         m_controlHandlePanel = new ControlHandlePanel(levelEditorCanvasRect, levelEditorUIProperty);

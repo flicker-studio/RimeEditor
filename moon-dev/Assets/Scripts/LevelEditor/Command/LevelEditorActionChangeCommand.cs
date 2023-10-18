@@ -1,4 +1,6 @@
-public class LevelEditorActionChangeCommand : LevelEditorCommand
+using LevelEditor;
+
+public class LevelEditorActionChangeCommand : Command
 {
     private ControlHandleAction m_controlHandleAction;
     
