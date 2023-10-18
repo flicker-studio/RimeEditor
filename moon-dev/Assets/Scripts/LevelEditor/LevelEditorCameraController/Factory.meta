@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:moon-dev/Assets/Scripts/LevelEditor/LevelEditorCameraController/Factory.meta
 guid: 918772d4543341944b250efc955c1a21
+=======
+guid: e531b44f63588f44ba9e3e0dfd1e9a2a
+>>>>>>> origin/main:moon-dev/Assets/Plugins/EzySlice.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -12,6 +12,7 @@ namespace Frame.StateMachine
     private BaseInformation m_information;
 
     private MotionCallBack m_motionCallBack;
+    
 
     public MotionController(BaseInformation information)
     {
