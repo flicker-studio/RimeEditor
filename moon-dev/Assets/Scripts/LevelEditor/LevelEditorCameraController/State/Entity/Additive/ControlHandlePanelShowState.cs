@@ -42,7 +42,7 @@ namespace LevelEditor
         {
             if (!CheckStates.Contains(typeof(MouseSelecteState)))
             {
-                ChangeMotionState(MOTIONSTATEENUM.MouseSelecteState);
+                ChangeMotionState(typeof(MouseSelecteState));
             }
         }
         
@@ -50,7 +50,7 @@ namespace LevelEditor
         {
             if (!CheckStates.Contains(typeof(PositionAxisDragState)))
             {
-                ChangeMotionState(MOTIONSTATEENUM.PositionAxisDragState);
+                ChangeMotionState(typeof(PositionAxisDragState));
             }
         }
 
@@ -58,7 +58,7 @@ namespace LevelEditor
         {
             if (!CheckStates.Contains(typeof(RotationAxisDragState)))
             {
-                ChangeMotionState(MOTIONSTATEENUM.RotationAxisDragState);
+                ChangeMotionState(typeof(RotationAxisDragState));
             }
         }
     }

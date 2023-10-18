@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Frame.StateMachine
 {
@@ -16,9 +14,10 @@ namespace Frame.StateMachine
         protected IList<Type> CheckGlobalStates => m_motionCallBack.CheckGlobalStatesCallBack?.Invoke();
         public abstract void Motion(BaseInformation information);
     
-        protected void ChangeMotionState(MOTIONSTATEENUM motionStateEnum)
+        protected void ChangeMotionState(Type motionStateType)
         {
-            m_motionCallBack.ChangeMotionStateCallBack.Invoke(motionStateEnum);
+            if (!motionStateType.IsSubclassOf(typeof(MotionState))) return;
+            m_motionCallBack.ChangeMotionStateCallBack?.Invoke(motionStateType);
         }
     
         public MotionState(BaseInformation baseInformation,MotionCallBack motionCallBack)

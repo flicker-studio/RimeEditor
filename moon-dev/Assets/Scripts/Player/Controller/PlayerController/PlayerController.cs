@@ -13,14 +13,14 @@ namespace Character
         private void ControllerInit()
         {
             m_playerInformation = new PlayerInformation(transform);
-            m_motionController = new MotionController(m_playerInformation,new MainStateFactory(),new AdditiveStateFactory());
+            m_motionController = new MotionController(m_playerInformation);
         }
 
         private void MotionInit()
         {
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.PlyerMainDefultState);
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.PlayerAdditiveDefultState);
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.PlayerPerpendicularGroundState);
+            m_motionController.ChangeMotionState(typeof(PlayerMainDefultState));
+            m_motionController.ChangeMotionState(typeof(PlayerAdditiveDefultState));
+            m_motionController.ChangeMotionState(typeof(PlayerPerpendicularGroundState));
         }
         private void Start()
         {

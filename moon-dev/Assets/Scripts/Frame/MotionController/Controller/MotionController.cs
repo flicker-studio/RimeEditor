@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Frame.Static.Extensions;
-using UnityEngine;
 
 namespace Frame.StateMachine
 {
@@ -15,12 +13,7 @@ namespace Frame.StateMachine
 
     private MotionCallBack m_motionCallBack;
 
-    private MainMotionStateFactory m_mainMotionStateFactory;
-
-    private AdditiveMotionStateFactory m_additiveMotionStateFactory;
-
-    public MotionController(BaseInformation information,MainMotionStateFactory mainMotionStateFactory
-        ,AdditiveMotionStateFactory additiveMotionStateFactory)
+    public MotionController(BaseInformation information)
     {
         m_motionStateMachines = new List<MotionStateMachine>();
         m_information = information;
@@ -29,32 +22,6 @@ namespace Frame.StateMachine
             CheckGlobalStatesCallBack = CheckGlobalStates,
             ChangeMotionStateCallBack = ChangeMotionState
         };
-        m_mainMotionStateFactory = mainMotionStateFactory;
-        m_additiveMotionStateFactory = additiveMotionStateFactory;
-    }
-    
-    public MotionController(BaseInformation information,AdditiveMotionStateFactory additiveMotionStateFactory)
-    {
-        m_motionStateMachines = new List<MotionStateMachine>();
-        m_information = information;
-        m_motionCallBack = new MotionCallBack
-        {
-            CheckGlobalStatesCallBack = CheckGlobalStates,
-            ChangeMotionStateCallBack = ChangeMotionState
-        };
-        m_additiveMotionStateFactory = additiveMotionStateFactory;
-    }
-    
-    public MotionController(BaseInformation information,MainMotionStateFactory mainMotionStateFactory)
-    {
-        m_motionStateMachines = new List<MotionStateMachine>();
-        m_information = information;
-        m_motionCallBack = new MotionCallBack
-        {
-            CheckGlobalStatesCallBack = CheckGlobalStates,
-            ChangeMotionStateCallBack = ChangeMotionState
-        };
-        m_mainMotionStateFactory = mainMotionStateFactory;
     }
     
     public void Motion(BaseInformation baseInformation)
@@ -67,38 +34,38 @@ namespace Frame.StateMachine
         }
     }
 
-    public void ChangeMotionState(MOTIONSTATEENUM motionStateEnum)
+    public void ChangeMotionState(Type motionStateType)
     {
-        if (motionStateEnum.CheckMotionIsMain())
+        if (motionStateType.IsSubclassOf(typeof(MainMotionState)))
         {
-            ChangeMotionStateInMainMachine(motionStateEnum);
+            ChangeMotionStateInMainMachine(motionStateType);
         }
         else
         {
-            ChangeMotionStateInAdditiveMachine(motionStateEnum);
+            ChangeMotionStateInAdditiveMachine(motionStateType);
         }
     }
 
-    private void ChangeMotionStateInMainMachine(MOTIONSTATEENUM motionStateEnum)
+    private void ChangeMotionStateInMainMachine(Type motionStateType)
     {
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is MainMotionStateMachine);   
         if (motionMachine == null)
         {
-            motionMachine = new MainMotionStateMachine(m_mainMotionStateFactory,m_motionCallBack);
+            motionMachine = new MainMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionStateEnum,m_information);
+        motionMachine.ChangeMotionState(motionStateType,m_information);
     }
 
-    private void ChangeMotionStateInAdditiveMachine(MOTIONSTATEENUM motionStateEnum)
+    private void ChangeMotionStateInAdditiveMachine(Type motionStateType)
     {
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is AddtiveMotionStateMachine);   
         if (motionMachine == null)
         {
-            motionMachine = new AddtiveMotionStateMachine(m_additiveMotionStateFactory,m_motionCallBack);
+            motionMachine = new AddtiveMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionStateEnum,m_information);
+        motionMachine.ChangeMotionState(motionStateType,m_information);
     }
 
     private List<Type> CheckGlobalStates()
