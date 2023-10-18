@@ -7,9 +7,9 @@ namespace Frame.StateMachine
 {
     public class AddtiveMotionStateMachine : MotionStateMachine
     {
-        public override void ChangeMotionState(MOTIONSTATEENUM playerMoveState,BaseInformation information)
+        public override void ChangeMotionState(Type motionStateType,BaseInformation information)
         {
-            if (playerMoveState == MOTIONSTATEENUM.None)
+            if (motionStateType == typeof(NoneMotionState))
             {
                 List<MotionState> tempList = new List<MotionState>();
                 tempList.AddRange(m_motionStates);
@@ -22,16 +22,16 @@ namespace Frame.StateMachine
                 }
                 return;
             }
-            MotionState motionState = CreateMotionState(playerMoveState, information);
+            MotionState motionState = CreateMotionState(motionStateType, information);
             if(motionState == null) return;
             if (m_motionStates.Contains(motionState)) return;
             m_motionStates.Add(motionState);
         }
 
 
-        public AddtiveMotionStateMachine(AdditiveMotionStateFactory motionStateFactory,MotionCallBack motionCallBack): base(motionCallBack)
+        public AddtiveMotionStateMachine(MotionCallBack motionCallBack): base(motionCallBack)
         {
-            m_motionStateFactory = motionStateFactory;
+            
         }
     }
 

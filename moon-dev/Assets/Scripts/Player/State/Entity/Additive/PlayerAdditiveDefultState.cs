@@ -34,7 +34,7 @@ namespace Character
             {
                 m_canJump = false;
             
-                ChangeMotionState(MOTIONSTATEENUM.PlayerJumpState);
+                ChangeMotionState(typeof(PlayerJumpState));
             }
         }
 

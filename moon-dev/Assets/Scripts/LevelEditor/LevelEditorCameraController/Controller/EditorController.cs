@@ -18,15 +18,15 @@ namespace LevelEditor
         void ControllerInit(RectTransform levelEditorTransform,CommandExcute levelEditorCommandExcute)
         {
             m_information = new Information(levelEditorTransform,levelEditorCommandExcute);
-            m_motionController = new MotionController(m_information,new AdditiveStateFactory());
+            m_motionController = new MotionController(m_information);
         }
     
         private void MotionInit()
         {
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.CameraDefultState);
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.ItemTransformPanelShowState);
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.ActionPanelShowState);
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.ControlHandlePanelShowState);
+            m_motionController.ChangeMotionState(typeof(CameraDefultState));
+            m_motionController.ChangeMotionState(typeof(ItemTransformPanelShowState));
+            m_motionController.ChangeMotionState(typeof(ActionPanelShowState));
+            m_motionController.ChangeMotionState(typeof(ControlHandlePanelShowState));
         }
     
         public void LateUpdate()

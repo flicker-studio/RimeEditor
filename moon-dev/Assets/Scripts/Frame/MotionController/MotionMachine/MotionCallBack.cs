@@ -7,7 +7,7 @@ namespace Frame.StateMachine
 
     public delegate List<Type> CheckGlobalStatesCallBack();
 
-    public delegate void ChangeMotionStateCallBack(MOTIONSTATEENUM motionStateEnum);
+    public delegate void ChangeMotionStateCallBack(Type motionState);
 
     public class MotionCallBack
     {

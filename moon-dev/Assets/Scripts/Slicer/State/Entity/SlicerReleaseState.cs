@@ -14,7 +14,7 @@ namespace Slicer
             base.Motion(information);
             if (m_slicerInformation.GetNum1Down)
             {
-                ChangeMotionState(MOTIONSTATEENUM.SlicerCloseState);
+                ChangeMotionState(typeof(SlicerCloseState));
                 RemoveState();
             }
         }

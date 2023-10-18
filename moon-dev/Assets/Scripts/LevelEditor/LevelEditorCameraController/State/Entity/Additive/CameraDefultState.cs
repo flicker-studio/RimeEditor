@@ -22,7 +22,7 @@ namespace LevelEditor
             {
                 if(!CheckStates.Contains(typeof(CameraMoveState)))
                 {
-                    ChangeMotionState(MOTIONSTATEENUM.CameraMoveState);
+                    ChangeMotionState(typeof(CameraMoveState));
                 }
             }
 
@@ -30,7 +30,7 @@ namespace LevelEditor
             {
                 if(!CheckStates.Contains(typeof(CameraChangeZState)))
                 {
-                    ChangeMotionState(MOTIONSTATEENUM.CameraChangeZState);
+                    ChangeMotionState(typeof(CameraChangeZState));
                 }
             }
         }

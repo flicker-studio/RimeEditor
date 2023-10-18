@@ -25,7 +25,7 @@ namespace Character
         {
             if (CheckSuitableSlope)
             {
-                ChangeMotionState(MOTIONSTATEENUM.PlyerMainDefultState);
+                ChangeMotionState(typeof(PlayerMainDefultState));
                 return;
             }
 

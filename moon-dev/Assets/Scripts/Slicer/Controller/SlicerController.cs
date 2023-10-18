@@ -13,12 +13,12 @@ namespace Slicer
         void ControllerInit()
         {
             m_slicerInformation = new SlicerInformation(transform);
-            m_motionController = new MotionController(m_slicerInformation,new AdditiveStateFactory());
+            m_motionController = new MotionController(m_slicerInformation);
         }
         
         private void MotionInit()
         {
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.SlicerCloseState);
+            m_motionController.ChangeMotionState(typeof(SlicerCloseState));
         }
         
         private void Start()

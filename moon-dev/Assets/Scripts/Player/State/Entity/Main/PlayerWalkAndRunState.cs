@@ -32,7 +32,7 @@ namespace Character
                 if (m_slopetimer >= GetMoveProperty.SLOPE_START_TIME_COMPENSATE)
                 {
                     if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-                    ChangeMotionState(MOTIONSTATEENUM.PlayerSlideState);
+                    ChangeMotionState(typeof(PlayerSlideState));
                     return;
                 }
             }
@@ -44,7 +44,7 @@ namespace Character
             if (GetMotionInputData.MoveInput.x == 0)
             {
                 if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-                ChangeMotionState(MOTIONSTATEENUM.PlyerMainDefultState);
+                ChangeMotionState(typeof(PlayerMainDefultState));
                 return;
             }
     

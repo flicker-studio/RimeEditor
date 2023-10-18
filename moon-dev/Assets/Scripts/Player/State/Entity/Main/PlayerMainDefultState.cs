@@ -28,13 +28,13 @@ namespace Character
         if (!CheckSuitableSlope)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMotionState(MOTIONSTATEENUM.PlayerSlideState);
+            ChangeMotionState(typeof(PlayerSlideState));
             return;
         }
         if (GetMotionInputData.MoveInput.x != 0)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMotionState(MOTIONSTATEENUM.PlayerWalkAndRunState);
+            ChangeMotionState(typeof(PlayerWalkAndRunState));
             return;
         }
         timmer += Time.fixedDeltaTime;
