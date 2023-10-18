@@ -29,9 +29,9 @@ namespace Frame.StateMachine
         }
 
 
-        public AddtiveMotionStateMachine(MotionCallBack motionCallBack): base(motionCallBack)
+        public AddtiveMotionStateMachine(AdditiveMotionStateFactory motionStateFactory,MotionCallBack motionCallBack): base(motionCallBack)
         {
-            m_motionStateFactory = new AdditiveMotionStateFactory();
+            m_motionStateFactory = motionStateFactory;
         }
     }
 

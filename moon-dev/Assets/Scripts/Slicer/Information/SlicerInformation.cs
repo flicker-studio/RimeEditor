@@ -3,10 +3,9 @@ using Data.ScriptableObject;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using Frame.Tool;
-using Slicer.Data;
 using UnityEngine;
 
-namespace Slicer.Information
+namespace Slicer
 {
     public class SlicerInformation : BaseInformation
     {

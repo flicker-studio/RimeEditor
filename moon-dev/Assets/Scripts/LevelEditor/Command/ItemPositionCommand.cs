@@ -1,31 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPositionCommand : LevelEditorCommand
+namespace LevelEditor
 {
-    private List<GameObject> m_gameObjects = new List<GameObject>();
-    private List<Vector3> m_lastPosition = new List<Vector3>();
-    private List<Vector3> m_nextPosition = new List<Vector3>();
+    public class ItemPositionCommand : Command
+    {
+        private List<GameObject> m_gameObjects = new List<GameObject>();
+        private List<Vector3> m_lastPosition = new List<Vector3>();
+        private List<Vector3> m_nextPosition = new List<Vector3>();
     
-    public ItemPositionCommand(List<GameObject> gameObjects,List<Vector3> lastPosition,List<Vector3> nextPosition)
-    {
-        m_gameObjects.AddRange(gameObjects);
-        m_lastPosition.AddRange(lastPosition);
-        m_nextPosition.AddRange(nextPosition);
-    }
-    public override void Execute()
-    {
-        for (int i = 0; i < m_gameObjects.Count; i++)
+        public ItemPositionCommand(List<GameObject> gameObjects,List<Vector3> lastPosition,List<Vector3> nextPosition)
         {
-            m_gameObjects[i].transform.position = m_nextPosition[i];
+            m_gameObjects.AddRange(gameObjects);
+            m_lastPosition.AddRange(lastPosition);
+            m_nextPosition.AddRange(nextPosition);
         }
-    }
-
-    public override void Undo()
-    {
-        for (int i = 0; i < m_gameObjects.Count; i++)
+        public override void Execute()
         {
-            m_gameObjects[i].transform.position = m_lastPosition[i];
+            for (int i = 0; i < m_gameObjects.Count; i++)
+            {
+                m_gameObjects[i].transform.position = m_nextPosition[i];
+            }
+        }
+
+        public override void Undo()
+        {
+            for (int i = 0; i < m_gameObjects.Count; i++)
+            {
+                m_gameObjects[i].transform.position = m_lastPosition[i];
+            }
         }
     }
 }

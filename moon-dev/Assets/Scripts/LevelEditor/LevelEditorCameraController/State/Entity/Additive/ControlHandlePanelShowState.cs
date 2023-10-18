@@ -3,7 +3,9 @@ using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-public class ControlHandlePanelShowState : LevelEditorAdditiveState
+namespace LevelEditor
+{
+    public class ControlHandlePanelShowState : AdditiveState
 {
     private List<GameObject> TargetList => m_information.TargetList;
 
@@ -108,4 +110,6 @@ public class ControlHandlePanelShowState : LevelEditorAdditiveState
 
         return positionList;
     }
+}
+
 }

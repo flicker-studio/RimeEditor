@@ -7,7 +7,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class MouseSelecteState : LevelEditorAdditiveState
+namespace LevelEditor
+{
+    public class MouseSelecteState : AdditiveState
 {
     private RectTransform GetSelectionUIRect => m_information.GetUI.GetControlHandlePanel.GetSelectionRect;
 
@@ -41,7 +43,7 @@ public class MouseSelecteState : LevelEditorAdditiveState
 
     private List<GameObject> m_selectList = new List<GameObject>();
 
-    private LevelEditorCommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
     
     private Vector2 m_originMousePositon;
 
@@ -194,4 +196,6 @@ public class MouseSelecteState : LevelEditorAdditiveState
         m_outlinePainter.SetTargetObj = tempList;
         GetExcute?.Invoke(new ItemSelectCommand(TargetList,tempList,m_outlinePainter));
     }
+}
+
 }

@@ -1,8 +1,7 @@
 using Frame.StateMachine;
-using Slicer.Information;
 using UnityEngine;
 
-namespace Slicer.Controller
+namespace Slicer
 {
     public class SlicerController : MonoBehaviour
     {
@@ -14,7 +13,7 @@ namespace Slicer.Controller
         void ControllerInit()
         {
             m_slicerInformation = new SlicerInformation(transform);
-            m_motionController = new MotionController(m_slicerInformation);
+            m_motionController = new MotionController(m_slicerInformation,new AdditiveStateFactory());
         }
         
         private void MotionInit()

@@ -1,6 +1,6 @@
 using Data.ScriptableObject;
-using Frame.Static.Extensions;
 using Frame.Static.Global;
+using Slicer;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
