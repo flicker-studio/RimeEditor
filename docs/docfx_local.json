@@ -13,7 +13,7 @@
                 {
                     "src": "../moon-dev",
                     "files": [
-                        "Assembly-CSharp.csproj"
+                        "**.csproj"
                     ]
                 }
             ],
@@ -52,10 +52,18 @@
             {
                 "src": "manual",
                 "files": [
-                    "toc.yml",
+                    "**.yml",
                     "**.md"
                 ],
                 "dest": "manual"
+            },
+            {
+                "src": "mermaid",
+                "files": [
+                    "**.yml",
+                    "**.md"
+                ],
+                "dest": "mermaid"
             }
         ],
         "resource": [
@@ -65,7 +73,8 @@
         ],
         "template": [
             "default",
-            "templates/singulinkfx"
+            "modern",
+            "templates/material"
         ],
         "xref": [
             "https://nicoco007.github.io/UnityXRefMap/2022.3/xrefmap.yml"
