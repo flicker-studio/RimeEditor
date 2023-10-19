@@ -29,6 +29,8 @@ MonoBehaviour:
       <OUTLINE_MODE>k__BackingField: 0
       <OUTLINE_COLOR>k__BackingField: {r: 1, g: 0.87176263, b: 0, a: 1}
       <OUTLINE_WIDTH>k__BackingField: 7.5
+    <GetMouseCursorProperty>k__BackingField:
+      <CURSOR_BOUND_CHECK_COMPENSATION>k__BackingField: {x: 5, y: 5}
   <GetActionPanelUI>k__BackingField:
     <GetActionPanelUIName>k__BackingField:
       <UNDO_BUTTON>k__BackingField: TopPanel/ActionPanel/UndoButton

@@ -27,6 +27,9 @@ namespace LevelEditor
             public RotationDragProperty GetRotationDragProperty{ get; private set; }
             [field:SerializeField,Header("描边属性")]
             public OutlineProperty GetOutlineProperty{ get; private set; }
+            
+            [field:SerializeField,Header("鼠标光标属性")]
+            public MouseCursorProperty GetMouseCursorProperty { get; private set; }
         }
         
         [Serializable]
@@ -68,6 +71,12 @@ namespace LevelEditor
             public Color OUTLINE_COLOR{ get; private set; }
             [field:SerializeField,CustomLabel("描边线宽")]
             public float OUTLINE_WIDTH{ get; private set; }
+        }
+        [Serializable]
+        public struct MouseCursorProperty
+        {
+            [field:SerializeField,CustomLabel("鼠标光标边界检测距离补偿")]
+            public Vector2 CURSOR_BOUND_CHECK_COMPENSATION { get; private set; }
         }
         
         [Serializable]
