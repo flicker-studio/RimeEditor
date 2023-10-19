@@ -1,5 +1,3 @@
 items:
-  - name: LevelEditor
-    href: LevelEditor.md
-  - name: Introduction2
-    href: etiam.md
+  - name: Mermaid
+    href: mermaid.md

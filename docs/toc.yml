@@ -1,3 +1,5 @@
+- name: 开始
+  href: index.md
 - name: 开发手册
   href: manual/
 - name: 脚本 API

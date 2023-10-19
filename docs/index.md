@@ -1,6 +1,6 @@
  <h1 align="center">
 
-![Logo](resources/images/Logo/Logo.png)
+![Logo](resources/images/logo/head.png)
 
 ProJect-Moon
 </h1>
