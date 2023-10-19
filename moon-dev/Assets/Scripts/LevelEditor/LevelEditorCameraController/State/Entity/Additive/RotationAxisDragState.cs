@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
+using UnityEditor;
 using UnityEngine;
 
 namespace LevelEditor
@@ -23,6 +24,8 @@ namespace LevelEditor
     private Vector3 m_currentPosition;
 
     private Vector3 m_originDir;
+    
+    private Vector3 m_oriRotationAxisPos;
 
     private float GetRotationSpeed => m_information.GetUI.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
 
@@ -63,8 +66,7 @@ namespace LevelEditor
         }
         UpdateRotation();
     }
-
-    //TODO:旋转拖动会有值突然非常大的情况，初步判断是GetRotationAxisRectTransform.anchoredPosition特别大引起的，但还不知道原因
+    
     private void UpdateRotation()
     {
         m_currentPosition = GetMousePosition;
@@ -75,12 +77,12 @@ namespace LevelEditor
         Quaternion rotationQuaternion = Quaternion
             .Euler(0, 0, (float)Math.Round(mouseDis * rotationDirAndMultiplying * GetRotationSpeed,2));
         GetRotationAxisRectTransform.rotation = rotationQuaternion;
-        
+        GetRotationAxisRectTransform.position = m_oriRotationAxisPos;
         for (var i = 0; i < TagetList.Count; i++)
         {
             TagetList[i].transform.rotation = m_targetOriginRotation[i] * rotationQuaternion;
             TagetList[i].transform.position = GetRotationAxisWorldPosition
-                                              + Quaternion.Euler(Vector3.forward * (mouseDis * rotationDirAndMultiplying * GetRotationSpeed)) *
+                                              + Quaternion.Euler(Vector3.forward * (mouseDis * rotationDirAndMultiplying * GetRotationSpeed)).normalized *
                                               (m_targetOriginPosition[i] - GetRotationAxisWorldPosition);
         }
     }
@@ -89,6 +91,7 @@ namespace LevelEditor
     {
         m_originPosition = GetMousePosition;
         m_originDir = (m_originPosition - GetRotationAxisScreenPosition).normalized;
+        m_oriRotationAxisPos = GetRotationAxisRectTransform.position;
         
         for (var i = 0; i < TagetList.Count; i++)
         {
