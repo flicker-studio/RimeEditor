@@ -6,7 +6,7 @@ ProJect-Moon
 </h1>
 
 > [!NOTE]
-> 在开始之前,你需要了解下面列出的基本知识
+> 在开始之前，你需要了解下面列出的基本知识
 
 ## 代码样式规则
 
@@ -38,9 +38,7 @@ Commit Message规范如下，参考于[Conventional Commits](<https://www.conven
 
 关键字解释如下：
 
-- `type`，必选项
-
-> commit的类型，各项含义如下表.
+- `type`,*必选项*,commit的类型，各项含义见下表:
 
 |     类型     |                描述                |
 |:------------:|:--------------------------------:|
@@ -56,18 +54,33 @@ Commit Message规范如下，参考于[Conventional Commits](<https://www.conven
 |    chore     |   不修改代码或测试文件的其他更改   |
 |    revert    |           还原以前的提交           |
 
-- `scope`，可选项
+- `scope`，*可选项*，commit 影响的范围，比如：route，component，utils，build...
 
-> commit 影响的范围, 比如: route, component, utils, build...
+- `subject`，*必选项*，commit 的概述.
 
-- `subject`，必选项
+- `body`，*必选项*，commit 具体修改内容，可以分为多行.
 
-> commit 的概述.
+- `footer`，*必选项*，一些备注，通常是[SKIP CI]或Closed #2.
 
-- `body`，必选项
+## 代码注释
 
-> commit 具体修改内容, 可以分为多行.
+> [!IMPORTANT]
+> 为了生成可读性良好的开发手册，请使用符合C#标准的xml注释！
+> 你可以在[微软官方手册](https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/xmldoc/)中看到详细的解释．
+> [!NOTE]
+> 由于编码问题，中文注释会在转换时随机出现乱码，请尽可能使用英文注释(机翻也行)
 
-- `footer`，必选项
+## 单元测试
 
-> 一些备注, 通常是[SKIP CI]或Closed #2.
+> [!IMPORTANT]
+> 单元测试有助于验证程序的健壮性，务必多加注意!
+
+关于单元测试的用法，参见[Unity Unit Test](https://docs.unity3d.com/Packages/com.unity.test-framework@1.3/manual/index.html)
+
+单元测试已配置代码覆盖率信息，你可以通过运行根目录下的`CodeCoverage.bat`批处理程序快速打开生成的覆盖率测试结果.
+
+也可以手动打开位于`moon-dev/CodeCoverage/Report/index.html`的网页查看.
+
+## 开发手册
+
+本项目使用[Docfx](https://github.com/dotnet/docfx)生成开发手册,查看[官方手册](https://dotnet.github.io/docfx/)以快速入门.

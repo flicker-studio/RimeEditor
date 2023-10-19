@@ -12,17 +12,13 @@ ProJect-Moon
 [![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
 </div>
 
-<video id="video" controls="" preload="none" poster="封面">
-      <source id="mp4" src="docs/resources/videos/SlicerFollow.mp4" type="video/mp4">
-</videos>
-
 ## TODO
 
 - [x] Build the basic framework and design the coding style.
 - [x] Multi-parameter player controller.
 - [x] Polygoncollider2D needs to be generated from the mesh, and concave polygons need to be supported.
 - [x] Accurate clipping, and the minimum number of game objects mounted.
-- [ ] [Add move following and rotation following states to the SlicerController.](#Add-move-following-and-rotation-following-states-to-the-SlicerController.)
+- [ ] Add move following and rotation following states to the SlicerController.
 - [ ] The camera controller, based on Cinemachine cameras, requires enough pithy.
 - [ ] The AI of game NPCS requires high scalability and state-based production.
 - [ ] Optimal handling of physical collisions in which multiple objects physically form an assembly.
