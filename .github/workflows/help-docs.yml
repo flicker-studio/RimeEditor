@@ -9,15 +9,44 @@ on:
 jobs:
   Docs:
     if: ${{ github.repository_owner == 'fictional-vision' && (github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch') }}
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout Self
         uses: actions/checkout@v3
-      
-      - name: Build site
-        uses: nikeee/docfx-action@v1.0.0
+
+      - uses: actions/cache@v2
         with:
-          args: docs/docfx.json
+          path: moon-dev/Library
+          key: Library-Moon-Win
+          restore-keys: |
+            Library-Win
+
+      - name: Setup Unity
+        id: setup-unity
+        uses: kuler90/setup-unity@v1
+        with:
+          project-path: moon-dev/
+       
+      - name: Execute Unity
+        uses: Morsiusiurandum/unity-runner@main
+        with:
+          unity-path: ${{steps.setup-unity.outputs.unity-path}}
+          unity-username: ${{ secrets.UNITY_EMAIL }}
+          unity-password: ${{ secrets.UNITY_PASSWORD }}
+          unity-serial: ${{ secrets.UNITY_SERIAL }}
+          project-path: "moon-dev/"
+          execute-method: SyncVS_Workaround.SyncSolution
+
+      - name: Dotnet Setup
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.x
+
+      - name: Setup Docfx
+        run: dotnet tool update -g docfx
+
+      - name: Build Site
+        run: docfx docs/docfx.json
 
       - name: Azure Deploy
         uses: Azure/static-web-apps-deploy@v1
