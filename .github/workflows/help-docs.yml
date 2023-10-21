@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Docs:
+  build:
     if: ${{ github.repository_owner == 'fictional-vision' && (github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch') }}
     runs-on: windows-latest
     steps:
@@ -48,11 +48,30 @@ jobs:
       - name: Build Site
         run: docfx docs/docfx.json
 
-      - name: Azure Deploy
-        uses: Azure/static-web-apps-deploy@v1
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          action: "upload"
-          app_location: "docs/_site"  
-          skip_app_build: true
-          skip_api_build: true
+          name: _site
+          path: docs/_site
+
+  deploy:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+
+        # Download the generated documentation
+        - name: Download site artifact
+          uses: actions/download-artifact@v1
+          with:
+            name: _site     
+
+        - name: Azure Deploy
+          uses: Azure/static-web-apps-deploy@v1
+          with:
+            azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+            action: "upload"
+            app_location: "_site"  
+            skip_app_build: true
+            skip_api_build: true
