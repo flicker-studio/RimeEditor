@@ -68,6 +68,8 @@ dotnet_style_qualification_for_method = false:suggestion
 dotnet_style_qualification_for_property = false:suggestion
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
 
+dotnet_diagnostic.CS1591.severity = suggestion
+
 # ReSharper properties
 resharper_autodetect_indent_settings = true
 resharper_csharp_naming_rule.enum_member = AA_BB
