@@ -1,29 +1,28 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Frame.StateMachine
 {
     public abstract class MotionState
     {
-        protected BaseInformation m_information;
+        protected BaseInformation m_baseInformation;
 
         protected MotionCallBack m_motionCallBack;
     
-        protected List<Type> CheckStates => m_motionCallBack.CheckStatesCallBack?.Invoke();
+        protected IList<Type> CheckStates => m_motionCallBack.CheckStatesCallBack?.Invoke();
     
-        protected List<Type> CheckGlobalStates => m_motionCallBack.CheckGlobalStatesCallBack?.Invoke();
+        protected IList<Type> CheckGlobalStates => m_motionCallBack.CheckGlobalStatesCallBack?.Invoke();
         public abstract void Motion(BaseInformation information);
     
-        protected void ChangeMotionState(MOTIONSTATEENUM motionStateEnum)
+        protected void ChangeMotionState(Type motionStateType)
         {
-            m_motionCallBack.ChangeMotionStateCallBack.Invoke(motionStateEnum);
+            if (!motionStateType.IsSubclassOf(typeof(MotionState))) return;
+            m_motionCallBack.ChangeMotionStateCallBack?.Invoke(motionStateType);
         }
     
-        public MotionState(BaseInformation information,MotionCallBack motionCallBack)
+        public MotionState(BaseInformation baseInformation,MotionCallBack motionCallBack)
         {
-            m_information = information;
+            m_baseInformation = baseInformation;
             m_motionCallBack = motionCallBack;
         }
     }

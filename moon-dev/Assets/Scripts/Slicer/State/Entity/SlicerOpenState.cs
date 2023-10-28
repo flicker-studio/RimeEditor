@@ -1,6 +1,6 @@
 using Frame.StateMachine;
 
-namespace Slicer.State
+namespace Slicer
 {
     public class SlicerOpenState : SlicerAdditiveMotionState
     {
@@ -13,7 +13,7 @@ namespace Slicer.State
             base.Motion(information);
             if (m_slicerInformation.GetNum1Down)
             {
-                ChangeMotionState(MOTIONSTATEENUM.SlicerCopyState);
+                ChangeMotionState(typeof(SlicerCopyState));
                 RemoveState();
             }
         }

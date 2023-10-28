@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Frame.Static.Extensions;
-using UnityEngine;
 
 namespace Frame.StateMachine
 {
@@ -14,6 +12,7 @@ namespace Frame.StateMachine
     private BaseInformation m_information;
 
     private MotionCallBack m_motionCallBack;
+    
 
     public MotionController(BaseInformation information)
     {
@@ -36,19 +35,19 @@ namespace Frame.StateMachine
         }
     }
 
-    public void ChangeMotionState(MOTIONSTATEENUM motionStateEnum)
+    public void ChangeMotionState(Type motionStateType)
     {
-        if (motionStateEnum.CheckMotionIsMain())
+        if (motionStateType.IsSubclassOf(typeof(MainMotionState)))
         {
-            ChangeMotionStateInMainMachine(motionStateEnum);
+            ChangeMotionStateInMainMachine(motionStateType);
         }
         else
         {
-            ChangeMotionStateInAdditiveMachine(motionStateEnum);
+            ChangeMotionStateInAdditiveMachine(motionStateType);
         }
     }
 
-    private void ChangeMotionStateInMainMachine(MOTIONSTATEENUM motionStateEnum)
+    private void ChangeMotionStateInMainMachine(Type motionStateType)
     {
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is MainMotionStateMachine);   
         if (motionMachine == null)
@@ -56,10 +55,10 @@ namespace Frame.StateMachine
             motionMachine = new MainMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionStateEnum,m_information);
+        motionMachine.ChangeMotionState(motionStateType,m_information);
     }
 
-    private void ChangeMotionStateInAdditiveMachine(MOTIONSTATEENUM motionStateEnum)
+    private void ChangeMotionStateInAdditiveMachine(Type motionStateType)
     {
         MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is AddtiveMotionStateMachine);   
         if (motionMachine == null)
@@ -67,7 +66,7 @@ namespace Frame.StateMachine
             motionMachine = new AddtiveMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
-        motionMachine.ChangeMotionState(motionStateEnum,m_information);
+        motionMachine.ChangeMotionState(motionStateType,m_information);
     }
 
     private List<Type> CheckGlobalStates()

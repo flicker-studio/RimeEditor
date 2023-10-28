@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Character.Data;
 using Frame.Static.Extensions;
-using UnityEditor;
 using UnityEngine;
 
-namespace Character.Information
+namespace Character
 {
     public class PlayerColliding
     {

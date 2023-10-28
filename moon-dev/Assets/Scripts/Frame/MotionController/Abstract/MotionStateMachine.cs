@@ -9,8 +9,6 @@ namespace Frame.StateMachine
 
         protected MotionCallBack m_motionCallBack;
 
-        protected MotionStateFactory m_motionStateFactory;
-
         public void Motion(BaseInformation baseInformation)
         {
             List<MotionState> tempList = new List<MotionState>();
@@ -21,7 +19,7 @@ namespace Frame.StateMachine
             }
         }
 
-        public abstract void ChangeMotionState(MOTIONSTATEENUM playerMoveState,BaseInformation baseInformation);
+        public abstract void ChangeMotionState(Type motionStateType,BaseInformation baseInformation);
     
         public List<Type> CheckStates()
         {
@@ -33,9 +31,9 @@ namespace Frame.StateMachine
             return tempList;
         }
 
-        protected MotionState CreateMotionState(MOTIONSTATEENUM motionStateEnum, BaseInformation information)
+        protected MotionState CreateMotionState(Type motionStateType, BaseInformation information)
         {
-            return m_motionStateFactory.CreateMotion(motionStateEnum,information, m_motionCallBack);
+            return Activator.CreateInstance(motionStateType, information, m_motionCallBack) as MotionState;
         }
 
         public MotionStateMachine(MotionCallBack motionCallBack)
@@ -44,6 +42,7 @@ namespace Frame.StateMachine
             m_motionCallBack = motionCallBack;
             m_motionCallBack.CheckStatesCallBack = CheckStates;
         }
+        
     }
 
 }

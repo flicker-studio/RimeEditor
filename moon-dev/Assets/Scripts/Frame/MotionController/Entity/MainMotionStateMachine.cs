@@ -7,9 +7,9 @@ namespace Frame.StateMachine
 {
     public class MainMotionStateMachine : MotionStateMachine
     {
-        public override void ChangeMotionState(MOTIONSTATEENUM playerMoveState,BaseInformation baseInformation)
+        public override void ChangeMotionState(Type motionStateType,BaseInformation baseInformation)
         {
-            MotionState motionState = CreateMotionState(playerMoveState, baseInformation);
+            MotionState motionState = CreateMotionState(motionStateType, baseInformation);
             if(motionState == null) return;
             m_motionStates.Clear();
             m_motionStates.Add(motionState);
@@ -18,7 +18,7 @@ namespace Frame.StateMachine
 
         public MainMotionStateMachine(MotionCallBack motionCallBack): base(motionCallBack)
         {
-            m_motionStateFactory = new MainMotionStateFactory();
+            
         }
     }
 }

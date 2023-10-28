@@ -1,0 +1,32 @@
+name: Meta Check
+
+on:
+  push:
+    branches: [main]
+    paths: [moon-dev/Assets/**]
+  pull_request:
+    paths: [moon-dev/Assets/**]
+  workflow_dispatch:
+
+jobs:
+  meta-check:
+    name: "Check all .meta"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Check all .meta
+        uses: DeNA/unity-meta-check@v3
+        with:
+          target_path: moon-dev/Assets
+          enable_junit: true
+          junit_xml_path: junit.xml
+
+      - name: Report  
+        uses: mikepenz/action-junit-report@v2
+        with:
+          report_paths: junit.xml
+        if: always()
+
+

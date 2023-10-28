@@ -1,15 +1,15 @@
 using System;
 using Editor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Slicer.Data
+namespace Slicer
 {
     [CreateAssetMenu(menuName = "CustomProperty/SlicerProperty",order = 2,fileName = "SlicerProperty")]
     public class SlicerProperty : ScriptableObject
     {
+        [Header("裁切框尺寸")]
         public SlicerSizePanel SlicerSize;
-
+        [Header("连通性检测参数")]
         public ConnectedObjectPanel ConnectedObject;
 
         public SlicerMotionPanel SlicerMotion;

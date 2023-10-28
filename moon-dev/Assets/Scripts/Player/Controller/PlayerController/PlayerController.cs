@@ -1,10 +1,7 @@
-using System;
-using Character.Data;
-using Character.Information;
 using Frame.StateMachine;
 using UnityEngine;
 
-namespace Character.Controller
+namespace Character
 {
     [RequireComponent(typeof(Rigidbody2D),typeof(BoxCollider2D))]
     public class PlayerController : MonoBehaviour
@@ -21,9 +18,9 @@ namespace Character.Controller
 
         private void MotionInit()
         {
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.PlyerMainDefultState);
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.PlayerAdditiveDefultState);
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.PlayerPerpendicularGroundState);
+            m_motionController.ChangeMotionState(typeof(PlayerMainDefultState));
+            m_motionController.ChangeMotionState(typeof(PlayerAdditiveDefultState));
+            m_motionController.ChangeMotionState(typeof(PlayerPerpendicularGroundState));
         }
         private void Start()
         {

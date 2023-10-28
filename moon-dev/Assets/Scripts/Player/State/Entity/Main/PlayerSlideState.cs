@@ -1,9 +1,8 @@
-using Character.Data;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-namespace Character.State
+namespace Character
 {
     public class PlayerSlideState : PlayerMainMotionState
     {
@@ -26,7 +25,7 @@ namespace Character.State
         {
             if (CheckSuitableSlope)
             {
-                ChangeMotionState(MOTIONSTATEENUM.PlyerMainDefultState);
+                ChangeMotionState(typeof(PlayerMainDefultState));
                 return;
             }
 

@@ -1,7 +1,6 @@
 using Frame.StateMachine;
-using Slicer.Information;
 
-namespace Slicer.State
+namespace Slicer
 {
     public abstract class SlicerMainMotionState : MainMotionState
     {

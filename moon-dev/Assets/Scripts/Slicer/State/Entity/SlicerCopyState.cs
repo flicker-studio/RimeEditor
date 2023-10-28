@@ -1,13 +1,12 @@
 using Frame.StateMachine;
-using Slicer.Command;
 
-namespace Slicer.State
+namespace Slicer
 {
     public class SlicerCopyState : SlicerAdditiveMotionState
     {
         public SlicerCopyState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
-            m_sliceCommand = new CopySlicer(m_slicerInformation);
+            MSliceDoCommand = new CopySlicer(m_slicerInformation);
         }
 
         public override void Motion(BaseInformation information)
@@ -15,7 +14,7 @@ namespace Slicer.State
             base.Motion(information);
             if (m_slicerInformation.GetNum1Down)
             {
-                ChangeMotionState(MOTIONSTATEENUM.SlicerReleaseState);
+                ChangeMotionState(typeof(SlicerReleaseState));
                 RemoveState();
             }
         }
