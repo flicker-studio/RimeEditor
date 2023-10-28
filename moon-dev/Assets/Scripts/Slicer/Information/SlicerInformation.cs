@@ -43,6 +43,8 @@ namespace Slicer.Information
     
         public Vector3 GetDetectionCompensationScale => m_slicerProperty.ConnectedObject.DETECTION_COMPENSATIONS_SCALE;
 
+        public Vector3 GetMousePosition => Input.mousePosition;
+
         public Vector2 GetSliceOffset => m_slicerProperty.SlicerMotion.SLICE_OFFSET;
 
         public int GetRotationThreshold => m_slicerProperty.SlicerMotion.ROTATION_THRESHOLD;

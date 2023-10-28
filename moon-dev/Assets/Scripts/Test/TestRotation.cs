@@ -5,23 +5,23 @@ using UnityEngine;
 
 public class TestRotation : MonoBehaviour
 {
-    // Update is called once per frame
+    [SerializeField] private Transform lookAt;
+    private float distance;
 
     private void Start()
     {
-        var euler = Quaternion.Euler(new Vector3(0, 0, 40));
-        var rotation = new Quaternion();
-        rotation = transform.rotation * euler;
-        transform.rotation = rotation;
-
-        float angle1 = 10;
-        float angle2 = 50;
-        transform.position = new Vector3(transform.position.x * Mathf.Cos((angle1 + angle2) * Mathf.PI / 180),
-            transform.position.y * Mathf.Sin((angle1 + angle2) * Mathf.PI / 180), transform.position.z);
+        distance = (lookAt.position - transform.position).magnitude;
     }
 
     void Update()
     {
+        var fromAToB = Quaternion.AngleAxis(Time.deltaTime * 10, transform.up);
+        var rotate = transform.rotation * fromAToB;
+
+        transform.rotation = rotate;
+        
+        var offset = new Vector3(lookAt.position.x, transform.position.y, lookAt.position.z);
+        transform.position = offset - new Vector3(transform.forward.x, 0, transform.forward.z) * distance;
         
     }
 }

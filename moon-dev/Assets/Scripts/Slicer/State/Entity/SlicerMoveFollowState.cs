@@ -1,23 +1,28 @@
+using System;
 using Frame.StateMachine;
+using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.GridBrushBase;
 
 namespace Slicer.State
 {
     public class SlicerMoveFollowState : SlicerMainMotionState
     {
         private Vector3 m_lastFrameCursorPosition;
-
-        private float m_originAngle;
         
-        private bool m_rotationDirection
-        {
-            get => m_slicerInformation.GetRotationDirection;
-            set => m_slicerInformation.GetRotationDirection = value;
-        }
+        private float m_angle;
+
+        private float m_distance;
+
+        private Vector3 m_currentMousePosition;
         
         # region GetProperty
         
         private int GetRotationThreshold => m_slicerInformation.GetRotationThreshold;
+
+        private bool GetRotationDirection => m_slicerInformation.GetRotationDirection;
+
+        private Vector3 GetMousePosition => m_slicerInformation.GetMousePosition;
         
         private Vector2 GetOffSet => m_slicerInformation.GetSliceOffset;
         
@@ -31,45 +36,33 @@ namespace Slicer.State
         {
             Debug.Log("移动");
             m_lastFrameCursorPosition = Input.mousePosition;
-            m_originAngle = Mathf.Atan(GetOffSet.y / GetOffSet.x) * 180 / Mathf.PI;
+            m_distance = GetOffSet.magnitude;
+            m_angle = Mathf.Atan(GetOffSet.y / GetOffSet.x);
         }
 
         public override void Motion(BaseInformation information)    
         {
-            if (GetPlayerTransform.rotation.eulerAngles.z != 0)
-            {
-                var eulerAngles = GetPlayerTransform.eulerAngles;
-                var distance = Mathf.Sqrt(Mathf.Pow(GetOffSet.x, 2) + Mathf.Pow(GetOffSet.y, 2));
-                
-                GetTransform.position = GetPlayerTransform.position + new Vector3(
-                    distance * (m_rotationDirection ? 1 : -1) * Mathf.Cos((m_rotationDirection ? m_originAngle + eulerAngles.z : m_originAngle - eulerAngles.z) * Mathf.PI / 180)
-                    , distance * Mathf.Sin((m_rotationDirection ? m_originAngle + eulerAngles.z : m_originAngle - eulerAngles.z) * Mathf.PI / 180)
-                    , 0);
-                Debug.Log((m_originAngle + eulerAngles.z));
-            }
-            else
-            {
-                GetTransform.position = GetPlayerTransform.position + new Vector3(GetOffSet.x * (m_rotationDirection ? 1 : -1), GetOffSet.y, 0);
-            }
+            m_currentMousePosition = GetMousePosition;
             
-            GetTransform.eulerAngles = GetPlayerTransform.eulerAngles;
+            var curThreshold = m_currentMousePosition.x - m_lastFrameCursorPosition.x;
             
-            Vector3 cursorPosition = Input.mousePosition;
-            
-            if (cursorPosition.x - m_lastFrameCursorPosition.x > GetRotationThreshold && !m_rotationDirection)
+            if (curThreshold > GetRotationThreshold && !GetRotationDirection)
             {
-                // 向右
                 ChangeMotionState(MOTIONSTATEENUM.SlicerRotationFollowState);
-                m_rotationDirection = true;
-            } 
-            else if (cursorPosition.x - m_lastFrameCursorPosition.x < -GetRotationThreshold && m_rotationDirection)
+                return;
+            } else if (curThreshold < -GetRotationThreshold && GetRotationDirection)
             {
-                // 向左
                 ChangeMotionState(MOTIONSTATEENUM.SlicerRotationFollowState);
-                m_rotationDirection = false;
+                return;
             }
             
-            m_lastFrameCursorPosition = cursorPosition;
+            m_lastFrameCursorPosition = m_currentMousePosition;
+            GetTransform.position = GetPlayerTransform.position +
+                                    GetPlayerTransform.rotation * 
+                                    new Vector3((GetRotationDirection ? 1 : -1) * Mathf.Cos(m_angle), Mathf.Sin(m_angle), 0) * 
+                                    m_distance;
+            var angles = GetPlayerTransform.eulerAngles;
+            GetTransform.rotation = Quaternion.Euler(angles.x,angles.y, angles.z);
         }
     }
 }
