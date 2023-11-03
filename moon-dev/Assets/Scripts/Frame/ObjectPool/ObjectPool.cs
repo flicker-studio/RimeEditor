@@ -48,7 +48,7 @@ namespace Frame.Tool.Pool
         {
             obj = m_pool[tag].Dequeue();
             obj.SetActive(true);
-            obj.transform.parent = null;
+            obj.transform.SetParent(null);
         }
         else
         {
@@ -76,7 +76,7 @@ namespace Frame.Tool.Pool
         if (m_pool.ContainsKey(tag))
         {
             CheckTypeCachePanel(tag);
-            obj.transform.parent = m_typeCachePanel[tag].transform;
+            obj.transform.SetParent(m_typeCachePanel[tag].transform);
             obj.SetActive(false);
             m_pool[tag].Enqueue(obj);
             m_outPool[tag].Remove(obj);

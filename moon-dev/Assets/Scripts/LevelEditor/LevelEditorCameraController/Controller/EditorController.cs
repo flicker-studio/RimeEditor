@@ -27,6 +27,7 @@ namespace LevelEditor
             m_motionController.ChangeMotionState(typeof(ItemTransformPanelShowState));
             m_motionController.ChangeMotionState(typeof(ActionPanelShowState));
             m_motionController.ChangeMotionState(typeof(ControlHandlePanelShowState));
+            m_motionController.ChangeMotionState(typeof(HierarchyPanelShowState));
         }
     
         public void LateUpdate()

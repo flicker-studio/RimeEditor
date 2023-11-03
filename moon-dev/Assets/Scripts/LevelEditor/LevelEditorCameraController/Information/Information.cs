@@ -13,9 +13,33 @@ namespace LevelEditor
 
         public UIManager GetUI => m_uiManager;
 
+        public OutlinePainter GetOutlinePainter
+        {
+            get
+            {
+                if (m_outlinePainter == null)
+                {
+                    m_outlinePainter = new OutlinePainter();
+                    m_outlinePainter.OutlineMode = GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_MODE;
+                    m_outlinePainter.OutlineColor = GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_COLOR;;
+                    m_outlinePainter.OutlineWidth = GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_WIDTH;;
+                }
+
+                return m_outlinePainter;
+            }
+        }
+
         public InputController GetInput => m_inputController;
 
         public GameObject GetEmptyGameObject => m_prefabFactory.EMPTY_GAMEOBJECT;
+
+        public GameObject GetItemNodeGameObject => m_prefabFactory.ITEM_NODE;
+
+        public GameObject GetItemDetailGroup => m_prefabFactory.ITEM_DETAIL_GROUP;
+
+        public GameObject GetItemLattice => m_prefabFactory.ITEM_LATTICE;
+
+        public GameObject GetItemType => m_prefabFactory.ITEM_TYPE;
 
         public CameraProperty GetCameraProperty => m_cameraProperty;
 
@@ -35,6 +59,8 @@ namespace LevelEditor
         private UIManager m_uiManager;
 
         private PrefabFactory m_prefabFactory;
+
+        private OutlinePainter m_outlinePainter;
     
         private CommandExcute m_commandExcute;
     
