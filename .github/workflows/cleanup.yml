@@ -25,8 +25,7 @@ jobs:
   Manual-Cleanup:
     if: ${{github.event_name == 'workflow_dispatch'}}
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
+    permissions: write-all
     steps:
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@v2
