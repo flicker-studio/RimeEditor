@@ -57,7 +57,7 @@ namespace LevelEditor
     
         public bool GetRotationInputZDown => m_rotationInputZ.GetInputDown;
         
-        public ControlHandleAction GetControlHandleAction => _mControlHandleAction;
+        public ControlHandleAction GetControlHandleAction => m_controlHandleAction;
     
         private Image m_selectionImage;
         
@@ -83,7 +83,7 @@ namespace LevelEditor
     
         private InputProperty<bool> m_rotationInputZ;
         
-        private ControlHandleAction _mControlHandleAction = new ControlHandleAction();
+        private ControlHandleAction m_controlHandleAction = new ControlHandleAction();
     
         private UIProperty.ControlHandleUI m_property;
     

@@ -23,11 +23,13 @@ namespace LevelEditor
         {
             //TODO:目前与输入框互动时Redo和Undo会有BUG，出于架构考虑，暂时在想解决办法，在想用不用全局事件
             bool zButtonDown = InputManager.Instance.GetZButtonDown;
-            if (zButtonDown && InputManager.Instance.GetCtrlButton && InputManager.Instance.GetShiftButton)
+            // if (zButtonDown && InputManager.Instance.GetCtrlButton && InputManager.Instance.GetShiftButton)
+            if(InputManager.Instance.GetDebuggerNum2Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
                 m_commandManager.Redo();
-            }else if (zButtonDown && InputManager.Instance.GetCtrlButton)
+            // }else if (zButtonDown && InputManager.Instance.GetCtrlButton)
+            }else if(InputManager.Instance.GetDebuggerNum1Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
                 m_commandManager.Undo();

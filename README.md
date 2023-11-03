@@ -302,6 +302,14 @@ LevelEditorInformation *-- LevelEditorUIManager
 LevelEditorUIManager *-- ActionPanel
 LevelEditorUIManager *-- ControlHandlePanel
 LevelEditorUIManager *-- ItemTransformPanel
+LevelEditorUIManager *-- HierarchyPanel
 ItemTransformPanel *-- InputFieldVector3
-LevelData *-- ItemData
 ```
+
+Data
+
+```mermaid
+classDiagram
+ItemNode <|-- ItemData
+```
+

@@ -8,7 +8,7 @@ namespace LevelEditor
         private Stack<Command> m_undoCommands = new Stack<Command>();
 
         private Stack<Command> m_redoCommands = new Stack<Command>();
-
+        
         public void Excute(Command command)
         {
             command.Execute();

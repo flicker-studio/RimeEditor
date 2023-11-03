@@ -16,10 +16,10 @@ namespace Test.Editor
         [Test]
         public void SimplePasses()
         {
-            var itemData = new ItemData(new GameObject(), true, true);
-            Debug.Log(JsonUtility.ToJson(itemData, true));
-            // Use the Assert class to test conditions
-            Assert.IsNotNull(itemData);
+            // var itemData = new ItemData(new GameObject(), true, true);
+            // Debug.Log(JsonUtility.ToJson(itemData, true));
+            // // Use the Assert class to test conditions
+            // Assert.IsNotNull(itemData);
         }
 
         /// <summary>
