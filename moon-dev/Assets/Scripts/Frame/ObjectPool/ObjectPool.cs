@@ -10,7 +10,7 @@ namespace Frame.Tool.Pool
 
     private Dictionary<string, GameObject> m_typeCachePanel = new Dictionary<string, GameObject>();
 
-    private Dictionary<string, Queue<GameObject>> m_pool = new Dictionary<string, Queue<GameObject>>();
+    private Dictionary<string, List<GameObject>> m_pool = new Dictionary<string, List<GameObject>>();
     
     private Dictionary<string, List<GameObject>> m_outPool = new Dictionary<string, List<GameObject>>();
 
@@ -39,14 +39,15 @@ namespace Frame.Tool.Pool
         if (!m_pool.ContainsKey(tag))
         {
             m_objTag.Add(prefab,tag);
-            m_pool[tag] = new Queue<GameObject>();
+            m_pool[tag] = new List<GameObject>();
             m_outPool[tag] = new List<GameObject>();
         }
 
         GameObject obj;
         if (m_pool[tag].Count > 0)
         {
-            obj = m_pool[tag].Dequeue();
+            obj = m_pool[tag][0];
+            m_pool[tag].RemoveAt(0);
             obj.SetActive(true);
             obj.transform.SetParent(null);
         }
@@ -59,6 +60,34 @@ namespace Frame.Tool.Pool
         m_outPool[tag].Add(obj);
         return obj;
     }
+    
+    /// <summary>
+    /// 指定从对象池中拿取物体
+    /// </summary>
+    /// <param name="目标物体"></param>
+    /// <param name="目标预制体"></param>
+    public GameObject OnTake(GameObject targetObj,GameObject prefab)
+    {
+        string tag = prefab.name;
+        if (!m_pool.ContainsKey(tag))
+        {
+            m_objTag.Add(prefab,tag);
+            m_pool[tag] = new List<GameObject>();
+            m_outPool[tag] = new List<GameObject>();
+        }
+
+        if (!m_pool[tag].Contains(targetObj))
+        {
+            return OnTake(prefab);
+        }
+        
+        targetObj.SetActive(true);
+        targetObj.transform.SetParent(null);
+        m_pool[tag].Remove(targetObj);
+        m_outPool[tag].Add(targetObj);
+        return targetObj;
+    }
+    
     /// <summary>
     /// 归还对象池对象
     /// </summary>
@@ -78,7 +107,7 @@ namespace Frame.Tool.Pool
             CheckTypeCachePanel(tag);
             obj.transform.SetParent(m_typeCachePanel[tag].transform);
             obj.SetActive(false);
-            m_pool[tag].Enqueue(obj);
+            m_pool[tag].Add(obj);
             m_outPool[tag].Remove(obj);
         }
     }
@@ -101,13 +130,13 @@ namespace Frame.Tool.Pool
         if (!m_pool.ContainsKey(tag))
         {
             m_objTag.Add(prefab,tag);
-            m_pool[tag] = new Queue<GameObject>();
+            m_pool[tag] = new List<GameObject>();
             m_outPool[tag] = new List<GameObject>();
         }
         CheckTypeCachePanel(tag);
         obj.transform.parent = m_typeCachePanel[tag].transform;
         obj.SetActive(false);
-        m_pool[tag].Enqueue(obj);
+        m_pool[tag].Add(obj);
         m_outPool[tag].Remove(obj);
     }
     
@@ -135,7 +164,7 @@ namespace Frame.Tool.Pool
                 if(tempObj.transform.childCount > 0) continue;
                 tempObj.transform.parent = m_typeCachePanel[tag].transform;
                 tempObj.SetActive(false);
-                m_pool[tag].Enqueue(tempObj);
+                m_pool[tag].Add(tempObj);
                 m_outPool[tag].Remove(tempObj);
             }
         }
