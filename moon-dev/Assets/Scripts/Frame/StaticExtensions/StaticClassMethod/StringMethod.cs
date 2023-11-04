@@ -5,7 +5,7 @@ namespace Frame.Static.Extensions
 {
     public static class StringMethod
     {
-        [Obsolete("Consider using the extension method under Moon.Extension.Method instead this.")]
+        [Obsolete("Consider using the extension method under Moon.Extension.Csharp Method instead this.")]
         public static string RemoveTrailingNumbers(this string input)
         {
             return Regex.Replace(input, @"\d+$", "");

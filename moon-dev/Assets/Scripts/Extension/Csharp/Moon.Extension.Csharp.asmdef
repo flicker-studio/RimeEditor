@@ -1,5 +1,5 @@
 {
-    "name": "Moon.Extension",
+    "name": "Moon.Extension.Csharp",
     "rootNamespace": "Moon",
     "references": [],
     "includePlatforms": [],

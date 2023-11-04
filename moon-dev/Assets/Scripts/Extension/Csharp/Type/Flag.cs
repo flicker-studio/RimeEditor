@@ -1,4 +1,4 @@
-﻿namespace Moon.Extension.Type
+﻿namespace Moon.Extension.Csharp.Type
 {
     /// <summary>
     ///    Custom value types to store special flag bits.

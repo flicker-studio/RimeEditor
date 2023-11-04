@@ -1,9 +1,9 @@
-﻿using Moon.Extension.Type;
+﻿using Moon.Extension.Csharp.Type;
 using NUnit.Framework;
 
-namespace Test.Extension.Type
+namespace Test.Extension.Csharp.Type
 {
-    [Author("Mors")]
+    [Author("Mors"), TestOf(nameof(Flag))]
     internal class FlagTest
     {
         internal static Flag[] FlagDataSource =
