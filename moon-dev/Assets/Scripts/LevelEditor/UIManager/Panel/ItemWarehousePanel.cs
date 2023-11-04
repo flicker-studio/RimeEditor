@@ -13,6 +13,8 @@ namespace LevelEditor
 
         public TextMeshProUGUI GetSelectPromptText => m_selectPromptText;
 
+        public TextMeshProUGUI GetNothingFindText => m_nothingFindText;
+
         public Button GetCloseButton => m_closeButton;
 
         public Button GetCreateButton => m_createButton;
@@ -40,6 +42,7 @@ namespace LevelEditor
         
         private TMP_InputField m_searchField;
         private TextMeshProUGUI m_selectPromptText;
+        private TextMeshProUGUI m_nothingFindText;
         private Button m_closeButton;
         private Button m_createButton;
         private Button m_clearSearchButton;
@@ -68,6 +71,7 @@ namespace LevelEditor
             UIProperty.ItemWarehousePanelUIName uiName = m_property.GetItemWarehousePanelUIName;
             m_searchField = levelEditorCanvasRect.FindPath(uiName.SEARCH_INPUT_FIELD).GetComponent<TMP_InputField>();
             m_selectPromptText = levelEditorCanvasRect.FindPath(uiName.SELECT_TEXT).GetComponent<TextMeshProUGUI>();
+            m_nothingFindText = levelEditorCanvasRect.FindPath(uiName.NOTHING_FIND_TEXT).GetComponent<TextMeshProUGUI>();
             m_closeButton = levelEditorCanvasRect.FindPath(uiName.CLOSE_BUTTON).GetComponent<Button>();
             m_createButton = levelEditorCanvasRect.FindPath(uiName.CREATE_BUTTON).GetComponent<Button>();
             m_clearSearchButton = levelEditorCanvasRect.FindPath(uiName.CLEAR_SEARCH_BUTTON).GetComponent<Button>();

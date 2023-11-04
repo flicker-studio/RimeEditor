@@ -118,6 +118,8 @@ namespace LevelEditor
             public string CLEAR_SEARCH_BUTTON{ get; private set; }
             [field: SerializeField, CustomLabel("选择物体文本提示名字")]
             public string SELECT_TEXT{ get; private set; }
+            [field: SerializeField, CustomLabel("找不到物体提示文字")]
+            public string NOTHING_FIND_TEXT{ get; private set; }
             [field: SerializeField, CustomLabel("创建物体按钮名字")]
             public string CREATE_BUTTON{ get; private set; }
             [field: SerializeField, CustomLabel("关闭仓库按钮名字")]

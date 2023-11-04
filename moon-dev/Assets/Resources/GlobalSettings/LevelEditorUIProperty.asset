@@ -70,6 +70,7 @@ MonoBehaviour:
       <SEARCH_INPUT_FIELD>k__BackingField: PopoverPanel/ItemWarehousePanel/TopPanel/MiddlePanel/SearchInputField
       <CLEAR_SEARCH_BUTTON>k__BackingField: PopoverPanel/ItemWarehousePanel/TopPanel/MiddlePanel/SearchInputField/ClearButton
       <SELECT_TEXT>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/RightPanel/BottomPanel/Select
+      <NOTHING_FIND_TEXT>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/RightPanel/TopPanel/NothingFindText
       <CREATE_BUTTON>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/RightPanel/BottomPanel/CreateButton
       <CLOSE_BUTTON>k__BackingField: PopoverPanel/ItemWarehousePanel/TopPanel/RightPanel/DeleteButton
       <ITEM_TYPE_GROUP>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/LeftPanel/ItemTypeGroup

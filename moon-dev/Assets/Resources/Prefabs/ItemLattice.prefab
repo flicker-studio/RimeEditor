@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 191372088067346253}
   - component: {fileID: 1305071981387262669}
   - component: {fileID: 5576107130687764130}
-  - component: {fileID: 2603120229011215109}
+  - component: {fileID: 8196092240033784342}
   m_Layer: 5
   m_Name: ItemLattice
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2603120229011215109
+--- !u!114 &8196092240033784342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 697301454166220078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b7aee4ae7a628041b162878de969c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -100,10 +100,10 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
-    m_HighlightedColor: {r: 0.18970275, g: 0.6317638, b: 0.8207547, a: 1}
-    m_PressedColor: {r: 0.1882353, g: 0.6313726, b: 0.81960785, a: 1}
-    m_SelectedColor: {r: 0, g: 0.7018633, b: 1, a: 1}
-    m_DisabledColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+    m_HighlightedColor: {r: 0.16820934, g: 0.7872507, b: 0.7924528, a: 1}
+    m_PressedColor: {r: 0.16862746, g: 0.7882353, b: 0.7921569, a: 1}
+    m_SelectedColor: {r: 0, g: 0.99166656, b: 1, a: 1}
+    m_DisabledColor: {r: 0, g: 0.99215686, b: 1, a: 1}
     m_ColorMultiplier: 2
     m_FadeDuration: 0
   m_SpriteState:
