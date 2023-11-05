@@ -1,4 +1,5 @@
 using Frame.StateMachine;
+using Slicer.State;
 using UnityEngine;
 
 namespace Slicer
@@ -8,17 +9,19 @@ namespace Slicer
         private MotionController m_motionController;
     
         private SlicerInformation m_slicerInformation;
+
+        [SerializeField] private Transform playerTransform;
         
     
         void ControllerInit()
         {
-            m_slicerInformation = new SlicerInformation(transform);
+            m_slicerInformation = new SlicerInformation(transform, playerTransform);
             m_motionController = new MotionController(m_slicerInformation);
         }
         
         private void MotionInit()
         {
-            m_motionController.ChangeMotionState(typeof(SlicerCloseState));
+            m_motionController.ChangeMotionState(typeof(SlicerMoveFollowState));
         }
         
         private void Start()
