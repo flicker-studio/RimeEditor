@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Character.Data;
-using Character.Information;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-namespace Character.State
+namespace Character
 {
     public class PlayerMainDefultState : PlayerMainMotionState
 {
@@ -32,13 +28,13 @@ namespace Character.State
         if (!CheckSuitableSlope)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMotionState(MOTIONSTATEENUM.PlayerSlideState);
+            ChangeMotionState(typeof(PlayerSlideState));
             return;
         }
         if (GetMotionInputData.MoveInput.x != 0)
         {
             GetRigidbody.Freeze(FREEZEAXIS.RotZ);
-            ChangeMotionState(MOTIONSTATEENUM.PlayerWalkAndRunState);
+            ChangeMotionState(typeof(PlayerWalkAndRunState));
             return;
         }
         timmer += Time.fixedDeltaTime;

@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using Character.Data;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-namespace Character.Information
+namespace Character
 {
     public class PlayerRaycasting
     {

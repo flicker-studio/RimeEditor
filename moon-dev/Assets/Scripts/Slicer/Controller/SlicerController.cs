@@ -1,27 +1,24 @@
 using Frame.StateMachine;
-using Slicer.Information;
 using UnityEngine;
 
-namespace Slicer.Controller
+namespace Slicer
 {
     public class SlicerController : MonoBehaviour
     {
         private MotionController m_motionController;
     
         private SlicerInformation m_slicerInformation;
-
-        [SerializeField] private Transform m_playerTransform;
         
+    
         void ControllerInit()
         {
-            m_slicerInformation = new SlicerInformation(transform, m_playerTransform);
+            m_slicerInformation = new SlicerInformation(transform);
             m_motionController = new MotionController(m_slicerInformation);
         }
         
         private void MotionInit()
         {
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.SlicerCloseState);
-            m_motionController.ChangeMotionState(MOTIONSTATEENUM.SlicerMoveFollowState);
+            m_motionController.ChangeMotionState(typeof(SlicerCloseState));
         }
         
         private void Start()
@@ -38,7 +35,7 @@ namespace Slicer.Controller
     #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            if(m_slicerInformation == null) m_slicerInformation = new SlicerInformation(transform, m_playerTransform);
+            if(m_slicerInformation == null) m_slicerInformation = new SlicerInformation(transform);
             Gizmos.color = new Color(0, 1, 0, 0.5f);
             Matrix4x4 oldGizmosMatrix = Gizmos.matrix;
             Gizmos.matrix = Matrix4x4.TRS(transform.position,transform.rotation, m_slicerInformation.GetDetectionRange);

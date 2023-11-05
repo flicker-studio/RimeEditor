@@ -1,14 +1,12 @@
 using Frame.StateMachine;
-using Frame.Tool;
-using Slicer.Information;
 
-namespace Slicer.State
+namespace Slicer
 {
     public abstract class SlicerAdditiveMotionState : AdditiveMotionState
     {
         protected SlicerInformation m_slicerInformation;
 
-        protected ICommand m_sliceCommand;
+        protected SliceCommand MSliceDoCommand;
     
         private bool m_firstExecute = true;
 
@@ -28,9 +26,9 @@ namespace Slicer.State
 
         public override void Motion(BaseInformation information)
         {
-            if (m_sliceCommand != null && GetFirstExecute)
+            if (MSliceDoCommand != null && GetFirstExecute)
             {
-                m_sliceCommand.Execute();
+                MSliceDoCommand.Execute();
             }
         }
 

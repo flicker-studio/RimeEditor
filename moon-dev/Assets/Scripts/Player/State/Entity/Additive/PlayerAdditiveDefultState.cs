@@ -1,8 +1,6 @@
-using Character.Information;
-using Character.State.Timer;
 using Frame.StateMachine;
 
-namespace Character.State
+namespace Character
 {
     public class PlayerAdditiveDefultState : PlayerAdditiveMotionState
     {
@@ -36,7 +34,7 @@ namespace Character.State
             {
                 m_canJump = false;
             
-                ChangeMotionState(MOTIONSTATEENUM.PlayerJumpState);
+                ChangeMotionState(typeof(PlayerJumpState));
             }
         }
 

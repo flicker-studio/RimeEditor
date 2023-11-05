@@ -3,20 +3,20 @@ using Editor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Character.Data
+namespace Character
 {
     [CreateAssetMenu(menuName = "CustomProperty/CharacterProperty",order = 3,fileName = "CharacterProperty")]
     public class CharacterProperty : ScriptableObject
     {
-        [FormerlySerializedAs("m_playerMoveProperty")] public PlayerMoveProperty MoveProperty;
-        
-        [FormerlySerializedAs("m_PlayerJumpProperty")] public PlayerJumpProperty JumpProperty;
-        
-        [FormerlySerializedAs("m_GroundCheckParameter")] public PlayerGroundCheckParameter GroundCheckParameter;
-        
+        [Header("角色移动属性")]
+        public PlayerMoveProperty MoveProperty;
+        [Header("角色跳跃属性")]
+        public PlayerJumpProperty JumpProperty;
+        [Header("地面检测参数")]
+        public PlayerGroundCheckParameter GroundCheckParameter;
+        [Header("顶头检测参数")]
         public PlayerCeilingCheckParameter CeilingCheckParameter;
-        
-        [FormerlySerializedAs("perpendicularOnGround")] [FormerlySerializedAs("OrthogonalOnGround")] 
+        [Header("地面IK参数")]
         public PlayerPerpendicularOnGround PerpendicularOnGround;
         
         [Serializable]

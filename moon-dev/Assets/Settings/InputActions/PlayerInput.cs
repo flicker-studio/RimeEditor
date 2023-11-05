@@ -24,7 +24,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInput"",
     ""maps"": [
         {
-            ""name"": ""PlayerMotion"",
+            ""name"": ""Player"",
             ""id"": ""b08f03bb-6ffc-40f6-83a9-0213de34ebf2"",
             ""actions"": [
                 {
@@ -156,6 +156,154 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""LevelEditor"",
+            ""id"": ""9449d73d-313b-4118-82e3-24a8bb0259be"",
+            ""actions"": [
+                {
+                    ""name"": ""MouseLeftButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae21c847-1f66-4316-a262-eee5769f3ff8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseRightButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""29e8cb2b-90b0-4773-991a-30b90ee84ad0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseMiddleButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""32cac3c6-3d5c-4bb2-921e-711d7d4451ef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""2bfb80a4-26ed-4d90-b555-054a5519e77a"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ShiftButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""799fdf90-8207-4541-9b7c-32adda34045c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CtrlButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2aa88f7-dfa8-4be0-8686-305030f30d45"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ZButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""8717c785-5f1d-4701-a017-277ff0cc177e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""389e03b5-e949-4899-abfb-39c6ad3c27f7"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLeftButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15886c0f-15cb-4a94-be05-8411631d1008"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseRightButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""493c756c-f7c7-4c50-a956-eb3e3810d213"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseMiddleButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24662bfa-e8b2-43a9-86d4-b94044ef1294"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad9aba12-9d0b-4993-807d-fba5e3aa92cb"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShiftButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b6d4f76-839e-4277-b42c-234159d240e3"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CtrlButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81f23e94-4f93-4fc3-a37e-c8086864ce22"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Debugger"",
             ""id"": ""4cf33d12-3205-4d8f-babc-c5cae1dc0812"",
             ""actions"": [
@@ -266,12 +414,21 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // PlayerMotion
-        m_PlayerMotion = asset.FindActionMap("PlayerMotion", throwIfNotFound: true);
-        m_PlayerMotion_Move = m_PlayerMotion.FindAction("Move", throwIfNotFound: true);
-        m_PlayerMotion_Jump = m_PlayerMotion.FindAction("Jump", throwIfNotFound: true);
-        m_PlayerMotion_Run = m_PlayerMotion.FindAction("Run", throwIfNotFound: true);
-        m_PlayerMotion_Slice = m_PlayerMotion.FindAction("Slice", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+        m_Player_Slice = m_Player.FindAction("Slice", throwIfNotFound: true);
+        // LevelEditor
+        m_LevelEditor = asset.FindActionMap("LevelEditor", throwIfNotFound: true);
+        m_LevelEditor_MouseLeftButton = m_LevelEditor.FindAction("MouseLeftButton", throwIfNotFound: true);
+        m_LevelEditor_MouseRightButton = m_LevelEditor.FindAction("MouseRightButton", throwIfNotFound: true);
+        m_LevelEditor_MouseMiddleButton = m_LevelEditor.FindAction("MouseMiddleButton", throwIfNotFound: true);
+        m_LevelEditor_MouseScroll = m_LevelEditor.FindAction("MouseScroll", throwIfNotFound: true);
+        m_LevelEditor_ShiftButton = m_LevelEditor.FindAction("ShiftButton", throwIfNotFound: true);
+        m_LevelEditor_CtrlButton = m_LevelEditor.FindAction("CtrlButton", throwIfNotFound: true);
+        m_LevelEditor_ZButton = m_LevelEditor.FindAction("ZButton", throwIfNotFound: true);
         // Debugger
         m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
         m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
@@ -337,30 +494,30 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerMotion
-    private readonly InputActionMap m_PlayerMotion;
-    private List<IPlayerMotionActions> m_PlayerMotionActionsCallbackInterfaces = new List<IPlayerMotionActions>();
-    private readonly InputAction m_PlayerMotion_Move;
-    private readonly InputAction m_PlayerMotion_Jump;
-    private readonly InputAction m_PlayerMotion_Run;
-    private readonly InputAction m_PlayerMotion_Slice;
-    public struct PlayerMotionActions
+    // Player
+    private readonly InputActionMap m_Player;
+    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
+    private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Run;
+    private readonly InputAction m_Player_Slice;
+    public struct PlayerActions
     {
         private @PlayerAction m_Wrapper;
-        public PlayerMotionActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_PlayerMotion_Move;
-        public InputAction @Jump => m_Wrapper.m_PlayerMotion_Jump;
-        public InputAction @Run => m_Wrapper.m_PlayerMotion_Run;
-        public InputAction @Slice => m_Wrapper.m_PlayerMotion_Slice;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerMotion; }
+        public PlayerActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Run => m_Wrapper.m_Player_Run;
+        public InputAction @Slice => m_Wrapper.m_Player_Slice;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerMotionActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerMotionActions instance)
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerMotionActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerMotionActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -375,7 +532,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Slice.canceled += instance.OnSlice;
         }
 
-        private void UnregisterCallbacks(IPlayerMotionActions instance)
+        private void UnregisterCallbacks(IPlayerActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -391,21 +548,115 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Slice.canceled -= instance.OnSlice;
         }
 
-        public void RemoveCallbacks(IPlayerMotionActions instance)
+        public void RemoveCallbacks(IPlayerActions instance)
         {
-            if (m_Wrapper.m_PlayerMotionActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerMotionActions instance)
+        public void SetCallbacks(IPlayerActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerMotionActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerMotionActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerMotionActions @PlayerMotion => new PlayerMotionActions(this);
+    public PlayerActions @Player => new PlayerActions(this);
+
+    // LevelEditor
+    private readonly InputActionMap m_LevelEditor;
+    private List<ILevelEditorActions> m_LevelEditorActionsCallbackInterfaces = new List<ILevelEditorActions>();
+    private readonly InputAction m_LevelEditor_MouseLeftButton;
+    private readonly InputAction m_LevelEditor_MouseRightButton;
+    private readonly InputAction m_LevelEditor_MouseMiddleButton;
+    private readonly InputAction m_LevelEditor_MouseScroll;
+    private readonly InputAction m_LevelEditor_ShiftButton;
+    private readonly InputAction m_LevelEditor_CtrlButton;
+    private readonly InputAction m_LevelEditor_ZButton;
+    public struct LevelEditorActions
+    {
+        private @PlayerAction m_Wrapper;
+        public LevelEditorActions(@PlayerAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MouseLeftButton => m_Wrapper.m_LevelEditor_MouseLeftButton;
+        public InputAction @MouseRightButton => m_Wrapper.m_LevelEditor_MouseRightButton;
+        public InputAction @MouseMiddleButton => m_Wrapper.m_LevelEditor_MouseMiddleButton;
+        public InputAction @MouseScroll => m_Wrapper.m_LevelEditor_MouseScroll;
+        public InputAction @ShiftButton => m_Wrapper.m_LevelEditor_ShiftButton;
+        public InputAction @CtrlButton => m_Wrapper.m_LevelEditor_CtrlButton;
+        public InputAction @ZButton => m_Wrapper.m_LevelEditor_ZButton;
+        public InputActionMap Get() { return m_Wrapper.m_LevelEditor; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LevelEditorActions set) { return set.Get(); }
+        public void AddCallbacks(ILevelEditorActions instance)
+        {
+            if (instance == null || m_Wrapper.m_LevelEditorActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_LevelEditorActionsCallbackInterfaces.Add(instance);
+            @MouseLeftButton.started += instance.OnMouseLeftButton;
+            @MouseLeftButton.performed += instance.OnMouseLeftButton;
+            @MouseLeftButton.canceled += instance.OnMouseLeftButton;
+            @MouseRightButton.started += instance.OnMouseRightButton;
+            @MouseRightButton.performed += instance.OnMouseRightButton;
+            @MouseRightButton.canceled += instance.OnMouseRightButton;
+            @MouseMiddleButton.started += instance.OnMouseMiddleButton;
+            @MouseMiddleButton.performed += instance.OnMouseMiddleButton;
+            @MouseMiddleButton.canceled += instance.OnMouseMiddleButton;
+            @MouseScroll.started += instance.OnMouseScroll;
+            @MouseScroll.performed += instance.OnMouseScroll;
+            @MouseScroll.canceled += instance.OnMouseScroll;
+            @ShiftButton.started += instance.OnShiftButton;
+            @ShiftButton.performed += instance.OnShiftButton;
+            @ShiftButton.canceled += instance.OnShiftButton;
+            @CtrlButton.started += instance.OnCtrlButton;
+            @CtrlButton.performed += instance.OnCtrlButton;
+            @CtrlButton.canceled += instance.OnCtrlButton;
+            @ZButton.started += instance.OnZButton;
+            @ZButton.performed += instance.OnZButton;
+            @ZButton.canceled += instance.OnZButton;
+        }
+
+        private void UnregisterCallbacks(ILevelEditorActions instance)
+        {
+            @MouseLeftButton.started -= instance.OnMouseLeftButton;
+            @MouseLeftButton.performed -= instance.OnMouseLeftButton;
+            @MouseLeftButton.canceled -= instance.OnMouseLeftButton;
+            @MouseRightButton.started -= instance.OnMouseRightButton;
+            @MouseRightButton.performed -= instance.OnMouseRightButton;
+            @MouseRightButton.canceled -= instance.OnMouseRightButton;
+            @MouseMiddleButton.started -= instance.OnMouseMiddleButton;
+            @MouseMiddleButton.performed -= instance.OnMouseMiddleButton;
+            @MouseMiddleButton.canceled -= instance.OnMouseMiddleButton;
+            @MouseScroll.started -= instance.OnMouseScroll;
+            @MouseScroll.performed -= instance.OnMouseScroll;
+            @MouseScroll.canceled -= instance.OnMouseScroll;
+            @ShiftButton.started -= instance.OnShiftButton;
+            @ShiftButton.performed -= instance.OnShiftButton;
+            @ShiftButton.canceled -= instance.OnShiftButton;
+            @CtrlButton.started -= instance.OnCtrlButton;
+            @CtrlButton.performed -= instance.OnCtrlButton;
+            @CtrlButton.canceled -= instance.OnCtrlButton;
+            @ZButton.started -= instance.OnZButton;
+            @ZButton.performed -= instance.OnZButton;
+            @ZButton.canceled -= instance.OnZButton;
+        }
+
+        public void RemoveCallbacks(ILevelEditorActions instance)
+        {
+            if (m_Wrapper.m_LevelEditorActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ILevelEditorActions instance)
+        {
+            foreach (var item in m_Wrapper.m_LevelEditorActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_LevelEditorActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public LevelEditorActions @LevelEditor => new LevelEditorActions(this);
 
     // Debugger
     private readonly InputActionMap m_Debugger;
@@ -484,12 +735,22 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         }
     }
     public DebuggerActions @Debugger => new DebuggerActions(this);
-    public interface IPlayerMotionActions
+    public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnSlice(InputAction.CallbackContext context);
+    }
+    public interface ILevelEditorActions
+    {
+        void OnMouseLeftButton(InputAction.CallbackContext context);
+        void OnMouseRightButton(InputAction.CallbackContext context);
+        void OnMouseMiddleButton(InputAction.CallbackContext context);
+        void OnMouseScroll(InputAction.CallbackContext context);
+        void OnShiftButton(InputAction.CallbackContext context);
+        void OnCtrlButton(InputAction.CallbackContext context);
+        void OnZButton(InputAction.CallbackContext context);
     }
     public interface IDebuggerActions
     {

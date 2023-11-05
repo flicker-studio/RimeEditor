@@ -1,0 +1,20 @@
+{
+    "name": "Slicer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7ec9264b26f0fa94d9cf280a19d35ab5",
+        "GUID:fd8e15a1e0abe1c428ec9781ac410a34",
+        "GUID:6be1d8d1a07509e4a89722d198d78cd2",
+        "GUID:555dcd2a6cd2f26428dc229816b9537d",
+        "GUID:8a788827d3760b94481ebb0ec3b29eed"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

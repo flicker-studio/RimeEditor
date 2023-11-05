@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Character.Data;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-namespace Character.Information
+namespace Character
 {
     public class PlayerInformation : BaseInformation
 {

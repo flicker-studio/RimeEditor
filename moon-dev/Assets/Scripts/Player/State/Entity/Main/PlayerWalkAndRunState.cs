@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Character.Data;
-using Character.Information;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 
-namespace Character.State
+namespace Character
 {
     public class PlayerWalkAndRunState : PlayerMainMotionState
     {
@@ -36,7 +32,7 @@ namespace Character.State
                 if (m_slopetimer >= GetMoveProperty.SLOPE_START_TIME_COMPENSATE)
                 {
                     if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-                    ChangeMotionState(MOTIONSTATEENUM.PlayerSlideState);
+                    ChangeMotionState(typeof(PlayerSlideState));
                     return;
                 }
             }
@@ -48,7 +44,7 @@ namespace Character.State
             if (GetMotionInputData.MoveInput.x == 0)
             {
                 if(GetIsGround) GetRigidbody.velocity = GetRigidbody.velocity.NewY(GetMoveProperty.JELLY_EFFECT_COMPENSATION);
-                ChangeMotionState(MOTIONSTATEENUM.PlyerMainDefultState);
+                ChangeMotionState(typeof(PlayerMainDefultState));
                 return;
             }
     

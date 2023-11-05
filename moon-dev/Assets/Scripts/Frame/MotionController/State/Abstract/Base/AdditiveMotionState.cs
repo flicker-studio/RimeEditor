@@ -10,10 +10,10 @@ namespace Frame.StateMachine
         protected virtual void RemoveState()
         {
             IsEnd = true;
-            ChangeMotionState(MOTIONSTATEENUM.None);
+            ChangeMotionState(typeof(NoneMotionState));
         }
 
-        protected AdditiveMotionState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+        protected AdditiveMotionState(BaseInformation baseInformation,MotionCallBack motionCallBack):base(baseInformation, motionCallBack)
         {
         }
     }
