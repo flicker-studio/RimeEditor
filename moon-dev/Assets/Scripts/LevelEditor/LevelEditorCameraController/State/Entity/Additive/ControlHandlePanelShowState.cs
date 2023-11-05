@@ -10,21 +10,23 @@ namespace LevelEditor
 {
     private List<GameObject> TargetList => m_information.TargetList;
 
-    private ControlHandleAction GetControlHandleAction => m_information.GetUI.GetControlHandlePanel.GetControlHandleAction;
+    private ControlHandlePanel GetControlHandlePanel => m_information.GetUI.GetControlHandlePanel;
 
-    private GameObject GetPositionAxisObj => m_information.GetUI.GetControlHandlePanel.GetPositionRect.gameObject;
+    private ControlHandleAction GetControlHandleAction => GetControlHandlePanel.GetControlHandleAction;
 
-    private GameObject GetRotationAxisObj => m_information.GetUI.GetControlHandlePanel.GetRotationRect.gameObject;
+    private GameObject GetPositionAxisObj => GetControlHandlePanel.GetPositionRect.gameObject;
 
-    private bool GetPositionAxisXButtonDown => m_information.GetUI.GetControlHandlePanel.GetPositionInputXDown;
+    private GameObject GetRotationAxisObj => GetControlHandlePanel.GetRotationRect.gameObject;
+
+    private bool GetPositionAxisXButtonDown => GetControlHandlePanel.GetPositionInputXDown;
     
-    private bool GetPositionAxisYButtonDown => m_information.GetUI.GetControlHandlePanel.GetPositionInputYDown;
+    private bool GetPositionAxisYButtonDown => GetControlHandlePanel.GetPositionInputYDown;
     
-    private bool GetPositionAxisXYButtonDown => m_information.GetUI.GetControlHandlePanel.GetPositionInputXYDown;
+    private bool GetPositionAxisXYButtonDown => GetControlHandlePanel.GetPositionInputXYDown;
 
     private bool GetPositionAxisButtonDown => GetPositionAxisXYButtonDown || GetPositionAxisXButtonDown || GetPositionAxisYButtonDown;
 
-    private bool GetRotationAxisZButtonDown => m_information.GetUI.GetControlHandlePanel.GetRotationInputZDown;
+    private bool GetRotationAxisZButtonDown => GetControlHandlePanel.GetRotationInputZDown;
     
     public ControlHandlePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {

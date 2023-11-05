@@ -52,3 +52,33 @@ MonoBehaviour:
       <SCALE_INPUT_X>k__BackingField: RightPanel/ItemTransformPanel/Scale/ScaleInputX/InputField
       <SCALE_INPUT_Y>k__BackingField: RightPanel/ItemTransformPanel/Scale/ScaleInputY/InputField
       <SCALE_INPUT_Z>k__BackingField: RightPanel/ItemTransformPanel/Scale/ScaleInputZ/InputField
+  <GetHierarchyPanelUI>k__BackingField:
+    <GetHierarchyPanelUIName>k__BackingField:
+      <SCROLL_VIEW_CONTENT>k__BackingField: LeftPanel/HierarchyPanel/ItemHierarchyPanel/Scroll
+        View/Viewport/Content
+      <ADD_BUTTON>k__BackingField: LeftPanel/HierarchyPanel/BottomButton/AddButton
+      <DELETE_BUTTON>k__BackingField: LeftPanel/HierarchyPanel/BottomButton/DeleteButton
+    <GetItemNodeProperty>k__BackingField:
+      <HIGH_LIGHTED_COLOR>k__BackingField: {r: 0.6698113, g: 0.5581885, b: 0.21800463, a: 1}
+      <SELECTED_COLOR>k__BackingField: {r: 1, g: 0.7529412, b: 0, a: 1}
+  <GetItemWarehousePanelUI>k__BackingField:
+    <GetItemWarehousePanelUIName>k__BackingField:
+      <POPOVER_PANEL>k__BackingField: PopoverPanel
+      <ITEM_WAREHOURSE_PANEL>k__BackingField: PopoverPanel/ItemWarehousePanel
+      <ITEM_DETAIL_GROUP_SCROLL_BAR>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/RightPanel/TopPanel/ItemDetailGroupScroll/Scrollbar
+        Vertical
+      <SEARCH_INPUT_FIELD>k__BackingField: PopoverPanel/ItemWarehousePanel/TopPanel/MiddlePanel/SearchInputField
+      <CLEAR_SEARCH_BUTTON>k__BackingField: PopoverPanel/ItemWarehousePanel/TopPanel/MiddlePanel/SearchInputField/ClearButton
+      <SELECT_TEXT>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/RightPanel/BottomPanel/Select
+      <NOTHING_FIND_TEXT>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/RightPanel/TopPanel/NothingFindText
+      <CREATE_BUTTON>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/RightPanel/BottomPanel/CreateButton
+      <CLOSE_BUTTON>k__BackingField: PopoverPanel/ItemWarehousePanel/TopPanel/RightPanel/DeleteButton
+      <ITEM_TYPE_GROUP>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/LeftPanel/ItemTypeGroup
+      <ITEM_TYPE_TEXT>k__BackingField: Text
+      <ITEM_DETAIL_GROUP_CONTENT>k__BackingField: PopoverPanel/ItemWarehousePanel/BottomPanel/RightPanel/TopPanel/ItemDetailGroupScroll/Viewport/Content
+      <ITEM_DETAIL_GROUP_PREFAB_TEXT>k__BackingField: DescribeText
+      <ITEM_DETAIL_GROUP_PREFAB_CONTENT>k__BackingField: Group
+      <ITEM_LATTICE_IMAGE>k__BackingField: Image
+      <ITEM_LATTICE_TEXT>k__BackingField: Text
+    <GetItemWarehouseProperty>k__BackingField:
+      <ITEM_ROOT_PATH>k__BackingField: Items\ScriptableObject

@@ -16,6 +16,7 @@ namespace LevelEditor
     private Image GetSelectionImage => m_information.GetUI.GetControlHandlePanel.GetSelectionImage;
     private Transform GetCameraTransform => Camera.main.transform;
 
+    private OutlinePainter GetOutlinePainter => m_information.GetOutlinePainter;
     private OUTLINEMODE GetOutlineMode => m_information.GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_MODE;
 
     private Color GetOutlineColor => m_information.GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_COLOR;
@@ -50,8 +51,6 @@ namespace LevelEditor
     private Vector2 m_currentMousePosition;
 
     private float selectUiWidth, SelectUiHeight;
-
-    private static OutlinePainter m_outlinePainter;
     
     private static ContactFilter2D m_contactFilter2D = new ContactFilter2D();
     
@@ -119,7 +118,6 @@ namespace LevelEditor
 
     private void StateInit()
     {
-        OutlineInit();
         GetSelectionImage.color = GetSelectionColor;
         m_originMousePositon = GetMousePosition;
         m_emptyObj = ObjectPool.Instance.OnTake(m_information.GetEmptyGameObject);
@@ -142,31 +140,19 @@ namespace LevelEditor
         return Camera.main.ScreenToWorldPoint(worldPoint.NewZ(Mathf.Abs(GetCameraTransform.position.z)));
     }
 
-    private void OutlineInit()
-    {
-        if (m_outlinePainter == null)
-        {
-            m_outlinePainter = new OutlinePainter();
-        }
-
-        m_outlinePainter.OutlineMode = GetOutlineMode;
-        m_outlinePainter.OutlineColor = GetOutlineColor;
-        m_outlinePainter.OutlineWidth = GetOutlineWidth;
-    }
-
     private void ReturnTargetList()
     {
         List<GameObject> tempList = new List<GameObject>();
         if (GetShiftButton)
         {
-            tempList.AddRange(m_outlinePainter.GetTargetObj);
+            tempList.AddRange(GetOutlinePainter.GetTargetObj);
             tempList.AddRange(m_selectList);
         }
         else if (GetCtrlButton)
         {
             if (m_selectCollider.size == GetSelectionMinSize)
             {
-                tempList.AddRange(m_outlinePainter.GetTargetObj);
+                tempList.AddRange(GetOutlinePainter.GetTargetObj);
                 foreach (var obj in m_selectList)
                 {
                     if (tempList.Contains(obj))
@@ -181,7 +167,7 @@ namespace LevelEditor
             }
             else
             {
-                tempList.AddRange(m_outlinePainter.GetTargetObj);
+                tempList.AddRange(GetOutlinePainter.GetTargetObj);
                 foreach (var obj in m_selectList)
                 {
                     tempList.Remove(obj);
@@ -193,8 +179,8 @@ namespace LevelEditor
             tempList.AddRange(m_selectList);
         }
         tempList = tempList.Distinct().ToList();
-        m_outlinePainter.SetTargetObj = tempList;
-        GetExcute?.Invoke(new ItemSelectCommand(TargetList,tempList,m_outlinePainter));
+        GetOutlinePainter.SetTargetObj = tempList;
+        GetExcute?.Invoke(new ItemSelectCommand(TargetList,tempList,GetOutlinePainter));
     }
 }
 

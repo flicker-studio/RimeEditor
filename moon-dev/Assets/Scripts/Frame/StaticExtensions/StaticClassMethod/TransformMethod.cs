@@ -25,7 +25,7 @@ namespace Frame.Static.Extensions
 
         public static Transform FindPath(this Transform transform,string path)
         {
-            string[] pashs = path.Replace(" ","").Split("/");
+            string[] pashs = path.TrimEnd().Split("/");
             Transform childTransform = transform;
             for (var i = 0; i < pashs.Length; i++)
             {
