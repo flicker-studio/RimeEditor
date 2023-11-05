@@ -1,6 +1,5 @@
 using System;
 using Frame.StateMachine;
-using Unity.Mathematics;
 using UnityEngine;
 using static UnityEngine.GridBrushBase;
 
@@ -48,11 +47,11 @@ namespace Slicer.State
             
             if (curThreshold > GetRotationThreshold && !GetRotationDirection)
             {
-                ChangeMotionState(MOTIONSTATEENUM.SlicerRotationFollowState);
+                ChangeMotionState(typeof(SlicerRotationFollowState));
                 return;
             } else if (curThreshold < -GetRotationThreshold && GetRotationDirection)
             {
-                ChangeMotionState(MOTIONSTATEENUM.SlicerRotationFollowState);
+                ChangeMotionState(typeof(SlicerRotationFollowState));
                 return;
             }
             

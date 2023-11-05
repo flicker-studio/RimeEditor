@@ -51,7 +51,7 @@ namespace Slicer.State
     
             if (m_timeCount >= 1)
             {
-                ChangeMotionState(MOTIONSTATEENUM.SlicerMoveFollowState);
+                ChangeMotionState(typeof(SlicerMoveFollowState));
                 return;
             }
                 
