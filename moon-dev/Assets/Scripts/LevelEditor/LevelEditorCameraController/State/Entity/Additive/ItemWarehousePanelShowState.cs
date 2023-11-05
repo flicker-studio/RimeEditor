@@ -463,7 +463,7 @@ namespace LevelEditor
 
         private void CreateNewItem()
         {
-            GetExcute?.Invoke(new ItemCreateCommand(TargetList,GetOutlinePainter,m_currentChoose.ItemObject));
+            GetExcute?.Invoke(new ItemCreateCommand(TargetList,GetOutlinePainter,m_currentChoose));
         }
 
         private void ChooseItemProduct(GameObject newItemProductObj,ItemProduct itemProduct)
