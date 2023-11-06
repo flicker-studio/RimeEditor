@@ -20,18 +20,16 @@ namespace LevelEditor
         {
             if (GetMouseMiddleButtonDown)
             {
-                if(!CheckStates.Contains(typeof(CameraMoveState)))
-                {
-                    ChangeMotionState(typeof(CameraMoveState));
-                }
+                if(CheckStates.Contains(typeof(CameraMoveState))) return;
+                if(CheckStates.Contains(typeof(ItemWarehousePanelShowState))) return;
+                ChangeMotionState(typeof(CameraMoveState));
             }
 
             if (GetMouseSrollDown)
             {
-                if(!CheckStates.Contains(typeof(CameraChangeZState)))
-                {
-                    ChangeMotionState(typeof(CameraChangeZState));
-                }
+                if(CheckStates.Contains(typeof(CameraChangeZState))) return;
+                if(CheckStates.Contains(typeof(ItemWarehousePanelShowState))) return;
+                ChangeMotionState(typeof(CameraChangeZState));
             }
         }
     }

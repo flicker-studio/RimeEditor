@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Frame.Static.Extensions;
+using Frame.Tool;
 
 namespace Frame.StateMachine
 {
@@ -60,10 +61,10 @@ namespace Frame.StateMachine
 
     private void ChangeMotionStateInAdditiveMachine(Type motionStateType)
     {
-        MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is AddtiveMotionStateMachine);   
+        MotionStateMachine motionMachine = m_motionStateMachines.FirstOrDefault(state => state is AdditiveMotionStateMachine);   
         if (motionMachine == null)
         {
-            motionMachine = new AddtiveMotionStateMachine(m_motionCallBack);
+            motionMachine = new AdditiveMotionStateMachine(m_motionCallBack);
             m_motionStateMachines.Add(motionMachine);
         }
         motionMachine.ChangeMotionState(motionStateType,m_information);

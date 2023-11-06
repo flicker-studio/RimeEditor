@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Frame.Tool;
 using UnityEngine;
 
 namespace Frame.StateMachine
 {
-    public class AddtiveMotionStateMachine : MotionStateMachine
+    public class AdditiveMotionStateMachine : MotionStateMachine
     {
         public override void ChangeMotionState(Type motionStateType,BaseInformation information)
         {
@@ -29,7 +30,7 @@ namespace Frame.StateMachine
         }
 
 
-        public AddtiveMotionStateMachine(MotionCallBack motionCallBack): base(motionCallBack)
+        public AdditiveMotionStateMachine(MotionCallBack motionCallBack): base(motionCallBack)
         {
             
         }

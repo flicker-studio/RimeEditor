@@ -1,11 +1,12 @@
 
+
 namespace Frame.StateMachine
 {
     public abstract class AdditiveMotionState : MotionState 
     {
         protected float m_endTimmer = 0;
 
-        public bool IsEnd = false;
+        public bool IsEnd { get; private set; }
 
         protected virtual void RemoveState()
         {

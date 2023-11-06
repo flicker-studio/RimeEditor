@@ -40,7 +40,10 @@ public class HierarchyPanelShowState : AdditiveState
     {
         GetAddButton.onClick.AddListener(() =>
         {
-            ChangeMotionState(typeof(ItemWarehousePanelShowState));
+            if (!CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
+            {
+                ChangeMotionState(typeof(ItemWarehousePanelShowState));
+            }
         });
     }
 
