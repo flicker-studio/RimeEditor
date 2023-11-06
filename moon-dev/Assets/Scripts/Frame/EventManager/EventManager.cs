@@ -7,7 +7,7 @@ namespace Frame.Tool
     //事件列表
     public enum GameEvent
     {
-        UNDO_AND_REDO
+        UNDO_AND_REDO,
     }
     
     /// <summary>

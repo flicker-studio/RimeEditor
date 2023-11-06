@@ -49,7 +49,7 @@ namespace LevelEditor
     
         public Vector3 GetMouseWorldPoint =>
             Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Mathf.Abs(Camera.main.transform.position.z)));
-
+        
         private CameraProperty m_cameraProperty;
 
         private UIProperty m_uiProperty;

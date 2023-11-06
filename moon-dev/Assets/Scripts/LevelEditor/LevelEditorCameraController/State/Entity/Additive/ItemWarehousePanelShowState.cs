@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
+using Frame.Tool;
 using Frame.Tool.Pool;
 using TMPro;
 using UnityEngine;
@@ -62,7 +63,7 @@ namespace LevelEditor
 
         private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
 
-        private ItemProduct m_currentChoose;
+        private static ItemProduct m_currentChoose;
 
         private static bool m_isInit = true;
 
@@ -94,11 +95,12 @@ namespace LevelEditor
 
         public override void Motion(BaseInformation information)
         {
-            
+
         }
 
         protected override void RemoveState()
         {
+            RemoveListener();
             base.RemoveState();
             SetPanelActive(false);
         }
@@ -166,8 +168,6 @@ namespace LevelEditor
         {
             GetCreateButton.interactable = false;
             
-            if(!m_isInit) return;
-            
             GetCreateButton.onClick.AddListener(() =>
             {
                 CreateNewItem();
@@ -202,6 +202,21 @@ namespace LevelEditor
             {
                 SetItemTypeByScrollBarValue();
             });
+        }
+
+        private void RemoveListener()
+        {
+            m_currentChoose = null;
+            
+            GetCreateButton.onClick.RemoveAllListeners();
+
+            GetCloseButton.onClick.RemoveAllListeners();
+            
+            GetClearSearchButton.onClick.RemoveAllListeners();
+            
+            GetSearchField.onSubmit.RemoveAllListeners();
+            
+            GetScrollbar.onValueChanged.RemoveAllListeners();
         }
 
         private void SearchItem(string searchValue)
