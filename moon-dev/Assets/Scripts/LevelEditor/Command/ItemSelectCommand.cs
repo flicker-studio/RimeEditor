@@ -7,12 +7,12 @@ namespace LevelEditor
 {
     public class ItemSelectCommand : Command
     {
-        private List<GameObject> m_targetList;
+        private ObservableList<ItemData> m_targetList;
         private OutlinePainter m_outlinePainter;
-        private List<GameObject> m_lastList = new List<GameObject>();
-        private List<GameObject> m_nextList = new List<GameObject>();
+        private List<ItemData> m_lastList = new List<ItemData>();
+        private List<ItemData> m_nextList = new List<ItemData>();
     
-        public ItemSelectCommand(List<GameObject> targetList,List<GameObject> nextList,OutlinePainter outlinePainter)
+        public ItemSelectCommand(ObservableList<ItemData> targetList,List<ItemData> nextList,OutlinePainter outlinePainter)
         {
             m_targetList = targetList;
             m_outlinePainter = outlinePainter;
@@ -24,14 +24,14 @@ namespace LevelEditor
         {
             m_targetList.Clear();
             m_targetList.AddRange(m_nextList);
-            m_outlinePainter.SetTargetObj = m_targetList;
+            m_outlinePainter.SetTargetObj = m_targetList.GetItemObjs();
         }
 
         public override void Undo()
         {
             m_targetList.Clear();
             m_targetList.AddRange(m_lastList);
-            m_outlinePainter.SetTargetObj = m_targetList;
+            m_outlinePainter.SetTargetObj = m_targetList.GetItemObjs();
         }
     }
 

@@ -40,9 +40,11 @@ namespace LevelEditor
         .NewX(Mathf.Clamp(Mouse.current.position.ReadValue().x, 0, Screen.width))
         .NewY(Mathf.Clamp(Mouse.current.position.ReadValue().y, 0, Screen.height));
 
-    private List<GameObject> TargetList => m_information.TargetList;
+    private ObservableList<ItemData> TargetList => m_information.TargetItems;
 
-    private List<GameObject> m_selectList = new List<GameObject>();
+    private List<ItemData> m_selectList = new List<ItemData>();
+
+    private ObservableList<ItemData> ItemAssets => m_information.ItemAssets;
 
     private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
     
@@ -112,7 +114,11 @@ namespace LevelEditor
         
         foreach (var collider in colliders)
         {
-            m_selectList.Add(collider.gameObject);
+            ItemData itemData = ItemAssets.CheckItemObj(collider.gameObject);
+            if (itemData != null)
+            {
+                m_selectList.Add(ItemAssets.CheckItemObj(collider.gameObject));
+            }
         }
     }
 
@@ -142,17 +148,17 @@ namespace LevelEditor
 
     private void ReturnTargetList()
     {
-        List<GameObject> tempList = new List<GameObject>();
+        List<ItemData> tempList = new List<ItemData>();
         if (GetShiftButton)
         {
-            tempList.AddRange(GetOutlinePainter.GetTargetObj);
+            tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
             tempList.AddRange(m_selectList);
         }
         else if (GetCtrlButton)
         {
             if (m_selectCollider.size == GetSelectionMinSize)
             {
-                tempList.AddRange(GetOutlinePainter.GetTargetObj);
+                tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
                 foreach (var obj in m_selectList)
                 {
                     if (tempList.Contains(obj))
@@ -167,7 +173,7 @@ namespace LevelEditor
             }
             else
             {
-                tempList.AddRange(GetOutlinePainter.GetTargetObj);
+                tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
                 foreach (var obj in m_selectList)
                 {
                     tempList.Remove(obj);
@@ -179,7 +185,7 @@ namespace LevelEditor
             tempList.AddRange(m_selectList);
         }
         tempList = tempList.Distinct().ToList();
-        GetOutlinePainter.SetTargetObj = tempList;
+        GetOutlinePainter.SetTargetObj = tempList.GetItemObjs();
         GetExcute?.Invoke(new ItemSelectCommand(TargetList,tempList,GetOutlinePainter));
     }
 }

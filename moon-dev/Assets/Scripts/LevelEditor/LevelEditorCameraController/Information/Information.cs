@@ -9,7 +9,9 @@ namespace LevelEditor
 {
     public class Information : BaseInformation
     {
-        public List<GameObject> TargetList = new List<GameObject>();
+        public ObservableList<ItemData> TargetItems = new ObservableList<ItemData>();
+
+        public ObservableList<ItemData> ItemAssets = new ObservableList<ItemData>();
 
         public UIManager GetUI => m_uiManager;
 
