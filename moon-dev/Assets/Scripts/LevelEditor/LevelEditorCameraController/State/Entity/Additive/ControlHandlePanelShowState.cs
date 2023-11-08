@@ -8,7 +8,7 @@ namespace LevelEditor
 {
     public class ControlHandlePanelShowState : AdditiveState
 {
-    private List<GameObject> TargetList => m_information.TargetList;
+    private List<GameObject> TargetList => m_information.TargetItems.GetItemObjs();
 
     private ControlHandlePanel GetControlHandlePanel => m_information.GetUI.GetControlHandlePanel;
 

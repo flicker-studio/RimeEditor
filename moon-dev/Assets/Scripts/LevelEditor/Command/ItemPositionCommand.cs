@@ -5,11 +5,11 @@ namespace LevelEditor
 {
     public class ItemPositionCommand : Command
     {
-        private List<GameObject> m_gameObjects = new List<GameObject>();
+        private List<ItemData> m_gameObjects = new List<ItemData>();
         private List<Vector3> m_lastPosition = new List<Vector3>();
         private List<Vector3> m_nextPosition = new List<Vector3>();
     
-        public ItemPositionCommand(List<GameObject> gameObjects,List<Vector3> lastPosition,List<Vector3> nextPosition)
+        public ItemPositionCommand(ObservableList<ItemData> gameObjects,List<Vector3> lastPosition,List<Vector3> nextPosition)
         {
             m_gameObjects.AddRange(gameObjects);
             m_lastPosition.AddRange(lastPosition);
@@ -19,7 +19,7 @@ namespace LevelEditor
         {
             for (int i = 0; i < m_gameObjects.Count; i++)
             {
-                m_gameObjects[i].transform.position = m_nextPosition[i];
+                m_gameObjects[i].GetItemObj.transform.position = m_nextPosition[i];
             }
         }
 
@@ -27,7 +27,7 @@ namespace LevelEditor
         {
             for (int i = 0; i < m_gameObjects.Count; i++)
             {
-                m_gameObjects[i].transform.position = m_lastPosition[i];
+                m_gameObjects[i].GetItemObj.transform.position = m_lastPosition[i];
             }
         }
     }

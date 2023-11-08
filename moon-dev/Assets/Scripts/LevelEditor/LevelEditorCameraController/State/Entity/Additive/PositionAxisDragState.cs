@@ -18,7 +18,7 @@ namespace LevelEditor
     
         private POSITIONDRAGTYPE m_positionDragType;
     
-        private List<GameObject> TagetList => m_information.TargetList;
+        private ObservableList<ItemData> TargetItems => m_information.TargetItems;
         
         private Vector3 GetMouseWorldPoint => m_information.GetMouseWorldPoint;
     
@@ -50,11 +50,11 @@ namespace LevelEditor
         {
             if (GetMouseLeftButtonUp)
             {
-                for (var i = 0; i < TagetList.Count; i++)
+                for (var i = 0; i < TargetItems.Count; i++)
                 {
-                    m_targetCurrentPosition.Add(TagetList[i].transform.position);
+                    m_targetCurrentPosition.Add(TargetItems[i].GetItemObj.transform.position);
                 }
-                GetExcute?.Invoke(new ItemPositionCommand(TagetList,m_targetOriginPosition,m_targetCurrentPosition));
+                GetExcute?.Invoke(new ItemPositionCommand(TargetItems,m_targetOriginPosition,m_targetCurrentPosition));
                 RemoveState();
                 return;
             }
@@ -77,9 +77,9 @@ namespace LevelEditor
     
             m_originMouseWorldPosition = GetMouseWorldPoint;
             
-            for (var i = 0; i < TagetList.Count; i++)
+            for (var i = 0; i < TargetItems.Count; i++)
             {
-                m_targetOriginPosition.Add(TagetList[i].transform.position);
+                m_targetOriginPosition.Add(TargetItems[i].GetItemObj.transform.position);
             }
         }
         
@@ -88,26 +88,26 @@ namespace LevelEditor
             m_currentMouseWorldPosition = GetMouseWorldPoint;
             Vector3 moveDir = m_currentMouseWorldPosition - m_originMouseWorldPosition;
             
-            for (var i = 0; i < TagetList.Count; i++)
+            for (var i = 0; i < TargetItems.Count; i++)
             {
                 switch (m_positionDragType)
                 {
                     case POSITIONDRAGTYPE.XAxis:
-                        TagetList[i].transform.position = m_targetOriginPosition[i] + moveDir.NewY(0);
+                        TargetItems[i].GetItemObj.transform.position = m_targetOriginPosition[i] + moveDir.NewY(0);
                         break;
                     case POSITIONDRAGTYPE.YAxis:
-                        TagetList[i].transform.position = m_targetOriginPosition[i] + moveDir.NewX(0);
+                        TargetItems[i].GetItemObj.transform.position = m_targetOriginPosition[i] + moveDir.NewX(0);
                         break;
                     case POSITIONDRAGTYPE.XYAxis:
-                        TagetList[i].transform.position = m_targetOriginPosition[i] + moveDir;
+                        TargetItems[i].GetItemObj.transform.position = m_targetOriginPosition[i] + moveDir;
                         break;
                     default:
                         continue;
                 }
     
-                TagetList[i].transform.position = TagetList[i]
-                    .transform.position.NewX((float)Math.Round(TagetList[i].transform.position.x,2))
-                                        .NewY((float)Math.Round(TagetList[i].transform.position.y,2));
+                TargetItems[i].GetItemObj.transform.position = TargetItems[i]
+                    .GetItemObj.transform.position.NewX((float)Math.Round(TargetItems[i].GetItemObj.transform.position.x,2))
+                                        .NewY((float)Math.Round(TargetItems[i].GetItemObj.transform.position.y,2));
             }
         }
 

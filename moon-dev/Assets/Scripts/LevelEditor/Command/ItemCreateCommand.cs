@@ -6,46 +6,48 @@ namespace LevelEditor
 {
     public class ItemCreateCommand : Command
     {
-        private GameObject m_item;
-        private GameObject m_itemPrefab;
-        private ITEMTYPE m_itemType;
+        private ItemProduct m_itemProduct;
+        private ItemData m_itemData;
         
-        private List<GameObject> m_targetList;
+        private ObservableList<ItemData> m_targetAssets;
+        private ObservableList<ItemData> m_itemAssets;
+        
         private OutlinePainter m_outlinePainter;
-        private List<GameObject> m_lastList = new List<GameObject>();
-        private Vector3 m_createPoint;
-        
-        private Vector3 GetScreenMiddlePoint =>
-            Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2,
-                Mathf.Abs(Camera.main.transform.position.z)));
+        private List<ItemData> m_lastAssets = new List<ItemData>();
 
-        public ItemCreateCommand(List<GameObject> targetList,OutlinePainter outlinePainter,ItemProduct prefab)
+        public ItemCreateCommand(ObservableList<ItemData> targetAssets,ObservableList<ItemData> itemAssets,OutlinePainter outlinePainter,ItemProduct itemProduct)
         {
-            m_targetList = targetList;
+            m_targetAssets = targetAssets;
+            m_itemAssets = itemAssets;
             m_outlinePainter = outlinePainter;
-            m_itemPrefab = prefab.ItemObject;
-            m_itemType = prefab.ItemType;
-            m_createPoint = GetScreenMiddlePoint;
+            m_itemProduct = itemProduct;
         }
     
         public override void Execute()
         {
-            m_lastList.Clear();
-            m_lastList.AddRange(m_targetList);
-            m_item = ObjectPool.Instance.OnTake(m_item,m_itemPrefab);
-            m_item.transform.rotation = Quaternion.identity;
-            m_item.transform.position = m_createPoint;
-            m_targetList.Clear();
-            m_targetList.Add(m_item);
-            m_outlinePainter.SetTargetObj = m_targetList;
+            if (m_itemData == null)
+            {
+                m_itemData = new ItemData(m_itemProduct);
+            }
+            else
+            {
+                m_itemData.SetActive(true);
+            }
+            m_lastAssets.Clear();
+            m_lastAssets.AddRange(m_targetAssets);
+            m_targetAssets.Clear();
+            m_targetAssets.Add(m_itemData);
+            m_itemAssets.Add(m_itemData);
+            m_outlinePainter.SetTargetObj = m_targetAssets.GetItemObjs();
         }
 
         public override void Undo()
         {
-            m_targetList.Clear();
-            m_targetList.AddRange(m_lastList);
-            m_outlinePainter.SetTargetObj = m_targetList;
-            ObjectPool.Instance.OnRelease(m_item);
+            m_targetAssets.Clear();
+            m_targetAssets.AddRange(m_lastAssets);
+            m_itemAssets.Remove(m_itemData);
+            m_outlinePainter.SetTargetObj = m_targetAssets.GetItemObjs();
+            m_itemData.SetActive(false);
         }
     }
 

@@ -9,7 +9,7 @@ namespace LevelEditor
 {
 public class RotationAxisDragState : AdditiveState
 {
-    private List<GameObject> TagetList => m_information.TargetList;
+    private ObservableList<ItemData> TagetList => m_information.TargetItems;
     
     private RectTransform GetRotationAxisRectTransform => m_information.GetUI.GetControlHandlePanel.GetRotationRect;
     
@@ -63,8 +63,8 @@ public class RotationAxisDragState : AdditiveState
             GetRotationAxisRectTransform.transform.rotation = Quaternion.identity;
             for (var i = 0; i < TagetList.Count; i++)
             {
-                m_targetCurrentPosition.Add(TagetList[i].transform.position);
-                m_targetCurrentRotation.Add(TagetList[i].transform.rotation);
+                m_targetCurrentPosition.Add(TagetList[i].GetItemObj.transform.position);
+                m_targetCurrentRotation.Add(TagetList[i].GetItemObj.transform.rotation);
             }
             GetExcute?.Invoke(new ItemRotationCommand(TagetList,m_targetOriginPosition,m_targetCurrentPosition,
             m_targetOriginRotation,m_targetCurrentRotation));
@@ -96,8 +96,8 @@ public class RotationAxisDragState : AdditiveState
         GetRotationAxisRectTransform.position = m_oriRotationAxisPos;
         for (var i = 0; i < TagetList.Count; i++)
         {
-            TagetList[i].transform.rotation = m_targetOriginRotation[i] * rotationQuaternion;
-            TagetList[i].transform.position = GetRotationAxisWorldPosition
+            TagetList[i].GetItemObj.transform.rotation = m_targetOriginRotation[i] * rotationQuaternion;
+            TagetList[i].GetItemObj.transform.position = GetRotationAxisWorldPosition
                                               + Quaternion.Euler(Vector3.forward * (mouseDis * rotationDirAndMultiplying * GetRotationSpeed)).normalized *
                                               (m_targetOriginPosition[i] - GetRotationAxisWorldPosition);
         }
@@ -111,8 +111,8 @@ public class RotationAxisDragState : AdditiveState
         
         for (var i = 0; i < TagetList.Count; i++)
         {
-            m_targetOriginRotation.Add(TagetList[i].transform.rotation);
-            m_targetOriginPosition.Add(TagetList[i].transform.position);
+            m_targetOriginRotation.Add(TagetList[i].GetItemObj.transform.rotation);
+            m_targetOriginPosition.Add(TagetList[i].GetItemObj.transform.position);
         }
     }
     
