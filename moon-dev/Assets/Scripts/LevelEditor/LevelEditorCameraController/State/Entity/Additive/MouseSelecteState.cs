@@ -3,6 +3,7 @@ using System.Linq;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using Frame.Tool.Pool;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -42,7 +43,7 @@ namespace LevelEditor
 
     private ObservableList<ItemData> TargetList => m_information.TargetItems;
 
-    private List<ItemData> m_selectList = new List<ItemData>();
+    private List<Collider2D> m_selectList = new List<Collider2D>();
 
     private ObservableList<ItemData> ItemAssets => m_information.ItemAssets;
 
@@ -112,14 +113,7 @@ namespace LevelEditor
         
         m_selectList.Clear();
         
-        foreach (var collider in colliders)
-        {
-            ItemData itemData = ItemAssets.CheckItemObj(collider.gameObject);
-            if (itemData != null)
-            {
-                m_selectList.Add(ItemAssets.CheckItemObj(collider.gameObject));
-            }
-        }
+        m_selectList.AddRange(colliders);
     }
 
     private void StateInit()
@@ -152,41 +146,58 @@ namespace LevelEditor
         if (GetShiftButton)
         {
             tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
-            tempList.AddRange(m_selectList);
+            tempList.AddRange(ChangeCollidersToDatas(m_selectList));
         }
         else if (GetCtrlButton)
         {
             if (m_selectCollider.size == GetSelectionMinSize)
             {
                 tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
-                foreach (var obj in m_selectList)
+                foreach (var collider in m_selectList)
                 {
-                    if (tempList.Contains(obj))
+                    ItemData itemData = ItemAssets.CheckItemObj(collider.gameObject);
+                    if (tempList.Contains(itemData))
                     {
-                        tempList.Remove(obj);
+                        tempList.Remove(itemData);
                     }
                     else
                     {
-                        tempList.Add(obj);
+                        tempList.Add(itemData);
                     }
                 }
             }
             else
             {
                 tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
-                foreach (var obj in m_selectList)
+                foreach (var collider in m_selectList)
                 {
-                    tempList.Remove(obj);
+                    ItemData itemData = ItemAssets.CheckItemObj(collider.gameObject);
+                    tempList.Remove(itemData);
                 }
             }
         }
         else
         {
-            tempList.AddRange(m_selectList);
+            tempList.AddRange(ChangeCollidersToDatas(m_selectList));
         }
         tempList = tempList.Distinct().ToList();
         GetOutlinePainter.SetTargetObj = tempList.GetItemObjs();
         GetExcute?.Invoke(new ItemSelectCommand(TargetList,tempList,GetOutlinePainter));
+    }
+
+    private List<ItemData> ChangeCollidersToDatas(List<Collider2D> colliders)
+    {
+        List<ItemData> tempList = new List<ItemData>();
+        foreach (var collider in colliders)
+        {
+            ItemData itemData = ItemAssets.CheckItemObj(collider.gameObject);
+            if (itemData != null)
+            {
+                tempList.Add(itemData);
+            }
+        }
+
+        return tempList;
     }
 }
 
