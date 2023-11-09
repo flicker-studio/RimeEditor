@@ -8,7 +8,9 @@ namespace LevelEditor
 {
     public class ItemTransformPanelShowState : AdditiveState
 {
-    private ObservableList<ItemData> TargetItemList => m_information.TargetItems;
+    private ObservableList<ItemData> TargetItems => m_information.TargetItems;
+
+    private List<GameObject> TargetObjs => m_information.TargetObjs;
 
     private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
 
@@ -44,14 +46,14 @@ namespace LevelEditor
         if (!GetPositionChange) return;
         List<Vector3> nextPosition = new List<Vector3>();
         Vector3 value = GetItemTransformPanel.GetPosition;
-        for (int i = 0; i < TargetItemList.Count; i++)
+        for (int i = 0; i < TargetObjs.Count; i++)
         {
-            GameObject target = TargetItemList[i].GetItemObj;
+            GameObject target = TargetObjs[i];
             nextPosition.Add(new(float.IsNaN(value.x) ? target.transform.position.x : value.x,
                 float.IsNaN(value.y) ? target.transform.position.y : value.y,
                 float.IsNaN(value.z) ? target.transform.position.z : value.z));
         }
-        GetExcute?.Invoke(new ItemPositionCommand(TargetItemList,m_lastPositon,nextPosition));
+        GetExcute?.Invoke(new ItemPositionCommand(TargetItems,m_lastPositon,nextPosition));
     }
 
     private void CheckRotationChange()
@@ -61,14 +63,14 @@ namespace LevelEditor
         nextPosition.AddRange(m_lastPositon);
         List<Quaternion> nextRotation = new List<Quaternion>();
         Vector3 value = GetItemTransformPanel.GetRotation;
-        for (int i = 0; i < TargetItemList.Count; i++)
+        for (int i = 0; i < TargetObjs.Count; i++)
         {
-            GameObject target = TargetItemList[i].GetItemObj;
+            GameObject target = TargetObjs[i];
             nextRotation.Add(Quaternion.Euler(new(float.IsNaN(value.x) ? target.transform.position.x : value.x,
                 float.IsNaN(value.y) ? target.transform.position.y : value.y,
                 float.IsNaN(value.z) ? target.transform.position.z : value.z)));
         }
-        GetExcute?.Invoke(new ItemRotationCommand(TargetItemList,m_lastPositon,nextPosition,m_lastRotation,nextRotation));
+        GetExcute?.Invoke(new ItemRotationCommand(TargetItems,m_lastPositon,nextPosition,m_lastRotation,nextRotation));
     }
 
     private void CheckScaleChange()
@@ -76,14 +78,14 @@ namespace LevelEditor
         if (!GetScaleChange) return;
         List<Vector3> nextScale = new List<Vector3>();
         Vector3 value = GetItemTransformPanel.GetScale;
-        for (int i = 0; i < TargetItemList.Count; i++)
+        for (int i = 0; i < TargetObjs.Count; i++)
         {
-            GameObject target = TargetItemList[i].GetItemObj;
+            GameObject target = TargetObjs[i];
             nextScale.Add(new(float.IsNaN(value.x) ? target.transform.localScale.x : value.x,
                 float.IsNaN(value.y) ? target.transform.localScale.y : value.y,
                 float.IsNaN(value.z) ? target.transform.localScale.z : value.z));
         }
-        GetExcute?.Invoke(new ItemScaleCommand(TargetItemList,m_lastScale,nextScale));
+        GetExcute?.Invoke(new ItemScaleCommand(TargetItems,m_lastScale,nextScale));
     }
 
     private (List<Vector3>, List<Quaternion>, List<Vector3>) GetTransformPropertyFromGameObjectList(
@@ -104,33 +106,33 @@ namespace LevelEditor
 
     private void ShowTransformPanel()
     {
-        if (TargetItemList.Count == 0) return;
+        if (TargetObjs.Count == 0) return;
         if (GetItemTransformPanel.GetOnSelect)
         {
             SetItemValue();
             return;
         }
-        (m_lastPositon,m_lastRotation,m_lastScale) = GetTransformPropertyFromGameObjectList(TargetItemList.GetItemObjs());
+        (m_lastPositon,m_lastRotation,m_lastScale) = GetTransformPropertyFromGameObjectList(TargetObjs);
         SetFieldUIValue();
     }
 
     private void SetFieldUIValue()
     {
-        if (TargetItemList.Count == 0) return;
-        Vector3 position = TargetItemList[0].GetItemObj.transform.position;
-        Vector3 rotation = TargetItemList[0].GetItemObj.transform.rotation.eulerAngles;
-        Vector3 scale = TargetItemList[0].GetItemObj.transform.localScale;
-        for (var i = 1; i < TargetItemList.Count; i++)
+        if (TargetObjs.Count == 0) return;
+        Vector3 position = TargetObjs[0].transform.position;
+        Vector3 rotation = TargetObjs[0].transform.rotation.eulerAngles;
+        Vector3 scale = TargetObjs[0].transform.localScale;
+        for (var i = 1; i < TargetObjs.Count; i++)
         {
-            if (position.x != TargetItemList[i].GetItemObj.transform.position.x) position.x = float.NaN;
-            if (position.y != TargetItemList[i].GetItemObj.transform.position.y) position.y = float.NaN;
-            if (position.z != TargetItemList[i].GetItemObj.transform.position.z) position.z = float.NaN;
-            if (rotation.x != TargetItemList[i].GetItemObj.transform.rotation.eulerAngles.x) rotation.x = float.NaN;
-            if (rotation.y != TargetItemList[i].GetItemObj.transform.rotation.eulerAngles.y) rotation.y = float.NaN;
-            if (rotation.z != TargetItemList[i].GetItemObj.transform.rotation.eulerAngles.z) rotation.z = float.NaN;
-            if (scale.x != TargetItemList[i].GetItemObj.transform.localScale.x) scale.x = float.NaN;
-            if (scale.y != TargetItemList[i].GetItemObj.transform.localScale.y) scale.y = float.NaN;
-            if (scale.z != TargetItemList[i].GetItemObj.transform.localScale.z) scale.z = float.NaN;
+            if (position.x != TargetObjs[i].transform.position.x) position.x = float.NaN;
+            if (position.y != TargetObjs[i].transform.position.y) position.y = float.NaN;
+            if (position.z != TargetObjs[i].transform.position.z) position.z = float.NaN;
+            if (rotation.x != TargetObjs[i].transform.rotation.eulerAngles.x) rotation.x = float.NaN;
+            if (rotation.y != TargetObjs[i].transform.rotation.eulerAngles.y) rotation.y = float.NaN;
+            if (rotation.z != TargetObjs[i].transform.rotation.eulerAngles.z) rotation.z = float.NaN;
+            if (scale.x != TargetObjs[i].transform.localScale.x) scale.x = float.NaN;
+            if (scale.y != TargetObjs[i].transform.localScale.y) scale.y = float.NaN;
+            if (scale.z != TargetObjs[i].transform.localScale.z) scale.z = float.NaN;
         }
 
         GetItemTransformPanel.SetPosition = position;
@@ -151,9 +153,9 @@ namespace LevelEditor
         bool canParseX = float.TryParse(inputFieldX,out float valueX);
         bool chnParseY = float.TryParse(inputFieldY,out float valueY);
         bool chnParseZ = float.TryParse(inputFieldZ,out float valueZ);
-        for (int i = 0; i < TargetItemList.Count; i++)
+        for (int i = 0; i < TargetObjs.Count; i++)
         {
-            GameObject target = TargetItemList[i].GetItemObj;
+            GameObject target = TargetObjs[i];
             target.transform.position = new(
                 canParseX ? valueX : target.transform.position.x,
                 chnParseY ? valueY : target.transform.position.y,
@@ -167,9 +169,9 @@ namespace LevelEditor
         bool canParseX = float.TryParse(inputFieldX,out float valueX);
         bool chnParseY = float.TryParse(inputFieldY,out float valueY);
         bool chnParseZ = float.TryParse(inputFieldZ,out float valueZ);
-        for (int i = 0; i < TargetItemList.Count; i++)
+        for (int i = 0; i < TargetObjs.Count; i++)
         {
-            GameObject target = TargetItemList[i].GetItemObj;
+            GameObject target = TargetObjs[i];
             target.transform.rotation = Quaternion.Euler(new(
                 canParseX ? valueX : target.transform.rotation.x,
                 chnParseY ? valueY : target.transform.rotation.y,
@@ -183,9 +185,9 @@ namespace LevelEditor
         bool canParseX = float.TryParse(inputFieldX,out float valueX);
         bool chnParseY = float.TryParse(inputFieldY,out float valueY);
         bool chnParseZ = float.TryParse(inputFieldZ,out float valueZ);
-        for (int i = 0; i < TargetItemList.Count; i++)
+        for (int i = 0; i < TargetObjs.Count; i++)
         {
-            GameObject target = TargetItemList[i].GetItemObj;
+            GameObject target = TargetObjs[i];
             target.transform.localScale = new(
                 canParseX ? valueX : target.transform.localScale.x,
                 chnParseY ? valueY : target.transform.localScale.y,

@@ -19,7 +19,6 @@ Features:
 Limitations:
 - NOT able to blur other UI components
 
-
 <i>Tested and working for unity versions: `2020.3, 2021.3 2022.3`</i>
 
 

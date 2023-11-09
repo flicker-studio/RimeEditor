@@ -10,6 +10,8 @@ public class ObservableList<T> : IEnumerable<T>
     public event Action<T> OnRemove;
     public event Action<List<T>> OnRemoveAll;
     public event Action<List<T>> OnAddRange;
+
+    public event Action OnClear;
     
     public int Count
     {
@@ -65,6 +67,7 @@ public class ObservableList<T> : IEnumerable<T>
     public void Clear()
     {
         list.Clear();
+        OnClear?.Invoke();
     }
 
     public IEnumerator<T> GetEnumerator()
