@@ -209,6 +209,8 @@ namespace LevelEditor
         {
             m_currentChoose = null;
             
+            GetScrollbar.value = 1f;
+            
             GetCreateButton.onClick.RemoveAllListeners();
 
             GetCloseButton.onClick.RemoveAllListeners();

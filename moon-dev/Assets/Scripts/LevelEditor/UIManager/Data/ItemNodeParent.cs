@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemNodeParent : ItemNode
@@ -22,8 +23,9 @@ public class ItemNodeParent : ItemNode
         return tempList;
     }
 
-    private void ShowChilds()
+    public void ShowChilds()
     {
+        m_isShowOrHide = true;
         foreach (var child in m_childList)
         {
             child.ItemNodeTransform.gameObject.SetActive(true);
@@ -33,6 +35,7 @@ public class ItemNodeParent : ItemNode
     
     private void HideChilds()
     {
+        m_isShowOrHide = false;
         foreach (var child in m_childList)
         {
             child.ItemNodeTransform.gameObject.SetActive(false);
@@ -73,9 +76,8 @@ public class ItemNodeParent : ItemNode
         ItemName = Enum.GetName(typeof(ITEMTYPE), itemProduct.ItemType);
         m_arrowButton = ItemNodeTransform.transform.Find("Arrow").GetComponent<Button>();
         m_arrowButton.gameObject.SetActive(true);
-        m_itemButton.onClick.AddListener(() =>
+        m_nodeButton.AddTriggerEvent(EventTriggerType.PointerClick, context =>
         {
-            m_isShowOrHide = true;
             ShowChilds();
         });
         m_arrowButton.onClick.AddListener(() =>
