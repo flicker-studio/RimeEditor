@@ -1,4 +1,4 @@
-using LevelEditor;
+using Frame.Tool.Pool;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,17 +6,39 @@ using UnityEngine.UI;
 
 public abstract class ItemNode
 {
-    public string ItemName;
+    public string ItemName
+    {
+        get
+        {
+            return m_itemName;
+        }
+        set
+        {
+            m_itemName = value;
+            if (this as ItemNodeParent != null)
+            {
+                m_text.text = m_itemName;
+            }
+            else
+            {
+                m_text.text = "  " + m_itemName;
+            }
+        }
+    }
     
-    private Image m_image;
+    public ITEMTYPE Itemtype { get; private set; }
+    
+    public Transform ItemNodeTransform { get; private set; }
 
     protected TextMeshProUGUI m_text;
     
-    protected Button m_itemButton;
+    protected Button m_nodeButton;
 
-    private UIProperty.ItemNodeProperty m_itemNodeProperty;
+    private Image m_nodeImage;
 
     private bool m_isSelected;
+
+    private string m_itemName;
     public bool IsSelected
     {
         get
@@ -25,42 +47,51 @@ public abstract class ItemNode
         }
         set
         {
-            if (value)
+            m_isSelected = value;
+            if (m_isSelected)
             {
-                m_image.color = m_itemNodeProperty.SELECTED_COLOR;
+                m_nodeImage.color = m_nodeButton.colors.selectedColor;
             }
             else
             {
-                m_image.color = Color.clear;
+                m_nodeImage.color = m_nodeButton.colors.normalColor;
             }
-
-            m_isSelected = value;
         }
     }
-    
-    public ItemNode(string itemName,Transform itemNodeTransform,UIProperty.ItemNodeProperty itemNodeProperty,OnSelect onSelect)
+
+    public ItemNode(ItemProduct itemProduct,Transform itemNodeContent,OnSelect onSelect)
     {
-        ItemName = itemName;
-        m_text = itemNodeTransform.transform.Find("DescribeText").GetComponent<TextMeshProUGUI>();
-        m_text.text = ItemName;
-        m_image = itemNodeTransform.GetComponent<Image>();
-        m_itemButton = itemNodeTransform.GetComponent<Button>();
-        m_itemNodeProperty = itemNodeProperty;
-        m_itemButton.AddTriggerEvent(EventTriggerType.PointerEnter,
-            data =>
-            {
-                if(IsSelected) return;
-                m_image.color = m_itemNodeProperty.HIGH_LIGHTED_COLOR;
-            });
-        m_itemButton.AddTriggerEvent(EventTriggerType.PointerExit,
-            data =>
-            {
-                if(IsSelected) return;
-                m_image.color = Color.clear;
-            });
-        m_itemButton.onClick.AddListener(() =>
+        Itemtype = itemProduct.ItemType;
+        ItemNodeTransform = ObjectPool.Instance.OnTake(itemProduct.ItemNode).transform;
+        ItemNodeTransform.SetParent(itemNodeContent);
+        m_text = ItemNodeTransform.transform.Find("DescribeText").GetComponent<TextMeshProUGUI>();
+        m_nodeButton = ItemNodeTransform.GetComponent<Button>();
+        m_nodeImage = ItemNodeTransform.GetComponent<Image>();
+        InitEvents(onSelect);
+    }
+    
+    public void RemoveNode()
+    {
+        ObjectPool.Instance.OnRelease(ItemNodeTransform.gameObject);
+        m_nodeButton.RemoveAllTriggerEvents();
+    }
+
+    private void InitEvents(OnSelect onSelect)
+    {
+        m_nodeButton.RemoveAllTriggerEvents();
+        m_nodeButton.AddTriggerEvent(EventTriggerType.PointerClick, context =>
         {
             onSelect?.Invoke(this);
+        });
+        m_nodeButton.AddTriggerEvent(EventTriggerType.PointerEnter, context =>
+        {
+            if(m_isSelected) return;
+            m_nodeImage.color = m_nodeButton.colors.highlightedColor;
+        });
+        m_nodeButton.AddTriggerEvent(EventTriggerType.PointerExit, context =>
+        {
+            if(m_isSelected) return;
+            m_nodeImage.color = m_nodeButton.colors.normalColor;
         });
     }
 }

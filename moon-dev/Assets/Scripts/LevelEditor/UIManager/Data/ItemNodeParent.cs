@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
-using LevelEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemNodeParent : ItemNode
@@ -11,7 +12,7 @@ public class ItemNodeParent : ItemNode
 
     private bool m_isShowOrHide = true;
 
-    public List<ItemNodeChild> GetTargetChilds()
+    public List<ItemNodeChild> GetChilds()
     {
         List<ItemNodeChild> tempList = new List<ItemNodeChild>();
         foreach (var itemNodeChild in m_childList)
@@ -22,37 +23,61 @@ public class ItemNodeParent : ItemNode
         return tempList;
     }
 
-    private void ShowChilds()
+    public void ShowChilds()
     {
+        m_isShowOrHide = true;
         foreach (var child in m_childList)
         {
-            child.GetItemNodeTransform.gameObject.SetActive(true);
+            child.ItemNodeTransform.gameObject.SetActive(true);
         }
         m_arrowButton.transform.rotation = Quaternion.Euler(0,0,90);
     }
     
     private void HideChilds()
     {
+        m_isShowOrHide = false;
         foreach (var child in m_childList)
         {
-            child.GetItemNodeTransform.gameObject.SetActive(false);
+            child.ItemNodeTransform.gameObject.SetActive(false);
         }
         m_arrowButton.transform.rotation = Quaternion.Euler(0,0,0);
     }
 
-    public void AddTargetChilds(ItemNodeChild targetChild)
+    public void AddChild(ItemNodeChild targetChild)
     {
         m_childList.Add(targetChild);
+        if (m_childList.Count > 0)
+        {
+            ItemName = $"{Enum.GetName(typeof(ITEMTYPE), Itemtype)}({m_childList.Count})";
+        }
+        else
+        {
+            ItemName = $"{Enum.GetName(typeof(ITEMTYPE), Itemtype)}";
+        }
+    }
+    
+    public void RemoveChild(ItemNodeChild itemNodeChild)
+    {
+        m_childList.Remove(itemNodeChild);
+        if (m_childList.Count > 0)
+        {
+            ItemName = $"{Enum.GetName(typeof(ITEMTYPE), Itemtype)}({m_childList.Count})";
+        }
+        else
+        {
+            ItemName = $"{Enum.GetName(typeof(ITEMTYPE), Itemtype)}";
+        }
     }
 
 
-    public ItemNodeParent(string itemName, Transform itemNodeTransform, UIProperty.ItemNodeProperty itemNodeProperty, OnSelect onSelect) : base(itemName, itemNodeTransform, itemNodeProperty, onSelect)
+    public ItemNodeParent(ItemProduct itemProduct, Transform itemNodeContent,OnSelect onSelect) 
+        : base(itemProduct, itemNodeContent, onSelect)
     {
-        m_arrowButton = itemNodeTransform.transform.Find("Arrow").GetComponent<Button>();
+        ItemName = Enum.GetName(typeof(ITEMTYPE), itemProduct.ItemType);
+        m_arrowButton = ItemNodeTransform.transform.Find("Arrow").GetComponent<Button>();
         m_arrowButton.gameObject.SetActive(true);
-        m_itemButton.onClick.AddListener(() =>
+        m_nodeButton.AddTriggerEvent(EventTriggerType.PointerClick, context =>
         {
-            m_isShowOrHide = true;
             ShowChilds();
         });
         m_arrowButton.onClick.AddListener(() =>

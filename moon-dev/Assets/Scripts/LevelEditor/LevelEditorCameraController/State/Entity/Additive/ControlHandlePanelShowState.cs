@@ -8,7 +8,7 @@ namespace LevelEditor
 {
     public class ControlHandlePanelShowState : AdditiveState
 {
-    private List<GameObject> TargetList => m_information.TargetList;
+    private List<GameObject> TargetObjs => m_information.TargetObjs;
 
     private ControlHandlePanel GetControlHandlePanel => m_information.GetUI.GetControlHandlePanel;
 
@@ -73,8 +73,8 @@ namespace LevelEditor
             case CONTROLHANDLEACTIONTYPE.PositionAxisButton:
                 GetRotationAxisObj.SetActive(false);
                 GetPositionAxisObj.transform.position = Camera.main
-                    .WorldToScreenPoint(GetPositionListFromGameObjectList(TargetList).GetCenterPoint());
-                if (TargetList.Count > 0)
+                    .WorldToScreenPoint(GetPositionListFromGameObjectList(TargetObjs).GetCenterPoint());
+                if (TargetObjs.Count > 0)
                 {
                     GetPositionAxisObj.SetActive(true);
                 }
@@ -86,8 +86,8 @@ namespace LevelEditor
             case CONTROLHANDLEACTIONTYPE.RotationAxisButton:
                 GetPositionAxisObj.SetActive(false);
                 GetRotationAxisObj.transform.position = Camera.main
-                    .WorldToScreenPoint(GetPositionListFromGameObjectList(TargetList).GetCenterPoint());
-                if (TargetList.Count > 0)
+                    .WorldToScreenPoint(GetPositionListFromGameObjectList(TargetObjs).GetCenterPoint());
+                if (TargetObjs.Count > 0)
                 {
                     GetRotationAxisObj.SetActive(true);
                 }

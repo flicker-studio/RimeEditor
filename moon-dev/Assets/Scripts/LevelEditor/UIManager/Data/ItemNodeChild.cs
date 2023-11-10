@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class ItemNodeChild : ItemNode
 {
-    public Transform GetItemNodeTransform { get; private set; }
-    
-    public GameObject GetTargetObj{ get; private set; }
+    public ItemData ItemData{ get; private set; }
 
 
-    public ItemNodeChild(string itemName, Transform itemNodeTransform,GameObject targetObj, UIProperty.ItemNodeProperty itemNodeProperty, OnSelect onSelect) : base(itemName, itemNodeTransform, itemNodeProperty, onSelect)
+    public ItemNodeChild(ItemProduct itemProduct, Transform itemNodeTransform, OnSelect onSelect,ItemData targetItem) 
+        : base(itemProduct, itemNodeTransform, onSelect)
     {
-        GetItemNodeTransform = itemNodeTransform;
-        GetTargetObj = targetObj;
-        m_text.text = "  " + itemName;
+        ItemData = targetItem;
+        ItemName = itemProduct.Name;
     }
 }

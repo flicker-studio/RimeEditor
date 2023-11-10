@@ -5,29 +5,29 @@ namespace LevelEditor
 {
     public class ItemScaleCommand : Command
     {
-        private List<GameObject> m_gameObjects = new List<GameObject>();
+        private List<ItemData> m_itemDatas = new List<ItemData>();
         private List<Vector3> m_lastScale = new List<Vector3>();
         private List<Vector3> m_nextScale = new List<Vector3>();
     
-        public ItemScaleCommand(List<GameObject> gameObjects,List<Vector3> lastScale,List<Vector3> nextScale)
+        public ItemScaleCommand(ObservableList<ItemData> itemDatas,List<Vector3> lastScale,List<Vector3> nextScale)
         {
-            m_gameObjects.AddRange(gameObjects);
+            m_itemDatas.AddRange(itemDatas);
             m_lastScale.AddRange(lastScale);
             m_nextScale.AddRange(nextScale);
         }
         public override void Execute()
         {
-            for (int i = 0; i < m_gameObjects.Count; i++)
+            for (int i = 0; i < m_itemDatas.Count; i++)
             {
-                m_gameObjects[i].transform.localScale = m_nextScale[i];
+                m_itemDatas[i].GetItemObj.transform.localScale = m_nextScale[i];
             }
         }
 
         public override void Undo()
         {
-            for (int i = 0; i < m_gameObjects.Count; i++)
+            for (int i = 0; i < m_itemDatas.Count; i++)
             {
-                m_gameObjects[i].transform.localScale = m_lastScale[i];
+                m_itemDatas[i].GetItemObj.transform.localScale = m_lastScale[i];
             }
         }
     }

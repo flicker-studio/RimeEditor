@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,12 @@ public class ItemProduct : ScriptableObject
     public ITEMTYPE ItemType { get; private set; }
     [field:SerializeField]
     public GameObject ItemObject { get; private set; }
+    public GameObject ItemNode { get; private set; }
+
+    private void OnEnable()
+    {
+        ItemNode = Resources.Load<GameObject>("Prefabs/ItemNode");
+    }
 
     public ItemProduct(string name,Sprite itemIcon,ITEMTYPE itemType,GameObject itemObject)
     {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
-using Frame.Tool;
 using Frame.Tool.Pool;
 using TMPro;
 using UnityEngine;
@@ -57,7 +56,9 @@ namespace LevelEditor
         
         private string GetItemTypeTextName => GetItemWarehousePanel.GetItemTypeTextName;
         
-        private List<GameObject> TargetList => m_information.TargetList;
+        private ObservableList<ItemData> ItemAssets => m_information.ItemAssets;
+        
+        private ObservableList<ItemData> TargetAssets => m_information.TargetItems;
 
         private OutlinePainter GetOutlinePainter => m_information.GetOutlinePainter;
 
@@ -207,6 +208,8 @@ namespace LevelEditor
         private void RemoveListener()
         {
             m_currentChoose = null;
+            
+            GetScrollbar.value = 1f;
             
             GetCreateButton.onClick.RemoveAllListeners();
 
@@ -478,7 +481,7 @@ namespace LevelEditor
 
         private void CreateNewItem()
         {
-            GetExcute?.Invoke(new ItemCreateCommand(TargetList,GetOutlinePainter,m_currentChoose));
+            GetExcute?.Invoke(new ItemCreateCommand(TargetAssets,ItemAssets,GetOutlinePainter,m_currentChoose));
         }
 
         private void ChooseItemProduct(GameObject newItemProductObj,ItemProduct itemProduct)

@@ -1,4 +1,5 @@
 using Frame.StateMachine;
+using UnityEngine.EventSystems;
 
 namespace LevelEditor
 {
@@ -21,14 +22,14 @@ namespace LevelEditor
             if (GetMouseMiddleButtonDown)
             {
                 if(CheckStates.Contains(typeof(CameraMoveState))) return;
-                if(CheckStates.Contains(typeof(ItemWarehousePanelShowState))) return;
+                if(EventSystem.current.IsPointerOverGameObject()) return;
                 ChangeMotionState(typeof(CameraMoveState));
             }
 
             if (GetMouseSrollDown)
             {
                 if(CheckStates.Contains(typeof(CameraChangeZState))) return;
-                if(CheckStates.Contains(typeof(ItemWarehousePanelShowState))) return;
+                if(EventSystem.current.IsPointerOverGameObject()) return;
                 ChangeMotionState(typeof(CameraChangeZState));
             }
         }

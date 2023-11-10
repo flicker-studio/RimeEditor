@@ -9,7 +9,9 @@ namespace LevelEditor
 {
 public class RotationAxisDragState : AdditiveState
 {
-    private List<GameObject> TagetList => m_information.TargetList;
+    private ObservableList<ItemData> TagetItems => m_information.TargetItems;
+
+    private List<GameObject> TargetObjs => m_information.TargetObjs;
     
     private RectTransform GetRotationAxisRectTransform => m_information.GetUI.GetControlHandlePanel.GetRotationRect;
     
@@ -61,12 +63,12 @@ public class RotationAxisDragState : AdditiveState
         if (GetMouseLeftButtonUp)
         {
             GetRotationAxisRectTransform.transform.rotation = Quaternion.identity;
-            for (var i = 0; i < TagetList.Count; i++)
+            for (var i = 0; i < TargetObjs.Count; i++)
             {
-                m_targetCurrentPosition.Add(TagetList[i].transform.position);
-                m_targetCurrentRotation.Add(TagetList[i].transform.rotation);
+                m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
+                m_targetCurrentRotation.Add(TargetObjs[i].transform.rotation);
             }
-            GetExcute?.Invoke(new ItemRotationCommand(TagetList,m_targetOriginPosition,m_targetCurrentPosition,
+            GetExcute?.Invoke(new ItemRotationCommand(TagetItems,m_targetOriginPosition,m_targetCurrentPosition,
             m_targetOriginRotation,m_targetCurrentRotation));
             RemoveState();
             return;
@@ -94,12 +96,12 @@ public class RotationAxisDragState : AdditiveState
             .Euler(0, 0, (float)Math.Round(mouseDis * rotationDirAndMultiplying * GetRotationSpeed,2));
         GetRotationAxisRectTransform.rotation = rotationQuaternion;
         GetRotationAxisRectTransform.position = m_oriRotationAxisPos;
-        for (var i = 0; i < TagetList.Count; i++)
+        for (var i = 0; i < TargetObjs.Count; i++)
         {
-            TagetList[i].transform.rotation = m_targetOriginRotation[i] * rotationQuaternion;
-            TagetList[i].transform.position = GetRotationAxisWorldPosition
-                                              + Quaternion.Euler(Vector3.forward * (mouseDis * rotationDirAndMultiplying * GetRotationSpeed)).normalized *
-                                              (m_targetOriginPosition[i] - GetRotationAxisWorldPosition);
+            TargetObjs[i].transform.rotation = m_targetOriginRotation[i] * rotationQuaternion;
+            TargetObjs[i].transform.position = GetRotationAxisWorldPosition
+                                                          + Quaternion.Euler(Vector3.forward * (mouseDis * rotationDirAndMultiplying * GetRotationSpeed)).normalized *
+                                                          (m_targetOriginPosition[i] - GetRotationAxisWorldPosition);
         }
     }
     
@@ -109,10 +111,10 @@ public class RotationAxisDragState : AdditiveState
         m_originMouseToAxisDir = (m_originMousePosition - GetRotationAxisScreenPosition).normalized;
         m_oriRotationAxisPos = GetRotationAxisRectTransform.position;
         
-        for (var i = 0; i < TagetList.Count; i++)
+        for (var i = 0; i < TargetObjs.Count; i++)
         {
-            m_targetOriginRotation.Add(TagetList[i].transform.rotation);
-            m_targetOriginPosition.Add(TagetList[i].transform.position);
+            m_targetOriginRotation.Add(TargetObjs[i].transform.rotation);
+            m_targetOriginPosition.Add(TargetObjs[i].transform.position);
         }
     }
     

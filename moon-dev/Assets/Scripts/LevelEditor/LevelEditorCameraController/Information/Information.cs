@@ -9,7 +9,11 @@ namespace LevelEditor
 {
     public class Information : BaseInformation
     {
-        public List<GameObject> TargetList = new List<GameObject>();
+        public ObservableList<ItemData> TargetItems = new ObservableList<ItemData>();
+
+        public List<GameObject> TargetObjs = new List<GameObject>();
+
+        public ObservableList<ItemData> ItemAssets = new ObservableList<ItemData>();
 
         public UIManager GetUI => m_uiManager;
 
@@ -67,6 +71,7 @@ namespace LevelEditor
         public Information(RectTransform levelEditorTransform,CommandExcute levelEditorCommandExcute)
         {
             InitComponent(levelEditorTransform,levelEditorCommandExcute);
+            InitEvent();
         }
 
         private void InitComponent(RectTransform levelEditorTransform,CommandExcute levelEditorCommandExcute)
@@ -77,6 +82,28 @@ namespace LevelEditor
             m_prefabFactory = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
             m_uiManager = new UIManager(levelEditorTransform,m_uiProperty);
             m_inputController = new InputController();
+        }
+
+        private void InitEvent()
+        {
+            TargetItems.OnAddRange += SyncTargetObj;
+            TargetItems.OnAdd += SyncTargetObj;
+            TargetItems.OnClear += SyncTargetObj;
+        }
+
+        private void SyncTargetObj(List<ItemData> list)
+        {
+            TargetObjs = TargetItems.GetItemObjs();
+        }
+        
+        private void SyncTargetObj(ItemData list)
+        {
+            TargetObjs = TargetItems.GetItemObjs();
+        }
+        
+        private void SyncTargetObj()
+        {
+            TargetObjs = TargetItems.GetItemObjs();
         }
     }
 }
