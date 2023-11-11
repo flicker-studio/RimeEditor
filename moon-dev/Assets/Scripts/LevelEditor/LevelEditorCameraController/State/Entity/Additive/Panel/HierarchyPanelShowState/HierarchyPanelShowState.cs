@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Frame.StateMachine;
@@ -5,13 +6,11 @@ using LevelEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public delegate void OnSelect(ItemNode selectNode);
-
 public class HierarchyPanelShowState : AdditiveState
 {
     private HierarchyPanel GetHierarchyPanel => m_information.GetUI.GetHierarchyPanel;
 
-    private Transform GetScrollViewContent => GetHierarchyPanel.GetScrollViewContent;
+    private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
 
     private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
 
@@ -25,11 +24,13 @@ public class HierarchyPanelShowState : AdditiveState
 
     private Button GetDeleteButton => GetHierarchyPanel.GetDeleteButton;
 
+    private ScrollRect GetScrollView => GetHierarchyPanel.GetScrollView;
+
     private bool GetShiftInput => m_information.GetInput.GetShiftButton;
 
     private bool GetCtrlInput => m_information.GetInput.GetCtrlButton;
 
-    private OnSelect m_onSelect;
+    private bool GetDeleteInputDown => m_information.GetInput.GetDeleteButtonDown;
 
     private List<ItemNode> m_itemNodeProperties = new List<ItemNode>();
 
@@ -43,7 +44,10 @@ public class HierarchyPanelShowState : AdditiveState
 
     public override void Motion(BaseInformation information)
     {
-        
+        if (GetDeleteInputDown)
+        {
+            GetExcute?.Invoke(new ItemDeleteCommand(TargetItems,ItemAssets,GetOutlinePainter));
+        }
     }
 
     private void InitButton()
@@ -64,7 +68,6 @@ public class HierarchyPanelShowState : AdditiveState
 
     private void InitEvent()
     {
-        m_onSelect = GetSelectedNode;
         ItemAssets.OnAdd += CreateNode;
         ItemAssets.OnAdd += SynchronousNodePanel;
         ItemAssets.OnAddRange += CreateNode;
@@ -89,7 +92,7 @@ public class HierarchyPanelShowState : AdditiveState
         Transform itemNodeChildTransform = itemNodeChild.ItemNodeTransform;
         foreach (var itemNodeProperty in m_itemNodeProperties)
         {
-            if (itemNodeProperty as ItemNodeParent != null && itemNodeProperty.Itemtype == targetItem.GetItemProduct.ItemType)
+            if (itemNodeProperty as ItemNodeParent != null && itemNodeProperty.Itemtypeenum == targetItem.GetItemProduct.ItemType)
             {
                 itemNodeParent = itemNodeProperty as ItemNodeParent;
                 List<ItemNodeChild> parentChilds = itemNodeParent.GetChilds();
@@ -116,6 +119,7 @@ public class HierarchyPanelShowState : AdditiveState
 
     private void DeleteNode(List<ItemData> itemDatas)
     {
+        m_selectTargetItem.Clear();
         foreach (var itemData in itemDatas)
         {
             DeleteNode(itemData);
@@ -163,7 +167,7 @@ public class HierarchyPanelShowState : AdditiveState
 
     private ItemNodeParent CreateParent(ItemProduct itemProduct)
     {
-        ItemNodeParent itemNodeParent = new ItemNodeParent(itemProduct,GetScrollViewContent, m_onSelect);
+        ItemNodeParent itemNodeParent = new ItemNodeParent(itemProduct,GetScrollViewContent, GetSelectedNode,GetScrollView);
         m_itemNodeProperties.Add(itemNodeParent);
         itemNodeParent.ItemNodeTransform.SetSiblingIndex(GetScrollViewContent.childCount);
         return itemNodeParent;
@@ -171,35 +175,22 @@ public class HierarchyPanelShowState : AdditiveState
 
     private ItemNodeChild CreateChild(ItemData targetItem)
     {
-        ItemNodeChild itemNodeChild = new ItemNodeChild(targetItem.GetItemProduct, GetScrollViewContent,m_onSelect, targetItem);
+        ItemNodeChild itemNodeChild = new ItemNodeChild(targetItem.GetItemProduct, GetScrollViewContent,GetSelectedNode, targetItem,GetScrollView);
         m_itemNodeProperties.Add(itemNodeChild);
         return itemNodeChild;
     }
     
     private void SynchronousNodePanel(List<ItemData> itemData)
     {
-        m_selectTargetItem.Clear();
-        m_selectTargetItem.AddRange(TargetItems);
-        
-        foreach (var itemNodeProperty in m_itemNodeProperties)
-        {
-            itemNodeProperty.IsSelected = false;
-        }
-
-        foreach (var targetItem in TargetItems)
-        {
-            foreach (var itemNodeProperty in m_itemNodeProperties)
-            {
-                if (itemNodeProperty is ItemNodeChild itemNodeChild && itemNodeChild.ItemData == targetItem)
-                {
-                    itemNodeChild.IsSelected = true;
-                    break;
-                }
-            }
-        }
+        SynchronousNodePanel();
     }
 
     private void SynchronousNodePanel(ItemData itemData)
+    {
+        SynchronousNodePanel();
+    }
+    
+    private void SynchronousNodePanel()
     {
         m_selectTargetItem.Clear();
         m_selectTargetItem.AddRange(TargetItems);
@@ -227,19 +218,20 @@ public class HierarchyPanelShowState : AdditiveState
         if (GetShiftInput)
         {
             SelectAddItem(selectNode);
+            return;
         }
-        else if(GetCtrlInput)
+        if(GetCtrlInput)
         {
             SelectOppositeItem(selectNode);
+            return;
         }
-        else
-        {
-            SelectOneItem(selectNode);
-        }
+        SelectOneItem(selectNode);
     }
 
     private void SelectOneItem(ItemNode selectNode)
     {
+        if(selectNode.IsSelected) return;
+        
         m_selectTargetItem.Clear();
         
         foreach (var itemNodeProperty in m_itemNodeProperties)
@@ -252,6 +244,7 @@ public class HierarchyPanelShowState : AdditiveState
 
     private void SelectAddItem(ItemNode selectNode)
     {
+        if(selectNode.IsSelected) return;
         if (selectNode is ItemNodeChild child)
         {
             selectNode.IsSelected = true;
@@ -269,10 +262,10 @@ public class HierarchyPanelShowState : AdditiveState
                 itemNodeChild.IsSelected = true;
                 m_selectTargetItem.Add(itemNodeChild.ItemData);
             }
+            m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
+            GetExcute?.Invoke(new ItemSelectCommand(TargetItems,m_selectTargetItem,GetOutlinePainter));
+            selectNode.IsSelected = true;
         }
-        selectNode.IsSelected = true;
-        m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-        GetExcute?.Invoke(new ItemSelectCommand(TargetItems,m_selectTargetItem,GetOutlinePainter));
     }
     
     private void SelectOppositeItem(ItemNode selectNode)
@@ -292,15 +285,14 @@ public class HierarchyPanelShowState : AdditiveState
             GetExcute?.Invoke(new ItemSelectCommand(TargetItems,m_selectTargetItem,GetOutlinePainter));
             return;
         }
-
+        
         if (selectNode is ItemNodeParent selectNodeParent)
         {
-            selectNode.IsSelected = !selectNode.IsSelected;
             List<ItemNodeChild> targetChilds = selectNodeParent.GetChilds();
+            bool isSelectParent = !selectNode.IsSelected;
             foreach (var itemNodeChild in targetChilds)
             {
-                itemNodeChild.IsSelected = selectNode.IsSelected;
-                m_selectTargetItem.Add(itemNodeChild.ItemData);
+                itemNodeChild.IsSelected = isSelectParent;
                 if (itemNodeChild.IsSelected)
                 {
                     m_selectTargetItem.Add(itemNodeChild.ItemData);
@@ -310,8 +302,10 @@ public class HierarchyPanelShowState : AdditiveState
                     m_selectTargetItem.Remove(itemNodeChild.ItemData);
                 }
             }
+            
+            m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
+            GetExcute?.Invoke(new ItemSelectCommand(TargetItems,m_selectTargetItem,GetOutlinePainter));
+            selectNode.IsSelected = isSelectParent;
         }
-        m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-        GetExcute?.Invoke(new ItemSelectCommand(TargetItems,m_selectTargetItem,GetOutlinePainter));
     }
 }

@@ -6,17 +6,21 @@ namespace LevelEditor
 {
     public class HierarchyPanel
     {
-        public Transform GetScrollViewContent => m_scrollViewContent;
+        public Transform GetHierarchyContent => m_hierarchyContent;
 
         public Button GetAddButton => m_addButton;
 
         public Button GetDeleteButton => m_deleteButton;
+
+        public ScrollRect GetScrollView => m_scrollView;
         
         private Button m_addButton;
 
         private Button m_deleteButton;
 
-        private Transform m_scrollViewContent;
+        private ScrollRect m_scrollView;
+        
+        private Transform m_hierarchyContent;
 
         private UIProperty.HierarchyPanelUI m_property;
         
@@ -32,7 +36,8 @@ namespace LevelEditor
             UIProperty.HierarchyPanelUIName hierarchyPanelUIName = m_property.GetHierarchyPanelUIName;
             m_addButton = levelEditorCanvasRect.FindPath(hierarchyPanelUIName.ADD_BUTTON).GetComponent<Button>();
             m_deleteButton = levelEditorCanvasRect.FindPath(hierarchyPanelUIName.DELETE_BUTTON).GetComponent<Button>();
-            m_scrollViewContent = levelEditorCanvasRect.FindPath(hierarchyPanelUIName.SCROLL_VIEW_CONTENT);
+            m_hierarchyContent = levelEditorCanvasRect.FindPath(hierarchyPanelUIName.HIERARCHY_VIEW_CONTENT);
+            m_scrollView = levelEditorCanvasRect.FindPath(hierarchyPanelUIName.SCROLL_VIEW).GetComponent<ScrollRect>();
         }
 
         private void InitEvent()

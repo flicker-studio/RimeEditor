@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ITEMTYPE
+public enum ITEMTYPEENUM
 {
     Platform,
     Mechanism
@@ -16,7 +16,7 @@ public class ItemProduct : ScriptableObject
     [field:SerializeField]
     public Sprite ItemIcon { get; set; }
     [field:SerializeField]
-    public ITEMTYPE ItemType { get; private set; }
+    public ITEMTYPEENUM ItemType { get; private set; }
     [field:SerializeField]
     public GameObject ItemObject { get; private set; }
     public GameObject ItemNode { get; private set; }
@@ -26,7 +26,7 @@ public class ItemProduct : ScriptableObject
         ItemNode = Resources.Load<GameObject>("Prefabs/ItemNode");
     }
 
-    public ItemProduct(string name,Sprite itemIcon,ITEMTYPE itemType,GameObject itemObject)
+    public ItemProduct(string name,Sprite itemIcon,ITEMTYPEENUM itemType,GameObject itemObject)
     {
         ItemIcon = itemIcon;
         ItemObject = itemObject;

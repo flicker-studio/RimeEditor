@@ -221,6 +221,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DeleteButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""4151a266-1614-4499-8e94-482da3f8a5d8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -298,6 +307,17 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ZButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7100a455-0aa8-4b57-bf4e-be2a506f82cc"",
+                    ""path"": ""<Keyboard>/delete"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeleteButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -429,6 +449,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_LevelEditor_ShiftButton = m_LevelEditor.FindAction("ShiftButton", throwIfNotFound: true);
         m_LevelEditor_CtrlButton = m_LevelEditor.FindAction("CtrlButton", throwIfNotFound: true);
         m_LevelEditor_ZButton = m_LevelEditor.FindAction("ZButton", throwIfNotFound: true);
+        m_LevelEditor_DeleteButton = m_LevelEditor.FindAction("DeleteButton", throwIfNotFound: true);
         // Debugger
         m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
         m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
@@ -574,6 +595,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_LevelEditor_ShiftButton;
     private readonly InputAction m_LevelEditor_CtrlButton;
     private readonly InputAction m_LevelEditor_ZButton;
+    private readonly InputAction m_LevelEditor_DeleteButton;
     public struct LevelEditorActions
     {
         private @PlayerAction m_Wrapper;
@@ -585,6 +607,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @ShiftButton => m_Wrapper.m_LevelEditor_ShiftButton;
         public InputAction @CtrlButton => m_Wrapper.m_LevelEditor_CtrlButton;
         public InputAction @ZButton => m_Wrapper.m_LevelEditor_ZButton;
+        public InputAction @DeleteButton => m_Wrapper.m_LevelEditor_DeleteButton;
         public InputActionMap Get() { return m_Wrapper.m_LevelEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -615,6 +638,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @ZButton.started += instance.OnZButton;
             @ZButton.performed += instance.OnZButton;
             @ZButton.canceled += instance.OnZButton;
+            @DeleteButton.started += instance.OnDeleteButton;
+            @DeleteButton.performed += instance.OnDeleteButton;
+            @DeleteButton.canceled += instance.OnDeleteButton;
         }
 
         private void UnregisterCallbacks(ILevelEditorActions instance)
@@ -640,6 +666,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @ZButton.started -= instance.OnZButton;
             @ZButton.performed -= instance.OnZButton;
             @ZButton.canceled -= instance.OnZButton;
+            @DeleteButton.started -= instance.OnDeleteButton;
+            @DeleteButton.performed -= instance.OnDeleteButton;
+            @DeleteButton.canceled -= instance.OnDeleteButton;
         }
 
         public void RemoveCallbacks(ILevelEditorActions instance)
@@ -751,6 +780,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnShiftButton(InputAction.CallbackContext context);
         void OnCtrlButton(InputAction.CallbackContext context);
         void OnZButton(InputAction.CallbackContext context);
+        void OnDeleteButton(InputAction.CallbackContext context);
     }
     public interface IDebuggerActions
     {

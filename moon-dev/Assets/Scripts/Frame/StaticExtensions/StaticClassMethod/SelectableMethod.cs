@@ -1,4 +1,6 @@
 using System;
+using System.Dynamic;
+using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -19,6 +21,19 @@ public static class SelectableMethod
             eventrTrigger.triggers.Add(pointerEvent);
         }
         return eventrTrigger;
+    }
+
+    public static void Invoke(this Selectable theSelectable,EventTriggerType eventTriggerType)
+    {
+        EventTrigger eventrTrigger = theSelectable.gameObject.GetComponent<EventTrigger>();
+        if (eventrTrigger == null)
+        {
+            eventrTrigger = theSelectable.gameObject.AddComponent<EventTrigger>();
+        }
+        EventTrigger.Entry trigger = eventrTrigger.triggers
+            .FirstOrDefault(trigger => trigger.eventID == eventTriggerType);
+        if(trigger == null) return;
+        trigger.callback?.Invoke(null);
     }
     
     public static void RemoveAllTriggerEvents(this Selectable theSelectable)

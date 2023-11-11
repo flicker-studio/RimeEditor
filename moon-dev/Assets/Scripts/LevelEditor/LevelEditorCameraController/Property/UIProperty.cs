@@ -112,6 +112,8 @@ namespace LevelEditor
             public string ITEM_WAREHOURSE_PANEL{ get; private set; }
             [field: SerializeField, CustomLabel("物件栏滚动条名字")]
             public string ITEM_DETAIL_GROUP_SCROLL_BAR{ get; private set; }
+            [field: SerializeField, CustomLabel("物件栏滚动视图名字")]
+            public string ITEM_DETAIL_GROUP_SCROLL_VIEW{ get; private set; }
             [field: SerializeField, CustomLabel("搜索栏名字")]
             public string SEARCH_INPUT_FIELD{ get; private set; }
             [field: SerializeField, CustomLabel("清空搜索栏按钮名字")]
@@ -212,7 +214,9 @@ namespace LevelEditor
         public struct HierarchyPanelUIName
         {
             [field:SerializeField,CustomLabel("层级展示面板名字")] 
-            public string SCROLL_VIEW_CONTENT{ get; private set; }
+            public string HIERARCHY_VIEW_CONTENT{ get; private set; }
+            [field:SerializeField,CustomLabel("滚动视图名字")] 
+            public string SCROLL_VIEW{ get; private set; }
             [field:SerializeField,CustomLabel("添加按钮名字")] 
             public string ADD_BUTTON{ get; private set; }
             [field:SerializeField,CustomLabel("删除按钮名字")] 

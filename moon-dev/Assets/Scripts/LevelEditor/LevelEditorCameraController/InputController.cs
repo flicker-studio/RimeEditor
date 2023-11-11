@@ -31,6 +31,8 @@ namespace LevelEditor
         public bool GetShiftButton => InputManager.Instance.GetShiftButton;
 
         public bool GetCtrlButton => InputManager.Instance.GetCtrlButton;
+
+        public bool GetDeleteButtonDown => InputManager.Instance.GetDeleteButtonDown;
     }
 
 }
