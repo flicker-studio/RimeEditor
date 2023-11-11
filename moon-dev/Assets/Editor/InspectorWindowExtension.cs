@@ -146,7 +146,7 @@ namespace WindowExtension
                 
                 byte[] bytes = preview.EncodeToPNG();
 
-                string typeDirectory = Enum.GetName(typeof(ITEMTYPE), itemProduct.ItemType);
+                string typeDirectory = Enum.GetName(typeof(ITEMTYPEENUM), itemProduct.ItemType);
                 
                 string path = Application.dataPath +
                               $"/Resources/Items/Images/{typeDirectory}/{itemProduct.Name}" + ".png";

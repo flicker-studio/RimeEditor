@@ -48,11 +48,11 @@ public class ItemNodeParent : ItemNode
         m_childList.Add(targetChild);
         if (m_childList.Count > 0)
         {
-            ItemName = $"{Enum.GetName(typeof(ITEMTYPE), Itemtype)}({m_childList.Count})";
+            ItemName = $"{Enum.GetName(typeof(ITEMTYPEENUM), Itemtypeenum)}({m_childList.Count})";
         }
         else
         {
-            ItemName = $"{Enum.GetName(typeof(ITEMTYPE), Itemtype)}";
+            ItemName = $"{Enum.GetName(typeof(ITEMTYPEENUM), Itemtypeenum)}";
         }
     }
     
@@ -61,22 +61,22 @@ public class ItemNodeParent : ItemNode
         m_childList.Remove(itemNodeChild);
         if (m_childList.Count > 0)
         {
-            ItemName = $"{Enum.GetName(typeof(ITEMTYPE), Itemtype)}({m_childList.Count})";
+            ItemName = $"{Enum.GetName(typeof(ITEMTYPEENUM), Itemtypeenum)}({m_childList.Count})";
         }
         else
         {
-            ItemName = $"{Enum.GetName(typeof(ITEMTYPE), Itemtype)}";
+            ItemName = $"{Enum.GetName(typeof(ITEMTYPEENUM), Itemtypeenum)}";
         }
     }
 
 
-    public ItemNodeParent(ItemProduct itemProduct, Transform itemNodeContent,OnSelect onSelect) 
-        : base(itemProduct, itemNodeContent, onSelect)
+    public ItemNodeParent(ItemProduct itemProduct, Transform itemNodeContent,Action<ItemNode> onSelect,ScrollRect scrollView) 
+        : base(itemProduct, itemNodeContent, onSelect,scrollView)
     {
-        ItemName = Enum.GetName(typeof(ITEMTYPE), itemProduct.ItemType);
+        ItemName = Enum.GetName(typeof(ITEMTYPEENUM), itemProduct.ItemType);
         m_arrowButton = ItemNodeTransform.transform.Find("Arrow").GetComponent<Button>();
         m_arrowButton.gameObject.SetActive(true);
-        m_nodeButton.AddTriggerEvent(EventTriggerType.PointerClick, context =>
+        m_eventButton.AddEvents(EventTriggerType.PointerClick, context =>
         {
             ShowChilds();
         });
