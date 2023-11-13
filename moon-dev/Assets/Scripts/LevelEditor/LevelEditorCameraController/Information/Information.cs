@@ -93,12 +93,12 @@ namespace LevelEditor
 
         private void SyncTargetObj(List<ItemData> list)
         {
-            TargetObjs = TargetItems.GetItemObjs();
+            SyncTargetObj();
         }
         
         private void SyncTargetObj(ItemData list)
         {
-            TargetObjs = TargetItems.GetItemObjs();
+            SyncTargetObj();
         }
         
         private void SyncTargetObj()

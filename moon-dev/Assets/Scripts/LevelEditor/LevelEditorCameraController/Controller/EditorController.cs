@@ -24,10 +24,7 @@ namespace LevelEditor
         private void MotionInit()
         {
             m_motionController.ChangeMotionState(typeof(CameraDefultState));
-            m_motionController.ChangeMotionState(typeof(ItemTransformPanelShowState));
-            m_motionController.ChangeMotionState(typeof(ActionPanelShowState));
-            m_motionController.ChangeMotionState(typeof(ControlHandlePanelShowState));
-            m_motionController.ChangeMotionState(typeof(HierarchyPanelShowState));
+            m_motionController.ChangeMotionState(typeof(PanelDefultState));
         }
     
         public void LateUpdate()

@@ -336,7 +336,7 @@ namespace Frame.Tool
     public bool GetZButtonDown => m_zButton.GetInputDown;
     public bool GetZButtonUp => m_zButton.GetInputUp;
 
-    public bool GetDeleteButton => m_deleteButton.GetInput;
+    public bool GetDelexteButton => m_deleteButton.GetInput;
     
     public bool GetDeleteButtonDown => m_deleteButton.GetInputDown;
     

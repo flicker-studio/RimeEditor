@@ -1,0 +1,50 @@
+using System.Collections.Generic;
+using Frame.StateMachine;
+using LevelEditor;
+
+public class PanelDefultState : AdditiveState
+{
+    private ObservableList<ItemData> TargetItems => m_information.TargetItems;
+    
+    public PanelDefultState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
+    {
+        InitStates();
+        InitEvents();
+    }
+
+    private void InitEvents()
+    {
+        TargetItems.OnAddRange += ShowTransformPanel;
+        TargetItems.OnAdd += ShowTransformPanel;
+    }
+
+    private void InitStates()
+    {
+        ChangeMotionState(typeof(ActionPanelShowState));
+        ChangeMotionState(typeof(ControlHandlePanelShowState));
+        ChangeMotionState(typeof(HierarchyPanelShowState));
+    }
+    
+    public override void Motion(BaseInformation information)
+    {
+        
+    }
+    
+    private void ShowTransformPanel(List<ItemData> itemDatas)
+    {
+        ShowTransformPanel();
+    }
+    
+    private void ShowTransformPanel(ItemData itemData)
+    {
+        ShowTransformPanel();
+    }
+    
+    private void ShowTransformPanel()
+    {
+        if (!CheckStates.Contains(typeof(ItemTransformPanelShowState)))
+        {
+            ChangeMotionState(typeof(ItemTransformPanelShowState));
+        }
+    }
+}

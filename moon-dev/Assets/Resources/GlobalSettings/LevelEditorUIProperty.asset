@@ -42,6 +42,7 @@ MonoBehaviour:
       <RECT_BUTTON>k__BackingField: TopPanel/ActionPanel/RectButton
   <GetItemTransformPanelUI>k__BackingField:
     <GetItemTransformPanelUIName>k__BackingField:
+      <ROOT_PANEL>k__BackingField: RightPanel/ItemTransformPanel
       <EDIT_BUTTON>k__BackingField: RightPanel/ItemTransformPanel/EditButton
       <POSITION_INPUT_X>k__BackingField: RightPanel/ItemTransformPanel/Position/PositionInputX/InputField
       <POSITION_INPUT_Y>k__BackingField: RightPanel/ItemTransformPanel/Position/PositionInputY/InputField

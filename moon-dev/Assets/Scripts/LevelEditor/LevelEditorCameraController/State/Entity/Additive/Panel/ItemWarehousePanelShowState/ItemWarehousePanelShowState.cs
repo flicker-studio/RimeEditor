@@ -91,7 +91,6 @@ namespace LevelEditor
             LoadItemsFromPoject();
             LoadItemWarehouseFromItems();
             InitListener();
-            ResetState();
             SetPanelActive(true);
         }
 
@@ -107,20 +106,20 @@ namespace LevelEditor
             GetCreateButton.onClick.AddListener(() =>
             {
                 CreateNewItem();
-                RemoveState();
+                ClosePanel();
                 return;
             });
 
             GetCloseButton.onClick.AddListener(() =>
             {
-                RemoveState();
+                ClosePanel();
                 return;
             });
             
             GetClearSearchButton.onClick.AddListener(() =>
             {
                 ClearSearchInput();
-                ResetSearchPanel();
+                ResetSearchPanelState();
             });
             
             GetSearchField.onSubmit.AddListener((value) =>
@@ -128,11 +127,11 @@ namespace LevelEditor
                 if (value == "")
                 {
                     ClearSearchInput();
-                    ResetSearchPanel();
+                    ResetSearchPanelState();
                 }
                 else
                 {
-                    ResetSearchPanel();
+                    ResetSearchPanelState();
                     SearchItem(value);
                 }
             });
@@ -145,45 +144,47 @@ namespace LevelEditor
         
         protected override void RemoveState()
         {
+            ResetState();
             RemoveListener();
             base.RemoveState();
             SetPanelActive(false);
         }
 
+        private void ClosePanel()
+        {
+            ClearSearchInput();
+            RemoveState();
+        }
+        
         private void ResetState()
         {
-            ResetText();
-            ResetSearchPanel();
-            ResetButton();
+            ResetTextState();
+            ResetSearchPanelState();
+            ResetButtonState();
             m_isInit = false;
         }
         
-
-        private void ResetText()
+        private void ResetTextState()
         {
             GetSelectPromptText.text = "";
-            GetScrollbar.value = 1f;
         }
         
-        private void ResetSearchPanel()
+        private void ResetSearchPanelState()
         {
-            if(m_searchItemGroupObj != null)
+            if(m_searchItemGroupObj == null || !m_searchItemGroupObj.activeInHierarchy) return;
+            
+            m_searchItemGroupObj.SetActive(false);
+            
+            m_searchItemTypeButton.SetActive(false);
+            
+            foreach (var itemGroupObj in m_itemGroupObjList)
             {
-                m_searchItemGroupObj.SetActive(false);
+                itemGroupObj.SetActive(true);
             }
+            
+            m_itemTypeList[0].Invoke();
 
-            if (m_searchItemTypeButton != null)
-            {
-                m_searchItemTypeButton.SetActive(false);
-            }
-
-            if (m_itemGroupObjList != null)
-            {
-                foreach (var itemGroupObj in m_itemGroupObjList)
-                {
-                    itemGroupObj.SetActive(true);
-                }
-            }
+            GetScrollbar.value = 1f;
             
             GetNothingFindText.gameObject.SetActive(false);
         }
@@ -193,7 +194,7 @@ namespace LevelEditor
             GetSearchField.text = "";
         }
 
-        private void ResetButton()
+        private void ResetButtonState()
         {
             if (m_itemProductButtonList != null)
             {
@@ -201,11 +202,6 @@ namespace LevelEditor
                 {
                     itemProductObj.IsSelected = false;
                 }
-            }
-
-            if (m_itemTypeList != null && m_itemTypeList.Count > 0)
-            {
-                m_itemTypeList[0].Invoke();
             }
         }
 
@@ -218,8 +214,6 @@ namespace LevelEditor
         private void RemoveListener()
         {
             m_currentChoose = null;
-            
-            GetScrollbar.value = 1f;
             
             GetCreateButton.onClick.RemoveAllListeners();
 

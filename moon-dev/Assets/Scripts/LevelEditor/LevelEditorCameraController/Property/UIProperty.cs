@@ -188,6 +188,8 @@ namespace LevelEditor
         [Serializable]
         public struct ItemTransformPanelUIName
         {
+            [field:SerializeField,CustomLabel("几何变换面板名字")]
+            public string ROOT_PANEL{ get; private set; }
             [field:SerializeField,CustomLabel("编辑按钮名字")]
             public string EDIT_BUTTON{ get; private set; }
             [field:SerializeField,CustomLabel("位置X输入框名字")] 
