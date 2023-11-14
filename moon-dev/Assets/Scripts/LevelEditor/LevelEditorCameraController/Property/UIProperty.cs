@@ -22,6 +22,9 @@ namespace LevelEditor
         [field:SerializeField,Header("物件仓库面板属性")]
         public ItemWarehousePanelUI GetItemWarehousePanelUI { get; private set; }
         
+        [field:SerializeField,Header("区域面板属性")]
+        public AreaPanelUI GetAreaPanelUI { get; private set; }
+        
         [Serializable]
         public struct ControlHandleUI
         {
@@ -68,6 +71,13 @@ namespace LevelEditor
             public ItemWarehousePanelUIName GetItemWarehousePanelUIName { get; private set; }
             [field:SerializeField,Header("物件仓库属性")]
             public ItemWarehouseProperty GetItemWarehouseProperty { get; private set; }
+        }
+        
+        [Serializable]
+        public struct AreaPanelUI
+        {
+            [field:SerializeField,Header("区域面板UI名字")]
+            public AreaPanelUIName GetAreaPanelUIName { get; private set; }
         }
         
         [Serializable]
@@ -223,6 +233,24 @@ namespace LevelEditor
             public string ADD_BUTTON{ get; private set; }
             [field:SerializeField,CustomLabel("删除按钮名字")] 
             public string DELETE_BUTTON{ get; private set; }
+        }
+        [Serializable]
+        public struct AreaPanelUIName
+        {
+            [field:SerializeField,CustomLabel("描述文字名字")] 
+            public string DESCRIBE_TEST{ get; private set; }
+            [field:SerializeField,CustomLabel("下拉列表名字")] 
+            public string AREA_DROP_DOWN{ get; private set; }
+            [field:SerializeField,CustomLabel("添加区域按钮")] 
+            public string ADD_BUTTON{ get; private set; }
+            [field:SerializeField,CustomLabel("删除区域按钮")] 
+            public string DELETE_BUTTON{ get; private set; }
+            [field:SerializeField,CustomLabel("管理区域按钮")] 
+            public string MANAGE_BUTTON{ get; private set; }
+            [field:SerializeField,CustomLabel("区域设置按钮")] 
+            public string AREA_SETTING_BUTTON{ get; private set; }
+            [field:SerializeField,CustomLabel("环境设置按钮")] 
+            public string ENVIRONMENT_SETTING_BUTTON{ get; private set; }
         }
         
         [Serializable]

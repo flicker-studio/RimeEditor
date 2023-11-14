@@ -23,6 +23,7 @@ public class PanelDefultState : AdditiveState
         ChangeMotionState(typeof(ActionPanelShowState));
         ChangeMotionState(typeof(ControlHandlePanelShowState));
         ChangeMotionState(typeof(HierarchyPanelShowState));
+        ChangeMotionState(typeof(AreaPanelShowState));
     }
     
     public override void Motion(BaseInformation information)
@@ -42,7 +43,7 @@ public class PanelDefultState : AdditiveState
     
     private void ShowTransformPanel()
     {
-        if (!CheckStates.Contains(typeof(ItemTransformPanelShowState)))
+        if (TargetItems.Count > 0 && !CheckStates.Contains(typeof(ItemTransformPanelShowState)))
         {
             ChangeMotionState(typeof(ItemTransformPanelShowState));
         }

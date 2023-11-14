@@ -885,7 +885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option A
+  m_text: Level 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11702,12 +11702,8 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Option A
-      m_Image: {fileID: 0}
-    - m_Text: Option B
-      m_Image: {fileID: 0}
-    - m_Text: Option C
-      m_Image: {fileID: 0}
+    - m_Text: Level 0
+      m_Image: {fileID: 21300000, guid: dffef66376be4fa480fb02b19edbe903, type: 3}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -13311,7 +13307,7 @@ GameObject:
   - component: {fileID: 1413230765}
   - component: {fileID: 1413230764}
   m_Layer: 5
-  m_Name: CurrentAreaPanel
+  m_Name: AreaPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
