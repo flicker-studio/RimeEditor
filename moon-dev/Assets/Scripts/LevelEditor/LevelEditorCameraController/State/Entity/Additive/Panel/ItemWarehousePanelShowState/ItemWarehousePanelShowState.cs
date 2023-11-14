@@ -86,6 +86,12 @@ namespace LevelEditor
 
         private static List<ItemProductButton> m_itemProductButtonList;
         
+        [RuntimeInitializeOnLoadMethod]
+        static void ResetMyStaticVar()
+        {
+            m_isInit = true;
+        }
+        
         public ItemWarehousePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
             LoadItemsFromPoject();
@@ -98,7 +104,7 @@ namespace LevelEditor
         {
 
         }
-
+        
         private void InitListener()
         {
             GetCreateButton.interactable = false;

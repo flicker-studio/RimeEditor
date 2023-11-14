@@ -6,8 +6,10 @@ using UnityEngine;
 namespace Frame.Tool.Pool
 {
     //TODO: 考虑在未来使用UnityEngine.Pool代替
-    public class ObjectPool : Singleton<ObjectPool>
+    public class ObjectPool : UnityToolkit.MonoSingleton<ObjectPool>,UnityToolkit.IAutoCreateSingleton
     {
+        public static ObjectPool Instance => Singleton;
+        
         private GameObject m_cachePanel;
 
         private Dictionary<string, GameObject> m_typeCachePanel = new Dictionary<string, GameObject>();

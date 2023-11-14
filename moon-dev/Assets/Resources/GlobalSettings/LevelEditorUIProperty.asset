@@ -26,6 +26,14 @@ MonoBehaviour:
       <POSITION_AXIS_Y>k__BackingField: ControlHandlePanel/PositionUI/YAxis
       <POSITION_AXIS_XY>k__BackingField: ControlHandlePanel/PositionUI/XYAxis
       <ROTATION_AXIS>k__BackingField: ControlHandlePanel/RotationUI
+      <SCALE_AXIS>k__BackingField: LevelEditorUI/ControlHandlePanel/ScaleUI
+      <SCALE_AXIS_X>k__BackingField: LevelEditorUI/ControlHandlePanel/ScaleUI/XAxis
+      <SCALE_AXIS_Y>k__BackingField: LevelEditorUI/ControlHandlePanel/ScaleUI/YAxis
+      <SCALE_AXIS_XY>k__BackingField: LevelEditorUI/ControlHandlePanel/ScaleUI/XYAxis
+      <SCALE_AXIS_X_HEAD>k__BackingField: LevelEditorUI/ControlHandlePanel/ScaleUI/XAxis/Head
+      <SCALE_AXIS_X_BODY>k__BackingField: LevelEditorUI/ControlHandlePanel/ScaleUI/XAxis/Body
+      <SCALE_AXIS_Y_HEAD>k__BackingField: LevelEditorUI/ControlHandlePanel/ScaleUI/YAxis/Head
+      <SCALE_AXIS_Y_BODY>k__BackingField: LevelEditorUI/ControlHandlePanel/ScaleUI/YAxis/Body
     <GetSelectionProperty>k__BackingField:
       <SELECTION_MIN_SIZE>k__BackingField: {x: 0.01, y: 0.01}
       <SELECTION_COLOR>k__BackingField: {r: 0, g: 0.8638129, b: 1, a: 0.3019608}
