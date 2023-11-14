@@ -7,11 +7,11 @@ namespace LevelEditor
 {
     public class ItemTransformPanelShowState : AdditiveState
 {
-    private ObservableList<ItemData> TargetItems => m_information.TargetItems;
+    private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
 
-    private List<GameObject> TargetObjs => m_information.TargetObjs;
+    private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
 
-    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
 
     private ItemTransformPanel GetItemTransformPanel => m_information.GetUI.GetItemTransformPanel;
 

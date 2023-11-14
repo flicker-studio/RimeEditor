@@ -15,13 +15,13 @@ namespace LevelEditor
 
     private Transform GetCameraTransform => Camera.main.transform;
 
-    private float GetCameraMaxZ => m_information.GetCameraProperty.GetCameraMotionProperty.CAMERA_MAX_Z;
+    private float GetCameraMaxZ => m_information.GetCamera.GetProperty.GetCameraMotionProperty.CAMERA_MAX_Z;
 
-    private float GetCameraMinZ => m_information.GetCameraProperty.GetCameraMotionProperty.CAMERA_MIN_Z;
+    private float GetCameraMinZ => m_information.GetCamera.GetProperty.GetCameraMotionProperty.CAMERA_MIN_Z;
 
-    private float GetCameraZChangeSpeed => m_information.GetCameraProperty.GetCameraMotionProperty.CAMERA_Z_CHANGE_SPEED;
+    private float GetCameraZChangeSpeed => m_information.GetCamera.GetProperty.GetCameraMotionProperty.CAMERA_Z_CHANGE_SPEED;
 
-    private Vector3 GetMouseWorldPoint => m_information.GetMouseWorldPoint;
+    private Vector3 GetMouseWorldPoint => m_information.GetCamera.GetMouseWorldPoint;
 
     private Vector3 m_originMousePosition;
 

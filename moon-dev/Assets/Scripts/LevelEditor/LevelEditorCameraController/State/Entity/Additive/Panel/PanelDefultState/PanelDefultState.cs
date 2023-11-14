@@ -4,7 +4,7 @@ using LevelEditor;
 
 public class PanelDefultState : AdditiveState
 {
-    private ObservableList<ItemData> TargetItems => m_information.TargetItems;
+    private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
     
     public PanelDefultState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {

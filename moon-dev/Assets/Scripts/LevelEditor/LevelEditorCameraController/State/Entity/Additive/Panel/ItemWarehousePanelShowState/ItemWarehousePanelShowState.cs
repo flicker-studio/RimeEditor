@@ -19,11 +19,11 @@ namespace LevelEditor
 
         private Transform GetItemDetailGroupContent => GetItemWarehousePanel.GetItemDetailGroupContent;
         
-        private GameObject GetItemDtailGroup => m_information.GetItemDetailGroup;
+        private GameObject GetItemDtailGroup => m_information.GetPrefab.GetItemDetailGroup;
 
-        private GameObject GetItemLattice => m_information.GetItemLattice;
+        private GameObject GetItemLattice => m_information.GetPrefab.GetItemLattice;
 
-        private GameObject GetItemType => m_information.GetItemType;
+        private GameObject GetItemType => m_information.GetPrefab.GetItemType;
 
         private TextMeshProUGUI GetSelectPromptText => GetItemWarehousePanel.GetSelectPromptText;
         
@@ -57,13 +57,13 @@ namespace LevelEditor
         
         private string GetItemTypeTextName => GetItemWarehousePanel.GetItemTypeTextName;
         
-        private ObservableList<ItemData> ItemAssets => m_information.ItemAssets;
+        private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
         
-        private ObservableList<ItemData> TargetAssets => m_information.TargetItems;
+        private ObservableList<ItemData> TargetAssets => m_information.GetData.TargetItems;
 
-        private OutlinePainter GetOutlinePainter => m_information.GetOutlinePainter;
+        private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
 
-        private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
 
         private static ItemProduct m_currentChoose;
 

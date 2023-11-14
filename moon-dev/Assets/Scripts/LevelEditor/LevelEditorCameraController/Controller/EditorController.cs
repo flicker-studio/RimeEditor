@@ -9,15 +9,15 @@ namespace LevelEditor
 
         private Information m_information;
 
-        public EditorController(RectTransform levelEditorTransform,CommandExcute levelEditorCommandExcute)
+        public EditorController(RectTransform levelEditorTransform,CommandSet commandSet)
         {
-            ControllerInit(levelEditorTransform,levelEditorCommandExcute);
+            ControllerInit(levelEditorTransform,commandSet);
             MotionInit();
         }
     
-        void ControllerInit(RectTransform levelEditorTransform,CommandExcute levelEditorCommandExcute)
+        void ControllerInit(RectTransform levelEditorTransform,CommandSet commandSet)
         {
-            m_information = new Information(levelEditorTransform,levelEditorCommandExcute);
+            m_information = new Information(levelEditorTransform,commandSet);
             m_motionController = new MotionController(m_information);
         }
     

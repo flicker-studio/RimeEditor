@@ -18,20 +18,20 @@ namespace LevelEditor
     
         private POSITIONDRAGTYPE m_positionDragType;
     
-        private ObservableList<ItemData> TargetItems => m_information.TargetItems;
+        private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
 
-        private List<GameObject> TargetObjs => m_information.TargetObjs;
+        private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
         
-        private Vector3 GetMouseWorldPoint => m_information.GetMouseWorldPoint;
+        private Vector3 GetMouseWorldPoint => m_information.GetCamera.GetMouseWorldPoint;
     
-        private Vector2 GetMousePosition => m_information.GetMousePosition;
+        private Vector2 GetMousePosition => m_information.GetCamera.GetMousePosition;
 
         private Vector2 GetMouseCursorCompensation => m_information.GetUI.GetControlHandlePanel
             .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
     
         private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
     
-        private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
     
         private Vector3 m_originMouseWorldPosition;
     

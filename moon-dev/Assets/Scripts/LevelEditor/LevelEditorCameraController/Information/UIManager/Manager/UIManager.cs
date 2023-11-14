@@ -29,8 +29,9 @@ namespace LevelEditor
 
         private AreaPanel m_areaPanel;
 
-        public UIManager(RectTransform levelEditorCanvasRect, UIProperty uiProperty)
+        public UIManager(RectTransform levelEditorCanvasRect)
         {
+            UIProperty uiProperty = Resources.Load<UIProperty>("GlobalSettings/LevelEditorUIProperty");
             m_actionPanel = new ActionPanel(levelEditorCanvasRect, uiProperty);
             m_controlHandlePanel = new ControlHandlePanel(levelEditorCanvasRect, uiProperty);
             m_itemTransformPanel = new ItemTransformPanel(levelEditorCanvasRect, uiProperty);

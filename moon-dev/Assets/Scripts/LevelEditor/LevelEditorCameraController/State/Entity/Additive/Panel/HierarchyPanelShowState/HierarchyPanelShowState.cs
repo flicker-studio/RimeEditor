@@ -11,13 +11,13 @@ public class HierarchyPanelShowState : AdditiveState
 
     private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
 
-    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
 
-    private ObservableList<ItemData> TargetItems => m_information.TargetItems;
+    private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
 
-    private ObservableList<ItemData> ItemAssets => m_information.ItemAssets;
+    private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
 
-    private OutlinePainter GetOutlinePainter => m_information.GetOutlinePainter;
+    private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
 
     private Button GetAddButton => GetHierarchyPanel.GetAddButton;
 

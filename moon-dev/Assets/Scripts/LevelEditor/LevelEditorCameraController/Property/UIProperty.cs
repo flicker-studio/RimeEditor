@@ -34,8 +34,6 @@ namespace LevelEditor
             public SelectionProperty GetSelectionProperty{ get; private set; }
             [field:SerializeField,Header("旋转轴属性")] 
             public RotationDragProperty GetRotationDragProperty{ get; private set; }
-            [field:SerializeField,Header("描边属性")]
-            public OutlineProperty GetOutlineProperty{ get; private set; }
             
             [field:SerializeField,Header("鼠标光标属性")]
             public MouseCursorProperty GetMouseCursorProperty { get; private set; }
@@ -96,16 +94,6 @@ namespace LevelEditor
             public float ROTATION_SPEED { get; private set; }
         }
         
-        [Serializable]
-        public struct OutlineProperty
-        {
-            [field:SerializeField,CustomLabel("描边模式")]
-            public OUTLINEMODE OUTLINE_MODE{ get; private set; }
-            [field:SerializeField,CustomLabel("描边颜色")]
-            public Color OUTLINE_COLOR{ get; private set; }
-            [field:SerializeField,CustomLabel("描边线宽")]
-            public float OUTLINE_WIDTH{ get; private set; }
-        }
         [Serializable]
         public struct MouseCursorProperty
         {

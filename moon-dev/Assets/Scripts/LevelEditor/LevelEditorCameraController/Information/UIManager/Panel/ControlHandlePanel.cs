@@ -36,8 +36,6 @@ namespace LevelEditor
         public UIProperty.SelectionProperty GetSelectionProperty => m_property.GetSelectionProperty;
     
         public UIProperty.RotationDragProperty GetRotationDragProperty => m_property.GetRotationDragProperty;
-    
-        public UIProperty.OutlineProperty GetOutlineProperty => m_property.GetOutlineProperty;
 
         public UIProperty.MouseCursorProperty GetMouseCursorProperty => m_property.GetMouseCursorProperty;
     
