@@ -11,7 +11,7 @@ namespace LevelEditor
 
         private Transform GetTransform => Camera.main.transform;
 
-        private Vector3 MouseWorldPoint => m_information.GetMouseWorldPoint;
+        private Vector3 MouseWorldPoint => m_information.GetCamera.GetMouseWorldPoint;
     
         public CameraMoveState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {

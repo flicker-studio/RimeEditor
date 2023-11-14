@@ -9,6 +9,8 @@ namespace LevelEditor
     {
         [Header("相机运动属性")]
         public CameraMotionProperty GetCameraMotionProperty;
+        [Header("描边属性")]
+        public OutlineProperty GetOutlineProperty;
     
         [Serializable]
         public struct CameraMotionProperty
@@ -19,6 +21,17 @@ namespace LevelEditor
             public float CAMERA_MIN_Z;
             [CustomLabel("编辑器相机Z方向最大距离"),Range(-100,100)]
             public float CAMERA_MAX_Z;
+        }
+        
+        [Serializable]
+        public struct OutlineProperty
+        {
+            [field:SerializeField,CustomLabel("描边模式")]
+            public OUTLINEMODE OUTLINE_MODE{ get; private set; }
+            [field:SerializeField,CustomLabel("描边颜色")]
+            public Color OUTLINE_COLOR{ get; private set; }
+            [field:SerializeField,CustomLabel("描边线宽")]
+            public float OUTLINE_WIDTH{ get; private set; }
         }
     }
 }

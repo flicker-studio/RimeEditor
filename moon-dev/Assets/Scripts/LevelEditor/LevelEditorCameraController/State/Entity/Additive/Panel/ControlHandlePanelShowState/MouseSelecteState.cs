@@ -16,12 +16,7 @@ namespace LevelEditor
     private Image GetSelectionImage => m_information.GetUI.GetControlHandlePanel.GetSelectionImage;
     private Transform GetCameraTransform => Camera.main.transform;
 
-    private OutlinePainter GetOutlinePainter => m_information.GetOutlinePainter;
-    private OUTLINEMODE GetOutlineMode => m_information.GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_MODE;
-
-    private Color GetOutlineColor => m_information.GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_COLOR;
-
-    private float GetOutlineWidth => m_information.GetUI.GetControlHandlePanel.GetOutlineProperty.OUTLINE_WIDTH;
+    private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
 
     private Vector2 GetSelectionMinSize => m_information.GetUI.GetControlHandlePanel.GetSelectionProperty.SELECTION_MIN_SIZE;
 
@@ -36,17 +31,17 @@ namespace LevelEditor
     private GameObject m_emptyObj;
 
     private BoxCollider2D m_selectCollider;
-    private Vector3 GetMousePosition => m_information.GetMousePosition
+    private Vector3 GetMousePosition => m_information.GetCamera.GetMousePosition
         .NewX(Mathf.Clamp(Mouse.current.position.ReadValue().x, 0, Screen.width))
         .NewY(Mathf.Clamp(Mouse.current.position.ReadValue().y, 0, Screen.height));
 
-    private ObservableList<ItemData> TargetList => m_information.TargetItems;
+    private ObservableList<ItemData> TargetList => m_information.GetData.TargetItems;
 
     private List<Collider2D> m_selectList = new List<Collider2D>();
 
-    private ObservableList<ItemData> ItemAssets => m_information.ItemAssets;
+    private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
 
-    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
     
     private Vector2 m_originMousePositon;
 
@@ -119,7 +114,7 @@ namespace LevelEditor
     {
         GetSelectionImage.color = GetSelectionColor;
         m_originMousePositon = GetMousePosition;
-        m_emptyObj = ObjectPool.Instance.OnTake(m_information.GetEmptyGameObject);
+        m_emptyObj = ObjectPool.Instance.OnTake(m_information.GetPrefab.GetEmptyGameObject);
         m_selectCollider = m_emptyObj.GetComponent<BoxCollider2D>() == null
             ? m_emptyObj.AddComponent<BoxCollider2D>()
             : m_emptyObj.GetComponent<BoxCollider2D>();

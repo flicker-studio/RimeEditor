@@ -19,11 +19,11 @@ namespace LevelEditor
 
         private Transform GetItemDetailGroupContent => GetItemWarehousePanel.GetItemDetailGroupContent;
         
-        private GameObject GetItemDtailGroup => m_information.GetItemDetailGroup;
+        private GameObject GetItemDtailGroup => m_information.GetPrefab.GetItemDetailGroup;
 
-        private GameObject GetItemLattice => m_information.GetItemLattice;
+        private GameObject GetItemLattice => m_information.GetPrefab.GetItemLattice;
 
-        private GameObject GetItemType => m_information.GetItemType;
+        private GameObject GetItemType => m_information.GetPrefab.GetItemType;
 
         private TextMeshProUGUI GetSelectPromptText => GetItemWarehousePanel.GetSelectPromptText;
         
@@ -57,13 +57,13 @@ namespace LevelEditor
         
         private string GetItemTypeTextName => GetItemWarehousePanel.GetItemTypeTextName;
         
-        private ObservableList<ItemData> ItemAssets => m_information.ItemAssets;
+        private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
         
-        private ObservableList<ItemData> TargetAssets => m_information.TargetItems;
+        private ObservableList<ItemData> TargetAssets => m_information.GetData.TargetItems;
 
-        private OutlinePainter GetOutlinePainter => m_information.GetOutlinePainter;
+        private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
 
-        private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
 
         private static ItemProduct m_currentChoose;
 
@@ -91,7 +91,6 @@ namespace LevelEditor
             LoadItemsFromPoject();
             LoadItemWarehouseFromItems();
             InitListener();
-            ResetState();
             SetPanelActive(true);
         }
 
@@ -107,20 +106,20 @@ namespace LevelEditor
             GetCreateButton.onClick.AddListener(() =>
             {
                 CreateNewItem();
-                RemoveState();
+                ClosePanel();
                 return;
             });
 
             GetCloseButton.onClick.AddListener(() =>
             {
-                RemoveState();
+                ClosePanel();
                 return;
             });
             
             GetClearSearchButton.onClick.AddListener(() =>
             {
                 ClearSearchInput();
-                ResetSearchPanel();
+                ResetSearchPanelState();
             });
             
             GetSearchField.onSubmit.AddListener((value) =>
@@ -128,11 +127,11 @@ namespace LevelEditor
                 if (value == "")
                 {
                     ClearSearchInput();
-                    ResetSearchPanel();
+                    ResetSearchPanelState();
                 }
                 else
                 {
-                    ResetSearchPanel();
+                    ResetSearchPanelState();
                     SearchItem(value);
                 }
             });
@@ -145,45 +144,47 @@ namespace LevelEditor
         
         protected override void RemoveState()
         {
+            ResetState();
             RemoveListener();
             base.RemoveState();
             SetPanelActive(false);
         }
 
+        private void ClosePanel()
+        {
+            ClearSearchInput();
+            RemoveState();
+        }
+        
         private void ResetState()
         {
-            ResetText();
-            ResetSearchPanel();
-            ResetButton();
+            ResetTextState();
+            ResetSearchPanelState();
+            ResetButtonState();
             m_isInit = false;
         }
         
-
-        private void ResetText()
+        private void ResetTextState()
         {
             GetSelectPromptText.text = "";
-            GetScrollbar.value = 1f;
         }
         
-        private void ResetSearchPanel()
+        private void ResetSearchPanelState()
         {
-            if(m_searchItemGroupObj != null)
+            if(m_searchItemGroupObj == null || !m_searchItemGroupObj.activeInHierarchy) return;
+            
+            m_searchItemGroupObj.SetActive(false);
+            
+            m_searchItemTypeButton.SetActive(false);
+            
+            foreach (var itemGroupObj in m_itemGroupObjList)
             {
-                m_searchItemGroupObj.SetActive(false);
+                itemGroupObj.SetActive(true);
             }
+            
+            m_itemTypeList[0].Invoke();
 
-            if (m_searchItemTypeButton != null)
-            {
-                m_searchItemTypeButton.SetActive(false);
-            }
-
-            if (m_itemGroupObjList != null)
-            {
-                foreach (var itemGroupObj in m_itemGroupObjList)
-                {
-                    itemGroupObj.SetActive(true);
-                }
-            }
+            GetScrollbar.value = 1f;
             
             GetNothingFindText.gameObject.SetActive(false);
         }
@@ -193,7 +194,7 @@ namespace LevelEditor
             GetSearchField.text = "";
         }
 
-        private void ResetButton()
+        private void ResetButtonState()
         {
             if (m_itemProductButtonList != null)
             {
@@ -201,11 +202,6 @@ namespace LevelEditor
                 {
                     itemProductObj.IsSelected = false;
                 }
-            }
-
-            if (m_itemTypeList != null && m_itemTypeList.Count > 0)
-            {
-                m_itemTypeList[0].Invoke();
             }
         }
 
@@ -218,8 +214,6 @@ namespace LevelEditor
         private void RemoveListener()
         {
             m_currentChoose = null;
-            
-            GetScrollbar.value = 1f;
             
             GetCreateButton.onClick.RemoveAllListeners();
 

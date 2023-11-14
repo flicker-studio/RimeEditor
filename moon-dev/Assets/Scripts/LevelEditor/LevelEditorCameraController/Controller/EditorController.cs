@@ -9,25 +9,22 @@ namespace LevelEditor
 
         private Information m_information;
 
-        public EditorController(RectTransform levelEditorTransform,CommandExcute levelEditorCommandExcute)
+        public EditorController(RectTransform levelEditorTransform,CommandSet commandSet)
         {
-            ControllerInit(levelEditorTransform,levelEditorCommandExcute);
+            ControllerInit(levelEditorTransform,commandSet);
             MotionInit();
         }
     
-        void ControllerInit(RectTransform levelEditorTransform,CommandExcute levelEditorCommandExcute)
+        void ControllerInit(RectTransform levelEditorTransform,CommandSet commandSet)
         {
-            m_information = new Information(levelEditorTransform,levelEditorCommandExcute);
+            m_information = new Information(levelEditorTransform,commandSet);
             m_motionController = new MotionController(m_information);
         }
     
         private void MotionInit()
         {
             m_motionController.ChangeMotionState(typeof(CameraDefultState));
-            m_motionController.ChangeMotionState(typeof(ItemTransformPanelShowState));
-            m_motionController.ChangeMotionState(typeof(ActionPanelShowState));
-            m_motionController.ChangeMotionState(typeof(ControlHandlePanelShowState));
-            m_motionController.ChangeMotionState(typeof(HierarchyPanelShowState));
+            m_motionController.ChangeMotionState(typeof(PanelDefultState));
         }
     
         public void LateUpdate()

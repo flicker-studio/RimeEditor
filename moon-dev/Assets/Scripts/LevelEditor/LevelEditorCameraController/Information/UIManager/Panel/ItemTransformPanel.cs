@@ -12,6 +12,8 @@ namespace LevelEditor
         public Vector3 GetRotation => m_rotationInputFieldVector3.GetVector3;
     
         public Vector3 GetScale => m_scaleInputFieldVector3.GetVector3;
+
+        public GameObject GetPanelObj => m_transformPanelObj;
         
         public (string,string,string) GetPositionField => m_positionInputFieldVector3.GetVector3Field;
     
@@ -53,6 +55,8 @@ namespace LevelEditor
                                    m_scaleInputFieldVector3.OnSelect;
         
         private Button m_editButton;
+
+        private GameObject m_transformPanelObj;
     
         private InputFieldVector3 m_positionInputFieldVector3;
         
@@ -69,6 +73,7 @@ namespace LevelEditor
         {
             UIProperty.ItemTransformPanelUIName property = levelEditorUIProperty.GetItemTransformPanelUI.GetItemTransformPanelUIName;
             m_editButton = levelEditorCanvasRect.FindPath(property.EDIT_BUTTON).GetComponent<Button>();
+            m_transformPanelObj = levelEditorCanvasRect.FindPath(property.ROOT_PANEL).gameObject;
             m_positionInputFieldVector3 = new InputFieldVector3(
                 levelEditorCanvasRect.FindPath(property.POSITION_INPUT_X).GetComponent<TMP_InputField>(),
                 levelEditorCanvasRect.FindPath(property.POSITION_INPUT_Y).GetComponent<TMP_InputField>(),

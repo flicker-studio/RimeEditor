@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Frame.StateMachine;
@@ -12,13 +11,13 @@ public class HierarchyPanelShowState : AdditiveState
 
     private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
 
-    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
 
-    private ObservableList<ItemData> TargetItems => m_information.TargetItems;
+    private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
 
-    private ObservableList<ItemData> ItemAssets => m_information.ItemAssets;
+    private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
 
-    private OutlinePainter GetOutlinePainter => m_information.GetOutlinePainter;
+    private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
 
     private Button GetAddButton => GetHierarchyPanel.GetAddButton;
 
@@ -69,12 +68,12 @@ public class HierarchyPanelShowState : AdditiveState
     private void InitEvent()
     {
         ItemAssets.OnAdd += CreateNode;
-        ItemAssets.OnAdd += SynchronousNodePanel;
+        ItemAssets.OnAdd += SyncNodePanel;
         ItemAssets.OnAddRange += CreateNode;
         ItemAssets.OnRemove += DeleteNode;
-        ItemAssets.OnRemove += SynchronousNodePanel;
+        ItemAssets.OnRemove += SyncNodePanel;
         ItemAssets.OnRemoveAll += DeleteNode;
-        TargetItems.OnAddRange += SynchronousNodePanel;
+        TargetItems.OnAddRange += SyncNodePanel;
     }
 
     private void CreateNode(List<ItemData> targetItems)
@@ -180,17 +179,17 @@ public class HierarchyPanelShowState : AdditiveState
         return itemNodeChild;
     }
     
-    private void SynchronousNodePanel(List<ItemData> itemData)
+    private void SyncNodePanel(List<ItemData> itemData)
     {
-        SynchronousNodePanel();
+        SyncNodePanel();
     }
 
-    private void SynchronousNodePanel(ItemData itemData)
+    private void SyncNodePanel(ItemData itemData)
     {
-        SynchronousNodePanel();
+        SyncNodePanel();
     }
     
-    private void SynchronousNodePanel()
+    private void SyncNodePanel()
     {
         m_selectTargetItem.Clear();
         m_selectTargetItem.AddRange(TargetItems);
@@ -217,7 +216,7 @@ public class HierarchyPanelShowState : AdditiveState
     {
         if (GetShiftInput)
         {
-            SelectAddItem(selectNode);
+            SelectMultiItem(selectNode);
             return;
         }
         if(GetCtrlInput)
@@ -225,12 +224,12 @@ public class HierarchyPanelShowState : AdditiveState
             SelectOppositeItem(selectNode);
             return;
         }
-        SelectOneItem(selectNode);
+        SelectSingleItem(selectNode);
     }
 
-    private void SelectOneItem(ItemNode selectNode)
+    private void SelectSingleItem(ItemNode selectNode)
     {
-        if(selectNode.IsSelected) return;
+        if(selectNode.IsSelected && m_selectTargetItem.Count == 1) return;
         
         m_selectTargetItem.Clear();
         
@@ -240,6 +239,42 @@ public class HierarchyPanelShowState : AdditiveState
         }
 
         SelectAddItem(selectNode);
+    }
+
+    private void SelectMultiItem(ItemNode selecteNode)
+    {
+        if (m_selectTargetItem.Count == 0)
+        {
+            SelectAddItem(selecteNode);
+            return;
+        }
+
+        int startSelect = selecteNode.ItemNodeTransform.GetSiblingIndex();
+
+        int endSelect = startSelect;
+        
+        ItemData lastSelectData = m_selectTargetItem.Last();
+
+        foreach (var itemNodeProperty in m_itemNodeProperties)
+        {
+            if (itemNodeProperty is ItemNodeChild lastSelectNode && lastSelectNode.ItemData == lastSelectData)
+            {
+                endSelect = lastSelectNode.ItemNodeTransform.GetSiblingIndex();
+                break;
+            }
+        }
+        
+        int lower = Mathf.Min(startSelect, endSelect);
+        int upper = Mathf.Max(startSelect, endSelect);
+        
+        foreach (var itemNodeProperty in m_itemNodeProperties)
+        {
+            if (itemNodeProperty is ItemNodeChild child && child.ItemNodeTransform.GetSiblingIndex() >= lower
+                && child.ItemNodeTransform.GetSiblingIndex() <= upper)
+            {
+                SelectAddItem(child);
+            }
+        }
     }
 
     private void SelectAddItem(ItemNode selectNode)

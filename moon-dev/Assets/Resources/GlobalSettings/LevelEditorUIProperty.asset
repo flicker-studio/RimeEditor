@@ -42,6 +42,7 @@ MonoBehaviour:
       <RECT_BUTTON>k__BackingField: TopPanel/ActionPanel/RectButton
   <GetItemTransformPanelUI>k__BackingField:
     <GetItemTransformPanelUIName>k__BackingField:
+      <ROOT_PANEL>k__BackingField: RightPanel/ItemTransformPanel
       <EDIT_BUTTON>k__BackingField: RightPanel/ItemTransformPanel/EditButton
       <POSITION_INPUT_X>k__BackingField: RightPanel/ItemTransformPanel/Position/PositionInputX/InputField
       <POSITION_INPUT_Y>k__BackingField: RightPanel/ItemTransformPanel/Position/PositionInputY/InputField
@@ -85,3 +86,12 @@ MonoBehaviour:
       <ITEM_LATTICE_TEXT>k__BackingField: Text
     <GetItemWarehouseProperty>k__BackingField:
       <ITEM_ROOT_PATH>k__BackingField: Items\ScriptableObject
+  <GetAreaPanelUI>k__BackingField:
+    <GetAreaPanelUIName>k__BackingField:
+      <DESCRIBE_TEST>k__BackingField: LeftPanel/AreaPanel/DescribeText
+      <AREA_DROP_DOWN>k__BackingField: LeftPanel/AreaPanel/AreaDropdown
+      <ADD_BUTTON>k__BackingField: LeftPanel/AreaPanel/AddButton
+      <DELETE_BUTTON>k__BackingField: LeftPanel/AreaPanel/DeleteButton
+      <MANAGE_BUTTON>k__BackingField: LeftPanel/AreaPanel/ManageButton
+      <AREA_SETTING_BUTTON>k__BackingField: LeftPanel/AreaPanel/AreaSettingButton
+      <ENVIRONMENT_SETTING_BUTTON>k__BackingField: LeftPanel/AreaPanel/EnvironmentSettingButton

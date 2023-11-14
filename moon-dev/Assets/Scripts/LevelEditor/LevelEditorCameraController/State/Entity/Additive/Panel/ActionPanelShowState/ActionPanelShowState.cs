@@ -4,7 +4,11 @@ namespace LevelEditor
 {
     public class ActionPanelShowState : AdditiveState
     {
-        private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+
+        private UndoExcute GetUndo => m_information.GetCommandSet.GetUndo;
+        
+        private RedoExcute GetRedo => m_information.GetCommandSet.GetRedo;
 
         private ControlHandleAction GetControlHandleAction => m_information.GetUI.GetControlHandlePanel.GetControlHandleAction;
 
@@ -38,6 +42,12 @@ namespace LevelEditor
             }else if (GetViewButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ViewButton));
+            }else if (GetUndoButtonDown)
+            {
+                GetUndo?.Invoke();
+            }else if (GetRedoButtonDown)
+            {
+                GetRedo?.Invoke();
             }
         }
     

@@ -2,12 +2,18 @@ using System.Collections.Generic;
 
 namespace LevelEditor
 {
-    public delegate void CommandExcute(Command command);
     public class CommandManager
     {
         private Stack<Command> m_undoCommands = new Stack<Command>();
 
         private Stack<Command> m_redoCommands = new Stack<Command>();
+
+        public CommandSet CommandSet { get; private set; }
+
+        public CommandManager()
+        {
+            CommandSet = new CommandSet(Excute, Undo, Redo);
+        }
         
         public void Excute(Command command)
         {

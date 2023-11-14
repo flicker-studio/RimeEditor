@@ -1,18 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using Frame.StateMachine;
-using Frame.Tool;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace LevelEditor
 {
     public class ItemTransformPanelShowState : AdditiveState
 {
-    private ObservableList<ItemData> TargetItems => m_information.TargetItems;
+    private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
 
-    private List<GameObject> TargetObjs => m_information.TargetObjs;
+    private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
 
-    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
 
     private ItemTransformPanel GetItemTransformPanel => m_information.GetUI.GetItemTransformPanel;
 
@@ -30,7 +29,7 @@ namespace LevelEditor
     
     public ItemTransformPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
-        // EventCenterManager.Instance.AddEventListener(GameEvent.UNDO_AND_REDO,SetFieldUIValue);
+        InitState();
     }
 
     public override void Motion(BaseInformation information)
@@ -39,6 +38,17 @@ namespace LevelEditor
         CheckRotationChange();
         CheckScaleChange();
         ShowTransformPanel();
+    }
+    
+    private void InitState()
+    {
+        GetItemTransformPanel.GetPanelObj.SetActive(true);
+    }
+
+    protected override void RemoveState()
+    {
+        base.RemoveState();
+        GetItemTransformPanel.GetPanelObj.SetActive(false);
     }
 
     private void CheckPositionChange()
@@ -106,7 +116,11 @@ namespace LevelEditor
 
     private void ShowTransformPanel()
     {
-        if (TargetObjs.Count == 0) return;
+        if (TargetObjs.Count == 0)
+        {
+            RemoveState();
+            return;
+        }
         if (GetItemTransformPanel.GetOnSelect)
         {
             SetItemValue();

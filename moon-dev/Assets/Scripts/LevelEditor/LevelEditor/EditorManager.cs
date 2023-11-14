@@ -7,10 +7,12 @@ namespace LevelEditor
     {
         private EditorController m_editorController;
         private CommandManager m_commandManager;
+        private CommandSet m_commandSet;
+        
         void Start()
         {
             m_commandManager = new CommandManager();
-            m_editorController = new EditorController(transform as RectTransform,m_commandManager.Excute);
+            m_editorController = new EditorController(transform as RectTransform,m_commandManager.CommandSet);
         
         }
     

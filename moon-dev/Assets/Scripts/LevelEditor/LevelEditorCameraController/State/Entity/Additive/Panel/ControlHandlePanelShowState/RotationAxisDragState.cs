@@ -9,20 +9,20 @@ namespace LevelEditor
 {
 public class RotationAxisDragState : AdditiveState
 {
-    private ObservableList<ItemData> TagetItems => m_information.TargetItems;
+    private ObservableList<ItemData> TagetItems => m_information.GetData.TargetItems;
 
-    private List<GameObject> TargetObjs => m_information.TargetObjs;
+    private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
     
     private RectTransform GetRotationAxisRectTransform => m_information.GetUI.GetControlHandlePanel.GetRotationRect;
     
     private Vector2 GetMouseCursorCompensation => m_information.GetUI.GetControlHandlePanel
         .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
     
-    private Vector3 GetMousePosition => m_information.GetMousePosition;
+    private Vector3 GetMousePosition => m_information.GetCamera.GetMousePosition;
 
     private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
     
-    private CommandExcute GetExcute => m_information.GetLevelEditorCommandExcute;
+    private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
     
     private Vector3 m_originMousePosition;
 

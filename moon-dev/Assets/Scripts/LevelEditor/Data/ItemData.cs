@@ -10,10 +10,6 @@ namespace LevelEditor
         public GameObject GetItemObj => m_itemObj;
 
         public ItemProduct GetItemProduct => m_itemProduct;
-        
-        public bool CanBeCopy;
-
-        public bool CanBePush;
 
         private Quaternion m_rotation;
 
