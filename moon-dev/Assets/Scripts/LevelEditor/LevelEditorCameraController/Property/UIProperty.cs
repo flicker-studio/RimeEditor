@@ -7,6 +7,8 @@ namespace LevelEditor
     [CreateAssetMenu(menuName = "CustomProperty/LevelEditorUIProperty",order = 4,fileName = "LevelEditorUIProperty")]
     public class UIProperty : ScriptableObject
     {
+        [field:SerializeField,Header("关卡面板属性")] 
+        public LevelPanelUI GetLevelPanelUI { get; private set; }
         [field:SerializeField,Header("控制柄面板属性")] 
         public ControlHandleUI GetControlHandleUI { get; private set; }
     
@@ -24,6 +26,14 @@ namespace LevelEditor
         
         [field:SerializeField,Header("区域面板属性")]
         public AreaPanelUI GetAreaPanelUI { get; private set; }
+        
+                
+        [Serializable]
+        public struct LevelPanelUI
+        {
+            [field:SerializeField,Header("关卡面板UI名字")]
+            public LevelPanelUIName GetLevelPanelUIName{ get; private set; }
+        }
         
         [Serializable]
         public struct ControlHandleUI
@@ -99,6 +109,18 @@ namespace LevelEditor
         {
             [field:SerializeField,CustomLabel("鼠标光标边界检测距离补偿")]
             public Vector2 CURSOR_BOUND_CHECK_COMPENSATION { get; private set; }
+        }
+        [Serializable]
+        public struct LevelPanelUIName
+        {
+            [field: SerializeField, CustomLabel("关卡全局名字")]
+            public string LEVEL_NAME{ get; private set; }
+            [field: SerializeField, CustomLabel("保存按钮名字")]
+            public string SAVE_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("释放按钮名字")]
+            public string RELEASE_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("运行按钮名字")]
+            public string PLAY_BUTTON{ get; private set; }
         }
         
         [Serializable]

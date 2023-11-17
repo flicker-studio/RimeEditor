@@ -368,7 +368,7 @@ namespace LevelEditor
 
         private ItemTypeButton CreateItemType(string itemTypeName)
         {
-            ItemTypeButton itemTypeButton = new ItemTypeButton(GetItemType, ItemTypeSelectEvent, GetItemTypeGroup,GetScrollView, GetItemTypeTextName);
+            ItemTypeButton itemTypeButton = new ItemTypeButton(GetItemType, ItemTypeSelectEvent, GetItemTypeGroup,null, GetItemTypeTextName);
             itemTypeButton.GetText.text = itemTypeName;
             return itemTypeButton;
         }

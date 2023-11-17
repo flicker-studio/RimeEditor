@@ -29,7 +29,7 @@ namespace LevelEditor
             {
                 if(CheckStates.Contains(typeof(CameraMoveState))) return;
                 GameObject pointerUIObj = GetTopUIObjectUnderMouse();
-                if(pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROLHANDLE)) return;
+                if(pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROL_HANDLE)) return;
                 ChangeMotionState(typeof(CameraMoveState));
             }
 
@@ -37,7 +37,7 @@ namespace LevelEditor
             {
                 if(CheckStates.Contains(typeof(CameraChangeZState))) return;
                 GameObject pointerUIObj = GetTopUIObjectUnderMouse();
-                if(pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROLHANDLE)) return;
+                if(pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROL_HANDLE)) return;
                 ChangeMotionState(typeof(CameraChangeZState));
             }
         }

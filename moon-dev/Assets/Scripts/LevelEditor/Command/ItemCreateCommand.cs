@@ -27,7 +27,7 @@ namespace LevelEditor
         {
             if (m_itemData == null)
             {
-                m_itemData = new ItemData(m_itemProduct);
+                m_itemData = new PlatformData(m_itemProduct);
             }
             else
             {

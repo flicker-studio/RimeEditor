@@ -18,6 +18,14 @@ namespace LevelEditor
         public int GetCurrentIndex => m_index;
 
         public SyncLevelData SyncLevelData;
+
+        public void SetItemDatasActive(bool value)
+        {
+            foreach (var itemAsset in ItemAssets)
+            {
+                itemAsset.SetActive(value);
+            }
+        }
         
         public LevelData AddLevel()
         {

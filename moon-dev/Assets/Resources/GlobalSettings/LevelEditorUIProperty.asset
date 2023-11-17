@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20986d441bbf9f742a52a98133d4ffa2, type: 3}
   m_Name: LevelEditorUIProperty
   m_EditorClassIdentifier: 
+  <GetLevelPanelUI>k__BackingField:
+    <GetLevelPanelUIName>k__BackingField:
+      <LEVEL_NAME>k__BackingField: LeftPanel/LevelPanel/DescribeText
+      <SAVE_BUTTON>k__BackingField: LeftPanel/LevelPanel/SaveButton
+      <RELEASE_BUTTON>k__BackingField: LeftPanel/LevelPanel/ReleaseButton
+      <PLAY_BUTTON>k__BackingField: LeftPanel/LevelPanel/PlayButton
   <GetControlHandleUI>k__BackingField:
     <GetControlHandleUIName>k__BackingField:
       <SELECTION_UI_NAME>k__BackingField: ControlHandlePanel/SelectionUI
@@ -25,10 +31,6 @@ MonoBehaviour:
       <SELECTION_COLOR>k__BackingField: {r: 0, g: 0.8638129, b: 1, a: 0.3019608}
     <GetRotationDragProperty>k__BackingField:
       <ROTATION_SPEED>k__BackingField: 0.25
-    <GetOutlineProperty>k__BackingField:
-      <OUTLINE_MODE>k__BackingField: 0
-      <OUTLINE_COLOR>k__BackingField: {r: 1, g: 0.87176263, b: 0, a: 1}
-      <OUTLINE_WIDTH>k__BackingField: 7.5
     <GetMouseCursorProperty>k__BackingField:
       <CURSOR_BOUND_CHECK_COMPENSATION>k__BackingField: {x: 5, y: 5}
   <GetActionPanelUI>k__BackingField:

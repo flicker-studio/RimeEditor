@@ -50,7 +50,7 @@ namespace Frame.Static.Extensions
             {
                 GameObject parentObj;
                 if (colliderList.Count == 1 &&
-                    colliderList[0].gameObject.name.Contains(GlobalSetting.ObjNameTag.rigidbodyTag))
+                    colliderList[0].gameObject.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG))
                 {
                     parentObj = ObjectPool.Instance.OnTake(GetRigidbodyParentPrefab);
                 }
@@ -114,7 +114,7 @@ namespace Frame.Static.Extensions
     private static bool CheckRigidbody(this Collider2D collider)
     {
         return ObjectPool.Instance.CompareObj(collider.gameObject,GetSlicerObj) ||
-               collider.name.Contains(GlobalSetting.ObjNameTag.rigidbodyTag);
+               collider.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG);
     }
 }
 }
