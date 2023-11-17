@@ -1,5 +1,9 @@
+using System.Collections.Generic;
 using Frame.StateMachine;
+using Frame.Static.Global;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace LevelEditor
 {
@@ -8,8 +12,10 @@ namespace LevelEditor
         private bool GetMouseMiddleButtonDown => m_information.GetInput.GetMouseMiddleButtonDown;
 
         private bool GetMouseSrollDown => m_information.GetInput.GetMouseSrollDown;
+        
         public CameraDefultState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
+            
         }
 
         public override void Motion(BaseInformation information)
@@ -22,16 +28,36 @@ namespace LevelEditor
             if (GetMouseMiddleButtonDown)
             {
                 if(CheckStates.Contains(typeof(CameraMoveState))) return;
-                if(EventSystem.current.IsPointerOverGameObject()) return;
+                GameObject pointerUIObj = GetTopUIObjectUnderMouse();
+                if(pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROL_HANDLE)) return;
                 ChangeMotionState(typeof(CameraMoveState));
             }
 
             if (GetMouseSrollDown)
             {
                 if(CheckStates.Contains(typeof(CameraChangeZState))) return;
-                if(EventSystem.current.IsPointerOverGameObject()) return;
+                GameObject pointerUIObj = GetTopUIObjectUnderMouse();
+                if(pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROL_HANDLE)) return;
                 ChangeMotionState(typeof(CameraChangeZState));
             }
+        }
+        
+        GameObject GetTopUIObjectUnderMouse()
+        {
+            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            {
+                position = Mouse.current.position.ReadValue()
+            };
+
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerData, results);
+        
+            if (results.Count > 0)
+            {
+                return results[0].gameObject;
+            }
+            
+            return null;
         }
     }
 

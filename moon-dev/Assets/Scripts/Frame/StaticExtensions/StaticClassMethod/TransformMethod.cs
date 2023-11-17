@@ -35,6 +35,18 @@ namespace Frame.Static.Extensions
 
             return childTransform;
         }
+        
+        public static (Vector3,Quaternion,Vector3) GetTransformValue(this Transform transform)
+        {
+            return (transform.position, transform.rotation, transform.localScale);
+        }
+
+        public static void SetTransformValue(this Transform transform,Vector3 position,Quaternion rotation,Vector3 scale)
+        {
+            transform.position = position;
+            transform.rotation = rotation;
+            transform.localScale = scale;
+        }
     }
 }
 

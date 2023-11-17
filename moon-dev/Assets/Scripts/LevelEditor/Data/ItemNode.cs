@@ -45,6 +45,8 @@ public abstract class ItemNode
     public Transform ItemNodeTransform { get; private set; }
 
     protected TextMeshProUGUI m_text;
+    
+    protected Button m_arrowButton;
 
     protected EventButton<ItemNode> m_eventButton;
 
@@ -56,6 +58,7 @@ public abstract class ItemNode
         ItemNodeTransform = ObjectPool.Instance.OnTake(itemProduct.ItemNode).transform;
         ItemNodeTransform.SetParent(itemNodeContent);
         m_text = ItemNodeTransform.transform.Find("DescribeText").GetComponent<TextMeshProUGUI>();
+        m_arrowButton = ItemNodeTransform.transform.Find("Arrow").GetComponent<Button>();
         m_eventButton = new EventButton<ItemNode>(this, ItemNodeTransform,onSelect,scrollView);
     }
     

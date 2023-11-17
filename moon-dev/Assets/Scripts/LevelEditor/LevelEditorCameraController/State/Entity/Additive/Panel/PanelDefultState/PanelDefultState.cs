@@ -24,6 +24,7 @@ public class PanelDefultState : AdditiveState
         ChangeMotionState(typeof(ControlHandlePanelShowState));
         ChangeMotionState(typeof(HierarchyPanelShowState));
         ChangeMotionState(typeof(AreaPanelShowState));
+        ChangeMotionState(typeof(LevelPanelShowState));
     }
     
     public override void Motion(BaseInformation information)

@@ -8,8 +8,6 @@ public class ItemNodeParent : ItemNode
 {
     private List<ItemNodeChild> m_childList = new List<ItemNodeChild>();
 
-    private Button m_arrowButton;
-
     private bool m_isShowOrHide = true;
 
     public List<ItemNodeChild> GetChilds()
@@ -74,7 +72,6 @@ public class ItemNodeParent : ItemNode
         : base(itemProduct, itemNodeContent, onSelect,scrollView)
     {
         ItemName = Enum.GetName(typeof(ITEMTYPEENUM), itemProduct.ItemType);
-        m_arrowButton = ItemNodeTransform.transform.Find("Arrow").GetComponent<Button>();
         m_arrowButton.gameObject.SetActive(true);
         m_eventButton.AddEvents(EventTriggerType.PointerClick, context =>
         {

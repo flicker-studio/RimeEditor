@@ -42,7 +42,7 @@ public class OutlinePainter
       OnDisable();
       
       m_targetObj.Clear();
-      m_targetObj.AddRange(value);
+      if(value != null) m_targetObj.AddRange(value);
       
       foreach (var obj in m_targetObj)
       {

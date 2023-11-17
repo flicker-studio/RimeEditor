@@ -13,5 +13,6 @@ public class ItemNodeChild : ItemNode
     {
         ItemData = targetItem;
         ItemName = itemProduct.Name;
+        m_arrowButton.gameObject.SetActive(false);
     }
 }
