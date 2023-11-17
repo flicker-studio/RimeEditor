@@ -200,7 +200,7 @@ namespace LevelEditor
             {
                 foreach (var itemProductObj in m_itemProductButtonList)
                 {
-                    itemProductObj.IsSelected = false;
+                    itemProductObj.SetSelected = false;
                 }
             }
         }
@@ -396,15 +396,15 @@ namespace LevelEditor
             {
                 if (itemTypObj != newItemTypeButton)
                 {
-                    itemTypObj.IsSelected = false;
+                    itemTypObj.SetSelected = false;
                 }
             }
 
             if (m_searchItemTypeButton != null && m_searchItemTypeButton != newItemTypeButton)
             {
-                m_searchItemTypeButton.IsSelected = false;
+                m_searchItemTypeButton.SetSelected = false;
             }
-            newItemTypeButton.IsSelected = true;
+            newItemTypeButton.SetSelected = true;
         }
 
         private void SetContentPosByItemType(ItemTypeButton newItemTypeButton)
@@ -487,7 +487,7 @@ namespace LevelEditor
             {
                 if (itemProductObj != gridItemButton)
                 {
-                    itemProductObj.IsSelected = false;
+                    itemProductObj.SetSelected = false;
                 }
             }
             foreach (var keyValuePair in m_searchItemProductDic)
@@ -496,12 +496,12 @@ namespace LevelEditor
                 {
                     if (itemProductObj != gridItemButton)
                     {
-                        itemProductObj.IsSelected = false;
+                        itemProductObj.SetSelected = false;
                     }
                 }
             }
 
-            gridItemButton.IsSelected = true;
+            gridItemButton.SetSelected = true;
         }
     }
 }

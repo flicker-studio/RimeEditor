@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Frame.StateMachine;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ namespace LevelEditor
         public Information(RectTransform levelEditorTransform,CommandSet commandSet)
         {
             InitComponent(levelEditorTransform,commandSet);
+            InitEvent();
         }
 
         private void InitComponent(RectTransform levelEditorTransform,CommandSet commandSet)
@@ -43,6 +45,51 @@ namespace LevelEditor
             m_inputController = new InputController();
             m_dataManager = new DataManager();
             m_cameraManager = new CameraManager();
+        }
+
+        private void InitEvent()
+        {
+            m_dataManager.SyncLevelData += ResetCommand;
+            m_dataManager.SyncLevelData += ResetOutline;
+            m_dataManager.SyncLevelData += ResetCameraPos;
+        }
+
+        private void ResetCommand(LevelData levelData)
+        {
+            m_commandSet.Clear?.Invoke();
+        }
+        
+        private void ResetOutline(LevelData levelData)
+        {
+            GetCamera.GetOutlinePainter.SetTargetObj = GetData.TargetObjs;
+        }
+
+        private void ResetCameraPos(LevelData levelData)
+        {
+            List<GameObject> itemObjs = levelData.ItemAssets.GetItemObjs();
+            if (itemObjs.Count == 0)
+            {
+                return;
+            }
+            Vector3 targetPos = Vector3.zero;
+            foreach (var itemObj in itemObjs)
+            {
+                targetPos += itemObj.transform.position;
+            }
+
+            targetPos /= itemObjs.Count;
+
+            Vector3 oriPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2,
+                Mathf.Abs(Camera.main.transform.position.z)));
+
+            Vector3 direction = targetPos - oriPos;
+            
+            float zLength = (GetCamera.GetProperty.GetCameraMotionProperty.CAMERA_MAX_Z +
+                             GetCamera.GetProperty.GetCameraMotionProperty.CAMERA_MIN_Z) / 2;
+
+            Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + direction.x
+                ,Camera.main.transform.position.y + direction.y
+                    ,zLength);
         }
     }
 }

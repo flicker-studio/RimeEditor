@@ -7,16 +7,11 @@ namespace Frame.Data
 {
     public abstract class GridItemButton
     {
-        public bool IsSelected
+        public bool SetSelected
         {
             set
             {
                 m_eventButton.IsSelected = value;
-            }
-
-            get
-            {
-                return m_eventButton.IsSelected;
             }
         }
 
@@ -35,7 +30,7 @@ namespace Frame.Data
         public GridItemButton(GameObject buttonPrefab,Action<GridItemButton> onSelect,Transform parent,ScrollRect scrollRect)
         {
             m_buttonObj = ObjectPool.Instance.OnTake(buttonPrefab);
-            m_buttonObj.transform.parent = parent;
+            m_buttonObj.transform.SetParent(parent);
             m_eventButton = new EventButton<GridItemButton>(this, m_buttonObj.transform, onSelect,scrollRect);
         }
 

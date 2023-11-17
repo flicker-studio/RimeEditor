@@ -1,4 +1,5 @@
 using Frame.StateMachine;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 namespace Frame.Static.Global
@@ -8,6 +9,11 @@ namespace Frame.Static.Global
         public struct LayerMasks
         {
             public readonly static LayerMask GROUND = LayerMask.NameToLayer("Ground");
+        }
+        
+        public struct Tags
+        {
+            public readonly static string CONTROLHANDLE = "ControlHandle";
         }
     
         public struct ObjNameTag

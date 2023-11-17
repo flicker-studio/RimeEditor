@@ -12,7 +12,7 @@ namespace LevelEditor
 
         public CommandManager()
         {
-            CommandSet = new CommandSet(Excute, Undo, Redo);
+            CommandSet = new CommandSet(Excute, Undo, Redo,Clear);
         }
         
         public void Excute(Command command)
@@ -36,6 +36,12 @@ namespace LevelEditor
             Command command = m_redoCommands.Pop();
             m_undoCommands.Push(command);
             command.Execute();
+        }
+
+        public void Clear()
+        {
+            m_undoCommands.Clear();
+            m_redoCommands.Clear();
         }
     }
 

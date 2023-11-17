@@ -33,6 +33,10 @@ namespace LevelEditor
         public bool GetCtrlButton => InputManager.Instance.GetCtrlButton;
 
         public bool GetDeleteButtonDown => InputManager.Instance.GetDeleteButtonDown;
+        
+        public bool GetCButtonDown => InputManager.Instance.GetCButtonDown;
+        
+        public bool GetVButtonDown => InputManager.Instance.GetVButtonDown;
     }
 
 }

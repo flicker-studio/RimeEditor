@@ -123,6 +123,26 @@ namespace Frame.Tool
         {
             m_zButton.SetInput = false;
         };
+        
+        GetLevelEditorActions.CButton.performed += context =>
+        {
+            m_cButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.CButton.canceled += context =>
+        {
+            m_cButton.SetInput = false;
+        };
+        
+        GetLevelEditorActions.VButton.performed += context =>
+        {
+            m_vButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.VButton.canceled += context =>
+        {
+            m_vButton.SetInput = false;
+        };
 
         GetLevelEditorActions.DeleteButton.performed += context =>
         {
@@ -292,6 +312,10 @@ namespace Frame.Tool
     private InputProperty<bool> m_ctrlButton = new InputProperty<bool>();
     
     private InputProperty<bool> m_zButton = new InputProperty<bool>();
+    
+    private InputProperty<bool> m_cButton = new InputProperty<bool>();
+    
+    private InputProperty<bool> m_vButton = new InputProperty<bool>();
 
     private InputProperty<bool> m_deleteButton = new InputProperty<bool>();
 
@@ -335,13 +359,20 @@ namespace Frame.Tool
     
     public bool GetZButtonDown => m_zButton.GetInputDown;
     public bool GetZButtonUp => m_zButton.GetInputUp;
+    
+    public bool GetCButton => m_zButton.GetInput;
+    public bool GetCButtonDown => m_cButton.GetInputDown;
+    public bool GetCButtonUp => m_cButton.GetInputUp;
+    
+    public bool GetVButton => m_zButton.GetInput;
+    public bool GetVButtonDown => m_vButton.GetInputDown;
+    public bool GetVButtonUp => m_vButton.GetInputUp;
 
     public bool GetDelexteButton => m_deleteButton.GetInput;
     
     public bool GetDeleteButtonDown => m_deleteButton.GetInputDown;
     
     public bool GetDeleteButtonUp => m_deleteButton.GetInputUp;
-    
 
     #endregion
 

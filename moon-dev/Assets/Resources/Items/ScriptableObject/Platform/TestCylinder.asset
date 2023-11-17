@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2d479291d3f834c8360c660de40205, type: 3}
+  m_Name: TestCylinder
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: TestCylinder
+  <ItemIcon>k__BackingField: {fileID: 21300000, guid: c32a3851a23b0e042a9f41ab6c018bc8, type: 3}
+  <ItemType>k__BackingField: 0
+  <ItemObject>k__BackingField: {fileID: 6868405396425746578, guid: d8b7aff888b8e4140adfe0710a342a73, type: 3}

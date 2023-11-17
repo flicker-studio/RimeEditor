@@ -9,6 +9,8 @@ namespace LevelEditor
     public delegate void UndoExcute();
 
     public delegate void RedoExcute();
+
+    public delegate void ClearExcute();
     
     public class CommandSet
     {
@@ -17,12 +19,15 @@ namespace LevelEditor
         public UndoExcute GetUndo { get; private set; }
 
         public RedoExcute GetRedo { get; private set; }
+        
+        public ClearExcute Clear { get; private set; }
 
-        public CommandSet(CommandExcute excute, UndoExcute undo, RedoExcute redo)
+        public CommandSet(CommandExcute excute, UndoExcute undo, RedoExcute redo,ClearExcute clear)
         {
             GetExcute = excute;
             GetUndo = undo;
             GetRedo = redo;
+            Clear = clear;
         }
     }
 }

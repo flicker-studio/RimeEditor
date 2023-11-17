@@ -36,12 +36,12 @@ namespace LevelEditor
         {
             if (active)
             {
-                SetTransorm();
+                SetTransformFromData();
                 m_itemObj = ObjectPool.Instance.OnTake(m_itemObj,m_itemProduct.ItemObject);
             }
             else
             {
-                GetTransform();
+                GetTransformToData();
                 ObjectPool.Instance.OnRelease(m_itemObj);
             }
         }
@@ -53,14 +53,14 @@ namespace LevelEditor
             m_itemObj.transform.localScale = GetItemProduct.ItemObject.transform.localScale;
         }
 
-        private void GetTransform()
+        private void GetTransformToData()
         {
             m_position = m_itemObj.transform.position;
             m_rotation = m_itemObj.transform.rotation;
             m_scale = m_itemObj.transform.localScale;
         }
 
-        private void SetTransorm()
+        private void SetTransformFromData()
         {
             m_itemObj.transform.position = m_position;
             m_itemObj.transform.rotation = m_rotation;

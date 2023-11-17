@@ -7,15 +7,16 @@ using UnityEngine.UI;
 
 public class HierarchyPanelShowState : AdditiveState
 {
+    private DataManager GetData => m_information.GetData;
     private HierarchyPanel GetHierarchyPanel => m_information.GetUI.GetHierarchyPanel;
 
     private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
 
     private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
 
-    private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
+    private ObservableList<ItemData> TargetItems => GetData.TargetItems;
 
-    private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
+    private ObservableList<ItemData> ItemAssets => GetData.ItemAssets;
 
     private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
 
@@ -37,6 +38,7 @@ public class HierarchyPanelShowState : AdditiveState
     
     public HierarchyPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
+        InitSyncEvent();
         InitEvent();
         InitButton();
     }
@@ -65,15 +67,28 @@ public class HierarchyPanelShowState : AdditiveState
         });
     }
 
+    private void InitSyncEvent()
+    {
+        GetData.SyncLevelData += SyncNodeByLevelData;
+    }
+    
     private void InitEvent()
     {
+        ItemAssets.OnAdd -= CreateNode;
+        ItemAssets.OnAdd -= SyncNodePanelSelete;
+        ItemAssets.OnAddRange -= CreateNode;
+        ItemAssets.OnRemove -= DeleteNode;
+        ItemAssets.OnRemove -= SyncNodePanelSelete;
+        ItemAssets.OnRemoveAll -= DeleteNode;
+        TargetItems.OnAddRange -= SyncNodePanelSelete;
+        
         ItemAssets.OnAdd += CreateNode;
-        ItemAssets.OnAdd += SyncNodePanel;
+        ItemAssets.OnAdd += SyncNodePanelSelete;
         ItemAssets.OnAddRange += CreateNode;
         ItemAssets.OnRemove += DeleteNode;
-        ItemAssets.OnRemove += SyncNodePanel;
+        ItemAssets.OnRemove += SyncNodePanelSelete;
         ItemAssets.OnRemoveAll += DeleteNode;
-        TargetItems.OnAddRange += SyncNodePanel;
+        TargetItems.OnAddRange += SyncNodePanelSelete;
     }
 
     private void CreateNode(List<ItemData> targetItems)
@@ -178,18 +193,38 @@ public class HierarchyPanelShowState : AdditiveState
         m_itemNodeProperties.Add(itemNodeChild);
         return itemNodeChild;
     }
-    
-    private void SyncNodePanel(List<ItemData> itemData)
+
+    private void SyncNodeByLevelData(LevelData levelData)
     {
-        SyncNodePanel();
+        InitEvent();
+        ClearNode();
+        ObservableList<ItemData> itemDatas = levelData.ItemAssets;
+        foreach (var itemData in itemDatas)
+        {
+            CreateNode(itemData);
+        }
+    }
+    
+    private void ClearNode()
+    {
+        foreach (var itemNodeProperty in m_itemNodeProperties)
+        {
+            itemNodeProperty.RemoveNode();
+        }
+        m_itemNodeProperties.Clear();
+    }
+    
+    private void SyncNodePanelSelete(List<ItemData> itemData)
+    {
+        SyncNodePanelSelete();
     }
 
-    private void SyncNodePanel(ItemData itemData)
+    private void SyncNodePanelSelete(ItemData itemData)
     {
-        SyncNodePanel();
+        SyncNodePanelSelete();
     }
     
-    private void SyncNodePanel()
+    private void SyncNodePanelSelete()
     {
         m_selectTargetItem.Clear();
         m_selectTargetItem.AddRange(TargetItems);

@@ -230,6 +230,24 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""95f1226a-e9a8-4638-9efa-c98114234c07"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""VButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""9f4a6263-ca35-483d-b910-e0870c7fa6f7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -318,6 +336,28 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DeleteButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32f6e085-9b0a-43e1-81e8-d00f11fd5ad3"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e56c1b03-66a5-4ab1-a16d-aba6237027fe"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""VButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -450,6 +490,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_LevelEditor_CtrlButton = m_LevelEditor.FindAction("CtrlButton", throwIfNotFound: true);
         m_LevelEditor_ZButton = m_LevelEditor.FindAction("ZButton", throwIfNotFound: true);
         m_LevelEditor_DeleteButton = m_LevelEditor.FindAction("DeleteButton", throwIfNotFound: true);
+        m_LevelEditor_CButton = m_LevelEditor.FindAction("CButton", throwIfNotFound: true);
+        m_LevelEditor_VButton = m_LevelEditor.FindAction("VButton", throwIfNotFound: true);
         // Debugger
         m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
         m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
@@ -596,6 +638,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_LevelEditor_CtrlButton;
     private readonly InputAction m_LevelEditor_ZButton;
     private readonly InputAction m_LevelEditor_DeleteButton;
+    private readonly InputAction m_LevelEditor_CButton;
+    private readonly InputAction m_LevelEditor_VButton;
     public struct LevelEditorActions
     {
         private @PlayerAction m_Wrapper;
@@ -608,6 +652,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @CtrlButton => m_Wrapper.m_LevelEditor_CtrlButton;
         public InputAction @ZButton => m_Wrapper.m_LevelEditor_ZButton;
         public InputAction @DeleteButton => m_Wrapper.m_LevelEditor_DeleteButton;
+        public InputAction @CButton => m_Wrapper.m_LevelEditor_CButton;
+        public InputAction @VButton => m_Wrapper.m_LevelEditor_VButton;
         public InputActionMap Get() { return m_Wrapper.m_LevelEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -641,6 +687,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @DeleteButton.started += instance.OnDeleteButton;
             @DeleteButton.performed += instance.OnDeleteButton;
             @DeleteButton.canceled += instance.OnDeleteButton;
+            @CButton.started += instance.OnCButton;
+            @CButton.performed += instance.OnCButton;
+            @CButton.canceled += instance.OnCButton;
+            @VButton.started += instance.OnVButton;
+            @VButton.performed += instance.OnVButton;
+            @VButton.canceled += instance.OnVButton;
         }
 
         private void UnregisterCallbacks(ILevelEditorActions instance)
@@ -669,6 +721,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @DeleteButton.started -= instance.OnDeleteButton;
             @DeleteButton.performed -= instance.OnDeleteButton;
             @DeleteButton.canceled -= instance.OnDeleteButton;
+            @CButton.started -= instance.OnCButton;
+            @CButton.performed -= instance.OnCButton;
+            @CButton.canceled -= instance.OnCButton;
+            @VButton.started -= instance.OnVButton;
+            @VButton.performed -= instance.OnVButton;
+            @VButton.canceled -= instance.OnVButton;
         }
 
         public void RemoveCallbacks(ILevelEditorActions instance)
@@ -781,6 +839,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnCtrlButton(InputAction.CallbackContext context);
         void OnZButton(InputAction.CallbackContext context);
         void OnDeleteButton(InputAction.CallbackContext context);
+        void OnCButton(InputAction.CallbackContext context);
+        void OnVButton(InputAction.CallbackContext context);
     }
     public interface IDebuggerActions
     {
