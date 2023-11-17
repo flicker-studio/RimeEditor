@@ -17,6 +17,7 @@ namespace Moon.Extension.Csharp.Method
         /// <returns>Strings stripped of numbers</returns>
         public static string RemoveTrailingNumbers(this string input)
         {
+            //TODO:Optimized memory performance
             return Regex.Replace(input, @"\d+$", "");
         }
     }
