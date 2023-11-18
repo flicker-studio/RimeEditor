@@ -24,8 +24,8 @@ namespace LevelEditor
         {
             for (int i = 0; i < m_itemDatas.Count; i++)
             {
-                m_itemDatas[i].GetItemObj.transform.position = m_nextPosition[i];
-                m_itemDatas[i].GetItemObj.transform.rotation = m_nextRotation[i];
+                m_itemDatas[i].GetItemObjEditor.transform.position = m_nextPosition[i];
+                m_itemDatas[i].GetItemObjEditor.transform.rotation = m_nextRotation[i];
             }
         }
 
@@ -33,8 +33,8 @@ namespace LevelEditor
         {
             for (int i = 0; i < m_itemDatas.Count; i++)
             {
-                m_itemDatas[i].GetItemObj.transform.position = m_lastPosition[i];
-                m_itemDatas[i].GetItemObj.transform.rotation = m_lastRotation[i];
+                m_itemDatas[i].GetItemObjEditor.transform.position = m_lastPosition[i];
+                m_itemDatas[i].GetItemObjEditor.transform.rotation = m_lastRotation[i];
             }
         }
     }

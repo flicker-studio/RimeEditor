@@ -248,6 +248,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EscapeButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""180c7d23-1eb8-4004-a851-e0008e144a07"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -358,6 +367,17 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""VButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a338956-05a9-4ba7-a7e3-2350afa87c59"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EscapeButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -492,6 +512,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_LevelEditor_DeleteButton = m_LevelEditor.FindAction("DeleteButton", throwIfNotFound: true);
         m_LevelEditor_CButton = m_LevelEditor.FindAction("CButton", throwIfNotFound: true);
         m_LevelEditor_VButton = m_LevelEditor.FindAction("VButton", throwIfNotFound: true);
+        m_LevelEditor_EscapeButton = m_LevelEditor.FindAction("EscapeButton", throwIfNotFound: true);
         // Debugger
         m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
         m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
@@ -640,6 +661,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_LevelEditor_DeleteButton;
     private readonly InputAction m_LevelEditor_CButton;
     private readonly InputAction m_LevelEditor_VButton;
+    private readonly InputAction m_LevelEditor_EscapeButton;
     public struct LevelEditorActions
     {
         private @PlayerAction m_Wrapper;
@@ -654,6 +676,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @DeleteButton => m_Wrapper.m_LevelEditor_DeleteButton;
         public InputAction @CButton => m_Wrapper.m_LevelEditor_CButton;
         public InputAction @VButton => m_Wrapper.m_LevelEditor_VButton;
+        public InputAction @EscapeButton => m_Wrapper.m_LevelEditor_EscapeButton;
         public InputActionMap Get() { return m_Wrapper.m_LevelEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -693,6 +716,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @VButton.started += instance.OnVButton;
             @VButton.performed += instance.OnVButton;
             @VButton.canceled += instance.OnVButton;
+            @EscapeButton.started += instance.OnEscapeButton;
+            @EscapeButton.performed += instance.OnEscapeButton;
+            @EscapeButton.canceled += instance.OnEscapeButton;
         }
 
         private void UnregisterCallbacks(ILevelEditorActions instance)
@@ -727,6 +753,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @VButton.started -= instance.OnVButton;
             @VButton.performed -= instance.OnVButton;
             @VButton.canceled -= instance.OnVButton;
+            @EscapeButton.started -= instance.OnEscapeButton;
+            @EscapeButton.performed -= instance.OnEscapeButton;
+            @EscapeButton.canceled -= instance.OnEscapeButton;
         }
 
         public void RemoveCallbacks(ILevelEditorActions instance)
@@ -841,6 +870,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnDeleteButton(InputAction.CallbackContext context);
         void OnCButton(InputAction.CallbackContext context);
         void OnVButton(InputAction.CallbackContext context);
+        void OnEscapeButton(InputAction.CallbackContext context);
     }
     public interface IDebuggerActions
     {

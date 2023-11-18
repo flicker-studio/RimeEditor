@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using Frame.Tool.Pool;
+using Item;
 using UnityEngine;
 
 namespace LevelEditor
 {
     public abstract class ItemData
     {
-        public GameObject GetItemObj => m_itemObj;
+        public GameObject GetItemObjPlay => m_itemObjPlay;
+        public GameObject GetItemObjEditor => m_itemObjEditor;
 
         public ItemProduct GetItemProduct => m_itemProduct;
 
@@ -21,50 +23,67 @@ namespace LevelEditor
             Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2,
                 Mathf.Abs(Camera.main.transform.position.z)));
         
-        private GameObject m_itemObj;
+        private GameObject m_itemObjEditor;
+
+        private GameObject m_itemObjPlay;
         
         private ItemProduct m_itemProduct;
 
         public ItemData(ItemProduct itemProduct)
         {
             m_itemProduct = itemProduct;
-            m_itemObj = ObjectPool.Instance.OnTake(m_itemProduct.ItemObject);
+            m_itemObjEditor = ObjectPool.Instance.OnTake(m_itemProduct.ItemObject);
             TransformInit();
         }
         
-        public void SetActive(bool active)
+        public void SetActiveEditor(bool active)
         {
             if (active)
             {
                 SetTransformFromData();
-                m_itemObj = ObjectPool.Instance.OnTake(m_itemObj,m_itemProduct.ItemObject);
+                m_itemObjEditor = ObjectPool.Instance.OnTake(m_itemObjEditor,m_itemProduct.ItemObject);
             }
             else
             {
                 GetTransformToData();
-                ObjectPool.Instance.OnRelease(m_itemObj);
+                ObjectPool.Instance.OnRelease(m_itemObjEditor);
+            }
+        }
+
+        public virtual void SetActivePlay(bool active)
+        {
+            if (active)
+            {
+                SetTransformFromData();
+                m_itemObjPlay = ObjectPool.Instance.OnTake(m_itemObjPlay,m_itemProduct.ItemObject);
+                m_itemObjPlay.GetComponent<ItemPlay>().Play();
+            }
+            else
+            {
+                m_itemObjPlay.GetComponent<ItemPlay>().Stop();
+                ObjectPool.Instance.OnRelease(m_itemObjPlay);
             }
         }
 
         private void TransformInit()
         {
-            m_itemObj.transform.position = GetScreenMiddlePoint;
-            m_itemObj.transform.rotation = Quaternion.identity;
-            m_itemObj.transform.localScale = GetItemProduct.ItemObject.transform.localScale;
+            m_itemObjEditor.transform.position = GetScreenMiddlePoint;
+            m_itemObjEditor.transform.rotation = Quaternion.identity;
+            m_itemObjEditor.transform.localScale = GetItemProduct.ItemObject.transform.localScale;
         }
 
         private void GetTransformToData()
         {
-            m_position = m_itemObj.transform.position;
-            m_rotation = m_itemObj.transform.rotation;
-            m_scale = m_itemObj.transform.localScale;
+            m_position = m_itemObjEditor.transform.position;
+            m_rotation = m_itemObjEditor.transform.rotation;
+            m_scale = m_itemObjEditor.transform.localScale;
         }
 
         private void SetTransformFromData()
         {
-            m_itemObj.transform.position = m_position;
-            m_itemObj.transform.rotation = m_rotation;
-            m_itemObj.transform.localScale = m_scale;
+            m_itemObjEditor.transform.position = m_position;
+            m_itemObjEditor.transform.rotation = m_rotation;
+            m_itemObjEditor.transform.localScale = m_scale;
         }
 
         public (Vector3, Quaternion, Vector3) GetTransformFromData()

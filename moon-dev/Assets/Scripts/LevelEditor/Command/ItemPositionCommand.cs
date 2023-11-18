@@ -19,7 +19,7 @@ namespace LevelEditor
         {
             for (int i = 0; i < m_gameObjects.Count; i++)
             {
-                m_gameObjects[i].GetItemObj.transform.position = m_nextPosition[i];
+                m_gameObjects[i].GetItemObjEditor.transform.position = m_nextPosition[i];
             }
         }
 
@@ -27,7 +27,7 @@ namespace LevelEditor
         {
             for (int i = 0; i < m_gameObjects.Count; i++)
             {
-                m_gameObjects[i].GetItemObj.transform.position = m_lastPosition[i];
+                m_gameObjects[i].GetItemObjEditor.transform.position = m_lastPosition[i];
             }
         }
     }

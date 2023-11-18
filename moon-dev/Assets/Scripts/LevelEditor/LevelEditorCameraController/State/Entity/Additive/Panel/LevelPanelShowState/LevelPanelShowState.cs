@@ -24,7 +24,7 @@ namespace LevelEditor
         {
             GetData.SetItemDatasActive(false);
             GetCamera.GetOutlinePainter.SetTargetObj = null;
-            LevelPlay.Instance.Play(GetData.ShowLevels());
+            LevelPlay.Instance.Play(GetData.ShowLevels(),GetData.GetCurrentIndex);
         }
         
         public override void Motion(BaseInformation information)

@@ -21,3 +21,5 @@ MonoBehaviour:
   <ITEM_DETAIL_GROUP>k__BackingField: {fileID: 806047515979047565, guid: 6624810ec10a0d44c8077cfcff94c8fa, type: 3}
   <ITEM_LATTICE>k__BackingField: {fileID: 697301454166220078, guid: 3894a0810e64d0243a6f2e7856265d31, type: 3}
   <ITEM_TYPE>k__BackingField: {fileID: 4167006409222379282, guid: 9c9a01cc366c06e4da961e682c5751de, type: 3}
+  <PLAYER>k__BackingField: {fileID: 4314862480148561689, guid: 54738bf26f7d81546b8c92a47d4c095d, type: 3}
+  <PLAYER_CAMERA>k__BackingField: {fileID: 6082539278293185449, guid: f32ac835b746e674692146e2a222a4fe, type: 3}

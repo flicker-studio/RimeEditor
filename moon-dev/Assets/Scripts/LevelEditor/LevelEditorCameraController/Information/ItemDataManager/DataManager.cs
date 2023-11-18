@@ -23,7 +23,7 @@ namespace LevelEditor
         {
             foreach (var itemAsset in ItemAssets)
             {
-                itemAsset.SetActive(value);
+                itemAsset.SetActiveEditor(value);
             }
         }
         
@@ -101,7 +101,7 @@ namespace LevelEditor
         {
             foreach (var itemData in itemDatas)
             {
-                itemData.SetActive(active);
+                itemData.SetActiveEditor(active);
             }
         }
 

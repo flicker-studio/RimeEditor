@@ -23,7 +23,7 @@ namespace LevelEditor
         {
             foreach (var targetAsset in m_targetAssets)
             {
-                targetAsset.SetActive(false);
+                targetAsset.SetActiveEditor(false);
             }
             m_lastAssets.Clear();
             m_lastAssets.AddRange(m_targetAssets);
@@ -38,7 +38,7 @@ namespace LevelEditor
         {
             foreach (var lastAsset in m_lastAssets)
             {
-                lastAsset.SetActive(true);
+                lastAsset.SetActiveEditor(true);
             }
             m_targetAssets.Clear();
             m_targetAssets.AddRange(m_lastAssets);

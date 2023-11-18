@@ -52,6 +52,13 @@ namespace LevelEditor
             m_dataManager.SyncLevelData += ResetCommand;
             m_dataManager.SyncLevelData += ResetOutline;
             m_dataManager.SyncLevelData += ResetCameraPos;
+            m_commandSet.EnableExcute += EnableExcute;
+        }
+
+        private void EnableExcute()
+        {
+            m_dataManager.SetItemDatasActive(true);
+            m_cameraManager.GetOutlinePainter.SetTargetObj = m_dataManager.TargetObjs;
         }
 
         private void ResetCommand(LevelData levelData)
