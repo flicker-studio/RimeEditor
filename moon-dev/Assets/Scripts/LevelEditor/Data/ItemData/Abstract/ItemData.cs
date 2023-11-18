@@ -60,6 +60,7 @@ namespace LevelEditor
             }
             else
             {
+                if(m_itemObjPlay == null) return;
                 m_itemObjPlay.GetComponent<ItemPlay>().Stop();
                 ObjectPool.Instance.OnRelease(m_itemObjPlay);
             }
