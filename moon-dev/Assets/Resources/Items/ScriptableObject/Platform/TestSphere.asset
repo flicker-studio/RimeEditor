@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: TestSphere
   <ItemIcon>k__BackingField: {fileID: 21300000, guid: 65d84d6910bfae647ad2ad41e243f6e9, type: 3}
-  <ItemType>k__BackingField: 1
+  <ItemType>k__BackingField: 0
   <ItemObject>k__BackingField: {fileID: 5900846186996444679, guid: 056e5bb1e15587746ab95165e48bf476, type: 3}
