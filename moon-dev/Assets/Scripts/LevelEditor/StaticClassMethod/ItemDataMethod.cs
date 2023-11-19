@@ -10,7 +10,7 @@ namespace LevelEditor
         {
             foreach (var itemData in itemDatas)
             {
-                if (itemData.GetItemObj == targetObj) return itemData;
+                if (itemData.GetItemObjEditor == targetObj) return itemData;
             }
 
             return null;
@@ -23,7 +23,7 @@ namespace LevelEditor
             {
                 foreach (var itemData in itemDatas)
                 {
-                    if (itemData.GetItemObj == targetObj)
+                    if (itemData.GetItemObjEditor == targetObj)
                     {
                         tempList.Add(itemData);
                         break;
@@ -39,7 +39,7 @@ namespace LevelEditor
             List<GameObject> itemObjs = new List<GameObject>();
             foreach (var itemData in itemDatas)
             {
-                itemObjs.Add(itemData.GetItemObj);
+                itemObjs.Add(itemData.GetItemObjEditor);
             }
 
             return itemObjs;
@@ -49,7 +49,7 @@ namespace LevelEditor
         {
             foreach (var itemData in itemDatas)
             {
-                if (itemData.GetItemObj == targetObj) return itemData;
+                if (itemData.GetItemObjEditor == targetObj) return itemData;
             }
 
             return null;
@@ -62,7 +62,7 @@ namespace LevelEditor
             {
                 foreach (var itemData in itemDatas)
                 {
-                    if (itemData.GetItemObj == targetObj)
+                    if (itemData.GetItemObjEditor == targetObj)
                     {
                         tempList.Add(itemData);
                         break;
@@ -78,7 +78,7 @@ namespace LevelEditor
             List<GameObject> itemObjs = new List<GameObject>();
             foreach (var itemData in itemDatas)
             {
-                itemObjs.Add(itemData.GetItemObj);
+                itemObjs.Add(itemData.GetItemObjEditor);
             }
 
             return itemObjs;

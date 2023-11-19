@@ -1,3 +1,4 @@
+using System;
 using Frame.Tool;
 using UnityEngine;
 
@@ -36,6 +37,11 @@ namespace LevelEditor
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
                 m_commandManager.Undo();
             }
+        }
+
+        private void OnEnable()
+        {
+            if(m_commandManager != null) m_commandManager.CommandSet.EnableExcute?.Invoke();
         }
     }
 }

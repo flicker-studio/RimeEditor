@@ -1,3 +1,4 @@
+using System;
 using Struct;
 using UnityEngine;
 
@@ -152,6 +153,17 @@ namespace Frame.Tool
         GetLevelEditorActions.DeleteButton.canceled += context =>
         {
             m_deleteButton.SetInput = false;
+        };
+        
+        
+        GetLevelEditorActions.EscapeButton.performed += context =>
+        {
+            m_escapeButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.EscapeButton.canceled += context =>
+        {
+            m_escapeButton.SetInput = false;
         };
 
         #endregion
@@ -319,6 +331,8 @@ namespace Frame.Tool
 
     private InputProperty<bool> m_deleteButton = new InputProperty<bool>();
 
+    private InputProperty<bool> m_escapeButton = new InputProperty<bool>();
+
     public bool GetMouseLeftButton => m_mouseLeftButton.GetInput;
     
     public bool GetMouseLeftButtonDown => m_mouseLeftButton.GetInputDown;
@@ -373,6 +387,12 @@ namespace Frame.Tool
     public bool GetDeleteButtonDown => m_deleteButton.GetInputDown;
     
     public bool GetDeleteButtonUp => m_deleteButton.GetInputUp;
+    
+    public bool GetEscapeButton => m_escapeButton.GetInput;
+    
+    public bool GetEscapeButtonDown => m_escapeButton.GetInputDown;
+    
+    public bool GetEscapeButtonUp => m_escapeButton.GetInputUp;
 
     #endregion
 
@@ -407,6 +427,20 @@ namespace Frame.Tool
     public bool GetDebuggerNum5Down => m_num5.GetInputDown;
 
     public bool GetDebuggerNum5Up => m_num5.GetInputUp;
+
+    #endregion
+
+    #region Actions
+
+    public Action AddEscapeButtonDownAction
+    {
+        set => m_escapeButton.DownAction += value;
+    }
+    
+    public Action RemoveEscapeButtonDownAction
+    {
+        set => m_escapeButton.DownAction -= value;
+    }
 
     #endregion
 }

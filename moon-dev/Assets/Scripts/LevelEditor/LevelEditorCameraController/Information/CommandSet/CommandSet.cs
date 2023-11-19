@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace LevelEditor
 {
     public delegate void CommandExcute(Command command);
@@ -11,6 +7,8 @@ namespace LevelEditor
     public delegate void RedoExcute();
 
     public delegate void ClearExcute();
+
+    public delegate void EnableExcute();
     
     public class CommandSet
     {
@@ -21,6 +19,8 @@ namespace LevelEditor
         public RedoExcute GetRedo { get; private set; }
         
         public ClearExcute Clear { get; private set; }
+
+        public EnableExcute EnableExcute;
 
         public CommandSet(CommandExcute excute, UndoExcute undo, RedoExcute redo,ClearExcute clear)
         {

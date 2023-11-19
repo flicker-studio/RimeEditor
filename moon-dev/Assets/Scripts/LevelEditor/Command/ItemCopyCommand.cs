@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Frame.Static.Extensions;
-using Frame.Tool.Pool;
 using UnityEngine;
 
 namespace LevelEditor
@@ -16,6 +14,8 @@ namespace LevelEditor
         
         private OutlinePainter m_outlinePainter;
         private List<ItemData> m_lastAssets = new List<ItemData>();
+
+        private ItemFactory m_itemFactory = new ItemFactory();
 
         public ItemCopyCommand(ObservableList<ItemData> targetAssets,ObservableList<ItemData> itemAssets,OutlinePainter outlinePainter,List<ItemData> copyTarget)
         {
@@ -58,10 +58,10 @@ namespace LevelEditor
             
             foreach (var copyData in copyDatas)
             {
-                ItemData newData = new PlatformData(copyData.GetItemProduct);
-                (Vector3 position, Quaternion rotation, Vector3 scale) = copyData.GetItemObj.transform.GetTransformValue();
-                newData.GetItemObj.transform.SetTransformValue(position,rotation,scale);
-                oriPos += newData.GetItemObj.transform.position;
+                ItemData newData = m_itemFactory.CreateItem(copyData.GetItemProduct);
+                (Vector3 position, Quaternion rotation, Vector3 scale) = copyData.GetItemObjEditor.transform.GetTransformValue();
+                newData.GetItemObjEditor.transform.SetTransformValue(position,rotation,scale);
+                oriPos += newData.GetItemObjEditor.transform.position;
                 saveDatas.Add(newData);
             }
 
@@ -74,8 +74,8 @@ namespace LevelEditor
             
             foreach (var saveData in saveDatas)
             {
-                Vector3 oldPosition = saveData.GetItemObj.transform.position;
-                saveData.GetItemObj.transform.position = oldPosition + direction;
+                Vector3 oldPosition = saveData.GetItemObjEditor.transform.position;
+                saveData.GetItemObjEditor.transform.position = oldPosition + direction;
             }
             
             return saveDatas;
@@ -85,7 +85,7 @@ namespace LevelEditor
         {
             foreach (var itemData in itemDatas)
             {
-                itemData.SetActive(active);
+                itemData.SetActiveEditor(active);
             }
         }
     }

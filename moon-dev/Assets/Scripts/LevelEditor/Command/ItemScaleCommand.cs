@@ -19,7 +19,7 @@ namespace LevelEditor
         {
             for (int i = 0; i < m_itemDatas.Count; i++)
             {
-                m_itemDatas[i].GetItemObj.transform.localScale = m_nextScale[i];
+                m_itemDatas[i].GetItemObjEditor.transform.localScale = m_nextScale[i];
             }
         }
 
@@ -27,7 +27,7 @@ namespace LevelEditor
         {
             for (int i = 0; i < m_itemDatas.Count; i++)
             {
-                m_itemDatas[i].GetItemObj.transform.localScale = m_lastScale[i];
+                m_itemDatas[i].GetItemObjEditor.transform.localScale = m_lastScale[i];
             }
         }
     }

@@ -30,6 +30,10 @@ namespace Data.ScriptableObject
         
         [field:SerializeField,CustomLabel("物件种类侧边栏")] 
         public GameObject ITEM_TYPE{ get; private set; }
+        [field:SerializeField,CustomLabel("玩家")] 
+        public GameObject PLAYER{ get; private set; }
+        [field:SerializeField,CustomLabel("玩家相机")] 
+        public GameObject PLAYER_CAMERA{ get; private set; }
     }
 }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Frame.Tool
 
         public async UniTask RemoveCurrentScene()
         {
-            Scene currentScene = SceneManager.GetActiveScene();
+            Scene currentScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
             
             await SceneManager.UnloadSceneAsync(currentScene);
             

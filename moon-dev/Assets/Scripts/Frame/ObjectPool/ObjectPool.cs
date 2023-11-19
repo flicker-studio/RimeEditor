@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Frame.Static.Extensions;
+using UnityEditor;
 using UnityEngine;
 
 namespace Frame.Tool.Pool
@@ -59,6 +60,7 @@ namespace Frame.Tool.Pool
                 GameObject.DontDestroyOnLoad(obj);
             }
             m_outPool[tag].Add(obj);
+            ResetObject(obj, prefab);
             return obj;
         }
 
@@ -86,6 +88,7 @@ namespace Frame.Tool.Pool
             targetObj.transform.SetParent(null);
             m_pool[tag].Remove(targetObj);
             m_outPool[tag].Add(targetObj);
+            ResetObject(targetObj, prefab);
             return targetObj;
         }
 
@@ -208,6 +211,23 @@ namespace Frame.Tool.Pool
                 m_cachePanel.name = "CachePanel";
                 GameObject.DontDestroyOnLoad(m_cachePanel);
             }
+        }
+
+        private void ResetObject(GameObject obj,GameObject prefab)
+        {
+            foreach (var component in obj.GetComponents<Component>())
+            {
+                if (component is Collider2D collider)
+                {
+                    ResetColloder(collider,prefab.GetComponent<Collider2D>());
+                }
+            }
+        }
+
+        private void ResetColloder(Collider2D objColloder,Collider2D prefabCollider)
+        {
+            if(prefabCollider == null) return;
+            objColloder.isTrigger = prefabCollider.isTrigger;
         }
     }
 

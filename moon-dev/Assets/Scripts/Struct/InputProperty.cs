@@ -1,4 +1,6 @@
 
+using System;
+
 namespace Struct
 {
     public struct InputProperty<T> where T : struct
@@ -8,6 +10,10 @@ namespace Struct
         private bool m_inputDown;
 
         private bool m_inputUp;
+
+        public event Action DownAction;
+
+        public event Action UpAction;
 
         public T ResetInput
         {
@@ -24,11 +30,13 @@ namespace Struct
                 m_input = value;
                 if (m_input.Equals(default(T)))
                 {
+                    UpAction?.Invoke();
                     m_inputDown = false;
                     m_inputUp = true;
                 }
                 else
                 {
+                    DownAction?.Invoke();
                     m_inputDown = true;
                     m_inputUp = false;
                 }
