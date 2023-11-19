@@ -22,7 +22,7 @@ namespace LevelEditor
 
         private void PlayLevel()
         {
-            GetData.SetItemDatasActive(false);
+            GetData.SetActiveEditors(false);
             GetCamera.GetOutlinePainter.SetTargetObj = null;
             LevelPlay.Instance.Play(GetData.ShowLevels(),GetData.GetCurrentIndex);
         }

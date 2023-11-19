@@ -19,7 +19,7 @@ namespace LevelEditor
 
         public SyncLevelData SyncLevelData;
 
-        public void SetItemDatasActive(bool value)
+        public void SetActiveEditors(bool value)
         {
             foreach (var itemAsset in ItemAssets)
             {

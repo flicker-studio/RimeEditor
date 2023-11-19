@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Frame.Static.Extensions;
 using Frame.Tool.Pool;
 using Item;
 using UnityEngine;
@@ -54,13 +53,12 @@ namespace LevelEditor
         {
             if (active)
             {
-                SetTransformFromData();
                 m_itemObjPlay = ObjectPool.Instance.OnTake(m_itemObjPlay,m_itemProduct.ItemObject);
+                m_itemObjPlay.transform.SetTransformValue(m_position,m_rotation,m_scale);
                 m_itemObjPlay.GetComponent<ItemPlay>().Play();
             }
             else
             {
-                if(m_itemObjPlay == null) return;
                 m_itemObjPlay.GetComponent<ItemPlay>().Stop();
                 ObjectPool.Instance.OnRelease(m_itemObjPlay);
             }

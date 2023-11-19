@@ -57,7 +57,7 @@ namespace LevelEditor
 
         private void EnableExcute()
         {
-            m_dataManager.SetItemDatasActive(true);
+            m_dataManager.SetActiveEditors(true);
             m_cameraManager.GetOutlinePainter.SetTargetObj = m_dataManager.TargetObjs;
         }
 

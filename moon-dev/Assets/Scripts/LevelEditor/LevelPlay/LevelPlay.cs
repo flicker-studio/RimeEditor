@@ -29,12 +29,12 @@ namespace LevelEditor
                 Stop();
                 return;
             }
+            ClearLevelObjs();
             ReadLevel();
         }
 
         public void ReadLevel()
         {
-            ClearLevelObjs();
             currentLevel = m_levelDatas[m_index];
             foreach (var itemData in currentLevel.ItemAssets)
             {
@@ -44,7 +44,6 @@ namespace LevelEditor
 
         public void ClearLevelObjs()
         {
-            if (currentLevel == null) return;
             foreach (var itemData in currentLevel.ItemAssets)
             {
                 itemData.SetActivePlay(false);
