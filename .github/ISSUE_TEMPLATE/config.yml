@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: 项目开发手册
+    url: https://orange-cliff-0c5466300.3.azurestaticapps.net/
+    about: 请在开发前详阅手册,手册中还包含所有项目代码的API,会随开发自动更新.
   - name: GitHub Community Support
     url: https://github.com/orgs/community/discussions
     about: Please ask and answer questions here.
