@@ -88,3 +88,7 @@ crashlytics-build.properties
 ## JetBrains Rider
 *.idea/
 
+## Editor Plugin
+/Assets/Plugins/RainbowFolders
+/Assets/Plugins/RainbowFolders.meta
+
