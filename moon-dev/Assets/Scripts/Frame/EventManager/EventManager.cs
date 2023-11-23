@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityToolkit;
 
 namespace Frame.Tool
 {
@@ -13,10 +15,31 @@ namespace Frame.Tool
     /// <summary>
     /// 事件中心管理器
     /// </summary>
-    public class EventCenterManager : Singleton<EventCenterManager>
+    public class EventManager : Singleton<EventManager>
     {
         private readonly Dictionary<GameEvent, UnityEventBase> m_eventDict = new Dictionary<GameEvent, UnityEventBase>();
-    
+
+        #region TypeEventSystem
+
+        private readonly UnityToolkit.TypeEventSystem m_typeEventSystem = new UnityToolkit.TypeEventSystem();
+        
+        
+        public void Fire<T>() where T : new()=>m_typeEventSystem.Send<T>();
+        public void Fire<T>(T args)=>m_typeEventSystem.Send(args);
+
+        public ICommand Listen<T>(Action<T> onEvent)
+        {
+            // 将工具包中的ICommand转换为Frame中的ICommand
+            UnityToolkit.ICommand command =m_typeEventSystem.Register(onEvent);
+            return new BuildInCommand(command.Execute);
+        }
+        
+        public void Remove<T>(Action<T> onEvent)=>m_typeEventSystem.UnRegister(onEvent);
+
+        #endregion
+
+        
+
         #region 参数的
     
         /// <summary>
