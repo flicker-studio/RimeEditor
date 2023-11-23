@@ -1,0 +1,11 @@
+namespace UnityToolkit
+{
+#if UNITY_EDITOR
+using UnityToolkit.Editor;
+    [Parse]
+#endif
+    public enum EnumNameTemplate
+    {
+//fieldsTemplate
+    }
+}
