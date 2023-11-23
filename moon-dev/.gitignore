@@ -85,4 +85,6 @@ crashlytics-build.properties
 ## Docfx release folder
 /[Bb]in/
 
+## JetBrains Rider
+*.idea/
 

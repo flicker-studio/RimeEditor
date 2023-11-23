@@ -9,3 +9,5 @@
 # Fleet cache directory
 .fleet
 .fleet/
+
+*.idea/
