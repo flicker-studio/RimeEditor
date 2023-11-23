@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Frame.Tool
 {
-    public class InputManager : Singleton<InputManager>
-{
-    
-    public InputManager()
+    public class InputManager : UnityToolkit.MonoSingleton<InputManager>,UnityToolkit.IAutoCreateSingleton
+    {
+        public static InputManager Instance => Singleton;
+    protected override void OnInit()
     {
         #region MotionActions
 

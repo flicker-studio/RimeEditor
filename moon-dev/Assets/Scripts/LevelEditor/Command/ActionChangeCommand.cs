@@ -1,6 +1,7 @@
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ActionChangeCommand : Command
+    public class ActionChangeCommand : LevelEditCommand
     {
         private ControlHandleAction m_controlHandleAction;
     

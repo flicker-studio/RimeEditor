@@ -1,6 +1,7 @@
+using Frame.Tool;
 namespace LevelEditor
 {
-    public delegate void CommandExcute(Command command);
+    public delegate void CommandExcute(LevelEditCommand command);
 
     public delegate void UndoExcute();
 

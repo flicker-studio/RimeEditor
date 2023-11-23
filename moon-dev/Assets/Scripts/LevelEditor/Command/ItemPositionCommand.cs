@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ItemPositionCommand : Command
+    public class ItemPositionCommand : LevelEditCommand
     {
         private List<ItemData> m_gameObjects = new List<ItemData>();
         private List<Vector3> m_lastPosition = new List<Vector3>();

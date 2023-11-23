@@ -1,8 +1,8 @@
 using UnityEngine;
-
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ItemRectCommand : Command
+    public class ItemRectCommand : LevelEditCommand
     {
         private Vector3 m_lastPosition;
         private Vector3 m_lastScale;

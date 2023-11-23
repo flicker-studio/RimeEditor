@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ItemRotationCommand : Command
+    public class ItemRotationCommand : LevelEditCommand
     {
         private List<ItemData> m_itemDatas = new List<ItemData>();
         private List<Quaternion> m_lastRotation = new List<Quaternion>();

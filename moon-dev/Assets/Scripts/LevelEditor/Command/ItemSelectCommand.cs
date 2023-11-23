@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Frame.Static.Extensions;
 using UnityEngine;
-
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ItemSelectCommand : Command
+    public class ItemSelectCommand : LevelEditCommand
     {
         private ObservableList<ItemData> m_targetList;
         private OutlinePainter m_outlinePainter;

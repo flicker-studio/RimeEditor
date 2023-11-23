@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Frame.Tool.Pool;
 using UnityEngine;
-
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ItemCreateCommand : Command
+    public class ItemCreateCommand : LevelEditCommand
     {
         private ItemProduct m_itemProduct;
         private ItemData m_itemData;
