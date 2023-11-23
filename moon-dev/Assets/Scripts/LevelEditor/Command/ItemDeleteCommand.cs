@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Frame.Tool.Pool;
 using UnityEngine;
-
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ItemDeleteCommand : Command
+    public class ItemDeleteCommand : LevelEditCommand
     {
         private ObservableList<ItemData> m_targetAssets;
         private ObservableList<ItemData> m_itemAssets;

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ItemScaleCommand : Command
+    public class ItemScaleCommand : LevelEditCommand
     {
         private List<ItemData> m_itemDatas = new List<ItemData>();
         private List<Vector3> m_lastScale = new List<Vector3>();

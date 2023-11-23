@@ -2,7 +2,7 @@ using Frame.Tool;
 
 namespace LevelEditor
 {
-    public abstract class Command : ICommand
+    public abstract class LevelEditCommand : ICommand
     {
         public abstract void Execute();
 

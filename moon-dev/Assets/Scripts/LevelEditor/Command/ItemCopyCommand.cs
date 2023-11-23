@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Frame.Static.Extensions;
 using UnityEngine;
-
+using Frame.Tool;
 namespace LevelEditor
 {
-    public class ItemCopyCommand : Command
+    public class ItemCopyCommand : LevelEditCommand
     {
         private List<ItemData> m_copyTarget = new List<ItemData>();
         private List<ItemData> m_saveDatas = new List<ItemData>();
