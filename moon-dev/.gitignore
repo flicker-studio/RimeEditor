@@ -85,9 +85,6 @@ crashlytics-build.properties
 ## Docfx release folder
 /[Bb]in/
 
-## JetBrains Rider
-*.idea/
-
 ## Editor Plugin
 /Assets/Plugins/RainbowFolders
 /Assets/Plugins/RainbowFolders.meta
