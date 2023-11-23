@@ -90,6 +90,14 @@ namespace LevelEditor
         static void ResetMyStaticVar()
         {
             m_isInit = true;
+            m_searchItemGroupObj = null;
+            m_itemDictionary = null;
+            m_itemGroupObjList = null;
+            m_searchItemTypeButton = null;
+            m_itemTypeList = null;
+            m_itemProductButtonList = null;
+            m_searchItemProductDic.Clear();
+            m_searchItemProduct.Clear();
         }
         
         public ItemWarehousePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
@@ -252,7 +260,6 @@ namespace LevelEditor
             {
                 foreach (var itemProductButton in itemProductPair.Value)
                 {
-                    itemProductButton.Remove();
                     m_itemProductButtonList.Remove(itemProductButton);
                 }
             }
