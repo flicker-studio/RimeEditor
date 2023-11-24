@@ -9,6 +9,7 @@ namespace Frame.Tool
         public static InputManager Instance => Singleton;
     protected override void OnInit()
     {
+        base.OnInit();
         #region MotionActions
 
         GetPlayerActions.Move.performed += context =>
