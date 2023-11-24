@@ -184,6 +184,22 @@ namespace LevelEditor
             public string POSITION_AXIS_XY{ get; private set; }
             [field:SerializeField,CustomLabel("旋转轴UI名字")]
             public string ROTATION_AXIS{ get; private set; }
+            [field:SerializeField,CustomLabel("缩放轴UI名字")]
+            public string SCALE_AXIS{ get; private set; }
+            [field:SerializeField,CustomLabel("缩放轴X名字")]
+            public string SCALE_AXIS_X{ get; private set; }
+            [field:SerializeField,CustomLabel("缩放轴Y名字")]
+            public string SCALE_AXIS_Y{ get; private set; }
+            [field:SerializeField,CustomLabel("缩放轴XY名字")]
+            public string SCALE_AXIS_XY{ get; private set; }
+            [field:SerializeField,CustomLabel("缩放轴X头部名字")]
+            public string SCALE_AXIS_X_HEAD{ get; private set; }
+            [field:SerializeField,CustomLabel("缩放轴X躯干名字")]
+            public string SCALE_AXIS_X_BODY{ get; private set; }
+            [field:SerializeField,CustomLabel("缩放轴Y头部名字")]
+            public string SCALE_AXIS_Y_HEAD{ get; private set; }
+            [field:SerializeField,CustomLabel("缩放轴Y躯干名字")]
+            public string SCALE_AXIS_Y_BODY{ get; private set; }
         }
         
         [Serializable]

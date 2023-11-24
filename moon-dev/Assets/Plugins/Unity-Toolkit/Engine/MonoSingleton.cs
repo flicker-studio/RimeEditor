@@ -80,6 +80,7 @@ namespace UnityToolkit
 
         protected virtual void OnInit()
         {
+            gameObject.hideFlags = HideFlags.HideInHierarchy;
         }
 
         protected virtual void OnDispose()

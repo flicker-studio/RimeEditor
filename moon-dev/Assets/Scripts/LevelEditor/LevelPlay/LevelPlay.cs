@@ -4,8 +4,10 @@ using Frame.Tool;
 
 namespace LevelEditor
 {
-    public class LevelPlay : Singleton<LevelPlay>
+    public class LevelPlay : UnityToolkit.MonoSingleton<LevelPlay>,UnityToolkit.IAutoCreateSingleton
     {
+        public static LevelPlay Instance => Singleton;
+        
         private List<LevelData> m_levelDatas = new List<LevelData>();
 
         private LevelData currentLevel;
