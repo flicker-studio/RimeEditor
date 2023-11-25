@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityToolkit;
 
-namespace Moon.Transition
+namespace Moon
 {
     public class WallTransition : ITransition<Robot>
     {
@@ -11,7 +11,7 @@ namespace Moon.Transition
             type = null;
             Vector2 direction = owner.model.facingDir;
             int count = RayCaster2D.RaycastNonAlloc(owner.transform.position, direction, out var results,
-                owner.config.wallCheckDistance, owner.config.wallLayer);
+                owner.config.facingCheckDistance, owner.config.wallLayer);
             
             // 巡逻状态下，如果碰到墙壁，就切换方向
             if (stateMachine.CurrentState is PatrolState && count > 0)

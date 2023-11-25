@@ -2,6 +2,9 @@
 
 namespace Moon
 {
+    /// <summary>
+    /// 切换朝向状态
+    /// </summary>
     public class SwitchFacingState : State<Robot>
     {
         public override void OnEnter(Robot owner)
