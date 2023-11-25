@@ -12,6 +12,27 @@ namespace Moon
         [field: SerializeReference] internal TriggerEnter2D topTrigger { get; private set; } // 头顶碰撞盒 用于判断玩家是否踩到了机器人
         [SerializeField] internal RobotConfig config;
         [SerializeField] internal RobotModel model;
+        [SerializeField] internal Transform followTarget;
+
+
+        #region InitMethods
+
+        private void _InitStateMachine()
+        {
+            m_stateMachine = new RobotStateMachine(this);
+            // 所有的状态
+            m_stateMachine.Add<PatrolState>();
+            m_stateMachine.Add<SwitchFacingState>();
+            m_stateMachine.Add<FlusteredState>();
+            m_stateMachine.Add<FollowState>();
+            // 状态切换
+            m_stateMachine.AddTransition<WallTransition>();
+            m_stateMachine.AddTransition<FollowTransition>();
+            // 默认状态
+            m_stateMachine.Start<FlusteredState>();
+        }
+
+        #endregion
 
         private void Awake()
         {
@@ -25,21 +46,20 @@ namespace Moon
         private void Start()
         {
             // StateMachine Init
-            m_stateMachine = new RobotStateMachine(this);
-            // 所有的状态
-            m_stateMachine.Add<PatrolState>();
-            m_stateMachine.Add<SwitchFacingState>();
-            m_stateMachine.Add<FlusteredState>();
-            // 状态切换
-            m_stateMachine.AddTransition<WallTransition>();
-            // 默认状态
-            m_stateMachine.Start<FlusteredState>();
+            _InitStateMachine();
         }
+
 
         private void Update()
         {
             m_stateMachine.OnUpdate();
             m_stateMachine.OnTransition();
+        }
+        
+        public void SetFollowTarget(Transform target)
+        {
+            followTarget = target;
+            m_stateMachine.Change<FollowState>();
         }
 
 #if UNITY_EDITOR

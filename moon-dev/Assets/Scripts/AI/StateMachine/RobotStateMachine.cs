@@ -14,8 +14,8 @@ namespace Moon
 
         private void TopEnter2D(Collider2D collider)
         {
-            if (!collider.CompareTag(Owner.config.playerTag)) return;
-            Debug.Log("TopEnter2D");
+            if (!collider.CompareTag(Owner.config.playerTag)) return;// 头被玩家踩到
+            // Debug.Log("TopEnter2D");
             if (CurrentState is FlusteredState)
             {
                 Change<PatrolState>();
