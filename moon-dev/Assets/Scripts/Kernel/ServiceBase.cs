@@ -1,4 +1,4 @@
-﻿namespace Moon.Runtime.System
+﻿namespace Moon.Kernel
 {
     /// <summary>
     ///     Provides a base class for the service that will exist as part of the service application.

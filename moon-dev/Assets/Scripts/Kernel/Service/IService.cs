@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Moon.Runtime.System
+namespace Moon.Kernel.Service
 {
     /// <summary>
     ///     System service interface. This interface allows users to create long-running, executable applications in .
