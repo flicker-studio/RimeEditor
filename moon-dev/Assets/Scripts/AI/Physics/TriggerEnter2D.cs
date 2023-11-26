@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Moon
 {
+
+
+    
     [RequireComponent(typeof(Collider2D))]
     public class TriggerEnter2D : MonoBehaviour
     {
