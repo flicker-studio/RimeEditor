@@ -8,16 +8,17 @@ namespace Moon
     public class Robot : MonoBehaviour
     {
         private RobotStateMachine m_stateMachine;
-
+        
         internal MeshRenderer meshRenderer { get; private set; }
         [field: SerializeReference] internal TriggerEnter2D headTrigger { get; private set; } // 头顶碰撞盒 用于判断玩家是否踩到了机器人
-
+        
+        [field: SerializeField] internal Animator animator { get; private set; }
         [SerializeField] internal RobotConfig config;
         [SerializeField] internal Rigidbody2D rb2D; // 被射击时，用来模拟运动的刚体
         [SerializeField] internal RobotModel model;
 
 
-        private Transform m_followTarget; // 跟随状态下 跟随的Transform
+        internal Transform followTarget;
         private Transform m_collectorTransform; // 收纳状态下 收纳者的Transform
 
 
@@ -71,7 +72,7 @@ namespace Moon
 
         public void SetFollowTarget(Transform target)
         {
-            m_followTarget = target;
+            followTarget = target;
             m_stateMachine.Change<FollowState>();
         }
 
@@ -90,11 +91,19 @@ namespace Moon
         }
 
 
+        /// <summary>
+        /// TODO 将拍摄的数据存储到Robot里
+        /// </summary>
+        public void StoreData(object data)
+        {
+            throw new NotImplementedException();
+        }
+
 #if UNITY_EDITOR
-        [Header("Debug")]
-        public bool enableDebug = true;
+        [Header("Debug")] public bool enableDebug = false;
         public Transform debugTarget;
         public Transform debugCollector;
+        public Vector2 debugShotForce = Vector2.one * 7;
 
         private void OnGUI()
         {
@@ -104,6 +113,9 @@ namespace Moon
             GUILayout.Label($"State:{m_stateMachine.CurrentState.GetType().Name}");
             foreach (var state in m_stateMachine.GetAll())
             {
+                if(state.GetType() == typeof(FollowState))continue;
+                if(state.GetType() == typeof(BeCollectedState))continue;
+                if(state.GetType() == typeof(BeShotState))continue;
                 // Debug.Log(state.GetType().Name);
                 if (GUILayout.Button(state.GetType().Name))
                 {
@@ -113,20 +125,20 @@ namespace Moon
 
             // 发射按钮
             GUILayout.BeginHorizontal();
-            Vector2 flyForce = UnityEditor.EditorGUILayout.Vector2Field("FlyForce", Vector2.one * 7);
+            Vector2 flyForce = UnityEditor.EditorGUILayout.Vector2Field("FlyForce", debugShotForce);
             if (GUILayout.Button("Shot"))
             {
                 BeShot(transform.position, flyForce);
             }
 
             GUILayout.EndHorizontal();
-            
-            if(GUILayout.Button("BeCollected") && debugCollector != null)
+
+            if (GUILayout.Button("BeCollected") && debugCollector != null)
             {
                 BeCollected(debugCollector);
             }
-            
-            if(GUILayout.Button("Follow") && debugTarget != null)
+
+            if (GUILayout.Button("Follow") && debugTarget != null)
             {
                 SetFollowTarget(debugTarget);
             }
@@ -162,15 +174,21 @@ namespace Moon
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(position + Vector3.up * config.topOffsetY, 0.1f);
 
-            
-            
+
             Gizmos.color = Color.yellow;
-            
+
             // 画出跟随状态下的跟随目标
             if (enableDebug && debugTarget != null)
             {
                 Gizmos.DrawSphere(debugTarget.position, 0.1f);
             }
+            
+            // 画出跟随的最小距离圈
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(position, config.followDistance.x);
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(position, config.followDistance.y);
         }
 #endif
     }

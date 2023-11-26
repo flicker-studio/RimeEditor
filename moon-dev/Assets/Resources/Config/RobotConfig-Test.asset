@@ -26,3 +26,5 @@ MonoBehaviour:
   playerTag: Player
   topOffsetY: 0.5
   groundCheckDistance: 0.6
+  followDistance: {x: 1, y: 1.5}
+  followSpeed: 5

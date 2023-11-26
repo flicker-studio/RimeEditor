@@ -13,7 +13,7 @@
 
         public override void OnUpdate(Robot owner)
         {
-            if (owner.rb2D.velocity.magnitude < GameConst.TOLERANCE)
+            if (owner.rb2D.velocity.magnitude < GameConst.Tolerance)
             {
                 m_canSwitch = true;
                 return;

@@ -2,6 +2,6 @@
 {
     public static class GameConst
     {
-        public const float TOLERANCE = 0.001f;
+        public const float Tolerance = 0.001f;
     }
 }
