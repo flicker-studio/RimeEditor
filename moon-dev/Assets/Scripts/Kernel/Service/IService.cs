@@ -9,17 +9,16 @@ namespace Moon.Kernel.Service
     /// <remarks>Services are ideal for situations where long-running functionality is required.</remarks>
     public interface IService
     {
-        //TODO: Pause and restart function
         /// <summary>
         ///     Start the service, allocate system resources.
         /// </summary>
         /// <returns>The task at the end</returns>
-        public Task StartTask();
+        public Task Run();
 
         /// <summary>
-        ///     Stop the service, release all the held resources.
+        ///     Abort the service, release all the held resources.
         /// </summary>
         /// <returns>The task at the end</returns>
-        public Task AbortTask();
+        public Task Abort();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Moon.Kernel.Service;
+using SCM = Moon.Kernel.Service.ServiceControlManager;
 
 namespace Moon.Kernel
 {
@@ -10,7 +11,7 @@ namespace Moon.Kernel
     /// </summary>
     public static class Explorer
     {
-        private static IEnumerable<IService> Services => Boot.SystemServices;
+        private static IEnumerable<IService> Services => SCM.RunningServices;
         private static readonly Dictionary<Type, IService> ServicesCache = new();
 
         /// <summary>

@@ -4,40 +4,49 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using UnityEngine.Events;
+using JetBrains.Annotations;
 using UnityEngine.SceneManagement;
 
 namespace Moon.Kernel.Service
 {
-    /// <inheritdoc />
     /// <summary>
     ///     Use this class to switch scenes
     /// </summary>
-    public sealed class SceneService : IService
+    /// <inheritdoc cref="Moon.Kernel.Service.IService" />
+    [UsedImplicitly]
+    public sealed class SceneService : ServiceBase, IService
     {
         /// <summary>
         ///     Get the currently active scene
         /// </summary>
         public Scene ActiveScene => m_activeScene;
 
+        private readonly bool m_isInstanced;
+
         private Scene m_activeScene;
 
         private readonly List<string> m_sceneNameList = new();
 
 
-        /// <inheritdoc />
-        public async Task StartTask()
-        {
-            var tasks = new List<UniTask> { VariableInitialization(), Fun() };
+       
 
-            await UniTask.WhenAll(tasks);
+        #region API
+
+        /// <inheritdoc />
+        public async Task Run()
+        {
+            var uniTasks = new List<UniTask> { VariableInitialization(), Fun() };
+
+            await UniTask.WhenAll(uniTasks);
+            await Task.Run(OnStart);
         }
 
         /// <inheritdoc />
-        public async Task AbortTask()
+        public Task Abort()
         {
-            await Task.CompletedTask;
+            return Task.Run(OnStop);
         }
+
 
         /// <summary>
         ///     Unload tag scene and load next scene asynchronously
@@ -47,7 +56,7 @@ namespace Moon.Kernel.Service
         /// <param name="postAction">method to do after switch</param>
         /// <param name="unloadName">scene name to unload, default is the active scene</param>
         /// <exception cref="Exception"> </exception>
-        public async UniTask TransitionScene(string loadName, UnityAction postAction, string unloadName = null)
+        public async UniTask TransitionScene(string loadName,Action postAction, string unloadName = null)
         {
             unloadName ??= m_activeScene.name;
 
@@ -68,6 +77,24 @@ namespace Moon.Kernel.Service
             postAction?.Invoke();
         }
 
+        #endregion
+
+        /// <inheritdoc />
+        protected override void OnStart()
+        {
+        }
+
+        /// <inheritdoc />
+        protected override void OnStop()
+        {
+            Dispose(true);
+        }
+
+        /// <inheritdoc />
+        protected override void Dispose(bool all)
+        {
+            throw new NotImplementedException();
+        }
 
         private async UniTask VariableInitialization()
         {

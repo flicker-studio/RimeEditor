@@ -21,7 +21,7 @@ namespace Test.Kernel.Service
                 try
                 {
                     var trans = Explorer.TryGetService<SceneService>();
-                    await trans.StartTask();
+                    await trans.Run();
                     await trans.TransitionScene("TestScene", Action);
 
                     var sceneName = trans.ActiveScene.name;
