@@ -6,8 +6,7 @@ using UnityEngine.TestTools;
 
 namespace Test.Kernel
 {
-    [Author("Mors")]
-    [TestOf(nameof(Explorer))]
+    [Author("Mors"), TestOf(nameof(Explorer)), TestFixture]
     internal class ExplorerTest
     {
         [UnityTest]
