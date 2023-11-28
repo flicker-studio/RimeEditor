@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
@@ -24,16 +25,26 @@ namespace LevelEditor
         private GameObject GetPositionAxisObj => GetControlHandlePanel.GetPositionRect.gameObject;
     
         private GameObject GetRotationAxisObj => GetControlHandlePanel.GetRotationRect.gameObject;
+        
+        private GameObject GetScaleAxisObj => GetControlHandlePanel.GetScaleRect.gameObject;
     
         private bool GetPositionAxisXButtonDown => GetControlHandlePanel.GetPositionInputXDown;
         
         private bool GetPositionAxisYButtonDown => GetControlHandlePanel.GetPositionInputYDown;
         
         private bool GetPositionAxisXYButtonDown => GetControlHandlePanel.GetPositionInputXYDown;
+
+        private bool GetScaleAxisXButtonDown => GetControlHandlePanel.GetScaleInputXDown;
+        
+        private bool GetScaleAxisYButtonDown => GetControlHandlePanel.GetScaleInputYDown;
+        
+        private bool GetScaleAxisXYButtonDown => GetControlHandlePanel.GetScaleInputXYDown;
     
         private bool GetPositionAxisButtonDown => GetPositionAxisXYButtonDown || GetPositionAxisXButtonDown || GetPositionAxisYButtonDown;
     
         private bool GetRotationAxisZButtonDown => GetControlHandlePanel.GetRotationInputZDown;
+
+        private bool GetScaleAxisButtonDown => GetScaleAxisXButtonDown || GetScaleAxisYButtonDown || GetScaleAxisXYButtonDown;
 
         private List<ItemData> m_copyDatas = new List<ItemData>();
         
@@ -84,6 +95,14 @@ namespace LevelEditor
                     ChangeMotionState(typeof(RotationAxisDragState));
                 }
             }
+
+            if (GetScaleAxisButtonDown)
+            {
+                if (!CheckStates.Contains(typeof(ScaleAxisDragState)))
+                {
+                    ChangeMotionState(typeof(ScaleAxisDragState));
+                }
+            }
             
             if (GetInput.GetCtrlButton && GetInput.GetCButtonDown)
             {
@@ -107,10 +126,11 @@ namespace LevelEditor
             {
                 case CONTROLHANDLEACTIONTYPE.PositionAxisButton:
                     GetRotationAxisObj.SetActive(false);
-                    GetPositionAxisObj.transform.position = Camera.main
-                        .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
+                    GetScaleAxisObj.SetActive(false);
                     if (GetData.TargetObjs.Count > 0)
                     {
+                        GetPositionAxisObj.transform.position = Camera.main
+                            .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
                         GetPositionAxisObj.SetActive(true);
                     }
                     else
@@ -120,10 +140,11 @@ namespace LevelEditor
                     break;
                 case CONTROLHANDLEACTIONTYPE.RotationAxisButton:
                     GetPositionAxisObj.SetActive(false);
-                    GetRotationAxisObj.transform.position = Camera.main
-                        .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
+                    GetScaleAxisObj.SetActive(false);
                     if (GetData.TargetObjs.Count > 0)
                     {
+                        GetRotationAxisObj.transform.position = Camera.main
+                            .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
                         GetRotationAxisObj.SetActive(true);
                     }
                     else
@@ -131,9 +152,25 @@ namespace LevelEditor
                         GetRotationAxisObj.SetActive(false);
                     }
                     break;
+                case CONTROLHANDLEACTIONTYPE.ScaleAxisButton:
+                    GetPositionAxisObj.SetActive(false);
+                    GetRotationAxisObj.SetActive(false);
+                    if (GetData.TargetObjs.Count > 0)
+                    {
+                        GetScaleAxisObj.transform.position = Camera.main
+                            .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
+                        GetScaleAxisObj.transform.rotation = GetData.TargetObjs.Last().transform.rotation;
+                        GetScaleAxisObj.SetActive(true);
+                    }
+                    else
+                    {
+                        GetScaleAxisObj.SetActive(false);
+                    }
+                    break;
                 case CONTROLHANDLEACTIONTYPE.ViewButton:
                     GetPositionAxisObj.SetActive(false);
                     GetRotationAxisObj.SetActive(false);
+                    GetScaleAxisObj.SetActive(false);
                     break;
             }
         }

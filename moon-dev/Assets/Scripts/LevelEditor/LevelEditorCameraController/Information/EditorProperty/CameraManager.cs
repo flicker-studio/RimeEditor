@@ -28,6 +28,11 @@ namespace LevelEditor
         public Vector3 GetMouseWorldPoint =>
             Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Mathf.Abs(Camera.main.transform.position.z)));
 
+        public Vector3 GetScreenWorldPoint(Vector3 sreenPoint)
+        {
+            return Camera.main.ScreenToWorldPoint(sreenPoint.NewZ(Mathf.Abs(Camera.main.transform.position.z)));
+        }
+        
         private OutlinePainter m_outlinePainter;
 
         private CameraProperty m_cameraProperty;

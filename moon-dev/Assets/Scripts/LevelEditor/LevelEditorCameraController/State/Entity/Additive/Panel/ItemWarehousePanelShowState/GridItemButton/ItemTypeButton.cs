@@ -1,5 +1,5 @@
 using System;
-using Frame.Data;
+using Frame.CompnentExtensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

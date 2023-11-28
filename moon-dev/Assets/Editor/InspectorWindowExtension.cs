@@ -91,7 +91,7 @@ namespace WindowExtension
         string GeneratePath(Transform transform)
         {
             string path = transform.name;
-            while (transform.parent != null)
+            while (transform.parent != null && transform.parent.GetComponent<RectTransform>() != null)
             {
                 transform = transform.parent;
                 path = transform.name + "/" + path;

@@ -3,7 +3,7 @@ using Frame.Tool.Pool;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Frame.Data
+namespace Frame.CompnentExtensions
 {
     public abstract class GridItemButton
     {
