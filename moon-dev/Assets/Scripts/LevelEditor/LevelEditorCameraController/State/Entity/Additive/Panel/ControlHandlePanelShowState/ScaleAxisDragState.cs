@@ -181,8 +181,8 @@ namespace LevelEditor
         
         private Vector3 GetXYAxisScaleDir(Vector2 mouseSumVector)
         {
-            float upperRightProjectLength = Vector3.Dot(mouseSumVector, mouseSumVector.NewX(1).NewY(1));
-            float lowerLeftProjectLength = Vector3.Dot(mouseSumVector, mouseSumVector.NewX(-1).NewY(-1));
+            float upperRightProjectLength = Vector3.Dot(mouseSumVector, (GetScaleRect.up + GetScaleRect.right).normalized);
+            float lowerLeftProjectLength = Vector3.Dot(mouseSumVector, -(GetScaleRect.up + GetScaleRect.right).normalized);
             if (upperRightProjectLength >= lowerLeftProjectLength)
             {
                 return mouseSumVector.NewX(1).NewY(1);
@@ -213,7 +213,9 @@ namespace LevelEditor
                         + Vector3.Project(positionOffset,GetScaleRect.up)* (rate.y - 1);
                     break;
                 case SCALEDRAGTYPE.XYAxis:
-                    rate = Vector3.one + GetScaleSpeed * (currentMouseProject - originMouseProject);
+                    rate = originMouseProject.y > 0
+                        ? Vector3.one + GetScaleSpeed * (currentMouseProject - originMouseProject)
+                        : Vector3.one + GetScaleSpeed * (originMouseProject - currentMouseProject);
                     newScale = m_targetOriginScale[index].HadamardProduct(rate.NewZ(1));
                     newPosition = m_centerPosition + positionOffset.HadamardProduct(rate.NewZ(1));
                     break;
@@ -292,7 +294,7 @@ namespace LevelEditor
                         .NewY(Mathf.Abs(GetScaleYAxisRect.anchoredPosition.y * 2));
                     break;
                 case SCALEDRAGTYPE.XYAxis:
-                    axisDir = Vector3.Dot(mouseProjectDir, GetScaleRect.right) >= 0 ? 1 : -1;
+                    axisDir = Vector3.Dot(mouseProjectDir, (GetScaleRect.right + GetScaleRect.up).normalized) >= 0 ? 1 : -1;
                     GetScaleYAxisRect.anchoredPosition = GetScaleYAxisRect.anchoredPosition
                         .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y + axisDir * mouseProjectDir.magnitude/2));
                     if (GetScaleYAxisRect.anchoredPosition.y >= 0)

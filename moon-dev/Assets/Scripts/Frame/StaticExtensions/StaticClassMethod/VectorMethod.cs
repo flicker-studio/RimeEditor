@@ -135,6 +135,11 @@ namespace Frame.Static.Extensions
     {
         return new Vector2(a.x / b.x, a.y / b.y);
     }
+
+    public static Vector3 Abs(this Vector3 value)
+    {
+        return new Vector3(Mathf.Abs(value.x), Mathf.Abs(value.y),Mathf.Abs(value.z));
+    }
 }
 
 }
