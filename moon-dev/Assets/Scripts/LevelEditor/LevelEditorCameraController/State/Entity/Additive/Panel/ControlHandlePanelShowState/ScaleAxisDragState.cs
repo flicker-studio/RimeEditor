@@ -213,7 +213,7 @@ namespace LevelEditor
                         + Vector3.Project(positionOffset,GetScaleRect.up)* (rate.y - 1);
                     break;
                 case SCALEDRAGTYPE.XYAxis:
-                    rate = originMouseProject.y > 0
+                    rate = GetScaleRect.up.y > 0
                         ? Vector3.one + GetScaleSpeed * (currentMouseProject - originMouseProject)
                         : Vector3.one + GetScaleSpeed * (originMouseProject - currentMouseProject);
                     newScale = m_targetOriginScale[index].HadamardProduct(rate.NewZ(1));
