@@ -124,70 +124,6 @@ namespace LevelEditor
             UpdateScale();
         }
         
-        private void UpdateScale()
-        {
-            if(m_waitToNextFrame.GetFlag) return;
-            Vector2 mouseSumVector = Vector2.zero;
-            foreach (var posVector in m_mousePosVectorList)
-            {
-                mouseSumVector += posVector;
-            }
-            m_currentMousePosition = GetMousePosition;
-            mouseSumVector += m_currentMousePosition - m_originMousePosition;
-            for (var i = 0; i < TargetObjs.Count; i++)
-            {
-                Vector3 currentMouseProject = Vector3.zero;
-                Vector3 originMouseProject = Vector3.zero;
-                Vector3 scaleDir;
-                Vector3 positionOffset;
-                Vector3 rate;
-                positionOffset = m_targetOriginPosition[i] - m_centerPosition;
-                switch (m_scaleDragType)
-                {
-                    case SCALEDRAGTYPE.XAxis:
-                        scaleDir = GetScaleRect.transform.right;
-                        currentMouseProject = Vector3.Project(mouseSumVector,scaleDir);
-                        originMouseProject = Vector3.Project(m_originMouseSumVector,scaleDir);
-                        rate = currentMouseProject.DivideVector(originMouseProject);
-                        TargetObjs[i].transform.localScale = m_targetOriginScale[i].HadamardProduct(rate).NewY(1).NewZ(1);
-                        TargetObjs[i].transform.position = m_centerPosition + positionOffset 
-                            + Vector3.Project(positionOffset,GetScaleRect.right)* (rate.x - 1);
-                        break;
-                    case SCALEDRAGTYPE.YAxis:
-                        scaleDir = GetScaleRect.transform.up;
-                        currentMouseProject = Vector3.Project(mouseSumVector,scaleDir);
-                        originMouseProject = Vector3.Project(m_originMouseSumVector,scaleDir);
-                        rate = currentMouseProject.DivideVector(originMouseProject);
-                        TargetObjs[i].transform.localScale = m_targetOriginScale[i].HadamardProduct(rate.NewX(1).NewZ(1));
-                        TargetObjs[i].transform.position = m_centerPosition + positionOffset 
-                            + Vector3.Project(positionOffset,GetScaleRect.up)* (rate.y - 1);
-                        break;
-                    case SCALEDRAGTYPE.XYAxis:
-                        float upperRightProjectLength = Vector3.Dot(mouseSumVector, mouseSumVector.NewX(1).NewY(1));
-                        float lowerLeftProjectLength = Vector3.Dot(mouseSumVector, mouseSumVector.NewX(-1).NewY(-1));
-                        if (upperRightProjectLength >= lowerLeftProjectLength)
-                        {
-                            currentMouseProject = Vector3.Project(mouseSumVector, mouseSumVector.NewX(1).NewY(1));
-                            originMouseProject = Vector3.Project(m_originMouseSumVector, mouseSumVector.NewX(1).NewY(1));
-                        }
-                        else
-                        {
-                            currentMouseProject = Vector3.Project(mouseSumVector, mouseSumVector.NewX(-1).NewY(-1));
-                            originMouseProject = Vector3.Project(m_originMouseSumVector, mouseSumVector.NewX(-1).NewY(-1));
-                        }
-                        rate = Vector3.one + GetScaleSpeed * (currentMouseProject - originMouseProject);
-                        TargetObjs[i].transform.localScale = m_targetOriginScale[i].HadamardProduct(rate.NewZ(1));
-                        TargetObjs[i].transform.position = m_centerPosition + positionOffset.HadamardProduct(rate.NewZ(1));
-                        break;
-                }
-                
-                ChangeAxisScale(originMouseProject, currentMouseProject);
-    
-                TargetObjs[i].transform.localScale = TargetObjs[i].transform.localScale.NewX((float)Math.Round(TargetObjs[i].transform.localScale.x,2))
-                    .NewY((float)Math.Round(TargetObjs[i].transform.localScale.y,2));
-            }
-        }
-        
         private void StateInit()
         {
             InitDragType();
@@ -203,6 +139,91 @@ namespace LevelEditor
             GetScaleYAxisRect.sizeDelta = m_scaleAxisYOriginSize;
             GetScaleXAxisRect.localRotation = Quaternion.identity;
             GetScaleYAxisRect.localRotation = Quaternion.identity;
+        }
+        
+        private void UpdateScale()
+        {
+            if(m_waitToNextFrame.GetFlag) return;
+            
+            Vector2 mouseSumVector = Vector2.zero;
+            foreach (var posVector in m_mousePosVectorList)
+            {
+                mouseSumVector += posVector;
+            }
+            m_currentMousePosition = GetMousePosition;
+            mouseSumVector += m_currentMousePosition - m_originMousePosition;
+        
+            Vector3 scaleDir = Vector3.zero;
+            Vector3 currentMouseProject;
+            Vector3 originMouseProject;
+        
+            switch (m_scaleDragType)
+            {
+                case SCALEDRAGTYPE.XAxis:
+                    scaleDir = GetScaleRect.transform.right;
+                    break;
+                case SCALEDRAGTYPE.YAxis:
+                    scaleDir = GetScaleRect.transform.up;
+                    break;
+                case SCALEDRAGTYPE.XYAxis:
+                    scaleDir = GetXYAxisScaleDir(mouseSumVector);
+                    break;
+            }
+        
+            currentMouseProject = Vector3.Project(mouseSumVector, scaleDir);
+            originMouseProject = Vector3.Project(m_originMouseSumVector, scaleDir);
+        
+            for (var i = 0; i < TargetObjs.Count; i++)
+            {
+                ApplyScaleToTarget(currentMouseProject, originMouseProject, i);
+            }
+        }
+        
+        private Vector3 GetXYAxisScaleDir(Vector2 mouseSumVector)
+        {
+            float upperRightProjectLength = Vector3.Dot(mouseSumVector, mouseSumVector.NewX(1).NewY(1));
+            float lowerLeftProjectLength = Vector3.Dot(mouseSumVector, mouseSumVector.NewX(-1).NewY(-1));
+            if (upperRightProjectLength >= lowerLeftProjectLength)
+            {
+                return mouseSumVector.NewX(1).NewY(1);
+            }
+            else
+            {
+                return mouseSumVector.NewX(-1).NewY(-1);
+            }
+        }
+        
+        private void ApplyScaleToTarget(Vector3 currentMouseProject, Vector3 originMouseProject, int index)
+        {
+            Vector3 positionOffset = m_targetOriginPosition[index] - m_centerPosition;
+            Vector3 rate = currentMouseProject.DivideVector(originMouseProject);
+            Vector3 newScale = Vector3.zero;
+            Vector3 newPosition = Vector3.zero;
+        
+            switch (m_scaleDragType)
+            {
+                case SCALEDRAGTYPE.XAxis:
+                    newScale = m_targetOriginScale[index].HadamardProduct(rate.NewY(1).NewZ(1));
+                    newPosition = m_centerPosition + positionOffset 
+                        + Vector3.Project(positionOffset,GetScaleRect.right)* (rate.x - 1);
+                    break;
+                case SCALEDRAGTYPE.YAxis:
+                    newScale = m_targetOriginScale[index].HadamardProduct(rate.NewX(1).NewZ(1));
+                    newPosition = m_centerPosition + positionOffset 
+                        + Vector3.Project(positionOffset,GetScaleRect.up)* (rate.y - 1);
+                    break;
+                case SCALEDRAGTYPE.XYAxis:
+                    rate = Vector3.one + GetScaleSpeed * (currentMouseProject - originMouseProject);
+                    newScale = m_targetOriginScale[index].HadamardProduct(rate.NewZ(1));
+                    newPosition = m_centerPosition + positionOffset.HadamardProduct(rate.NewZ(1));
+                    break;
+            }
+        
+            ChangeAxisScale(originMouseProject, currentMouseProject);
+        
+            TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x,2))
+                .NewY((float)Math.Round(newScale.y,2));
+            TargetObjs[index].transform.position = newPosition;
         }
 
         private void InitDragType()
