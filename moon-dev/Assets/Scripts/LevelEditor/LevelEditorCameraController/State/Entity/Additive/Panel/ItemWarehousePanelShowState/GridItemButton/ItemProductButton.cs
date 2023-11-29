@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Frame.Data;
+using Frame.CompnentExtensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

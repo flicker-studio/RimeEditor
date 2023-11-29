@@ -45,6 +45,9 @@ namespace LevelEditor
             [field:SerializeField,Header("旋转轴属性")] 
             public RotationDragProperty GetRotationDragProperty{ get; private set; }
             
+            [field:SerializeField,Header("缩放轴属性")] 
+            public ScaleDragProperty GetScaleDragProperty { get;private set; }
+            
             [field:SerializeField,Header("鼠标光标属性")]
             public MouseCursorProperty GetMouseCursorProperty { get; private set; }
         }
@@ -102,6 +105,16 @@ namespace LevelEditor
         {
             [field:SerializeField,CustomLabel("旋转轴拖拽速度"),Range(0.01f,1)]
             public float ROTATION_SPEED { get; private set; }
+        }
+        
+                
+        [Serializable]
+        public struct ScaleDragProperty
+        {
+            [field:SerializeField,CustomLabel("缩放轴拖拽速度"),Range(0.01f,1)]
+            public float SCALE_SPEED { get; private set; }
+            [field:SerializeField,CustomLabel("中心点轴显示补偿"),Range(0.01f,5)]
+            public float CENTER_AXIS_COMPENSATION { get; private set; }
         }
         
         [Serializable]

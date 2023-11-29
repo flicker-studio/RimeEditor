@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Frame.Data;
+using Frame.CompnentExtensions;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using Frame.Tool.Pool;

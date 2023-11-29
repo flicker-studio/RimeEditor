@@ -110,7 +110,36 @@ namespace Frame.Static.Extensions
         }
         return sum / points.Count;
     }
+    
+    public static Vector3 HadamardProduct(this Vector3 a, Vector3 b)
+    {
+        return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
+    }
 
+    public static Vector3 DivideVector(this Vector3 a, Vector3 b)
+    {
+        return new Vector3(a.x / b.x, a.y / b.y, a.z / b.z);
+    }
+    
+    public static Vector3 Pow(this Vector3 a, float pow)
+    {
+        return new Vector3(Mathf.Pow(a.x,pow), Mathf.Pow(a.y,pow), Mathf.Pow(a.z,pow));
+    }
+    
+    public static Vector2 HadamardProduct(this Vector2 a, Vector2 b)
+    {
+        return new Vector2(a.x * b.x, a.y * b.y);
+    }
+
+    public static Vector2 DivideVector(this Vector2 a, Vector2 b)
+    {
+        return new Vector2(a.x / b.x, a.y / b.y);
+    }
+
+    public static Vector3 Abs(this Vector3 value)
+    {
+        return new Vector3(Mathf.Abs(value.x), Mathf.Abs(value.y),Mathf.Abs(value.z));
+    }
 }
 
 }

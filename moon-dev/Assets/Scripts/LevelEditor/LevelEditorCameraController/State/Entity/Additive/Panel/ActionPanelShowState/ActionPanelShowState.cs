@@ -42,7 +42,11 @@ namespace LevelEditor
             }else if (GetViewButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ViewButton));
-            }else if (GetUndoButtonDown)
+            }else if (GetScaleButtonDown)
+            {
+                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ScaleAxisButton));
+            }
+            else if (GetUndoButtonDown)
             {
                 GetUndo?.Invoke();
             }else if (GetRedoButtonDown)

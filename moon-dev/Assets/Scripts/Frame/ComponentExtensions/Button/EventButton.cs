@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Frame.Data
+namespace Frame.CompnentExtensions
 {
     public class EventButton<T> where T : class
     {

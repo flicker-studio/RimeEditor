@@ -87,6 +87,8 @@ namespace LevelEditor
     {
         if (!GetScaleChange) return;
         List<Vector3> nextScale = new List<Vector3>();
+        List<Vector3> nextPosition = new List<Vector3>();
+        nextPosition.AddRange(m_lastPositon);
         Vector3 value = GetItemTransformPanel.GetScale;
         for (int i = 0; i < TargetObjs.Count; i++)
         {
@@ -95,7 +97,7 @@ namespace LevelEditor
                 float.IsNaN(value.y) ? target.transform.localScale.y : value.y,
                 float.IsNaN(value.z) ? target.transform.localScale.z : value.z));
         }
-        GetExcute?.Invoke(new ItemScaleCommand(TargetItems,m_lastScale,nextScale));
+        GetExcute?.Invoke(new ItemScaleCommand(TargetItems,m_lastPositon,nextPosition,m_lastScale,nextScale));
     }
 
     private (List<Vector3>, List<Quaternion>, List<Vector3>) GetTransformPropertyFromGameObjectList(
