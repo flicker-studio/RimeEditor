@@ -1,9 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using Data.ScriptableObject;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
+using Frame.Static.Global;
 using Frame.Tool;
+using Frame.Tool.Pool;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Slicer
 {
@@ -39,7 +43,10 @@ namespace Slicer
 
         public Vector2 GetSliceOffset => m_slicerProperty.SlicerMotion.SLICE_OFFSET;
         
-        public Vector3 GetMousePosition => Input.mousePosition;
+        
+        public Vector3 GetMousePosition => Mouse.current.position.ReadValue();
+        public Vector3 GetMouseWorldPoint =>
+            Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Mathf.Abs(Camera.main.transform.position.z)));
         
         public Vector3 GetDetectionRange => m_slicerProperty.SlicerSize.RANGE_OF_DETECTION;
     
@@ -53,7 +60,7 @@ namespace Slicer
 
         public int GetRotationThreshold =>  m_slicerProperty.SlicerMotion.ROTATION_THRESHOLD;
         
-        public bool GetNum1Down => InputManager.Instance.GetDebuggerNum1Down;
+        public bool GetMouseLeftButtonDown => InputManager.Instance.GetMouseLeftButtonDown;
 
         public bool GetRotationDirection { get; set; } = true;
     
@@ -91,6 +98,36 @@ namespace Slicer
             m_cutMaterial = Resources.Load<Material>("Materials/Test");
             m_transform = transform;
             m_playerTransform = playerTransform;
+        }
+
+        public void ResetCopy()
+        {
+            List<List<Collider2D>> colliderListGroup = TargetList.CheckColliderConnectivity(
+                GetDetectionCompensationScale
+                , GlobalSetting.LayerMasks.GROUND);
+
+            foreach (var collider in TargetList)
+            {
+                ObjectPool.Instance.OnRelease(collider.gameObject);
+            }
+
+            ObjectPool.Instance.OnReleaseAll(GetCombinationRigidbodyParentPrefab);
+
+            ObjectPool.Instance.OnReleaseAll(GetCombinationNotRigidbodyParentPrefab);
+
+            List<Collider2D> tempList = new List<Collider2D>();
+
+            foreach (var colliderList in colliderListGroup)
+            {
+                tempList.AddRange(colliderList);
+            }
+
+            tempList = tempList.Distinct().ToList();
+
+            foreach (var collider in TargetList)
+            {
+                tempList.Remove(collider);
+            }
         }
     }
 

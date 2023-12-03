@@ -11,7 +11,7 @@ namespace Slicer
         public override void Motion(BaseInformation information)
         {
             base.Motion(information);
-            if (m_slicerInformation.GetNum1Down)
+            if (m_slicerInformation.GetMouseLeftButtonDown)
             {
                 ChangeMotionState(typeof(SlicerCopyState));
                 RemoveState();

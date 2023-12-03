@@ -10,18 +10,23 @@ namespace Slicer
     
         private SlicerInformation m_slicerInformation;
 
-        [SerializeField] private Transform playerTransform;
+        public Transform PlayerTransform;
+
+        public void ResetCopy()
+        {
+            m_slicerInformation?.ResetCopy();
+        }
         
-    
         void ControllerInit()
         {
-            m_slicerInformation = new SlicerInformation(transform, playerTransform);
+            m_slicerInformation = new SlicerInformation(transform, PlayerTransform);
             m_motionController = new MotionController(m_slicerInformation);
         }
         
         private void MotionInit()
         {
             m_motionController.ChangeMotionState(typeof(SlicerMoveFollowState));
+            m_motionController.ChangeMotionState(typeof(SlicerCloseState));
         }
         
         private void Start()

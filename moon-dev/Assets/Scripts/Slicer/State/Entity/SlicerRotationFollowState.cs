@@ -32,7 +32,6 @@ namespace Slicer.State
         
         public SlicerRotationFollowState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
-            Debug.Log("旋转");
             m_originRotation = GetTransform.rotation;
             GetDirection = !GetDirection;
         }
