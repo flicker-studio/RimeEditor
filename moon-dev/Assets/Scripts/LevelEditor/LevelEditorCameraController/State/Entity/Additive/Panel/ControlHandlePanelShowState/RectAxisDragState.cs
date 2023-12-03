@@ -151,8 +151,6 @@ namespace LevelEditor
 
                 rate = rate.NewZ(1);
                 
-                Debug.Log(rate);
-                
                 newScale = m_targetOriginScale[index].HadamardProduct(rate);
                 
                 if (scaleDir != Vector3.one)
