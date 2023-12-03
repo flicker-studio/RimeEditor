@@ -27,6 +27,8 @@ namespace LevelEditor
         private GameObject GetRotationAxisObj => GetControlHandlePanel.GetRotationRect.gameObject;
         
         private GameObject GetScaleAxisObj => GetControlHandlePanel.GetScaleRect.gameObject;
+
+        private GameObject GetRectObj => GetControlHandlePanel.GetRectRect.gameObject;
     
         private bool GetPositionAxisXButtonDown => GetControlHandlePanel.GetPositionInputXDown;
         
@@ -39,6 +41,24 @@ namespace LevelEditor
         private bool GetScaleAxisYButtonDown => GetControlHandlePanel.GetScaleInputYDown;
         
         private bool GetScaleAxisXYButtonDown => GetControlHandlePanel.GetScaleInputXYDown;
+
+        private bool GetRectTopRightCornerInputDown => GetControlHandlePanel.GetRectTopRightCornerInputDown;
+
+        private bool GetRectTopLeftCornerInputDown => GetControlHandlePanel.GetRectTopLeftCornerInputDown;
+        
+        private bool GetRectBottomRightCornerInputDown => GetControlHandlePanel.GetRectBottomRightCornerInputDown;
+        
+        private bool GetRectBottomLeftCornerInputDown => GetControlHandlePanel.GetRectBottomLeftCornerInputDown;
+        
+        private bool GetRectTopEdgeInputDown => GetControlHandlePanel.GetRectTopEdgeInputDown;
+        
+        private bool GetRectRightEdgeInputDown => GetControlHandlePanel.GetRectRightEdgeInputDown;
+        
+        private bool GetRectBottomEdgeInputDown => GetControlHandlePanel.GetRectBottomEdgeInputDown;
+        
+        private bool GetRectLeftEdgeInputDown => GetControlHandlePanel.GetRectLeftEdgeInputDown;
+        
+        private bool GetRectCenterInputDown => GetControlHandlePanel.GetRectCenterInputDown;
     
         private bool GetPositionAxisButtonDown => GetPositionAxisXYButtonDown || GetPositionAxisXButtonDown || GetPositionAxisYButtonDown;
     
@@ -46,6 +66,12 @@ namespace LevelEditor
 
         private bool GetScaleAxisButtonDown => GetScaleAxisXButtonDown || GetScaleAxisYButtonDown || GetScaleAxisXYButtonDown;
 
+        private bool GetRectAxisButtonDowm => GetRectCenterInputDown || GetRectLeftEdgeInputDown ||
+                                              GetRectBottomEdgeInputDown || GetRectRightEdgeInputDown ||
+                                              GetRectTopEdgeInputDown || GetRectBottomLeftCornerInputDown ||
+                                              GetRectBottomRightCornerInputDown || GetRectTopLeftCornerInputDown ||
+                                              GetRectTopRightCornerInputDown;
+        
         private List<ItemData> m_copyDatas = new List<ItemData>();
         
         public ControlHandlePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
@@ -103,6 +129,14 @@ namespace LevelEditor
                     ChangeMotionState(typeof(ScaleAxisDragState));
                 }
             }
+
+            if (GetRectAxisButtonDowm)
+            {
+                if (!CheckStates.Contains(typeof(RectAxisDragState)))
+                {
+                    ChangeMotionState(typeof(RectAxisDragState));
+                }
+            }
             
             if (GetInput.GetCtrlButton && GetInput.GetCButtonDown)
             {
@@ -125,54 +159,161 @@ namespace LevelEditor
             switch (levelEditorActionType)
             {
                 case CONTROLHANDLEACTIONTYPE.PositionAxisButton:
-                    GetRotationAxisObj.SetActive(false);
-                    GetScaleAxisObj.SetActive(false);
-                    if (GetData.TargetObjs.Count > 0)
-                    {
-                        GetPositionAxisObj.transform.position = Camera.main
-                            .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
-                        GetPositionAxisObj.SetActive(true);
-                    }
-                    else
-                    {
-                        GetPositionAxisObj.SetActive(false);
-                    }
+                    ShowPositionAxis();
                     break;
                 case CONTROLHANDLEACTIONTYPE.RotationAxisButton:
-                    GetPositionAxisObj.SetActive(false);
-                    GetScaleAxisObj.SetActive(false);
-                    if (GetData.TargetObjs.Count > 0)
-                    {
-                        GetRotationAxisObj.transform.position = Camera.main
-                            .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
-                        GetRotationAxisObj.SetActive(true);
-                    }
-                    else
-                    {
-                        GetRotationAxisObj.SetActive(false);
-                    }
+                    ShowRotationAxis();
                     break;
                 case CONTROLHANDLEACTIONTYPE.ScaleAxisButton:
-                    GetPositionAxisObj.SetActive(false);
-                    GetRotationAxisObj.SetActive(false);
-                    if (GetData.TargetObjs.Count > 0)
-                    {
-                        GetScaleAxisObj.transform.position = Camera.main
-                            .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
-                        GetScaleAxisObj.transform.rotation = GetData.TargetObjs.Last().transform.rotation;
-                        GetScaleAxisObj.SetActive(true);
-                    }
-                    else
-                    {
-                        GetScaleAxisObj.SetActive(false);
-                    }
+                    ShowScaleAxis();
+                    break;
+                case CONTROLHANDLEACTIONTYPE.RectButton:
+                    ShowRectAxis();
                     break;
                 case CONTROLHANDLEACTIONTYPE.ViewButton:
-                    GetPositionAxisObj.SetActive(false);
-                    GetRotationAxisObj.SetActive(false);
-                    GetScaleAxisObj.SetActive(false);
+                    HideAxis();
                     break;
             }
+        }
+
+        private void ShowPositionAxis()
+        {
+            GetRotationAxisObj.SetActive(false);
+            GetScaleAxisObj.SetActive(false);
+            GetRectObj.SetActive(false);
+            if (GetData.TargetObjs.Count > 0)
+            {
+                GetPositionAxisObj.transform.position = Camera.main
+                    .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
+                GetPositionAxisObj.SetActive(true);
+            }
+            else
+            {
+                GetPositionAxisObj.SetActive(false);
+            }
+        }
+
+        private void ShowRotationAxis()
+        {
+            GetPositionAxisObj.SetActive(false);
+            GetScaleAxisObj.SetActive(false);
+            GetRectObj.SetActive(false);
+            if (GetData.TargetObjs.Count > 0)
+            {
+                GetRotationAxisObj.transform.position = Camera.main
+                    .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
+                GetRotationAxisObj.SetActive(true);
+            }
+            else
+            {
+                GetRotationAxisObj.SetActive(false);
+            }
+        }
+
+        private void ShowScaleAxis()
+        {
+            GetPositionAxisObj.SetActive(false);
+            GetRotationAxisObj.SetActive(false);
+            GetRectObj.SetActive(false);
+            if (GetData.TargetObjs.Count > 0)
+            {
+                GetScaleAxisObj.transform.position = Camera.main
+                    .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs).GetCenterPoint());
+                GetScaleAxisObj.transform.rotation = GetData.TargetObjs.Last().transform.rotation;
+                GetScaleAxisObj.SetActive(true);
+            }
+            else
+            {
+                GetScaleAxisObj.SetActive(false);
+            }
+        }
+
+        private void ShowRectAxis()
+        {
+            GetPositionAxisObj.SetActive(false);
+            GetRotationAxisObj.SetActive(false);
+            GetScaleAxisObj.SetActive(false);
+            if (GetData.TargetObjs.Count == 0)
+            {
+                GetRectObj.SetActive(false);
+                return;
+            }
+            
+            if (GetData.TargetObjs.Count > 0)
+            {
+                GetRectObj.SetActive(true);
+            }
+            
+            if (GetData.TargetObjs.Count == 1)
+            {
+                GameObject lastObj = GetData.TargetObjs.Last();
+                
+                Renderer renderer = lastObj.GetComponent<Renderer>();
+
+                Quaternion objRotation = lastObj.transform.rotation;
+
+                lastObj.transform.rotation = Quaternion.identity;
+                
+                Bounds bounds = renderer.bounds;
+
+                lastObj.transform.rotation = objRotation;
+                
+                Vector3 minXminY = new Vector3(bounds.min.x, bounds.min.y, 0);
+                Vector3 maxXminY = new Vector3(bounds.max.x, bounds.min.y, 0);
+                Vector3 maxXmaxY = new Vector3(bounds.max.x, bounds.max.y, 0);
+
+                Vector2 newSizeDelta = new Vector2(
+                    (Camera.main.WorldToScreenPoint(maxXminY) - Camera.main.WorldToScreenPoint(minXminY)).magnitude,
+                    (Camera.main.WorldToScreenPoint(maxXmaxY) - Camera.main.WorldToScreenPoint(maxXminY)).magnitude);
+                
+                GetRectObj.transform.position = Camera.main.WorldToScreenPoint(lastObj.transform.position);
+                GetRectObj.transform.rotation = lastObj.transform.rotation;
+
+                (GetRectObj.transform as RectTransform).sizeDelta = newSizeDelta;
+                return;
+            }
+
+            if (GetData.TargetObjs.Count > 1)
+            {
+                float minX = float.MaxValue;
+                float minY = float.MaxValue;
+                float maxX = float.MinValue;
+                float maxY = float.MinValue;
+                
+                foreach (var targetObj in GetData.TargetObjs)
+                {
+                    Renderer renderer = targetObj.GetComponent<Renderer>();
+                
+                    Bounds bounds = renderer.bounds;
+                    
+                    minX = Mathf.Min(minX, bounds.min.x);
+                    minY = Mathf.Min(minY, bounds.min.y);
+                    maxX = Mathf.Max(maxX, bounds.max.x);
+                    maxY = Mathf.Max(maxY, bounds.max.y);
+                }
+                
+                Vector3 minXminY = new Vector3(minX, minY, 0);
+                Vector3 maxXminY = new Vector3(maxX, minY, 0);
+                Vector3 maxXmaxY = new Vector3(maxX, maxY, 0);
+
+                Vector2 newSizeDelta = new Vector2(
+                    (Camera.main.WorldToScreenPoint(maxXminY) - Camera.main.WorldToScreenPoint(minXminY)).magnitude,
+                    (Camera.main.WorldToScreenPoint(maxXmaxY) - Camera.main.WorldToScreenPoint(maxXminY)).magnitude);
+                
+                GetRectObj.transform.position = 
+                    Camera.main.WorldToScreenPoint(new Vector3((minX + maxX)/2,(minY + maxY)/2,0));
+                GetRectObj.transform.rotation = Quaternion.identity;
+
+                (GetRectObj.transform as RectTransform).sizeDelta = newSizeDelta;
+            }
+        }
+
+        private void HideAxis()
+        {
+            GetPositionAxisObj.SetActive(false);
+            GetRotationAxisObj.SetActive(false);
+            GetScaleAxisObj.SetActive(false);
+            GetRectObj.SetActive(false);
         }
         
         private List<Vector3> GetPositionListFromGameObjectList(List<GameObject> gameobjectList)

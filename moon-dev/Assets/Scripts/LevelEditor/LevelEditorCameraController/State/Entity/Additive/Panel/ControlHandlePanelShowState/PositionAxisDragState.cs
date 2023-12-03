@@ -36,6 +36,10 @@ namespace LevelEditor
         private Vector3 m_originMouseWorldPosition;
     
         private Vector3 m_currentMouseWorldPosition;
+        
+        private List<Vector3> m_targetOriginScale = new List<Vector3>();
+    
+        private List<Vector3> m_targetCurrentScale = new List<Vector3>();
     
         private List<Vector3> m_targetOriginPosition = new List<Vector3>();
     

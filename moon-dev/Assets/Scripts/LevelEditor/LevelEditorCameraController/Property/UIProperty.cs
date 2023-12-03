@@ -213,6 +213,26 @@ namespace LevelEditor
             public string SCALE_AXIS_Y_HEAD{ get; private set; }
             [field:SerializeField,CustomLabel("缩放轴Y躯干名字")]
             public string SCALE_AXIS_Y_BODY{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形框UI名字名字")]
+            public string RECT_AXIS{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形右上角名字")]
+            public string RECT_TOP_RIGHT_CORNER{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形左上角名字")]
+            public string RECT_TOP_LEFT_CORNER{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形右下角名字")]
+            public string RECT_BOTTOM_RIGHT_CORNER{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形左下角名字")]
+            public string RECT_BOTTOM_LEFT_CORNER{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形上边名字")]
+            public string RECT_TOP_EDGE{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形下边名字")]
+            public string RECT_BOTTOM_EDGE{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形右边名字")]
+            public string RECT_RIGHT_EDGE{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形左边名字")]
+            public string RECT_LEFT_EDGE{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形中心名字")]
+            public string RECT_CENTER{ get; private set; }
         }
         
         [Serializable]

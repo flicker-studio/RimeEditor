@@ -9,20 +9,6 @@ namespace LevelEditor
 {
     public class ScaleAxisDragState : AdditiveState
     {
-        #region Other types of variables.
-
-        public enum SCALEDRAGTYPE
-        {
-            XAxis,
-            YAxis,
-            XYAxis
-        }
-
-        private SCALEDRAGTYPE m_scaleDragType;
-        
-        private FlagProperty m_waitToNextFrame;
-
-        #endregion
 
         #region Get properties.
 
@@ -62,6 +48,21 @@ namespace LevelEditor
 
         #endregion
 
+        #region Other types of variables.
+
+        public enum SCALEDRAGTYPE
+        {
+            XAxis,
+            YAxis,
+            XYAxis
+        }
+
+        private SCALEDRAGTYPE m_scaleDragType;
+        
+        private FlagProperty m_waitToNextFrame;
+
+        #endregion
+        
         #region Position variate and scale variate.
 
         private Vector2 m_originMouseSumVector;
@@ -127,7 +128,7 @@ namespace LevelEditor
         private void StateInit()
         {
             InitDragType();
-            InitMousePos();
+            InitData();
             InitAxisPosAndSize();
         }
 
@@ -230,19 +231,19 @@ namespace LevelEditor
 
         private void InitDragType()
         {
-            if (m_information.GetUI.GetControlHandlePanel.GetScaleInputX)
+            if (GetUI.GetControlHandlePanel.GetScaleInputX)
             {
                 m_scaleDragType = SCALEDRAGTYPE.XAxis;
-            }else if (m_information.GetUI.GetControlHandlePanel.GetScaleInputY)
+            }else if (GetUI.GetControlHandlePanel.GetScaleInputY)
             {
                 m_scaleDragType = SCALEDRAGTYPE.YAxis;
-            }else if (m_information.GetUI.GetControlHandlePanel.GetScaleInputXY)
+            }else if (GetUI.GetControlHandlePanel.GetScaleInputXY)
             {
                 m_scaleDragType = SCALEDRAGTYPE.XYAxis;
             }
         }
 
-        private void InitMousePos()
+        private void InitData()
         {
             m_originMousePosition = GetScaleRect.anchoredPosition;
             m_originMouseSumVector = GetMousePosition - GetScaleRect.anchoredPosition;

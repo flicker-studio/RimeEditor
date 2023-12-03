@@ -31,8 +31,7 @@ namespace Frame.CompnentExtensions
                     color = colors.disabledColor;
                     break;
                 default:
-                    color = Color.black;
-                    break;
+                    return;
             }
     
             if (gameObject.activeInHierarchy)

@@ -23,8 +23,8 @@ namespace LevelEditor
         private bool GetRotationButtonDown => m_information.GetUI.GetActionPanel.GetRotationInputDown;
 
         private bool GetScaleButtonDown => m_information.GetUI.GetActionPanel.GetScaleInputDown;
-    
-        private bool GetScaleChange => m_information.GetUI.GetItemTransformPanel.GetScaleChange;
+
+        private bool GetRectButtonDown => m_information.GetUI.GetActionPanel.GetRectInputDown;
     
         public ActionPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
@@ -36,20 +36,28 @@ namespace LevelEditor
             if (GetPositionButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.PositionAxisButton));
-            }else if (GetRotationButtonDown)
+            }
+            else if (GetRotationButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RotationAxisButton));
-            }else if (GetViewButtonDown)
+            }
+            else if (GetViewButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ViewButton));
-            }else if (GetScaleButtonDown)
+            }
+            else if (GetScaleButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ScaleAxisButton));
+            }
+            else if (GetRectButtonDown)
+            {
+                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RectButton));
             }
             else if (GetUndoButtonDown)
             {
                 GetUndo?.Invoke();
-            }else if (GetRedoButtonDown)
+            }
+            else if (GetRedoButtonDown)
             {
                 GetRedo?.Invoke();
             }

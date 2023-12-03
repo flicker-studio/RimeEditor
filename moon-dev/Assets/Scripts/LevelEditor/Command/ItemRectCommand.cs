@@ -1,32 +1,40 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Frame.Tool;
 namespace LevelEditor
 {
     public class ItemRectCommand : LevelEditCommand
     {
-        private Vector3 m_lastPosition;
-        private Vector3 m_lastScale;
-        private Vector3 m_nextPosition;
-        private Vector3 m_nextScale;
-        private Transform m_transform;
-
-        ItemRectCommand(Transform transform,Vector3 nextPosition,Vector3 nextScale)
+        private List<ItemData> m_itemDatas = new List<ItemData>();
+        private List<Vector3> m_lastScale = new List<Vector3>();
+        private List<Vector3> m_nextScale = new List<Vector3>();
+        private List<Vector3> m_lastPosition = new List<Vector3>();
+        private List<Vector3> m_nextPosition = new List<Vector3>();
+    
+        public ItemRectCommand(ObservableList<ItemData> itemDatas,List<Vector3> lastPosition,List<Vector3> nextPosition,List<Vector3> lastScale,List<Vector3> nextScale)
         {
-            m_lastPosition = transform.position;
-            m_lastScale = transform.localScale;
-            m_nextPosition = nextPosition;
-            m_nextScale = nextScale;
+            m_itemDatas.AddRange(itemDatas);
+            m_lastScale.AddRange(lastScale);
+            m_nextScale.AddRange(nextScale);
+            m_lastPosition.AddRange(lastPosition);
+            m_nextPosition.AddRange(nextPosition);
         }
         public override void Execute()
         {
-            m_transform.position = m_nextPosition;
-            m_transform.localScale = m_nextScale;
+            for (int i = 0; i < m_itemDatas.Count; i++)
+            {
+                m_itemDatas[i].GetItemObjEditor.transform.position = m_nextPosition[i];
+                m_itemDatas[i].GetItemObjEditor.transform.localScale = m_nextScale[i];
+            }
         }
 
         public override void Undo()
         {
-            m_transform.position = m_lastPosition;
-            m_transform.localScale = m_lastScale;
+            for (int i = 0; i < m_itemDatas.Count; i++)
+            {
+                m_itemDatas[i].GetItemObjEditor.transform.position = m_lastPosition[i];
+                m_itemDatas[i].GetItemObjEditor.transform.localScale = m_lastScale[i];
+            }
         }
     }
 }

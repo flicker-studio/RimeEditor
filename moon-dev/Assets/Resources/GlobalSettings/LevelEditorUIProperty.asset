@@ -34,6 +34,16 @@ MonoBehaviour:
       <SCALE_AXIS_X_BODY>k__BackingField: ControlHandlePanel/ScaleUI/XAxis/Body
       <SCALE_AXIS_Y_HEAD>k__BackingField: ControlHandlePanel/ScaleUI/YAxis/Head
       <SCALE_AXIS_Y_BODY>k__BackingField: ControlHandlePanel/ScaleUI/YAxis/Body
+      <RECT_AXIS>k__BackingField: ControlHandlePanel/RectUI
+      <RECT_TOP_RIGHT_CORNER>k__BackingField: ControlHandlePanel/RectUI/Corners/TopRightCorner
+      <RECT_TOP_LEFT_CORNER>k__BackingField: ControlHandlePanel/RectUI/Corners/TopLeftCorner
+      <RECT_BOTTOM_RIGHT_CORNER>k__BackingField: ControlHandlePanel/RectUI/Corners/BottomRightCorner
+      <RECT_BOTTOM_LEFT_CORNER>k__BackingField: ControlHandlePanel/RectUI/Corners/BottomLeftCorner
+      <RECT_TOP_EDGE>k__BackingField: ControlHandlePanel/RectUI/Edges/TopEdge
+      <RECT_BOTTOM_EDGE>k__BackingField: ControlHandlePanel/RectUI/Edges/BottomEdge
+      <RECT_RIGHT_EDGE>k__BackingField: ControlHandlePanel/RectUI/Edges/RightEdge
+      <RECT_LEFT_EDGE>k__BackingField: ControlHandlePanel/RectUI/Edges/LeftEdge
+      <RECT_CENTER>k__BackingField: ControlHandlePanel/RectUI/Center
     <GetSelectionProperty>k__BackingField:
       <SELECTION_MIN_SIZE>k__BackingField: {x: 0.01, y: 0.01}
       <SELECTION_COLOR>k__BackingField: {r: 0, g: 0.8638129, b: 1, a: 0.3019608}
