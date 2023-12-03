@@ -138,7 +138,6 @@ namespace LevelEditor
                 }
                 
                 rate = currentMouseProject.DivideVector(originMouseProject);
-                rate = Vector3.Dot(currentMouseProject, originMouseProject) >= 0 ? rate : -rate;
 
                 if (scaleDir == GetRectRect.transform.up || scaleDir == -GetRectRect.transform.up)
                 {
@@ -151,6 +150,8 @@ namespace LevelEditor
                 }
 
                 rate = rate.NewZ(1);
+                
+                Debug.Log(rate);
                 
                 newScale = m_targetOriginScale[index].HadamardProduct(rate);
                 
