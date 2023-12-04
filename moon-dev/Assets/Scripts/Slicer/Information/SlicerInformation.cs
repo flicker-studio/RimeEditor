@@ -128,6 +128,13 @@ namespace Slicer
             {
                 tempList.Remove(collider);
             }
+            
+            colliderListGroup = tempList.CheckColliderConnectivity(GetDetectionCompensationScale
+                , GlobalSetting.LayerMasks.GROUND);
+
+            colliderListGroup.GetCombinationConnectivity(GetPrefabFactory);
+            
+            TargetList.Clear();
         }
     }
 
