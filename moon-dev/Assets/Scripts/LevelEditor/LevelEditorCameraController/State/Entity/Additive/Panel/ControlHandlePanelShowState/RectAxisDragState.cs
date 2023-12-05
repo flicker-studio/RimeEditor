@@ -29,7 +29,7 @@ namespace LevelEditor
 
         private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
-        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
+        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
         
         private float GetScaleUnit => GetUI.GetControlHandlePanel.GetGridSnappingProperty.SCALE_UNIT;
         
@@ -121,8 +121,8 @@ namespace LevelEditor
                         if (GetUseGrid && TargetObjs.Count == 1)
                         {
                             TargetObjs[index].transform.position = 
-                                new Vector3(Mathf.RoundToInt(GetCellSize * TargetObjs[index].transform.position.x / GetCellSize)
-                                    , Mathf.RoundToInt(GetCellSize * TargetObjs[index].transform.position.y / GetCellSize)
+                                new Vector3( GetCellSize * Mathf.RoundToInt(TargetObjs[index].transform.position.x / GetCellSize)
+                                    ,  GetCellSize * Mathf.RoundToInt(TargetObjs[index].transform.position.y / GetCellSize)
                                     , TargetObjs[index].transform.position.z);
                         }
                         continue;

@@ -37,7 +37,7 @@ namespace LevelEditor
 
         private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
-        private float GetCellSize => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
+        private float GetCellSize => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
     
         private Vector3 m_originMouseWorldPosition;
     
@@ -135,16 +135,16 @@ namespace LevelEditor
                     {
                         case POSITIONDRAGTYPE.XAxis:
                             TargetObjs[i].transform.position = TargetObjs[i].transform.position
-                                .NewX(Mathf.RoundToInt(GetCellSize * TargetObjs[i].transform.position.x / GetCellSize));
+                                .NewX(GetCellSize * Mathf.RoundToInt(TargetObjs[i].transform.position.x / GetCellSize));
                             break;
                         case POSITIONDRAGTYPE.YAxis:
                             TargetObjs[i].transform.position = TargetObjs[i].transform.position
-                                .NewY(Mathf.RoundToInt(GetCellSize * TargetObjs[i].transform.position.y / GetCellSize));
+                                .NewY(GetCellSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellSize));
                             break;
                         case POSITIONDRAGTYPE.XYAxis:
                             TargetObjs[i].transform.position = 
-                                new Vector3(Mathf.RoundToInt(GetCellSize * TargetObjs[i].transform.position.x / GetCellSize)
-                                    , Mathf.RoundToInt(GetCellSize * TargetObjs[i].transform.position.y / GetCellSize)
+                                new Vector3(GetCellSize *  Mathf.RoundToInt(TargetObjs[i].transform.position.x / GetCellSize)
+                                    ,  GetCellSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellSize)
                                     , TargetObjs[i].transform.position.z);
                             break;
                         default:
