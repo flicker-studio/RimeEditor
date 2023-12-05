@@ -21,6 +21,7 @@ namespace LevelEditor
     public class ControlHandleAction
     {
         public CONTROLHANDLEACTIONTYPE ControlHandleActionType = CONTROLHANDLEACTIONTYPE.PositionAxisButton;
+        public bool UseGrid;
     }
     
     public class ControlHandlePanel
@@ -28,6 +29,8 @@ namespace LevelEditor
         #region Some public get methods.
 
         public Image GetSelectionImage => m_selectionImage;
+
+        public RectTransform GetGridRect => m_gridRect;
         
         public RectTransform GetSelectionRect => m_selectionRect;
         
@@ -49,6 +52,8 @@ namespace LevelEditor
 
         public UIProperty.ScaleDragProperty GetScaleDragProperty => m_property.GetScaleDragProperty;
         public UIProperty.MouseCursorProperty GetMouseCursorProperty => m_property.GetMouseCursorProperty;
+
+        public UIProperty.GridSnappingProperty GetGridSnappingProperty => m_property.GetGridSnappingProperty;
     
         public bool GetPositionInputX => m_positionInputX.GetInput;
     
@@ -219,6 +224,8 @@ namespace LevelEditor
 
         #endregion
         
+        private RectTransform m_gridRect;
+        
         private Image m_selectionImage;
         
         private InputProperty<bool> m_positionInputX;
@@ -254,6 +261,8 @@ namespace LevelEditor
         private InputProperty<bool> m_rectCenterInput;
         
         private ControlHandleAction m_controlHandleAction = new ControlHandleAction();
+        
+        private GridPainter m_gridPainter;
     
         private UIProperty.ControlHandleUI m_property;
     
@@ -270,6 +279,7 @@ namespace LevelEditor
             m_property = levelEditorUIProperty.GetControlHandleUI;
             UIProperty.ControlHandleUIName uiName = m_property.GetControlHandleUIName;
             m_selectionImage = rect.FindPath(uiName.SELECTION_UI_NAME).GetComponent<Image>();
+            m_gridRect = rect.FindPath(uiName.GRID_UI_NAME) as RectTransform;
             m_selectionRect = rect.FindPath(uiName.SELECTION_UI_NAME) as RectTransform;
             m_positionRect = rect.FindPath(uiName.POSITION_AXIS) as RectTransform;
             m_rotationRect = rect.FindPath(uiName.ROTATION_AXIS) as RectTransform;

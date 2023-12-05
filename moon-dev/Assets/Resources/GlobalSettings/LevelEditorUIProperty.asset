@@ -21,6 +21,7 @@ MonoBehaviour:
   <GetControlHandleUI>k__BackingField:
     <GetControlHandleUIName>k__BackingField:
       <SELECTION_UI_NAME>k__BackingField: ControlHandlePanel/SelectionUI
+      <GRID_UI_NAME>k__BackingField: ControlHandlePanel/GridUI
       <POSITION_AXIS>k__BackingField: ControlHandlePanel/PositionUI
       <POSITION_AXIS_X>k__BackingField: ControlHandlePanel/PositionUI/XAxis
       <POSITION_AXIS_Y>k__BackingField: ControlHandlePanel/PositionUI/YAxis
@@ -52,6 +53,13 @@ MonoBehaviour:
     <GetScaleDragProperty>k__BackingField:
       <SCALE_SPEED>k__BackingField: 0.02
       <CENTER_AXIS_COMPENSATION>k__BackingField: 3.38
+    <GetGridSnappingProperty>k__BackingField:
+      <GRID_COLOR>k__BackingField: {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
+      <GRID_SIZE>k__BackingField: 500
+      <CELL_SIZE>k__BackingField: 1
+      <GROWTH_FACTOR>k__BackingField: 0
+      <ROTATION_UNIT>k__BackingField: 15
+      <SCALE_UNIT>k__BackingField: 0.1
     <GetMouseCursorProperty>k__BackingField:
       <CURSOR_BOUND_CHECK_COMPENSATION>k__BackingField: {x: 5, y: 5}
   <GetActionPanelUI>k__BackingField:

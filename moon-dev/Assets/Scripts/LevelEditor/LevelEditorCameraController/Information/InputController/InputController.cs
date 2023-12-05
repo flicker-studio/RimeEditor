@@ -37,6 +37,8 @@ namespace LevelEditor
         public bool GetCButtonDown => InputManager.Instance.GetCButtonDown;
         
         public bool GetVButtonDown => InputManager.Instance.GetVButtonDown;
+
+        public bool GetGButtonDown => InputManager.Instance.GetGButtonDown;
     }
 
 }

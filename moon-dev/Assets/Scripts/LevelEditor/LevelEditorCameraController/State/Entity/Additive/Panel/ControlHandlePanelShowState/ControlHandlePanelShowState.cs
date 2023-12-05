@@ -29,6 +29,8 @@ namespace LevelEditor
         private GameObject GetScaleAxisObj => GetControlHandlePanel.GetScaleRect.gameObject;
 
         private GameObject GetRectObj => GetControlHandlePanel.GetRectRect.gameObject;
+
+        private GameObject GetGridObj => GetControlHandlePanel.GetGridRect.gameObject;
     
         private bool GetPositionAxisXButtonDown => GetControlHandlePanel.GetPositionInputXDown;
         
@@ -71,17 +73,32 @@ namespace LevelEditor
                                               GetRectTopEdgeInputDown || GetRectBottomLeftCornerInputDown ||
                                               GetRectBottomRightCornerInputDown || GetRectTopLeftCornerInputDown ||
                                               GetRectTopRightCornerInputDown;
+
+        private int GetGridSize => GetControlHandlePanel.GetGridSnappingProperty.GRID_SIZE;
+        
+        private float GetCellSize => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
+        
+        private int GetGrowthFactor => GetControlHandlePanel.GetGridSnappingProperty.GROWTH_FACTOR;
+        private Color GetGridColor => GetControlHandlePanel.GetGridSnappingProperty.GRID_COLOR;
         
         private List<ItemData> m_copyDatas = new List<ItemData>();
+
+        private GridPainter m_gridPainter;
         
         public ControlHandlePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
+            InitGird();
             InitEvent();
         }
 
         private void InitEvent()
         {
             GetData.SyncLevelData += ClearCopyDatas;
+        }
+
+        private void InitGird()
+        {
+            m_gridPainter = new GridPainter(GetGridObj, GetGridSize, GetCellSize, GetGrowthFactor, GetGridColor);
         }
 
         private void ClearCopyDatas(LevelData levelData)
@@ -92,10 +109,16 @@ namespace LevelEditor
         public override void Motion(BaseInformation information)
         {
             ShowActionView(GetControlHandleAction.ControlHandleActionType);
-    
+            ShowGrid();
             CheckButton();
         }
-    
+
+        private void ShowGrid()
+        {
+            m_gridPainter.SetActive(GetControlHandleAction.UseGrid);
+            m_gridPainter.UpdateGrid();
+        }
+
         private void CheckButton()
         {
             if (m_information.GetInput.GetMouseLeftButtonDown && !UIMethod.IsPointerOverUIElement())
@@ -136,6 +159,11 @@ namespace LevelEditor
                 {
                     ChangeMotionState(typeof(RectAxisDragState));
                 }
+            }
+
+            if (GetInput.GetGButtonDown)
+            {
+                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,!GetControlHandleAction.UseGrid));
             }
             
             if (GetInput.GetCtrlButton && GetInput.GetCButtonDown)

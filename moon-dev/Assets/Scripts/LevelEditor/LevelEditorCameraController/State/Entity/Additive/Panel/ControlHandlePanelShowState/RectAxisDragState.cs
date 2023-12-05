@@ -10,7 +10,6 @@ namespace LevelEditor
     public class RectAxisDragState : AdditiveState
     {
         private UIManager GetUI => m_information.GetUI;
-        
         private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
         
         private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
@@ -27,6 +26,12 @@ namespace LevelEditor
         private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
         
         private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+
+        private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
+
+        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
+        
+        private float GetScaleUnit => GetUI.GetControlHandlePanel.GetGridSnappingProperty.SCALE_UNIT;
         
         public enum RECTDRAGTYPE
         {
@@ -87,6 +92,8 @@ namespace LevelEditor
             m_currentMouseWorldPosition = GetMouseWorldPoint;
             Vector3 moveDir = m_currentMouseWorldPosition - m_originMouseWorldPosition;
             
+            if(moveDir.magnitude == 0) return;
+            
             for (var index = 0; index < TargetObjs.Count; index++)
             {
                 Vector3 scaleDir = Vector3.one;
@@ -100,7 +107,24 @@ namespace LevelEditor
                 switch (m_rectDragType)
                 {
                     case RECTDRAGTYPE.Center:
+                        if (GetUseGrid && TargetObjs.Count > 1)
+                        {
+                            moveDir = new Vector3(GetCellSize * Mathf.RoundToInt(moveDir.x / GetCellSize)
+                                , GetCellSize * Mathf.RoundToInt(moveDir.y / GetCellSize)
+                                , moveDir.z);
+                        }
+                        
                         TargetObjs[index].transform.position = m_targetOriginPosition[index] + moveDir;
+                        TargetObjs[index].transform.position.NewX((float)Math.Round(TargetObjs[index].transform.position.x,2))
+                            .NewY((float)Math.Round(TargetObjs[index].transform.position.y,2));
+                        
+                        if (GetUseGrid && TargetObjs.Count == 1)
+                        {
+                            TargetObjs[index].transform.position = 
+                                new Vector3(Mathf.RoundToInt(GetCellSize * TargetObjs[index].transform.position.x / GetCellSize)
+                                    , Mathf.RoundToInt(GetCellSize * TargetObjs[index].transform.position.y / GetCellSize)
+                                    , TargetObjs[index].transform.position.z);
+                        }
                         continue;
                     case RECTDRAGTYPE.TopEdge:
                         scaleDir = GetRectRect.transform.up;
@@ -139,6 +163,13 @@ namespace LevelEditor
                 
                 rate = currentMouseProject.DivideVector(originMouseProject);
 
+                if (GetUseGrid)
+                {
+                    rate = new Vector3(GetScaleUnit * Mathf.RoundToInt(rate.x / GetScaleUnit)
+                        , GetScaleUnit * Mathf.RoundToInt(rate.y / GetScaleUnit)
+                        , rate.z);
+                }
+                
                 if (scaleDir == GetRectRect.transform.up || scaleDir == -GetRectRect.transform.up)
                 {
                     rate = rate.NewX(1);
@@ -164,6 +195,11 @@ namespace LevelEditor
                 
                 newPosition = m_centerPosition + positionOffset + positionOffsetProject
                     .HadamardProduct(new Vector3(rate.x-1,rate.y-1,rate.z-1)) + (currentMouseProject - originMouseProject)/2;
+                
+                if (TargetObjs[index].transform.localScale == newScale.NewX((float)Math.Round(newScale.x, 2)))
+                {
+                    return;
+                }
                 
                 TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x,2))
                     .NewY((float)Math.Round(newScale.y,2));

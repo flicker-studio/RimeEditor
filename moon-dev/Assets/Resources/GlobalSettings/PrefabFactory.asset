@@ -23,3 +23,4 @@ MonoBehaviour:
   <ITEM_TYPE>k__BackingField: {fileID: 4167006409222379282, guid: 9c9a01cc366c06e4da961e682c5751de, type: 3}
   <PLAYER>k__BackingField: {fileID: 4314862480148561689, guid: 54738bf26f7d81546b8c92a47d4c095d, type: 3}
   <PLAYER_CAMERA>k__BackingField: {fileID: 6082539278293185449, guid: f32ac835b746e674692146e2a222a4fe, type: 3}
+  <SLICER>k__BackingField: {fileID: 1272315927300143796, guid: 43756be41236c1a49897143177a5a190, type: 3}

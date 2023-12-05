@@ -145,6 +145,16 @@ namespace Frame.Tool
         {
             m_vButton.SetInput = false;
         };
+        
+        GetLevelEditorActions.GButton.performed += context =>
+        {
+            m_gButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.GButton.canceled += context =>
+        {
+            m_gButton.SetInput = false;
+        };
 
         GetLevelEditorActions.DeleteButton.performed += context =>
         {
@@ -330,6 +340,8 @@ namespace Frame.Tool
     
     private InputProperty<bool> m_vButton = new InputProperty<bool>();
 
+    private InputProperty<bool> m_gButton = new InputProperty<bool>();
+
     private InputProperty<bool> m_deleteButton = new InputProperty<bool>();
 
     private InputProperty<bool> m_escapeButton = new InputProperty<bool>();
@@ -382,6 +394,9 @@ namespace Frame.Tool
     public bool GetVButton => m_zButton.GetInput;
     public bool GetVButtonDown => m_vButton.GetInputDown;
     public bool GetVButtonUp => m_vButton.GetInputUp;
+    
+    public bool GetGButtonDown => m_gButton.GetInputDown;
+    public bool GetGButtonUp => m_gButton.GetInputUp;
 
     public bool GetDelexteButton => m_deleteButton.GetInput;
     

@@ -17,6 +17,8 @@ namespace LevelEditor
         }
     
         private POSITIONDRAGTYPE m_positionDragType;
+
+        private ControlHandlePanel GetControlHandlePanel => m_information.GetUI.GetControlHandlePanel;
     
         private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
 
@@ -26,12 +28,16 @@ namespace LevelEditor
     
         private Vector2 GetMousePosition => m_information.GetCamera.GetMousePosition;
 
-        private Vector2 GetMouseCursorCompensation => m_information.GetUI.GetControlHandlePanel
+        private Vector2 GetMouseCursorCompensation => GetControlHandlePanel
             .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
     
         private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
     
         private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+
+        private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
+
+        private float GetCellSize => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
     
         private Vector3 m_originMouseWorldPosition;
     
@@ -93,6 +99,15 @@ namespace LevelEditor
         {
             m_currentMouseWorldPosition = GetMouseWorldPoint;
             Vector3 moveDir = m_currentMouseWorldPosition - m_originMouseWorldPosition;
+
+            if(moveDir.magnitude == 0) return;
+            
+            if (GetUseGrid && TargetObjs.Count > 1)
+            {
+                moveDir = new Vector3(GetCellSize * Mathf.RoundToInt(moveDir.x / GetCellSize)
+                    , GetCellSize * Mathf.RoundToInt(moveDir.y / GetCellSize)
+                    , moveDir.z);
+            }
             
             for (var i = 0; i < TargetObjs.Count; i++)
             {
@@ -110,9 +125,32 @@ namespace LevelEditor
                     default:
                         continue;
                 }
-    
+                
                 TargetObjs[i].transform.position = TargetObjs[i].transform.position.NewX((float)Math.Round(TargetObjs[i].transform.position.x,2))
                                         .NewY((float)Math.Round(TargetObjs[i].transform.position.y,2));
+                
+                if (GetUseGrid && TargetObjs.Count == 1)
+                {
+                    switch (m_positionDragType)
+                    {
+                        case POSITIONDRAGTYPE.XAxis:
+                            TargetObjs[i].transform.position = TargetObjs[i].transform.position
+                                .NewX(Mathf.RoundToInt(GetCellSize * TargetObjs[i].transform.position.x / GetCellSize));
+                            break;
+                        case POSITIONDRAGTYPE.YAxis:
+                            TargetObjs[i].transform.position = TargetObjs[i].transform.position
+                                .NewY(Mathf.RoundToInt(GetCellSize * TargetObjs[i].transform.position.y / GetCellSize));
+                            break;
+                        case POSITIONDRAGTYPE.XYAxis:
+                            TargetObjs[i].transform.position = 
+                                new Vector3(Mathf.RoundToInt(GetCellSize * TargetObjs[i].transform.position.x / GetCellSize)
+                                    , Mathf.RoundToInt(GetCellSize * TargetObjs[i].transform.position.y / GetCellSize)
+                                    , TargetObjs[i].transform.position.z);
+                            break;
+                        default:
+                            continue;
+                    }
+                }
             }
         }
 
