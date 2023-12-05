@@ -57,7 +57,7 @@ MonoBehaviour:
       <GRID_COLOR>k__BackingField: {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
       <GRID_SIZE>k__BackingField: 500
       <CELL_SIZE>k__BackingField: 1
-      <GROWTH_FACTOR>k__BackingField: 0
+      <GROWTH_FACTOR>k__BackingField: 100
       <ROTATION_UNIT>k__BackingField: 15
       <SCALE_UNIT>k__BackingField: 0.1
     <GetMouseCursorProperty>k__BackingField:
