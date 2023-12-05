@@ -59,7 +59,7 @@ MonoBehaviour:
       <CELL_SIZE>k__BackingField: 1
       <GROWTH_FACTOR>k__BackingField: 100
       <ROTATION_UNIT>k__BackingField: 15
-      <SCALE_UNIT>k__BackingField: 0.1
+      <SCALE_UNIT>k__BackingField: 0.5
     <GetMouseCursorProperty>k__BackingField:
       <CURSOR_BOUND_CHECK_COMPENSATION>k__BackingField: {x: 5, y: 5}
   <GetActionPanelUI>k__BackingField:
