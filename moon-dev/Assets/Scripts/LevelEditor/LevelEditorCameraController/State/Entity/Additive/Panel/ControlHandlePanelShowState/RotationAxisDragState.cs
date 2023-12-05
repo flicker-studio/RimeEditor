@@ -121,7 +121,7 @@ public class RotationAxisDragState : AdditiveState
             
             TargetObjs[i].transform.rotation = m_targetOriginRotation[i] * rotationQuaternion;
             TargetObjs[i].transform.position = GetRotationAxisWorldPosition
-                                                          + Quaternion.Euler(Vector3.forward * (mouseDis * rotationDirAndMultiplying * GetRotationSpeed)).normalized *
+                                                          + Quaternion.Euler(Vector3.forward * rotationQuaternion.eulerAngles.z).normalized *
                                                           (m_targetOriginPosition[i] - GetRotationAxisWorldPosition);
 
             if (GetUseGrid && TargetObjs.Count == 1)
