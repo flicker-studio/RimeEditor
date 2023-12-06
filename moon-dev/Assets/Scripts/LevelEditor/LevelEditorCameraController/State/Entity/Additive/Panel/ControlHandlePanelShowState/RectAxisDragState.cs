@@ -29,9 +29,9 @@ namespace LevelEditor
 
         private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
-        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
+        private float GetCellHalfSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
         
-        private float GetScaleUnit => GetUI.GetControlHandlePanel.GetGridSnappingProperty.SCALE_UNIT;
+        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
         
         public enum RECTDRAGTYPE
         {
@@ -102,6 +102,7 @@ namespace LevelEditor
                 Vector3 positionOffset = m_targetOriginPosition[index] - m_centerPosition;
                 Vector3 rate = Vector3.zero;
                 Vector3 newScale = Vector3.zero;
+                Vector3 oldScale = Vector3.zero;
                 Vector3 newPosition = Vector3.zero;
                 Vector3 positionOffsetProject = Vector3.zero;
                 switch (m_rectDragType)
@@ -109,8 +110,8 @@ namespace LevelEditor
                     case RECTDRAGTYPE.Center:
                         if (GetUseGrid && TargetObjs.Count > 1)
                         {
-                            moveDir = new Vector3(GetCellSize * Mathf.RoundToInt(moveDir.x / GetCellSize)
-                                , GetCellSize * Mathf.RoundToInt(moveDir.y / GetCellSize)
+                            moveDir = new Vector3(GetCellHalfSize * Mathf.RoundToInt(moveDir.x / GetCellHalfSize)
+                                , GetCellHalfSize * Mathf.RoundToInt(moveDir.y / GetCellHalfSize)
                                 , moveDir.z);
                         }
                         
@@ -121,8 +122,8 @@ namespace LevelEditor
                         if (GetUseGrid && TargetObjs.Count == 1)
                         {
                             TargetObjs[index].transform.position = 
-                                new Vector3( GetCellSize * Mathf.RoundToInt(TargetObjs[index].transform.position.x / GetCellSize)
-                                    ,  GetCellSize * Mathf.RoundToInt(TargetObjs[index].transform.position.y / GetCellSize)
+                                new Vector3( GetCellHalfSize * Mathf.RoundToInt(TargetObjs[index].transform.position.x / GetCellHalfSize)
+                                    ,  GetCellHalfSize * Mathf.RoundToInt(TargetObjs[index].transform.position.y / GetCellHalfSize)
                                     , TargetObjs[index].transform.position.z);
                         }
                         continue;
@@ -162,13 +163,6 @@ namespace LevelEditor
                 }
                 
                 rate = currentMouseProject.DivideVector(originMouseProject);
-
-                if (GetUseGrid)
-                {
-                    rate = new Vector3(GetScaleUnit * Mathf.RoundToInt(rate.x / GetScaleUnit)
-                        , GetScaleUnit * Mathf.RoundToInt(rate.y / GetScaleUnit)
-                        , rate.z);
-                }
                 
                 if (scaleDir == GetRectRect.transform.up || scaleDir == -GetRectRect.transform.up)
                 {
@@ -196,13 +190,34 @@ namespace LevelEditor
                 newPosition = m_centerPosition + positionOffset + positionOffsetProject
                     .HadamardProduct(new Vector3(rate.x-1,rate.y-1,rate.z-1)) + (currentMouseProject - originMouseProject)/2;
                 
-                if (TargetObjs[index].transform.localScale == newScale.NewX((float)Math.Round(newScale.x, 2)))
+                if (GetUseGrid)
                 {
-                    return;
+                    Vector3 oldSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size
+                        .HadamardProduct(TargetObjs[index].transform.localScale);
+                    Vector3 newSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size.HadamardProduct(newScale);
+                    oldSize = new Vector3(GetCellSize * Mathf.RoundToInt(oldSize.x/GetCellSize),
+                        GetCellSize * Mathf.RoundToInt(oldSize.y/GetCellSize),
+                        GetCellSize * Mathf.RoundToInt(oldSize.z / GetCellSize));
+                    newSize = new Vector3(GetCellSize * Mathf.RoundToInt(newSize.x/GetCellSize),
+                        GetCellSize * Mathf.RoundToInt(newSize.y/GetCellSize),
+                        GetCellSize * Mathf.RoundToInt(newSize.z / GetCellSize));
+                    newPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x/ GetCellHalfSize),
+                        GetCellHalfSize * Mathf.RoundToInt(newPosition.y/ GetCellHalfSize),
+                        GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
+                    if(oldSize == newSize) return;
+                }
+
+                if (GetUseGrid)
+                {
+                    TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Floor(newScale.x))
+                        .NewY((float)Math.Floor(newScale.y));
+                }
+                else
+                {
+                    TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x,2))
+                        .NewY((float)Math.Round(newScale.y,2));
                 }
                 
-                TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x,2))
-                    .NewY((float)Math.Round(newScale.y,2));
                 TargetObjs[index].transform.position = newPosition;
                 
                 TargetObjs[index].transform.position = TargetObjs[index].transform.position.NewX((float)Math.Round(TargetObjs[index].transform.position.x,2))

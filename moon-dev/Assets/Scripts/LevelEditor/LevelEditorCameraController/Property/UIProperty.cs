@@ -133,8 +133,6 @@ namespace LevelEditor
             public int GROWTH_FACTOR { get; private set; }
             [field:SerializeField,CustomLabel("旋转单位量")]
             public int ROTATION_UNIT { get; private set; }
-            [field:SerializeField,CustomLabel("缩放单位量")]
-            public float SCALE_UNIT { get; private set; }
         }
         
         [Serializable]

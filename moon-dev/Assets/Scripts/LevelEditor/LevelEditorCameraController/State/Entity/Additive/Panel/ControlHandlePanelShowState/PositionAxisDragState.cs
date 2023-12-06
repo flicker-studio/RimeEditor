@@ -37,7 +37,7 @@ namespace LevelEditor
 
         private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
-        private float GetCellSize => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
+        private float GetCellHalfSize => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
     
         private Vector3 m_originMouseWorldPosition;
     
@@ -104,8 +104,8 @@ namespace LevelEditor
             
             if (GetUseGrid && TargetObjs.Count > 1)
             {
-                moveDir = new Vector3(GetCellSize * Mathf.RoundToInt(moveDir.x / GetCellSize)
-                    , GetCellSize * Mathf.RoundToInt(moveDir.y / GetCellSize)
+                moveDir = new Vector3(GetCellHalfSize * Mathf.RoundToInt(moveDir.x / GetCellHalfSize)
+                    , GetCellHalfSize * Mathf.RoundToInt(moveDir.y / GetCellHalfSize)
                     , moveDir.z);
             }
             
@@ -135,16 +135,16 @@ namespace LevelEditor
                     {
                         case POSITIONDRAGTYPE.XAxis:
                             TargetObjs[i].transform.position = TargetObjs[i].transform.position
-                                .NewX(GetCellSize * Mathf.RoundToInt(TargetObjs[i].transform.position.x / GetCellSize));
+                                .NewX(GetCellHalfSize * Mathf.RoundToInt(TargetObjs[i].transform.position.x / GetCellHalfSize));
                             break;
                         case POSITIONDRAGTYPE.YAxis:
                             TargetObjs[i].transform.position = TargetObjs[i].transform.position
-                                .NewY(GetCellSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellSize));
+                                .NewY(GetCellHalfSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellHalfSize));
                             break;
                         case POSITIONDRAGTYPE.XYAxis:
                             TargetObjs[i].transform.position = 
-                                new Vector3(GetCellSize *  Mathf.RoundToInt(TargetObjs[i].transform.position.x / GetCellSize)
-                                    ,  GetCellSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellSize)
+                                new Vector3(GetCellHalfSize *  Mathf.RoundToInt(TargetObjs[i].transform.position.x / GetCellHalfSize)
+                                    ,  GetCellHalfSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellHalfSize)
                                     , TargetObjs[i].transform.position.z);
                             break;
                         default:
