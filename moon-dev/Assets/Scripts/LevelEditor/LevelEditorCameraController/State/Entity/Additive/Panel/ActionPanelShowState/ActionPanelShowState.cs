@@ -25,6 +25,13 @@ namespace LevelEditor
         private bool GetScaleButtonDown => m_information.GetUI.GetActionPanel.GetScaleInputDown;
 
         private bool GetRectButtonDown => m_information.GetUI.GetActionPanel.GetRectInputDown;
+
+        private bool GetShiftButton => m_information.GetInput.GetShiftButton;
+        public bool GetPButtonDown => m_information.GetInput.GetPButtonDown;
+        
+        public bool GetRButtonDown => m_information.GetInput.GetRButtonDown;
+        
+        public bool GetSButtonDown => m_information.GetInput.GetSButtonDown;
     
         public ActionPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
@@ -33,11 +40,15 @@ namespace LevelEditor
 
         public override void Motion(BaseInformation information)
         {
-            if (GetPositionButtonDown)
+            if (GetPositionButtonDown || GetPButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.PositionAxisButton));
             }
-            else if (GetRotationButtonDown)
+            else if (GetRectButtonDown || GetShiftButton && GetRButtonDown)
+            {
+                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RectButton));
+            }
+            else if (GetRotationButtonDown || GetRButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RotationAxisButton));
             }
@@ -45,13 +56,9 @@ namespace LevelEditor
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ViewButton));
             }
-            else if (GetScaleButtonDown)
+            else if (GetScaleButtonDown || GetSButtonDown)
             {
                 GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ScaleAxisButton));
-            }
-            else if (GetRectButtonDown)
-            {
-                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RectButton));
             }
             else if (GetUndoButtonDown)
             {

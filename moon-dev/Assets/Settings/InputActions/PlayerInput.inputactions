@@ -253,6 +253,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PButton",
+                    "type": "Button",
+                    "id": "53b2c1c2-d57a-4563-a5ae-24c88d888b1e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RButton",
+                    "type": "Button",
+                    "id": "2a8f27dc-4d24-41a5-b1af-2c783f5e36d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SButton",
+                    "type": "Button",
+                    "id": "7f416d2a-0640-4546-ac48-aa96562b8f0c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EButton",
+                    "type": "Button",
+                    "id": "1b368b3e-1f23-49c0-8c15-3e0f10729471",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -396,6 +432,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "MouseLeftButtonDoubleClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cfbc4abf-8ebe-4a00-a4b7-61267138ec7c",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "75ec608e-3588-4088-96f9-d6f26a9ac706",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92b11c4d-3af8-470b-82c1-3edd3a216a9e",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b67b3b5-9901-4847-826c-64a703280e38",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
