@@ -195,17 +195,40 @@ namespace LevelEditor
                     Vector3 oldSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size
                         .HadamardProduct(TargetObjs[index].transform.localScale);
                     Vector3 newSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size.HadamardProduct(newScale);
-                    oldSize = new Vector3(GetCellHalfSize * Mathf.RoundToInt(oldSize.x/GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(oldSize.y / GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(oldSize.z / GetCellHalfSize));
-                    newSize = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newSize.x/GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(newSize.y / GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(newSize.z / GetCellHalfSize));
-                    newPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x/ GetCellHalfSize),
+                    oldSize = new Vector3(GetCellSize * Mathf.RoundToInt(oldSize.x/GetCellSize),
+                        GetCellSize * Mathf.RoundToInt(oldSize.y/GetCellSize),
+                    GetCellSize * Mathf.RoundToInt(oldSize.z / GetCellSize));
+                    newSize = new Vector3(GetCellSize * Mathf.RoundToInt(newSize.x/GetCellSize),
+                        GetCellSize * Mathf.RoundToInt(newSize.y/GetCellSize),
+                        GetCellSize * Mathf.RoundToInt(newSize.z / GetCellSize));
+                    if(oldSize == newSize) return;
+                    Vector3 tempScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
+                    Vector3 tempPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x/ GetCellHalfSize),
                         GetCellHalfSize * Mathf.RoundToInt(newPosition.y/ GetCellHalfSize),
                         GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
-                    if(oldSize == newSize) return;
-                    newScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
+                    switch (m_rectDragType)
+                    {
+                        case RECTDRAGTYPE.LeftEdge:
+                            newScale = newScale.NewX(tempScale.x);
+                            newPosition = newPosition.NewX(tempPosition.x);
+                            break;
+                        case RECTDRAGTYPE.RightEdge:
+                            newScale = newScale.NewX(tempScale.x);
+                            newPosition = newPosition.NewX(tempPosition.x);
+                            break;
+                        case RECTDRAGTYPE.TopEdge:
+                            newScale = newScale.NewY(tempScale.y);
+                            newPosition = newPosition.NewY(tempPosition.y);
+                            break;
+                        case RECTDRAGTYPE.BottomEdge:
+                            newScale = newScale.NewY(tempScale.y);
+                            newPosition = newPosition.NewY(tempPosition.y);
+                            break;
+                        default:
+                            newScale = newScale.NewX(tempScale.x).NewY(tempScale.y);
+                            newPosition = newPosition.NewX(tempPosition.x).NewY(tempPosition.y);
+                            break;
+                    }
                 }
 
                 if (GetUseGrid)

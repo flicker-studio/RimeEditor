@@ -207,7 +207,6 @@ namespace LevelEditor
             Vector3 positionOffset = m_targetOriginPosition[index] - m_centerPosition;
             Vector3 rate = currentMouseProject.DivideVector(originMouseProject);
             Vector3 newScale = Vector3.zero;
-            Vector3 oldScale = Vector3.zero;
             Vector3 newPosition = Vector3.zero;
             switch (m_scaleDragType)
             {
@@ -243,11 +242,26 @@ namespace LevelEditor
                 newSize = new Vector3(GetCellSize * Mathf.RoundToInt(newSize.x/GetCellSize),
                     GetCellSize * Mathf.RoundToInt(newSize.y/GetCellSize),
                     GetCellSize * Mathf.RoundToInt(newSize.z / GetCellSize));
-                newPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x/ GetCellHalfSize),
+                if(oldSize == newSize) return;
+                Vector3 tempScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
+                Vector3 tempPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x/ GetCellHalfSize),
                     GetCellHalfSize * Mathf.RoundToInt(newPosition.y/ GetCellHalfSize),
                     GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
-                if(oldSize == newSize) return;
-                newScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
+                switch (m_scaleDragType)
+                {
+                    case SCALEDRAGTYPE.XAxis:
+                        newScale = newScale.NewX(tempScale.x);
+                        newPosition = newPosition.NewX(tempPosition.x);
+                        break;
+                    case SCALEDRAGTYPE.YAxis:
+                        newScale = newScale.NewY(tempScale.y);
+                        newPosition = newPosition.NewY(tempPosition.y);
+                        break;
+                    case SCALEDRAGTYPE.XYAxis:
+                        newScale = newScale.NewX(tempScale.x).NewY(tempScale.y);
+                        newPosition = newPosition.NewX(tempPosition.x).NewY(tempPosition.y);
+                        break;
+                }
             }
 
             if (GetUseGrid)
