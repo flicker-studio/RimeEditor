@@ -266,6 +266,15 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseLeftButtonDoubleClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""75a0d306-82bb-48e1-85ad-d3c3d4bf91c2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -398,6 +407,17 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""GButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd755188-bdbb-4426-bdc3-bd9740682543"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLeftButtonDoubleClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -534,6 +554,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_LevelEditor_VButton = m_LevelEditor.FindAction("VButton", throwIfNotFound: true);
         m_LevelEditor_EscapeButton = m_LevelEditor.FindAction("EscapeButton", throwIfNotFound: true);
         m_LevelEditor_GButton = m_LevelEditor.FindAction("GButton", throwIfNotFound: true);
+        m_LevelEditor_MouseLeftButtonDoubleClick = m_LevelEditor.FindAction("MouseLeftButtonDoubleClick", throwIfNotFound: true);
         // Debugger
         m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
         m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
@@ -684,6 +705,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_LevelEditor_VButton;
     private readonly InputAction m_LevelEditor_EscapeButton;
     private readonly InputAction m_LevelEditor_GButton;
+    private readonly InputAction m_LevelEditor_MouseLeftButtonDoubleClick;
     public struct LevelEditorActions
     {
         private @PlayerAction m_Wrapper;
@@ -700,6 +722,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @VButton => m_Wrapper.m_LevelEditor_VButton;
         public InputAction @EscapeButton => m_Wrapper.m_LevelEditor_EscapeButton;
         public InputAction @GButton => m_Wrapper.m_LevelEditor_GButton;
+        public InputAction @MouseLeftButtonDoubleClick => m_Wrapper.m_LevelEditor_MouseLeftButtonDoubleClick;
         public InputActionMap Get() { return m_Wrapper.m_LevelEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -745,6 +768,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @GButton.started += instance.OnGButton;
             @GButton.performed += instance.OnGButton;
             @GButton.canceled += instance.OnGButton;
+            @MouseLeftButtonDoubleClick.started += instance.OnMouseLeftButtonDoubleClick;
+            @MouseLeftButtonDoubleClick.performed += instance.OnMouseLeftButtonDoubleClick;
+            @MouseLeftButtonDoubleClick.canceled += instance.OnMouseLeftButtonDoubleClick;
         }
 
         private void UnregisterCallbacks(ILevelEditorActions instance)
@@ -785,6 +811,9 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @GButton.started -= instance.OnGButton;
             @GButton.performed -= instance.OnGButton;
             @GButton.canceled -= instance.OnGButton;
+            @MouseLeftButtonDoubleClick.started -= instance.OnMouseLeftButtonDoubleClick;
+            @MouseLeftButtonDoubleClick.performed -= instance.OnMouseLeftButtonDoubleClick;
+            @MouseLeftButtonDoubleClick.canceled -= instance.OnMouseLeftButtonDoubleClick;
         }
 
         public void RemoveCallbacks(ILevelEditorActions instance)
@@ -901,6 +930,7 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnVButton(InputAction.CallbackContext context);
         void OnEscapeButton(InputAction.CallbackContext context);
         void OnGButton(InputAction.CallbackContext context);
+        void OnMouseLeftButtonDoubleClick(InputAction.CallbackContext context);
     }
     public interface IDebuggerActions
     {
