@@ -247,6 +247,7 @@ namespace LevelEditor
                     GetCellHalfSize * Mathf.RoundToInt(newPosition.y/ GetCellHalfSize),
                     GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
                 if(oldSize == newSize) return;
+                newScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
             }
 
             if (GetUseGrid)
