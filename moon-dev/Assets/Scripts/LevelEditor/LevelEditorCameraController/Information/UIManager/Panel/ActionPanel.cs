@@ -83,7 +83,7 @@ namespace LevelEditor
         m_scaleButton.AddTriggerEvent(EventTriggerType.PointerClick,
             data => m_scaleInputProperty.SetInput = true);
         m_rectButton.AddTriggerEvent(EventTriggerType.PointerClick,
-            data => m_redoInputProperty.SetInput = true);
+            data => m_rectInputProperty.SetInput = true);
     }
 }
 }

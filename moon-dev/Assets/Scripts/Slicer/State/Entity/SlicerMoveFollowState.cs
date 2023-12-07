@@ -1,5 +1,6 @@
 using System;
 using Frame.StateMachine;
+using Frame.Static.Extensions;
 using UnityEngine;
 using static UnityEngine.GridBrushBase;
 
@@ -7,21 +8,9 @@ namespace Slicer.State
 {
     public class SlicerMoveFollowState : SlicerMainMotionState
     {
-        private Vector3 m_lastFrameCursorPosition;
-        
-        private float m_angle;
-
-        private float m_distance;
-
-        private Vector3 m_currentMousePosition;
-        
         # region GetProperty
         
-        private int GetRotationThreshold => m_slicerInformation.GetRotationThreshold;
-
-        private bool GetRotationDirection => m_slicerInformation.GetRotationDirection;
-
-        private Vector3 GetMousePosition => m_slicerInformation.GetMousePosition;
+        private Vector3 GetMouseWorldPoint => m_slicerInformation.GetMouseWorldPoint;
         
         private Vector2 GetOffSet => m_slicerInformation.GetSliceOffset;
         
@@ -33,35 +22,32 @@ namespace Slicer.State
         
         public SlicerMoveFollowState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
-            Debug.Log("移动");
-            m_lastFrameCursorPosition = Input.mousePosition;
-            m_distance = GetOffSet.magnitude;
-            m_angle = Mathf.Atan(GetOffSet.y / GetOffSet.x);
+            
         }
 
-        public override void Motion(BaseInformation information)    
+        public override void Motion(BaseInformation information)
         {
-            m_currentMousePosition = GetMousePosition;
+            Vector3 dir = GetMouseWorldPoint - GetPlayerTransform.position;
             
-            var curThreshold = m_currentMousePosition.x - m_lastFrameCursorPosition.x;
+            float angle = Vector3.SignedAngle(Vector3.right, dir,Vector3.forward);
             
-            if (curThreshold > GetRotationThreshold && !GetRotationDirection)
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            Vector3 currentOffset = rotation * GetOffSet;
+
+            if (Vector3.Dot(dir, GetPlayerTransform.right) < 0)
             {
-                ChangeMotionState(typeof(SlicerRotationFollowState));
-                return;
-            } else if (curThreshold < -GetRotationThreshold && GetRotationDirection)
+                currentOffset = rotation * GetOffSet.NewY(-GetOffSet.y);
+                GetTransform.localScale = GetTransform.localScale.NewY(-1);
+            }
+            else
             {
-                ChangeMotionState(typeof(SlicerRotationFollowState));
-                return;
+                GetTransform.localScale = GetTransform.localScale.NewY(1);
             }
             
-            m_lastFrameCursorPosition = m_currentMousePosition;
-            GetTransform.position = GetPlayerTransform.position +
-                                    GetPlayerTransform.rotation * 
-                                    new Vector3((GetRotationDirection ? 1 : -1) * Mathf.Cos(m_angle), Mathf.Sin(m_angle), 0) * 
-                                    m_distance;
-            var angles = GetPlayerTransform.eulerAngles;
-            GetTransform.rotation = Quaternion.Euler(angles.x,angles.y, angles.z);
+            GetTransform.position = GetPlayerTransform.position + currentOffset;
+
+            GetTransform.rotation = rotation;
         }
     }
 }

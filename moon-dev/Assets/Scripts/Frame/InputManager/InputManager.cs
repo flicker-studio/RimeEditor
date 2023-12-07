@@ -145,6 +145,46 @@ namespace Frame.Tool
         {
             m_vButton.SetInput = false;
         };
+        
+        GetLevelEditorActions.GButton.performed += context =>
+        {
+            m_gButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.GButton.canceled += context =>
+        {
+            m_gButton.SetInput = false;
+        };
+        
+        GetLevelEditorActions.PButton.performed += context =>
+        {
+            m_pButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.PButton.canceled += context =>
+        {
+            m_pButton.SetInput = false;
+        };
+        
+        GetLevelEditorActions.RButton.performed += context =>
+        {
+            m_rButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.RButton.canceled += context =>
+        {
+            m_rButton.SetInput = false;
+        };
+        
+        GetLevelEditorActions.SButton.performed += context =>
+        {
+            m_sButton.SetInput = true;
+        };
+        
+        GetLevelEditorActions.SButton.canceled += context =>
+        {
+            m_sButton.SetInput = false;
+        };
 
         GetLevelEditorActions.DeleteButton.performed += context =>
         {
@@ -330,6 +370,14 @@ namespace Frame.Tool
     
     private InputProperty<bool> m_vButton = new InputProperty<bool>();
 
+    private InputProperty<bool> m_gButton = new InputProperty<bool>();
+    
+    private InputProperty<bool> m_pButton = new InputProperty<bool>();
+    
+    private InputProperty<bool> m_rButton = new InputProperty<bool>();
+    
+    private InputProperty<bool> m_sButton = new InputProperty<bool>();
+
     private InputProperty<bool> m_deleteButton = new InputProperty<bool>();
 
     private InputProperty<bool> m_escapeButton = new InputProperty<bool>();
@@ -382,6 +430,18 @@ namespace Frame.Tool
     public bool GetVButton => m_zButton.GetInput;
     public bool GetVButtonDown => m_vButton.GetInputDown;
     public bool GetVButtonUp => m_vButton.GetInputUp;
+    
+    public bool GetGButtonDown => m_gButton.GetInputDown;
+    public bool GetGButtonUp => m_gButton.GetInputUp;
+    
+    public bool GetPButtonDown => m_pButton.GetInputDown;
+    public bool GetPButtonUp => m_pButton.GetInputUp;
+    
+    public bool GetRButtonDown => m_rButton.GetInputDown;
+    public bool GetRButtonUp => m_rButton.GetInputUp;
+    
+    public bool GetSButtonDown => m_sButton.GetInputDown;
+    public bool GetSButtonUp => m_sButton.GetInputUp;
 
     public bool GetDelexteButton => m_deleteButton.GetInput;
     

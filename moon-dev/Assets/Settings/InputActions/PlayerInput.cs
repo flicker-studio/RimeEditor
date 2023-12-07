@@ -257,6 +257,60 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""3dc470c1-048b-4372-910a-58b5082e8794"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseLeftButtonDoubleClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""75a0d306-82bb-48e1-85ad-d3c3d4bf91c2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""53b2c1c2-d57a-4563-a5ae-24c88d888b1e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""2a8f27dc-4d24-41a5-b1af-2c783f5e36d1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f416d2a-0640-4546-ac48-aa96562b8f0c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b368b3e-1f23-49c0-8c15-3e0f10729471"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -378,6 +432,72 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""EscapeButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14476c08-575b-4bb2-b3a7-13a777f593a3"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd755188-bdbb-4426-bdc3-bd9740682543"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLeftButtonDoubleClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfbc4abf-8ebe-4a00-a4b7-61267138ec7c"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75ec608e-3588-4088-96f9-d6f26a9ac706"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92b11c4d-3af8-470b-82c1-3edd3a216a9e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b67b3b5-9901-4847-826c-64a703280e38"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -513,6 +633,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_LevelEditor_CButton = m_LevelEditor.FindAction("CButton", throwIfNotFound: true);
         m_LevelEditor_VButton = m_LevelEditor.FindAction("VButton", throwIfNotFound: true);
         m_LevelEditor_EscapeButton = m_LevelEditor.FindAction("EscapeButton", throwIfNotFound: true);
+        m_LevelEditor_GButton = m_LevelEditor.FindAction("GButton", throwIfNotFound: true);
+        m_LevelEditor_MouseLeftButtonDoubleClick = m_LevelEditor.FindAction("MouseLeftButtonDoubleClick", throwIfNotFound: true);
+        m_LevelEditor_PButton = m_LevelEditor.FindAction("PButton", throwIfNotFound: true);
+        m_LevelEditor_RButton = m_LevelEditor.FindAction("RButton", throwIfNotFound: true);
+        m_LevelEditor_SButton = m_LevelEditor.FindAction("SButton", throwIfNotFound: true);
+        m_LevelEditor_EButton = m_LevelEditor.FindAction("EButton", throwIfNotFound: true);
         // Debugger
         m_Debugger = asset.FindActionMap("Debugger", throwIfNotFound: true);
         m_Debugger_Num1 = m_Debugger.FindAction("Num1", throwIfNotFound: true);
@@ -662,6 +788,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_LevelEditor_CButton;
     private readonly InputAction m_LevelEditor_VButton;
     private readonly InputAction m_LevelEditor_EscapeButton;
+    private readonly InputAction m_LevelEditor_GButton;
+    private readonly InputAction m_LevelEditor_MouseLeftButtonDoubleClick;
+    private readonly InputAction m_LevelEditor_PButton;
+    private readonly InputAction m_LevelEditor_RButton;
+    private readonly InputAction m_LevelEditor_SButton;
+    private readonly InputAction m_LevelEditor_EButton;
     public struct LevelEditorActions
     {
         private @PlayerAction m_Wrapper;
@@ -677,6 +809,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         public InputAction @CButton => m_Wrapper.m_LevelEditor_CButton;
         public InputAction @VButton => m_Wrapper.m_LevelEditor_VButton;
         public InputAction @EscapeButton => m_Wrapper.m_LevelEditor_EscapeButton;
+        public InputAction @GButton => m_Wrapper.m_LevelEditor_GButton;
+        public InputAction @MouseLeftButtonDoubleClick => m_Wrapper.m_LevelEditor_MouseLeftButtonDoubleClick;
+        public InputAction @PButton => m_Wrapper.m_LevelEditor_PButton;
+        public InputAction @RButton => m_Wrapper.m_LevelEditor_RButton;
+        public InputAction @SButton => m_Wrapper.m_LevelEditor_SButton;
+        public InputAction @EButton => m_Wrapper.m_LevelEditor_EButton;
         public InputActionMap Get() { return m_Wrapper.m_LevelEditor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -719,6 +857,24 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @EscapeButton.started += instance.OnEscapeButton;
             @EscapeButton.performed += instance.OnEscapeButton;
             @EscapeButton.canceled += instance.OnEscapeButton;
+            @GButton.started += instance.OnGButton;
+            @GButton.performed += instance.OnGButton;
+            @GButton.canceled += instance.OnGButton;
+            @MouseLeftButtonDoubleClick.started += instance.OnMouseLeftButtonDoubleClick;
+            @MouseLeftButtonDoubleClick.performed += instance.OnMouseLeftButtonDoubleClick;
+            @MouseLeftButtonDoubleClick.canceled += instance.OnMouseLeftButtonDoubleClick;
+            @PButton.started += instance.OnPButton;
+            @PButton.performed += instance.OnPButton;
+            @PButton.canceled += instance.OnPButton;
+            @RButton.started += instance.OnRButton;
+            @RButton.performed += instance.OnRButton;
+            @RButton.canceled += instance.OnRButton;
+            @SButton.started += instance.OnSButton;
+            @SButton.performed += instance.OnSButton;
+            @SButton.canceled += instance.OnSButton;
+            @EButton.started += instance.OnEButton;
+            @EButton.performed += instance.OnEButton;
+            @EButton.canceled += instance.OnEButton;
         }
 
         private void UnregisterCallbacks(ILevelEditorActions instance)
@@ -756,6 +912,24 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @EscapeButton.started -= instance.OnEscapeButton;
             @EscapeButton.performed -= instance.OnEscapeButton;
             @EscapeButton.canceled -= instance.OnEscapeButton;
+            @GButton.started -= instance.OnGButton;
+            @GButton.performed -= instance.OnGButton;
+            @GButton.canceled -= instance.OnGButton;
+            @MouseLeftButtonDoubleClick.started -= instance.OnMouseLeftButtonDoubleClick;
+            @MouseLeftButtonDoubleClick.performed -= instance.OnMouseLeftButtonDoubleClick;
+            @MouseLeftButtonDoubleClick.canceled -= instance.OnMouseLeftButtonDoubleClick;
+            @PButton.started -= instance.OnPButton;
+            @PButton.performed -= instance.OnPButton;
+            @PButton.canceled -= instance.OnPButton;
+            @RButton.started -= instance.OnRButton;
+            @RButton.performed -= instance.OnRButton;
+            @RButton.canceled -= instance.OnRButton;
+            @SButton.started -= instance.OnSButton;
+            @SButton.performed -= instance.OnSButton;
+            @SButton.canceled -= instance.OnSButton;
+            @EButton.started -= instance.OnEButton;
+            @EButton.performed -= instance.OnEButton;
+            @EButton.canceled -= instance.OnEButton;
         }
 
         public void RemoveCallbacks(ILevelEditorActions instance)
@@ -871,6 +1045,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         void OnCButton(InputAction.CallbackContext context);
         void OnVButton(InputAction.CallbackContext context);
         void OnEscapeButton(InputAction.CallbackContext context);
+        void OnGButton(InputAction.CallbackContext context);
+        void OnMouseLeftButtonDoubleClick(InputAction.CallbackContext context);
+        void OnPButton(InputAction.CallbackContext context);
+        void OnRButton(InputAction.CallbackContext context);
+        void OnSButton(InputAction.CallbackContext context);
+        void OnEButton(InputAction.CallbackContext context);
     }
     public interface IDebuggerActions
     {

@@ -9,20 +9,6 @@ namespace LevelEditor
 {
     public class ScaleAxisDragState : AdditiveState
     {
-        #region Other types of variables.
-
-        public enum SCALEDRAGTYPE
-        {
-            XAxis,
-            YAxis,
-            XYAxis
-        }
-
-        private SCALEDRAGTYPE m_scaleDragType;
-        
-        private FlagProperty m_waitToNextFrame;
-
-        #endregion
 
         #region Get properties.
 
@@ -60,8 +46,29 @@ namespace LevelEditor
         
         private CommandExcute GetExcute => GetCommandSet.GetExcute;
 
+        private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
+
+        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
+        
+        private float GetCellHalfSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
+
         #endregion
 
+        #region Other types of variables.
+
+        public enum SCALEDRAGTYPE
+        {
+            XAxis,
+            YAxis,
+            XYAxis
+        }
+
+        private SCALEDRAGTYPE m_scaleDragType;
+        
+        private FlagProperty m_waitToNextFrame;
+
+        #endregion
+        
         #region Position variate and scale variate.
 
         private Vector2 m_originMouseSumVector;
@@ -127,7 +134,7 @@ namespace LevelEditor
         private void StateInit()
         {
             InitDragType();
-            InitMousePos();
+            InitData();
             InitAxisPosAndSize();
         }
 
@@ -157,6 +164,8 @@ namespace LevelEditor
             Vector3 currentMouseProject;
             Vector3 originMouseProject;
         
+            if(mouseSumVector.magnitude == 0) return;
+            
             switch (m_scaleDragType)
             {
                 case SCALEDRAGTYPE.XAxis:
@@ -199,7 +208,6 @@ namespace LevelEditor
             Vector3 rate = currentMouseProject.DivideVector(originMouseProject);
             Vector3 newScale = Vector3.zero;
             Vector3 newPosition = Vector3.zero;
-        
             switch (m_scaleDragType)
             {
                 case SCALEDRAGTYPE.XAxis:
@@ -222,27 +230,68 @@ namespace LevelEditor
             }
         
             ChangeAxisScale(originMouseProject, currentMouseProject);
-        
-            TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x,2))
-                .NewY((float)Math.Round(newScale.y,2));
+            
+            if (GetUseGrid)
+            {
+                Vector3 oldSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size
+                    .HadamardProduct(TargetObjs[index].transform.localScale);
+                Vector3 newSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size.HadamardProduct(newScale);
+                oldSize = new Vector3(GetCellSize * Mathf.RoundToInt(oldSize.x/GetCellSize),
+                    GetCellSize * Mathf.RoundToInt(oldSize.y/GetCellSize),
+                GetCellSize * Mathf.RoundToInt(oldSize.z / GetCellSize));
+                newSize = new Vector3(GetCellSize * Mathf.RoundToInt(newSize.x/GetCellSize),
+                    GetCellSize * Mathf.RoundToInt(newSize.y/GetCellSize),
+                    GetCellSize * Mathf.RoundToInt(newSize.z / GetCellSize));
+                if(oldSize == newSize) return;
+                Vector3 tempScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
+                Vector3 tempPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x/ GetCellHalfSize),
+                    GetCellHalfSize * Mathf.RoundToInt(newPosition.y/ GetCellHalfSize),
+                    GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
+                switch (m_scaleDragType)
+                {
+                    case SCALEDRAGTYPE.XAxis:
+                        newScale = newScale.NewX(tempScale.x);
+                        newPosition = newPosition.NewX(tempPosition.x);
+                        break;
+                    case SCALEDRAGTYPE.YAxis:
+                        newScale = newScale.NewY(tempScale.y);
+                        newPosition = newPosition.NewY(tempPosition.y);
+                        break;
+                    case SCALEDRAGTYPE.XYAxis:
+                        newScale = newScale.NewX(tempScale.x).NewY(tempScale.y);
+                        newPosition = newPosition.NewX(tempPosition.x).NewY(tempPosition.y);
+                        break;
+                }
+            }
+
+            if (GetUseGrid)
+            {
+                TargetObjs[index].transform.localScale = newScale.NewX(Mathf.RoundToInt(newScale.x))
+                    .NewY(Mathf.RoundToInt(newScale.y));
+            }
+            else
+            {
+                TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x,2))
+                    .NewY((float)Math.Round(newScale.y,2));
+            }
             TargetObjs[index].transform.position = newPosition;
         }
 
         private void InitDragType()
         {
-            if (m_information.GetUI.GetControlHandlePanel.GetScaleInputX)
+            if (GetUI.GetControlHandlePanel.GetScaleInputX)
             {
                 m_scaleDragType = SCALEDRAGTYPE.XAxis;
-            }else if (m_information.GetUI.GetControlHandlePanel.GetScaleInputY)
+            }else if (GetUI.GetControlHandlePanel.GetScaleInputY)
             {
                 m_scaleDragType = SCALEDRAGTYPE.YAxis;
-            }else if (m_information.GetUI.GetControlHandlePanel.GetScaleInputXY)
+            }else if (GetUI.GetControlHandlePanel.GetScaleInputXY)
             {
                 m_scaleDragType = SCALEDRAGTYPE.XYAxis;
             }
         }
 
-        private void InitMousePos()
+        private void InitData()
         {
             m_originMousePosition = GetScaleRect.anchoredPosition;
             m_originMouseSumVector = GetMousePosition - GetScaleRect.anchoredPosition;

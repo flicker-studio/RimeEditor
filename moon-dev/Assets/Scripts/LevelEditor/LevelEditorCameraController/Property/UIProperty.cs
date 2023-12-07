@@ -48,6 +48,9 @@ namespace LevelEditor
             [field:SerializeField,Header("缩放轴属性")] 
             public ScaleDragProperty GetScaleDragProperty { get;private set; }
             
+            [field:SerializeField,Header("网格吸附属性")] 
+            public GridSnappingProperty GetGridSnappingProperty { get;private set; }
+            
             [field:SerializeField,Header("鼠标光标属性")]
             public MouseCursorProperty GetMouseCursorProperty { get; private set; }
         }
@@ -115,6 +118,21 @@ namespace LevelEditor
             public float SCALE_SPEED { get; private set; }
             [field:SerializeField,CustomLabel("中心点轴显示补偿"),Range(0.01f,5)]
             public float CENTER_AXIS_COMPENSATION { get; private set; }
+        }
+        
+        [Serializable]
+        public struct GridSnappingProperty
+        {
+            [field:SerializeField,CustomLabel("网格颜色")]
+            public Color GRID_COLOR { get; private set; }
+            [field:SerializeField,CustomLabel("网格初始大小")]
+            public int GRID_SIZE { get; private set; }
+            [field:SerializeField,CustomLabel("单位网格尺寸")]
+            public float CELL_SIZE { get; set; }
+            [field:SerializeField,CustomLabel("网格扩张系数")]
+            public int GROWTH_FACTOR { get; private set; }
+            [field:SerializeField,CustomLabel("旋转单位量")]
+            public int ROTATION_UNIT { get; private set; }
         }
         
         [Serializable]
@@ -187,6 +205,8 @@ namespace LevelEditor
         {
             [field:SerializeField,CustomLabel("选择框UI名字")]
             public string SELECTION_UI_NAME{ get; private set; }
+            [field:SerializeField,CustomLabel("网格吸附UI名字")]
+            public string GRID_UI_NAME{ get; private set; }
             [field:SerializeField,CustomLabel("坐标系UI名字")]
             public string POSITION_AXIS{ get; private set; }
             [field:SerializeField,CustomLabel("坐标系X轴名字")] 
@@ -213,6 +233,26 @@ namespace LevelEditor
             public string SCALE_AXIS_Y_HEAD{ get; private set; }
             [field:SerializeField,CustomLabel("缩放轴Y躯干名字")]
             public string SCALE_AXIS_Y_BODY{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形框UI名字名字")]
+            public string RECT_AXIS{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形右上角名字")]
+            public string RECT_TOP_RIGHT_CORNER{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形左上角名字")]
+            public string RECT_TOP_LEFT_CORNER{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形右下角名字")]
+            public string RECT_BOTTOM_RIGHT_CORNER{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形左下角名字")]
+            public string RECT_BOTTOM_LEFT_CORNER{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形上边名字")]
+            public string RECT_TOP_EDGE{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形下边名字")]
+            public string RECT_BOTTOM_EDGE{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形右边名字")]
+            public string RECT_RIGHT_EDGE{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形左边名字")]
+            public string RECT_LEFT_EDGE{ get; private set; }
+            [field:SerializeField,CustomLabel("矩形中心名字")]
+            public string RECT_CENTER{ get; private set; }
         }
         
         [Serializable]

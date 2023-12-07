@@ -13,9 +13,10 @@ public class RotationAxisDragState : AdditiveState
 
     private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
     
-    private RectTransform GetRotationAxisRectTransform => m_information.GetUI.GetControlHandlePanel.GetRotationRect;
+    private ControlHandlePanel GetControlHandlePanel => m_information.GetUI.GetControlHandlePanel;
+    private RectTransform GetRotationAxisRectTransform => GetControlHandlePanel.GetRotationRect;
     
-    private Vector2 GetMouseCursorCompensation => m_information.GetUI.GetControlHandlePanel
+    private Vector2 GetMouseCursorCompensation => GetControlHandlePanel
         .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
     
     private Vector3 GetMousePosition => m_information.GetCamera.GetMousePosition;
@@ -23,6 +24,10 @@ public class RotationAxisDragState : AdditiveState
     private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
     
     private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+    
+    private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
+
+    private float GetRotationUnit => GetControlHandlePanel.GetGridSnappingProperty.ROTATION_UNIT;
     
     private Vector3 m_originMousePosition;
 
@@ -88,20 +93,43 @@ public class RotationAxisDragState : AdditiveState
         }
         m_currentMousePosition = GetMousePosition;
         mouseSumVector += m_currentMousePosition - m_originMousePosition;
+        
+        if(mouseSumVector.magnitude == 0) return;
+        
         Vector3 mouseDir = mouseSumVector.normalized;
         float mouseDis = mouseSumVector.magnitude;
         Vector3 dirCross = Vector3.Cross(m_originMouseToAxisDir, mouseDir);
         float rotationDirAndMultiplying= dirCross.z;
         Quaternion rotationQuaternion = Quaternion
             .Euler(0, 0, (float)Math.Round(mouseDis * rotationDirAndMultiplying * GetRotationSpeed,2));
+        
+        if (GetUseGrid && TargetObjs.Count > 1)
+        {
+            rotationQuaternion = 
+                Quaternion.Euler(rotationQuaternion.eulerAngles
+                    .NewZ(GetRotationUnit * Mathf.RoundToInt(rotationQuaternion.eulerAngles.z / GetRotationUnit)));
+        }
+        
         GetRotationAxisRectTransform.rotation = rotationQuaternion;
         GetRotationAxisRectTransform.position = m_oriRotationAxisPos;
         for (var i = 0; i < TargetObjs.Count; i++)
         {
+            if (TargetObjs[i].transform.rotation == m_targetOriginRotation[i] * rotationQuaternion)
+            {
+                continue;
+            }
+            
             TargetObjs[i].transform.rotation = m_targetOriginRotation[i] * rotationQuaternion;
             TargetObjs[i].transform.position = GetRotationAxisWorldPosition
-                                                          + Quaternion.Euler(Vector3.forward * (mouseDis * rotationDirAndMultiplying * GetRotationSpeed)).normalized *
+                                                          + Quaternion.Euler(Vector3.forward * rotationQuaternion.eulerAngles.z).normalized *
                                                           (m_targetOriginPosition[i] - GetRotationAxisWorldPosition);
+
+            if (GetUseGrid && TargetObjs.Count == 1)
+            {
+                TargetObjs[i].transform.rotation = Quaternion.Euler(TargetObjs[i].transform.rotation.eulerAngles
+                    .NewZ(GetRotationUnit *  Mathf.RoundToInt(TargetObjs[i].transform.rotation.eulerAngles.z / GetRotationUnit)));
+                GetRotationAxisRectTransform.rotation = TargetObjs[i].transform.rotation;
+            }
         }
     }
     

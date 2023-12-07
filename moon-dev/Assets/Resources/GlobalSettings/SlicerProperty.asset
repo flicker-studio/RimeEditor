@@ -19,6 +19,6 @@ MonoBehaviour:
   ConnectedObject:
     DETECTION_COMPENSATIONS_SCALE: {x: 0.98, y: 0.98, z: 0.98}
   SlicerMotion:
-    SLICE_OFFSET: {x: 5.24, y: 2}
+    SLICE_OFFSET: {x: 5.24, y: 2.25}
     ROTATION_SPEED: 1
     ROTATION_THRESHOLD: 20
