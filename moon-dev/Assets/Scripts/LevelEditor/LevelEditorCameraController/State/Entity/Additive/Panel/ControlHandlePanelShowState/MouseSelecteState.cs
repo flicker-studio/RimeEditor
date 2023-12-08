@@ -28,7 +28,7 @@ namespace LevelEditor
 
     private ItemTransformPanel GetItemTransformPanel => m_information.GetUI.GetItemTransformPanel;
 
-    private GameObject m_emptyObj;
+    private GameObject m_selectObj;
 
     private BoxCollider2D m_selectCollider;
     private Vector3 GetMousePosition => m_information.GetCamera.GetMousePosition
@@ -55,7 +55,8 @@ namespace LevelEditor
     {
         StateInit();
         SetSelectRectUI();
-        SetSelectColliderBox();
+        SetSelectCollider();
+        SelectTarget();
         GetSelectionUIRect.gameObject.SetActive(true);
     }
     
@@ -71,7 +72,8 @@ namespace LevelEditor
             return;
         }
         SetSelectRectUI();
-        SetSelectColliderBox();
+        SetSelectCollider();
+        SelectTarget();
     }
 
     private void SetSelectRectUI()
@@ -84,7 +86,7 @@ namespace LevelEditor
         GetSelectionUIRect.sizeDelta = new Vector2(selectUiWidth, SelectUiHeight);
     }
 
-    private void SetSelectColliderBox()
+    private void SetSelectCollider()
     {
         Vector2 selectColliderCenter = ScreenToWorldPoint((m_currentMousePosition + m_originMousePositon)/2);
         float frustumHeight = ScreenToWorldPoint(new Vector2(0, Screen.height)).y
@@ -97,10 +99,24 @@ namespace LevelEditor
         selectColliderWidth = Mathf.Clamp(selectColliderWidth, GetSelectionMinSize.x, selectColliderWidth);
         selectColliderHeight = Mathf.Clamp(selectColliderHeight, GetSelectionMinSize.y, selectColliderHeight);
         
-        m_emptyObj.transform.position = selectColliderCenter;
+        m_selectObj.transform.position = selectColliderCenter;
 
         m_selectCollider.size = new Vector2(selectColliderWidth, selectColliderHeight);
-        
+    }
+
+    private void SelectTarget()
+    {
+        if (m_currentMousePosition.x <= m_originMousePositon.x)
+        {
+            SelectTargetRightToLeft();
+        }
+        else
+        {
+            SelectTargetLeftToRight();
+        }
+    }
+    private void SelectTargetRightToLeft()
+    {
         List<Collider2D> colliders = new List<Collider2D>();
 
         m_selectCollider.OverlapCollider(m_contactFilter2D,colliders);
@@ -109,15 +125,34 @@ namespace LevelEditor
         
         m_selectList.AddRange(colliders);
     }
+    
+    private void SelectTargetLeftToRight()
+    {
+        List<Collider2D> colliders = new List<Collider2D>();
+        
+        m_selectCollider.OverlapCollider(m_contactFilter2D,colliders);
+        
+        m_selectList.Clear();
+
+        foreach (var collider in colliders)
+        {
+            Bounds targetBounds = collider.GetComponent<MeshRenderer>().bounds;
+            if (m_selectCollider.bounds.Contains(targetBounds.max.NewZ(m_selectObj.transform.position.z)) &&
+                m_selectCollider.bounds.Contains(targetBounds.min.NewZ(m_selectObj.transform.position.z)))
+            {
+                m_selectList.Add(collider);
+            }
+        }
+    }
 
     private void StateInit()
     {
         GetSelectionImage.color = GetSelectionColor;
         m_originMousePositon = GetMousePosition;
-        m_emptyObj = ObjectPool.Instance.OnTake(m_information.GetPrefab.GetEmptyGameObject);
-        m_selectCollider = m_emptyObj.GetComponent<BoxCollider2D>() == null
-            ? m_emptyObj.AddComponent<BoxCollider2D>()
-            : m_emptyObj.GetComponent<BoxCollider2D>();
+        m_selectObj = ObjectPool.Instance.OnTake(m_information.GetPrefab.GetEmptyGameObject);
+        m_selectCollider = m_selectObj.GetComponent<BoxCollider2D>() == null
+            ? m_selectObj.AddComponent<BoxCollider2D>()
+            : m_selectObj.GetComponent<BoxCollider2D>();
         m_selectCollider.enabled = true;
     }
 
@@ -125,7 +160,7 @@ namespace LevelEditor
     {
         GetSelectionUIRect.gameObject.SetActive(false);
         m_selectCollider.enabled = false;
-        ObjectPool.Instance.OnRelease(m_emptyObj);
+        ObjectPool.Instance.OnRelease(m_selectObj);
     }
 
     private Vector3 ScreenToWorldPoint(Vector2 screenPoint)
