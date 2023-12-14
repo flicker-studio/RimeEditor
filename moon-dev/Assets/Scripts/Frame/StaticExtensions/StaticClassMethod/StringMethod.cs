@@ -4,7 +4,9 @@ namespace Frame.Static.Extensions
 {
     public static class StringMethod
     {
-        public static string RemoveTrailingNumbers(this string input) {
+        public static string RemoveInvalidCharacter(this string input)
+        {
+            input = Regex.Replace(input, "<.*?>", string.Empty);
             return Regex.Replace(input, @"\d+$", "");
         }
     }

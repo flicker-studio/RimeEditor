@@ -8,7 +8,6 @@ namespace LevelEditor
     {
         private EditorController m_editorController;
         private CommandManager m_commandManager;
-        private CommandSet m_commandSet;
         
         void Start()
         {
@@ -30,12 +29,12 @@ namespace LevelEditor
             if(InputManager.Instance.GetDebuggerNum2Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
-                m_commandManager.Redo();
+                m_commandManager.CommandSet.GetRedo?.Invoke();
             // }else if (zButtonDown && InputManager.Instance.GetCtrlButton)
             }else if(InputManager.Instance.GetDebuggerNum1Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
-                m_commandManager.Undo();
+                m_commandManager.CommandSet.GetUndo?.Invoke();
             }
         }
 

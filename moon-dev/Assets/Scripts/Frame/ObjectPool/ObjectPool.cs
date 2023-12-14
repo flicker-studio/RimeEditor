@@ -192,7 +192,7 @@ namespace Frame.Tool.Pool
         /// <returns></returns>
         private string CheckTag(GameObject obj)
         {
-            return obj.name.RemoveTrailingNumbers();
+            return obj.name.RemoveInvalidCharacter();
         }
 
         private void CheckTypeCachePanel(string tag)

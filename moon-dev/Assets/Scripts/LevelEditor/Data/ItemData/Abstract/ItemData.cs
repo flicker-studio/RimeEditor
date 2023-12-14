@@ -5,14 +5,15 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    public abstract class ItemData
+    public abstract class ItemData : ICopy
     {
+        public abstract ItemData Copy(ItemData saveData);
         public GameObject GetItemObjPlay => m_itemObjPlay;
         public GameObject GetItemObjEditor => m_itemObjEditor;
 
         public ItemProduct GetItemProduct => m_itemProduct;
 
-        private Quaternion m_rotation;
+        protected Quaternion m_rotation;
 
         private Vector3 m_position;
 
@@ -24,9 +25,9 @@ namespace LevelEditor
         
         private GameObject m_itemObjEditor;
 
-        private GameObject m_itemObjPlay;
+        protected GameObject m_itemObjPlay;
         
-        private ItemProduct m_itemProduct;
+        protected ItemProduct m_itemProduct;
 
         public ItemData(ItemProduct itemProduct)
         {
@@ -55,11 +56,9 @@ namespace LevelEditor
             {
                 m_itemObjPlay = ObjectPool.Instance.OnTake(m_itemObjPlay,m_itemProduct.ItemObject);
                 m_itemObjPlay.transform.SetTransformValue(m_position,m_rotation,m_scale);
-                m_itemObjPlay.GetComponent<ItemPlay>().Play();
             }
             else
             {
-                m_itemObjPlay.GetComponent<ItemPlay>().Stop();
                 ObjectPool.Instance.OnRelease(m_itemObjPlay);
             }
         }

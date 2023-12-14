@@ -1,4 +1,5 @@
-using Frame.Tool;
+using System;
+
 namespace LevelEditor
 {
     public delegate void CommandExcute(LevelEditCommand command);
@@ -21,14 +22,30 @@ namespace LevelEditor
         
         public ClearExcute Clear { get; private set; }
 
+        public event Action UndoAdditiveEvent;
+
+        public event Action RedoAdditiveEvent;
+
         public EnableExcute EnableExcute;
 
         public CommandSet(CommandExcute excute, UndoExcute undo, RedoExcute redo,ClearExcute clear)
         {
+            GetUndo = ExcuteUndoAdditiveEvent;
+            GetRedo = ExcuteRedoAdditiveEvent;
             GetExcute = excute;
-            GetUndo = undo;
-            GetRedo = redo;
+            GetUndo += undo;
+            GetRedo += redo;
             Clear = clear;
+        }
+
+        private void ExcuteUndoAdditiveEvent()
+        {
+            UndoAdditiveEvent?.Invoke();
+        }
+
+        private void ExcuteRedoAdditiveEvent()
+        {
+            RedoAdditiveEvent?.Invoke();
         }
     }
 }

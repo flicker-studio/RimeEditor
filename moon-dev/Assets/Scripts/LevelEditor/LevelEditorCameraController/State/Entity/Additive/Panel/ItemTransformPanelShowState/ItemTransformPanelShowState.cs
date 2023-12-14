@@ -11,7 +11,8 @@ namespace LevelEditor
 
     private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
 
-    private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+    private CommandSet GetCommandSet => m_information.GetCommandSet;
+    private CommandExcute GetExcute => GetCommandSet.GetExcute;
 
     private ItemTransformPanel GetItemTransformPanel => m_information.GetUI.GetItemTransformPanel;
 
@@ -26,6 +27,8 @@ namespace LevelEditor
     private List<Quaternion> m_lastRotation = new List<Quaternion>();
 
     private List<Vector3> m_lastScale = new List<Vector3>();
+
+    private bool m_isUndoOrRedo;
     
     public ItemTransformPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
@@ -34,6 +37,7 @@ namespace LevelEditor
 
     public override void Motion(BaseInformation information)
     {
+        CheckChange();
         CheckPositionChange();
         CheckRotationChange();
         CheckScaleChange();
@@ -43,14 +47,29 @@ namespace LevelEditor
     private void InitState()
     {
         GetItemTransformPanel.GetPanelObj.SetActive(true);
+        GetCommandSet.RedoAdditiveEvent += SetDo;
+        GetCommandSet.UndoAdditiveEvent += SetDo;
     }
 
     protected override void RemoveState()
     {
         base.RemoveState();
         GetItemTransformPanel.GetPanelObj.SetActive(false);
+        GetCommandSet.RedoAdditiveEvent -= SetDo;
+        GetCommandSet.UndoAdditiveEvent -= SetDo;
     }
 
+    private void CheckChange()
+    {
+        if (m_isUndoOrRedo)
+        {
+            if (GetPositionChange) ;
+            if (GetRotationChange) ;
+            if (GetScaleChange) ;
+            m_isUndoOrRedo = false;
+        }
+    }
+    
     private void CheckPositionChange()
     {
         if (!GetPositionChange) return;
@@ -209,6 +228,11 @@ namespace LevelEditor
                 chnParseY ? valueY : target.transform.localScale.y,
                 chnParseZ ? valueZ : target.transform.localScale.z);
         }
+    }
+
+    private void SetDo()
+    {
+        m_isUndoOrRedo = true;
     }
 }
 

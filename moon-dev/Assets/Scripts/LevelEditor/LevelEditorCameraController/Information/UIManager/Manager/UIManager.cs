@@ -15,6 +15,8 @@ namespace LevelEditor
 
         public ItemWarehousePanel GetItemWarehousePanel => m_itemWarehousePanel;
 
+        public InspectorPanel GetInspectorPanel => m_inspectorPanel;
+
         public LevelPanel GetLevelPanel => m_levelPanel;
 
         public AreaPanel GetAreaPanel => m_areaPanel;
@@ -33,6 +35,8 @@ namespace LevelEditor
 
         private LevelPanel m_levelPanel;
 
+        private InspectorPanel m_inspectorPanel;
+
         public UIManager(RectTransform levelEditorCanvasRect)
         {
             UIProperty uiProperty = Resources.Load<UIProperty>("GlobalSettings/LevelEditorUIProperty");
@@ -43,6 +47,7 @@ namespace LevelEditor
             m_itemWarehousePanel = new ItemWarehousePanel(levelEditorCanvasRect, uiProperty);
             m_areaPanel = new AreaPanel(levelEditorCanvasRect, uiProperty);
             m_levelPanel = new LevelPanel(levelEditorCanvasRect, uiProperty);
+            m_inspectorPanel = new InspectorPanel(levelEditorCanvasRect, uiProperty);
         }
     }
 }

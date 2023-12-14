@@ -17,6 +17,8 @@ namespace LevelEditor
 
         public GameObject GetItemType => m_prefabFactory.ITEM_TYPE;
 
+        public GameObject GetBoolItem => m_prefabFactory.BOOL_ITEM;
+
         private PrefabFactory m_prefabFactory;
 
         public PrefabManager()

@@ -48,5 +48,10 @@ public class PanelDefultState : AdditiveState
         {
             ChangeMotionState(typeof(ItemTransformPanelShowState));
         }
+
+        if (TargetItems.Count > 0 && !CheckStates.Contains(typeof(InspectorShowState)))
+        {
+            ChangeMotionState(typeof(InspectorShowState));
+        }
     }
 }

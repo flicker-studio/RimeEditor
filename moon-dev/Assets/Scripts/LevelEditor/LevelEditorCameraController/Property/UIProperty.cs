@@ -27,6 +27,9 @@ namespace LevelEditor
         [field:SerializeField,Header("区域面板属性")]
         public AreaPanelUI GetAreaPanelUI { get; private set; }
         
+        [field:SerializeField,Header("检视面板属性")]
+        public InspectorUI GetInspectorPanelUI { get; private set; }
+        
                 
         [Serializable]
         public struct LevelPanelUI
@@ -92,6 +95,16 @@ namespace LevelEditor
         {
             [field:SerializeField,Header("区域面板UI名字")]
             public AreaPanelUIName GetAreaPanelUIName { get; private set; }
+        }
+        
+        [Serializable]
+        public struct InspectorUI
+        {
+            [field:SerializeField,Header("检视面板UI名字")]
+            public InspectorPanelUIName GetInspectorPanelUIName { get; private set; }
+            
+            [field:SerializeField,Header("检视项属性")]
+            public InspectorItemProperty GetInspectorItemProperty{ get; private set; }
         }
         
         [Serializable]
@@ -333,12 +346,29 @@ namespace LevelEditor
         }
         
         [Serializable]
+        public struct InspectorPanelUIName
+        {
+            [field:SerializeField,CustomLabel("检视面板根节点名字")] 
+            public string INSPECTOR_ROOT { get; set; }
+            [field:SerializeField,CustomLabel("检视面板内容名字")] 
+            public string INSPECTOR_CONTENT { get; set; }
+            [field:SerializeField,CustomLabel("描述内容名字")] 
+            public string DESCRIBE_TEXT { get; set; }
+        }
+        
+        [Serializable]
         public struct ItemNodeProperty
         {
             [field:SerializeField,CustomLabel("高光颜色")] 
             public Color HIGH_LIGHTED_COLOR{ get; private set; }
             [field:SerializeField,CustomLabel("选中颜色")] 
             public Color SELECTED_COLOR{ get; private set; }
+        }
+        [Serializable]
+        public struct InspectorItemProperty
+        {
+            [field: SerializeField, CustomLabel("布尔项文字名字")]
+            public string BOOLEAN_ITEM_TEXT;
         }
     }
 

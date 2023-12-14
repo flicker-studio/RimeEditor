@@ -58,7 +58,7 @@ namespace LevelEditor
             
             foreach (var copyData in copyDatas)
             {
-                ItemData newData = m_itemFactory.CreateItem(copyData.GetItemProduct);
+                ItemData newData = copyData.Copy(m_itemFactory.CreateItem(copyData.GetItemProduct));
                 (Vector3 position, Quaternion rotation, Vector3 scale) = copyData.GetItemObjEditor.transform.GetTransformValue();
                 newData.GetItemObjEditor.transform.SetTransformValue(position,rotation,scale);
                 oriPos += newData.GetItemObjEditor.transform.position;
