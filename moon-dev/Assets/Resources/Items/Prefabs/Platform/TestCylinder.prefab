@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9106270636224044548}
   - component: {fileID: 6534073248817833590}
   - component: {fileID: 3833171066185843738}
-  - component: {fileID: -4398275588410661066}
+  - component: {fileID: -1230226438077617652}
   m_Layer: 3
   m_Name: TestCylinder
   m_TagString: Untagged
@@ -130,7 +130,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 2}
   m_EdgeRadius: 0
---- !u!114 &-4398275588410661066
+--- !u!114 &-1230226438077617652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,3 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4480370d27a2784d8904fb815848339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanCopy: 0
+  CanPush: 0
+  m_rigidbodyPrefab: {fileID: 2054610052206316180, guid: e10a99507bee0c64389bfd3932431ac8, type: 3}
+  m_canCopymaterial: {fileID: 2100000, guid: 70dd015bf375c464aab8b1da97527e70, type: 2}

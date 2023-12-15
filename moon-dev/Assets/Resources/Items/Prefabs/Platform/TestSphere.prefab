@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8989204452278230107}
   - component: {fileID: 8755905555720460099}
   - component: {fileID: 3721259594221393481}
-  - component: {fileID: -6730898386568432943}
+  - component: {fileID: 34230303565112195}
   m_Layer: 3
   m_Name: TestSphere
   m_TagString: Untagged
@@ -120,7 +120,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &-6730898386568432943
+--- !u!114 &34230303565112195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,3 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4480370d27a2784d8904fb815848339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanCopy: 0
+  CanPush: 0
+  m_rigidbodyPrefab: {fileID: 2054610052206316180, guid: e10a99507bee0c64389bfd3932431ac8, type: 3}
+  m_canCopymaterial: {fileID: 2100000, guid: 70dd015bf375c464aab8b1da97527e70, type: 2}

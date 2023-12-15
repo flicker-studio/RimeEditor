@@ -25,6 +25,7 @@ namespace Frame.Static.Global
         public struct ObjNameTag
         {
             public readonly static string RIGIDBODY_TAG = "<rigidbody>";
+            public readonly static string CAN_COPY_TAG = "<canCopy>";
         }
     }
 

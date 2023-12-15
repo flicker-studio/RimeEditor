@@ -3,7 +3,9 @@ guid: d4480370d27a2784d8904fb815848339
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - m_rigidbodyPrefab: {fileID: 2054610052206316180, guid: e10a99507bee0c64389bfd3932431ac8, type: 3}
+  - m_canCopymaterial: {fileID: 2100000, guid: 70dd015bf375c464aab8b1da97527e70, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
