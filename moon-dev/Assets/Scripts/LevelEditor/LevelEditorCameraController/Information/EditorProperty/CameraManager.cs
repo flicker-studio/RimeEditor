@@ -1,4 +1,5 @@
 using Frame.Static.Extensions;
+using Frame.Static.Global;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +25,9 @@ namespace LevelEditor
         }
         
         public Vector3 GetMousePosition => Mouse.current.position.ReadValue();
+
+        public Vector2 GetScreenScale => new Vector2(GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.x / Screen.width,
+                                                    GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.y / Screen.height);
         
         public Vector3 GetMouseWorldPoint =>
             Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Mathf.Abs(Camera.main.transform.position.z)));
