@@ -29,7 +29,9 @@ namespace LevelEditor
 
         private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
-        private float GetCellHalfSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
+        private float GetCellHalfSize => GetCellSize / 2f;
+
+        private float GetCellHalfHalfSize => GetCellHalfSize / 2f;
         
         private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
         
@@ -195,17 +197,17 @@ namespace LevelEditor
                     Vector3 oldSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size
                         .HadamardProduct(TargetObjs[index].transform.localScale);
                     Vector3 newSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size.HadamardProduct(newScale);
-                    oldSize = new Vector3(GetCellSize * Mathf.RoundToInt(oldSize.x/GetCellSize),
-                        GetCellSize * Mathf.RoundToInt(oldSize.y/GetCellSize),
-                    GetCellSize * Mathf.RoundToInt(oldSize.z / GetCellSize));
-                    newSize = new Vector3(GetCellSize * Mathf.RoundToInt(newSize.x/GetCellSize),
-                        GetCellSize * Mathf.RoundToInt(newSize.y/GetCellSize),
-                        GetCellSize * Mathf.RoundToInt(newSize.z / GetCellSize));
+                    oldSize = new Vector3(GetCellHalfSize * Mathf.RoundToInt(oldSize.x/GetCellHalfSize),
+                        GetCellHalfSize * Mathf.RoundToInt(oldSize.y/GetCellHalfSize),
+                        GetCellHalfSize * Mathf.RoundToInt(oldSize.z / GetCellHalfSize));
+                    newSize = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newSize.x/GetCellHalfSize),
+                        GetCellHalfSize * Mathf.RoundToInt(newSize.y/GetCellHalfSize),
+                        GetCellHalfSize * Mathf.RoundToInt(newSize.z / GetCellHalfSize));
                     if(oldSize == newSize) return;
                     Vector3 tempScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
-                    Vector3 tempPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x/ GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(newPosition.y/ GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
+                    Vector3 tempPosition = new Vector3(GetCellHalfHalfSize * Mathf.RoundToInt(newPosition.x/ GetCellHalfHalfSize),
+                        GetCellHalfHalfSize * Mathf.RoundToInt(newPosition.y / GetCellHalfHalfSize),
+                        GetCellHalfHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfHalfSize));
                     switch (m_rectDragType)
                     {
                         case RECTDRAGTYPE.LeftEdge:

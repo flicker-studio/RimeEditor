@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7761973229892511119}
   - component: {fileID: 9062504521542116843}
   - component: {fileID: 8573908082471180660}
-  - component: {fileID: -8563836546234159418}
+  - component: {fileID: -8014699002634870459}
   m_Layer: 3
   m_Name: TestCapsule
   m_TagString: Untagged
@@ -120,7 +120,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
---- !u!114 &-8563836546234159418
+--- !u!114 &-8014699002634870459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,3 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4480370d27a2784d8904fb815848339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanCopy: 0
+  CanPush: 0
+  m_rigidbodyPrefab: {fileID: 2054610052206316180, guid: e10a99507bee0c64389bfd3932431ac8, type: 3}
+  m_canCopymaterial: {fileID: 2100000, guid: 70dd015bf375c464aab8b1da97527e70, type: 2}

@@ -87,7 +87,7 @@ namespace LevelEditor
         private static List<ItemProductButton> m_itemProductButtonList;
         
         [RuntimeInitializeOnLoadMethod]
-        static void ResetMyStaticVar()
+        static void ResetStaticVar()
         {
             m_isInit = true;
             m_searchItemGroupObj = null;

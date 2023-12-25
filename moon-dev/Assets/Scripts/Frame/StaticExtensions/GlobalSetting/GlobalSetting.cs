@@ -25,6 +25,12 @@ namespace Frame.Static.Global
         public struct ObjNameTag
         {
             public readonly static string RIGIDBODY_TAG = "<rigidbody>";
+            public readonly static string CAN_COPY_TAG = "<canCopy>";
+        }
+        
+        public struct ScreenInfo
+        {
+            public static Vector2 REFERENCE_RESOLUTION => new Vector2(1920f,1920f / Screen.width * Screen.height);
         }
     }
 

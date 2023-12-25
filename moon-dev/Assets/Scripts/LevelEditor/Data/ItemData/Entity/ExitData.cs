@@ -8,6 +8,11 @@ namespace LevelEditor
         {
         }
 
+        public override ItemData Copy(ItemData saveData)
+        {
+            return saveData;
+        }
+
         public override void SetActivePlay(bool active)
         {
             base.SetActivePlay(active);
@@ -17,6 +22,11 @@ namespace LevelEditor
                 {
                     LevelPlay.Instance.NextLevel();
                 } ;
+                m_itemObjPlay.GetComponent<ItemPlay>().Play();
+            }
+            else
+            {
+                m_itemObjPlay.GetComponent<ItemPlay>().Stop();
             }
         }
     }

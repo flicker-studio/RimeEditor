@@ -59,7 +59,6 @@ MonoBehaviour:
       <CELL_SIZE>k__BackingField: 1
       <GROWTH_FACTOR>k__BackingField: 100
       <ROTATION_UNIT>k__BackingField: 15
-      <SCALE_UNIT>k__BackingField: 0.1
     <GetMouseCursorProperty>k__BackingField:
       <CURSOR_BOUND_CHECK_COMPENSATION>k__BackingField: {x: 5, y: 5}
   <GetActionPanelUI>k__BackingField:
@@ -126,3 +125,10 @@ MonoBehaviour:
       <MANAGE_BUTTON>k__BackingField: LeftPanel/AreaPanel/ManageButton
       <AREA_SETTING_BUTTON>k__BackingField: LeftPanel/AreaPanel/AreaSettingButton
       <ENVIRONMENT_SETTING_BUTTON>k__BackingField: LeftPanel/AreaPanel/EnvironmentSettingButton
+  <GetInspectorPanelUI>k__BackingField:
+    <GetInspectorPanelUIName>k__BackingField:
+      <INSPECTOR_ROOT>k__BackingField: RightPanel/InspectorPanel
+      <INSPECTOR_CONTENT>k__BackingField: RightPanel/InspectorPanel/Scroll View/Viewport/Content
+      <DESCRIBE_TEXT>k__BackingField: RightPanel/InspectorPanel/DescribeText
+    <GetInspectorItemProperty>k__BackingField:
+      BOOLEAN_ITEM_TEXT: Text

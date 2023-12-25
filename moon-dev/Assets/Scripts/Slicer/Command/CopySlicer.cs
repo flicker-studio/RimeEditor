@@ -65,7 +65,7 @@ namespace Slicer
 
             m_colliderListGroup.GetCombinationConnectivity(m_slicerInformation.GetPrefabFactory);
 
-            m_slicerInformation.TargetList = CutSliceAll(CheckBox());
+            m_slicerInformation.TargetList = CutSliceAll(CheckBox(GlobalSetting.ObjNameTag.CAN_COPY_TAG));
         }
 
         public CopySlicer(SlicerInformation slicerInformation)
@@ -146,7 +146,7 @@ namespace Slicer
             }
         }
 
-        private List<Collider2D> CheckBox()
+        private List<Collider2D> CheckBox(string tag)
         {
             List<Collider2D> overlapColliderList = m_slicerInformation.GetTransform.position.ToVector2()
                 .OverlapRotatedBox(m_slicerInformation.GetDetectionRange
@@ -155,12 +155,18 @@ namespace Slicer
             tempList.AddRange(overlapColliderList);
             foreach (var collider in overlapColliderList)
             {
+                if (!collider.gameObject.name.Contains(tag))
+                {
+                    tempList.Remove(collider);
+                }
+            }
+            foreach (var collider in overlapColliderList)
+            {
                 if (ObjectPool.Instance.CompareObj(collider.gameObject, m_slicerInformation.GetProductPrefab))
                 {
                     tempList.Remove(collider);
                 }
             }
-
             return tempList;
         }
 

@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using Frame.CompnentExtensions;
 using Random = UnityEngine.Random;
 
 namespace WindowExtension

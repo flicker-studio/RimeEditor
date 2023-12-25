@@ -36,6 +36,8 @@ namespace Data.ScriptableObject
         public GameObject PLAYER_CAMERA{ get; private set; }
         [field:SerializeField,CustomLabel("裁切器")] 
         public GameObject SLICER{ get; private set; }
+        [field:SerializeField,CustomLabel("布尔项")] 
+        public GameObject BOOL_ITEM{ get; private set; }
     }
 }
 
