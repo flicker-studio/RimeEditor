@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Moon.Kernel.Service
 {
     /// <summary>
     ///     Provides a base class for the service that will exist as part of the service application.
-    ///     When you create a new service class, you must derive from <c>ServiceBase</c>.
+    ///     When you create a new service class, you must derive from <c>Service</c>.
     /// </summary>
-    public abstract class ServiceBase
+    public abstract class Service
     {
         /// <summary>
         ///     Specifies the action to take when the service starts.
@@ -40,5 +41,17 @@ namespace Moon.Kernel.Service
         ///     If only temporary is released, it is <see langword="false" />.
         /// </param>
         protected abstract void Dispose(bool all);
+
+        /// <summary>
+        ///     Start the service, allocate system resources.
+        /// </summary>
+        /// <returns>The task at the end</returns>
+        internal abstract Task Run();
+
+        /// <summary>
+        ///     Abort the service, release all the held resources.
+        /// </summary>
+        /// <returns>The task at the end</returns>
+        internal abstract Task Abort();
     }
 }

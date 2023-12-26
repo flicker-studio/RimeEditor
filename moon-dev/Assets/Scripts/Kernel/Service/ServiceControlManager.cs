@@ -8,32 +8,70 @@ using UnityEngine;
 
 namespace Moon.Kernel.Service
 {
-    public class ServiceControlManager
+    public sealed class ServiceControlManager
     {
-        internal static readonly List<IService> RunningServices = new();
+        internal static readonly List<Service> RunningServices = new();
+
+        private static readonly Dictionary<Type, IService> ServicesCache = new();
+
 
         #region public API
 
         public static void Run([NotNull] IService service)
         {
-            if (RunningServices.Contains(service))
+            if (service is not Service ser)
             {
                 throw new Exception();
             }
 
-            service.Run();
-            RunningServices.Add(service);
+            if (RunningServices.Contains(ser))
+            {
+                throw new Exception();
+            }
+
+            ser.Run();
+            RunningServices.Add(ser);
         }
 
         public static void Abort([NotNull] IService service)
         {
-            if (!RunningServices.Contains(service))
+            if (service is not Service ser)
+            {
+                throw new Exception();
+            }
+
+            if (!RunningServices.Contains(ser))
             {
                 throw new NullReferenceException();
             }
 
-            service.Abort();
-            RunningServices.Remove(service);
+            ser.Abort();
+            RunningServices.Remove(ser);
+        }
+
+
+        /// <summary>
+        ///     Get the running Service class
+        /// </summary>
+        /// <typeparam name="T">Type of Service</typeparam>
+        /// <returns>The instance of service</returns>
+        /// <exception cref="NullReferenceException">Throw exception if there is not the service in memory</exception>
+        public static T TryGetService<T>() where T : Service, IService
+        {
+            var serviceType = typeof(T);
+
+            if (ServicesCache.TryGetValue(serviceType, out var targetsValue))
+            {
+                return (T)targetsValue;
+            }
+
+            foreach (var service in RunningServices.Where(service => service.GetType() == serviceType))
+            {
+                ServicesCache.Add(service.GetType(), (T)service);
+                return (T)service;
+            }
+
+            throw new NullReferenceException();
         }
 
         #endregion
@@ -55,7 +93,7 @@ namespace Moon.Kernel.Service
 
             await Task.Run(() =>
                 {
-                    var serviceAssembly = typeof(ServiceBase).Assembly;
+                    var serviceAssembly = typeof(Service).Assembly;
                     var assemblyTypes = serviceAssembly.GetTypes();
                     var serviceTypes = assemblyTypes.Where(type => type.GetInterfaces().Contains(typeof(IService)));
 
@@ -63,7 +101,7 @@ namespace Moon.Kernel.Service
                     {
                         var typeName = service.ToString();
 
-                        if (serviceAssembly.CreateInstance(typeName) is not IService instance)
+                        if (serviceAssembly.CreateInstance(typeName) is not Service instance)
                         {
                             throw new WarningException($"There has some error in {service} class");
                         }

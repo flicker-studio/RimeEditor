@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
@@ -14,37 +12,33 @@ namespace Moon.Kernel.Service
     /// </summary>
     /// <inheritdoc cref="Moon.Kernel.Service.IService" />
     [UsedImplicitly]
-    public sealed class SceneService : ServiceBase, IService
+    public sealed class SceneService : Service, IService
     {
         /// <summary>
         ///     Get the currently active scene
         /// </summary>
         public Scene ActiveScene => m_activeScene;
 
+        /// <inheritdoc />
+        public bool IsRunning => m_isInstanced && m_isActive;
+
+        /// <summary>
+        ///     Get all current scenes
+        /// </summary>
+        public List<Scene> CurrentScenes { get; } = new();
+
+        /// <summary>
+        /// </summary>
+        public const string PersistenceSceneName = "Persistent";
+
         private readonly bool m_isInstanced;
+
+        private readonly bool m_isActive;
 
         private Scene m_activeScene;
 
-        private readonly List<string> m_sceneNameList = new();
 
-
-        #region API
-
-        /// <inheritdoc />
-        public async Task Run()
-        {
-            //  var uniTasks = new List<UniTask> { VariableInitialization(), Fun() };
-
-            await VariableInitialization();
-            await Task.Run(OnStart);
-        }
-
-        /// <inheritdoc />
-        public Task Abort()
-        {
-            return Task.Run(OnStop);
-        }
-
+        #region public API
 
         /// <summary>
         ///     Unload tag scene and load next scene asynchronously
@@ -52,16 +46,9 @@ namespace Moon.Kernel.Service
         /// <remarks>Use Forget method to return void</remarks>
         /// <param name="loadName">scene name to load</param>
         /// <param name="postAction">method to do after switch</param>
-        /// <param name="unloadName">scene name to unload, default is the active scene</param>
-        /// <exception cref="Exception"> </exception>
-        public async UniTask TransitionScene(string loadName, Action postAction, string unloadName = null)
+        public async UniTask TransitionActiveScene(string loadName, Action postAction)
         {
-            unloadName ??= m_activeScene.name;
-
-            if (!m_sceneNameList.Contains(loadName))
-            {
-                throw new Exception($"{loadName} is not exist!");
-            }
+            var unloadName = m_activeScene.name;
 
             //asynchronous loading and unloading
             var tasks = new List<UniTask>
@@ -80,6 +67,21 @@ namespace Moon.Kernel.Service
 
         #endregion
 
+        #region internal API
+
+        /// <inheritdoc />
+        internal async override Task Run()
+        {
+            await Initialization();
+            await Task.Run(OnStart);
+        }
+
+        /// <inheritdoc />
+        internal async override Task Abort()
+        {
+            await Task.Run(OnStop);
+        }
+
         /// <inheritdoc />
         protected override void OnStart()
         {
@@ -97,42 +99,53 @@ namespace Moon.Kernel.Service
             throw new NotImplementedException();
         }
 
-        private async UniTask VariableInitialization()
+        #endregion
+
+
+        private void SetupActiveScene()
         {
-            var sceneCount = SceneManager.sceneCountInBuildSettings;
-            var scenePath = new string[sceneCount];
+            //TODO:use profiles
+        }
 
-            for (var i = 0; i < sceneCount; i++) scenePath[i] = Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+        private async UniTask Initialization()
+        {
+            //Collection names of scene
 
-            m_sceneNameList.AddRange(scenePath.Select(path => path[(path.LastIndexOf('/') + 1)..]));
-
-            var persistenceScene = SceneManager.GetSceneByName(Boot.PersistenceSceneName);
+            var persistenceScene = SceneManager.GetSceneByName(PersistenceSceneName);
 
             if (!persistenceScene.IsValid())
             {
-                await SceneManager.LoadSceneAsync(Boot.PersistenceSceneName, LoadSceneMode.Single).ToUniTask();
+                await SceneManager.LoadSceneAsync(PersistenceSceneName, LoadSceneMode.Additive);
+                CurrentScenes.Add(SceneManager.GetSceneByName(PersistenceSceneName));
+                persistenceScene = SceneManager.GetSceneByName(PersistenceSceneName);
             }
 
-            var startSceneName = m_sceneNameList[1];
-            var startScene = SceneManager.GetSceneByName(startSceneName);
+            SetupActiveScene();
 
-            if (!startScene.IsValid())
-            {
-                await SceneManager.LoadSceneAsync(startSceneName, LoadSceneMode.Additive);
-                startScene = SceneManager.GetSceneByName(startSceneName);
-            }
-
-            SceneManager.SetActiveScene(startScene);
-
-            await Fun();
+            SceneManager.activeSceneChanged += OnActiveSceneChange;
+            SceneManager.sceneUnloaded += OnSceneUnload;
+            SceneManager.sceneLoaded += OnSceneLoad;
         }
 
-
-        private async UniTask Fun()
+        private void OnSceneLoad(Scene scene, LoadSceneMode loadSceneMode)
         {
-            m_activeScene = SceneManager.GetActiveScene();
-            SceneManager.activeSceneChanged += OnActiveSceneChange;
-            await UniTask.CompletedTask;
+            switch (loadSceneMode)
+            {
+                case LoadSceneMode.Single:
+                    CurrentScenes.Clear();
+                    CurrentScenes.Add(scene);
+                    break;
+                case LoadSceneMode.Additive:
+                    CurrentScenes.Add(scene);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(loadSceneMode), loadSceneMode, null);
+            }
+        }
+
+        private void OnSceneUnload(Scene scene)
+        {
+            CurrentScenes.Remove(scene);
         }
 
         private void OnActiveSceneChange(Scene current, Scene next)
