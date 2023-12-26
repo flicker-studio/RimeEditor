@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using Moon.Kernel.Service;
-using UnityEditor;
 using UnityEngine.SceneManagement;
 
 namespace Moon.Kernel.Editor
@@ -10,10 +9,14 @@ namespace Moon.Kernel.Editor
     internal static class Checker
     {
         private static string PersistenceSceneName => SceneService.PersistenceSceneName;
-#if UNITY_EDITOR
-        [InitializeOnLoadMethod]
+
         private static void PreCheck()
         {
+            if (!MoonSettingProvider.MoonSetting.isCheck)
+            {
+                return;
+            }
+
             var sceneCount = SceneManager.sceneCountInBuildSettings;
             var scenePath = new string[sceneCount];
 
@@ -24,7 +27,5 @@ namespace Moon.Kernel.Editor
             if (!sceneName.Contains(PersistenceSceneName))
                 throw new Exception($"{PersistenceSceneName} scene is lose!");
         }
-
-#endif
     }
 }
