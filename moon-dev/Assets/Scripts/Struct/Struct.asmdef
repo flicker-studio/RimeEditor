@@ -2,7 +2,8 @@
     "name": "Struct",
     "rootNamespace": "",
     "references": [
-        "GUID:f432c69a6cce15f40a2bd82afd4d67af"
+        "GUID:f432c69a6cce15f40a2bd82afd4d67a,
+      "GUID:f432c69a6cce15f40a2bd82afd4d67af"f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

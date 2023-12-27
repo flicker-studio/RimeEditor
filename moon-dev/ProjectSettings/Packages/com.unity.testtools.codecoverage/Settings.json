@@ -4,7 +4,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "IncludeAssemblies",
-                "value": "{\"m_Value\":\"Assembly-CSharp-Editor,GameFrame,LevelEditor,Player,Setting,Slicer,Struct,Test,Test.Editor,Test.Runtime,Tool\"}"
+                "value": "{\"m_Value\":\"Moon.Kernel,Moon.Kernel.Editor,Test,Test.Editor,Test.Kernel,Test.Runtime\"}"
             },
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
@@ -43,12 +43,12 @@
             },
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-                "key": "AutoGenerateReport",
+                "key": "OpenReportWhenGenerated",
                 "value": "{\"m_Value\":false}"
             },
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-                "key": "OpenReportWhenGenerated",
+                "key": "AutoGenerateReport",
                 "value": "{\"m_Value\":false}"
             },
             {
