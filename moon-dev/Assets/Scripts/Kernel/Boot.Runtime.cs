@@ -7,7 +7,7 @@ namespace Moon.Kernel
     /// <summary>
     ///     The class of the entire game system is responsible for initialization at the lowest level.
     /// </summary>
-    public static class Boot
+    public static partial class Boot
     {
         /// <summary>
         /// </summary>
@@ -16,7 +16,7 @@ namespace Moon.Kernel
         private static UniTaskCompletionSource _source;
 
         [RuntimeInitializeOnLoadMethod]
-        private static async void BootLoader()
+        private static async void RuntimeBoot()
         {
             _source = new UniTaskCompletionSource();
             Debug.Log("<color=green>[SYS]</color> System is Booting...");

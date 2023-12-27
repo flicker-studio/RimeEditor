@@ -3,6 +3,7 @@
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.fictional-vision.slice": "https://github.com/fictional-vision/Slice.git?path=src/Assets/Slice#1.0.4",
     "com.unify.unified-universal-blur": "https://github.com/lukakldiashvili/Unified-Universal-Blur.git",
+    "com.unity.addressables": "1.21.19",
     "com.unity.ai.navigation": "1.1.5",
     "com.unity.feature.2d": "2.0.0",
     "com.unity.feature.development": "1.0.1",

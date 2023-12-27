@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Moon.Kernel.Attribute;
+using UnityEngine;
 
 namespace Moon.Kernel.Setting
 {
@@ -9,5 +10,7 @@ namespace Moon.Kernel.Setting
     public class MoonSetting : SettingBase
     {
         [SerializeField] public bool isCheck = true;
+
+        [SerializeField, SceneSelect] public string startScene;
     }
 }

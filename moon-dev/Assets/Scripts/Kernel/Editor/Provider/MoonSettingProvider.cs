@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
-using Moon.Kernel.Setting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Moon.Kernel.Editor
+namespace Moon.Kernel.Editor.Provider
 {
     /// <inheritdoc />
     /// <summary>
     /// </summary>
     public class MoonSettingProvider : SettingsProvider
     {
-        private const string Path = "Assets/Settings/Dev/MoonSetting.asset";
-
         private static SerializedObject _settings;
 
         private MoonSettingProvider(string path, SettingsScope scopes, IEnumerable<string> keywords = null) :
@@ -20,24 +17,17 @@ namespace Moon.Kernel.Editor
         {
         }
 
-        [InitializeOnLoadMethod]
-        private static void LoadSetting()
-        {
-            MoonSetting = AssetDatabase.LoadAssetAtPath<MoonSetting>(Path);
-        }
-
-        public static MoonSetting MoonSetting { get; private set; }
-
         /// <inheritdoc />
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
-            _settings = new SerializedObject(MoonSetting);
+            _settings = new SerializedObject(Boot.MoonSetting);
         }
 
         /// <inheritdoc />
         public override void OnGUI(string searchContext)
         {
             EditorGUILayout.PropertyField(_settings.FindProperty("isCheck"), Styles.Start);
+            EditorGUILayout.PropertyField(_settings.FindProperty("StartScene"), Styles.Start);
             _settings.ApplyModifiedPropertiesWithoutUndo();
         }
 
