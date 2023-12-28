@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Moon.Kernel.Setting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -20,14 +21,15 @@ namespace Moon.Kernel.Editor.Provider
         /// <inheritdoc />
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
-            _settings = new SerializedObject(Boot.MoonSetting);
+            var setting = AssetDatabase.LoadAssetAtPath<MoonSetting>("Assets/Settings/Dev/MoonSetting.asset");
+            _settings = new SerializedObject(setting);
         }
 
         /// <inheritdoc />
         public override void OnGUI(string searchContext)
         {
             EditorGUILayout.PropertyField(_settings.FindProperty("isCheck"), Styles.Start);
-            EditorGUILayout.PropertyField(_settings.FindProperty("StartScene"), Styles.Start);
+            EditorGUILayout.PropertyField(_settings.FindProperty("startScene"), Styles.Start);
             _settings.ApplyModifiedPropertiesWithoutUndo();
         }
 

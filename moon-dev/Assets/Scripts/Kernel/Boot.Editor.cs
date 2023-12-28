@@ -1,11 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using Moon.Kernel.Service;
 using Moon.Kernel.Setting;
 using UnityEditor;
-using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
@@ -13,8 +11,6 @@ namespace Moon.Kernel
 {
     public static partial class Boot
     {
-        public static MoonSetting MoonSetting { get; private set; }
-
         public static string[] SceneName;
 
         private static string PersistenceSceneName => SceneService.PersistenceSceneName;
@@ -22,7 +18,6 @@ namespace Moon.Kernel
         [InitializeOnLoadMethod]
         private static async void EditorBoot()
         {
-            MoonSetting = await Addressables.LoadAssetAsync<MoonSetting>("Assets/Settings/Dev/MoonSetting.asset");
             Scene();
             PreCheck();
         }
@@ -42,7 +37,9 @@ namespace Moon.Kernel
 
         private static void PreCheck()
         {
-            if (!MoonSetting.isCheck)
+            var setting = AssetDatabase.LoadAssetAtPath<MoonSetting>("Assets/Settings/Dev/MoonSetting.asset");
+
+            if (!setting.isCheck)
             {
                 return;
             }

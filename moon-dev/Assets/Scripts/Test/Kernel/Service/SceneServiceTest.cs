@@ -13,7 +13,7 @@ namespace Test.Kernel.Service
     internal class SceneServiceTest
     {
         [UnityTest]
-        public IEnumerator TransitionScenePasses()
+        public IEnumerator TransitionActiveScenePasses()
         {
             return UniTask.ToCoroutine(async () =>
             {
@@ -21,7 +21,7 @@ namespace Test.Kernel.Service
                 {
                     await Boot.InitTask;
                     var trans = SCM.TryGetService<SceneService>();
-                    await trans.TransitionActiveScene("TestScene", null);
+                    await trans.TransitionActiveScene("TestScene");
                     var sceneName = trans.ActiveScene.name;
                     Assert.AreEqual("TestScene", sceneName);
                 }

@@ -25,6 +25,7 @@ namespace Moon.Kernel.Service
         /// <summary>
         ///     Get all current scenes
         /// </summary>
+        [UsedImplicitly]
         public List<Scene> CurrentScenes { get; } = new();
 
         /// <summary>
@@ -45,24 +46,16 @@ namespace Moon.Kernel.Service
         /// </summary>
         /// <remarks>Use Forget method to return void</remarks>
         /// <param name="loadName">scene name to load</param>
-        /// <param name="postAction">method to do after switch</param>
-        public async UniTask TransitionActiveScene(string loadName, Action postAction)
+        public async UniTask TransitionActiveScene(string loadName)
         {
             var unloadName = m_activeScene.name;
 
-            //asynchronous loading and unloading
-            var tasks = new List<UniTask>
-            {
-                SceneManager.LoadSceneAsync(loadName, LoadSceneMode.Additive).ToUniTask(),
-                SceneManager.UnloadSceneAsync(unloadName).ToUniTask()
-            };
-
-            await UniTask.WhenAll(tasks);
+            await SceneManager.LoadSceneAsync(loadName, LoadSceneMode.Additive);
+            await SceneManager.UnloadSceneAsync(unloadName);
 
             //select the newest scene and set it active
             var targetScene = SceneManager.GetSceneByName(loadName);
             SceneManager.SetActiveScene(targetScene);
-            postAction?.Invoke();
         }
 
         #endregion
@@ -102,29 +95,37 @@ namespace Moon.Kernel.Service
         #endregion
 
 
-        private void SetupActiveScene()
-        {
-            //TODO:use profiles
-        }
-
         private async UniTask Initialization()
         {
-            //Collection names of scene
-
-            var persistenceScene = SceneManager.GetSceneByName(PersistenceSceneName);
-
-            if (!persistenceScene.IsValid())
-            {
-                await SceneManager.LoadSceneAsync(PersistenceSceneName, LoadSceneMode.Additive);
-                CurrentScenes.Add(SceneManager.GetSceneByName(PersistenceSceneName));
-                persistenceScene = SceneManager.GetSceneByName(PersistenceSceneName);
-            }
-
-            SetupActiveScene();
+            await TryLoadScene(PersistenceSceneName);
+            await TryLoadScene(Boot.MoonSetting.startScene);
 
             SceneManager.activeSceneChanged += OnActiveSceneChange;
             SceneManager.sceneUnloaded += OnSceneUnload;
             SceneManager.sceneLoaded += OnSceneLoad;
+        }
+
+        private async UniTask TryLoadScene(string name)
+        {
+            var target = SceneManager.GetSceneByName(name);
+
+            if (!target.IsValid())
+            {
+                try
+                {
+                    await SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
+                    target = SceneManager.GetSceneByName(name);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw new Exception($"Can't load target scene named {name}");
+                }
+
+                CurrentScenes.Add(SceneManager.GetSceneByName(name));
+                SceneManager.SetActiveScene(target);
+                m_activeScene = target;
+            }
         }
 
         private void OnSceneLoad(Scene scene, LoadSceneMode loadSceneMode)

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MoonSetting
   m_EditorClassIdentifier: 
   isCheck: 1
-  startScene: 
+  startScene: Test_Ryouta
