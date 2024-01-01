@@ -27,7 +27,7 @@ namespace Moon.Kernel
 
             MoonSetting = await Addressables.LoadAssetAsync<MoonSetting>("Assets/Settings/Dev/MoonSetting.asset");
 
-            await SCM.SCMInit();
+            await SCM.RegisterServices();
             _source.TrySetResult();
         }
     }

@@ -1,5 +1,4 @@
-﻿using Moon.Kernel.Service;
-using SCM = Moon.Kernel.Service.ServiceControlManager;
+﻿using SCM = Moon.Kernel.Service.ServiceControlManager;
 
 namespace Moon.Kernel
 {
@@ -8,7 +7,7 @@ namespace Moon.Kernel
     /// </summary>
     public static class Explorer
     {
-        public static T TryGetService<T>() where T : Service.Service, IService
+        public static T TryGetService<T>() where T : Service.Service
         {
             return SCM.TryGetService<T>();
         }

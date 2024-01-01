@@ -2,51 +2,55 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Moon.Kernel.Attribute;
 using UnityEngine;
 
 namespace Moon.Kernel.Service
 {
-    public sealed class ServiceControlManager
+    /// <summary>
+    ///     Use this class to manage system services
+    /// </summary>
+    public static class ServiceControlManager
     {
-        internal static readonly List<Service> RunningServices = new();
+        private static readonly List<Service> RunningServices = new();
 
-        private static readonly Dictionary<Type, IService> ServicesCache = new();
+        private static readonly Dictionary<Type, Service> ServicesCache = new();
 
 
-        #region public API
-
-        public static void Run([NotNull] IService service)
+        /// <summary>
+        ///     Register a service that is not running
+        /// </summary>
+        /// <param name="service">Service instances</param>
+        /// <exception cref="Exception">An exception is thrown when the service is already running</exception>
+        public static void Run([NotNull] Service service)
         {
-            if (service is not Service ser)
+            if (RunningServices.Contains(service))
             {
                 throw new Exception();
             }
 
-            if (RunningServices.Contains(ser))
-            {
-                throw new Exception();
-            }
-
-            ser.Run();
-            RunningServices.Add(ser);
+            service.Run();
+            RunningServices.Add(service);
         }
 
-        public static void Abort([NotNull] IService service)
-        {
-            if (service is not Service ser)
-            {
-                throw new Exception();
-            }
 
-            if (!RunningServices.Contains(ser))
+        /// <summary>
+        ///     Terminate a running service to free up memory
+        /// </summary>
+        /// <param name="service">The service instance that needs to be terminated</param>
+        /// <exception cref="NullReferenceException">When the service is not running, an exception is thrown</exception>
+        public static void Abort([NotNull] Service service)
+        {
+            if (!RunningServices.Contains(service))
             {
                 throw new NullReferenceException();
             }
 
-            ser.Abort();
-            RunningServices.Remove(ser);
+            service.Abort();
+            RunningServices.Remove(service);
         }
 
 
@@ -56,7 +60,7 @@ namespace Moon.Kernel.Service
         /// <typeparam name="T">Type of Service</typeparam>
         /// <returns>The instance of service</returns>
         /// <exception cref="NullReferenceException">Throw exception if there is not the service in memory</exception>
-        public static T TryGetService<T>() where T : Service, IService
+        public static T TryGetService<T>() where T : Service
         {
             var serviceType = typeof(T);
 
@@ -74,18 +78,12 @@ namespace Moon.Kernel.Service
             throw new NullReferenceException();
         }
 
-        #endregion
 
-        #region internal API
-
-        internal static async Task SCMInit()
-        {
-            await InitService();
-        }
-
-        #endregion
-
-        private static async Task InitService()
+        /// <summary>
+        ///     Register for services by attribute
+        /// </summary>
+        /// <exception cref="WarningException">Thrown when an error occurs during the creation of an instance</exception>
+        internal static async Task RegisterServices()
         {
             Debug.Log("<color=green>[SERVICE]</color> Initializing service");
 
@@ -95,15 +93,21 @@ namespace Moon.Kernel.Service
                 {
                     var serviceAssembly = typeof(Service).Assembly;
                     var assemblyTypes = serviceAssembly.GetTypes();
-                    var serviceTypes = assemblyTypes.Where(type => type.GetInterfaces().Contains(typeof(IService)));
 
-                    foreach (var service in serviceTypes)
+                    foreach (var type in assemblyTypes)
                     {
-                        var typeName = service.ToString();
+                        var attr = type.GetCustomAttribute<SystemServiceAttribute>();
 
-                        if (serviceAssembly.CreateInstance(typeName) is not Service instance)
+                        if (attr == null)
                         {
-                            throw new WarningException($"There has some error in {service} class");
+                            continue;
+                        }
+
+                        var instance = attr.Create();
+
+                        if (instance is null)
+                        {
+                            throw new WarningException($"There has some error in {type} class");
                         }
 
                         RunningServices.Add(instance);

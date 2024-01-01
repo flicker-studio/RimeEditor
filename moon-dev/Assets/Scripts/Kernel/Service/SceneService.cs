@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using Moon.Kernel.Attribute;
 using UnityEngine.SceneManagement;
 
 namespace Moon.Kernel.Service
 {
+    /// <inheritdoc />
     /// <summary>
     ///     Use this class to switch scenes
     /// </summary>
-    /// <inheritdoc cref="Moon.Kernel.Service.IService" />
-    [UsedImplicitly]
-    public sealed class SceneService : Service, IService
+    [UsedImplicitly, SystemService(typeof(SceneService))]
+    public sealed class SceneService : Service
     {
         /// <summary>
         ///     Get the currently active scene
@@ -20,7 +21,7 @@ namespace Moon.Kernel.Service
         public Scene ActiveScene => m_activeScene;
 
         /// <inheritdoc />
-        public bool IsRunning => m_isInstanced && m_isActive;
+        public override bool IsRunning => IsInstanced && IsActive;
 
         /// <summary>
         ///     Get all current scenes
@@ -32,9 +33,6 @@ namespace Moon.Kernel.Service
         /// </summary>
         public const string PersistenceSceneName = "Persistent";
 
-        private readonly bool m_isInstanced;
-
-        private readonly bool m_isActive;
 
         private Scene m_activeScene;
 

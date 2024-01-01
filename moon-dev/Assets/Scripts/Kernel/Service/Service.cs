@@ -9,6 +9,12 @@ namespace Moon.Kernel.Service
     /// </summary>
     public abstract class Service
     {
+        protected static bool IsInstanced = false;
+
+        protected static bool IsActive = false;
+
+        public abstract bool IsRunning { get; }
+
         /// <summary>
         ///     Specifies the action to take when the service starts.
         /// </summary>
@@ -53,5 +59,10 @@ namespace Moon.Kernel.Service
         /// </summary>
         /// <returns>The task at the end</returns>
         internal abstract Task Abort();
+
+        internal virtual void Instanced()
+        {
+            IsInstanced = true;
+        }
     }
 }
