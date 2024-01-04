@@ -19,7 +19,7 @@ namespace Test.Kernel.Service
             {
                 try
                 {
-                    await Boot.InitTask;
+                    await Explorer.BootkCompletionTask;
                     var trans = SCM.TryGetService<SceneService>();
                     await trans.TransitionActiveScene("TestScene");
                     var sceneName = trans.ActiveScene.name;

@@ -19,6 +19,7 @@ namespace Moon.Kernel.Service
 
         private static readonly Dictionary<Type, Service> ServicesCache = new();
 
+        private static Action _onStart;
 
         /// <summary>
         ///     Register a service that is not running
@@ -111,9 +112,13 @@ namespace Moon.Kernel.Service
                         }
 
                         RunningServices.Add(instance);
+
+                        _onStart += instance.OnStart;
                     }
                 }
             );
+
+            _onStart.Invoke();
 
             Debug.Log("<color=green>[SERVICE]</color>  Instantiation of service is complete");
             var runTask = RunningServices.Select(service => service.Run());

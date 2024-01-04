@@ -20,9 +20,6 @@ namespace Moon.Kernel.Service
         /// </summary>
         public Scene ActiveScene => m_activeScene;
 
-        /// <inheritdoc />
-        public override bool IsRunning => IsInstanced && IsActive;
-
         /// <summary>
         ///     Get all current scenes
         /// </summary>
@@ -33,9 +30,7 @@ namespace Moon.Kernel.Service
         /// </summary>
         public const string PersistenceSceneName = "Persistent";
 
-
         private Scene m_activeScene;
-
 
         #region public API
 
@@ -58,49 +53,32 @@ namespace Moon.Kernel.Service
 
         #endregion
 
-        #region internal API
-
-        /// <inheritdoc />
         internal async override Task Run()
         {
-            await Initialization();
-            await Task.Run(OnStart);
+            await TryLoadScene(PersistenceSceneName);
+            await TryLoadScene(Explorer.MoonSetting.startScene);
+
+            SceneManager.activeSceneChanged += OnActiveSceneChange;
+            SceneManager.sceneUnloaded += OnSceneUnload;
+            SceneManager.sceneLoaded += OnSceneLoad;
         }
 
-        /// <inheritdoc />
         internal async override Task Abort()
         {
             await Task.Run(OnStop);
         }
 
-        /// <inheritdoc />
-        protected override void OnStart()
+        internal override void OnStart()
         {
         }
 
-        /// <inheritdoc />
-        protected override void OnStop()
+        internal override void OnStop()
         {
-            Dispose(true);
         }
 
-        /// <inheritdoc />
-        protected override void Dispose(bool all)
+        internal override void Dispose(bool all)
         {
             throw new NotImplementedException();
-        }
-
-        #endregion
-
-
-        private async UniTask Initialization()
-        {
-            await TryLoadScene(PersistenceSceneName);
-            await TryLoadScene(Boot.MoonSetting.startScene);
-
-            SceneManager.activeSceneChanged += OnActiveSceneChange;
-            SceneManager.sceneUnloaded += OnSceneUnload;
-            SceneManager.sceneLoaded += OnSceneLoad;
         }
 
         private async UniTask TryLoadScene(string name)
