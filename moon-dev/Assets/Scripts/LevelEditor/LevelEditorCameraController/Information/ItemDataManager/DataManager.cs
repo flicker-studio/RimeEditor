@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    public delegate void SyncLevelData(LevelData levelData);
+    public delegate void SyncLevelData(SubLevelData subLevelData);
     public class DataManager
     {
         public ObservableList<ItemData> TargetItems = new ObservableList<ItemData>();
 
         public List<GameObject> TargetObjs = new List<GameObject>();
 
-        public ObservableList<ItemData> ItemAssets => GetCurrentLevel.ItemAssets;
+        public ObservableList<ItemData> ItemAssets => GetCurrentSubLevel.ItemAssets;
         
-        public LevelData GetCurrentLevel => m_levelDatas[m_index];
+        public SubLevelData GetCurrentSubLevel => m_levelDatas[m_index];
 
         public int GetCurrentIndex => m_index;
 
@@ -27,23 +27,23 @@ namespace LevelEditor
             }
         }
         
-        public LevelData AddLevel()
+        public SubLevelData AddLevel()
         {
             SetItemAssetActive(ItemAssets,false);
             TargetItems.Clear();
-            m_levelDatas.Add(new LevelData($"Level {m_levelDatas.Count}"));
+            m_levelDatas.Add(new SubLevelData($"Level {m_levelDatas.Count}"));
             m_index = m_levelDatas.Count - 1;
             SetItemAssetActive(ItemAssets,true);
-            SyncLevelData?.Invoke(GetCurrentLevel);
+            SyncLevelData?.Invoke(GetCurrentSubLevel);
             return m_levelDatas.Last();
         }
 
-        public List<LevelData> SetLevels(List<LevelData> levelDatas)
+        public List<SubLevelData> SetLevels(List<SubLevelData> levelDatas)
         {
             m_levelDatas.Clear();
             m_levelDatas.AddRange(levelDatas);
             m_index = Mathf.Clamp(m_index, 0, m_levelDatas.Count - 1);
-            SyncLevelData?.Invoke(GetCurrentLevel);
+            SyncLevelData?.Invoke(GetCurrentSubLevel);
             return m_levelDatas;
         }
 
@@ -54,7 +54,7 @@ namespace LevelEditor
             m_levelDatas.RemoveAt(m_index);
             m_index = Mathf.Clamp(m_index, 0, m_levelDatas.Count - 1);
             SetItemAssetActive(ItemAssets,true);
-            SyncLevelData?.Invoke(GetCurrentLevel);
+            SyncLevelData?.Invoke(GetCurrentSubLevel);
         }
 
         public void SetLevelIndex(int index)
@@ -64,17 +64,17 @@ namespace LevelEditor
             TargetItems.Clear();
             m_index = Mathf.Clamp(index, 0, m_levelDatas.Count - 1);
             SetItemAssetActive(ItemAssets,true);
-            SyncLevelData?.Invoke(GetCurrentLevel);
+            SyncLevelData?.Invoke(GetCurrentSubLevel);
         }
 
-        public List<LevelData> ShowLevels()
+        public List<SubLevelData> ShowLevels()
         {
-            List<LevelData> tempList = new List<LevelData>();
+            List<SubLevelData> tempList = new List<SubLevelData>();
             tempList.AddRange(m_levelDatas);
             return tempList;
         }
         
-        private List<LevelData> m_levelDatas = new List<LevelData>();
+        private List<SubLevelData> m_levelDatas = new List<SubLevelData>();
 
         private int m_index;
 
@@ -87,7 +87,7 @@ namespace LevelEditor
         private void InitLevel()
         {
             m_index = 0;
-            m_levelDatas.Add(new LevelData($"Level {m_levelDatas.Count - 1}"));
+            m_levelDatas.Add(new SubLevelData($"Level {m_levelDatas.Count - 1}"));
         }
         
         private void InitEvent()

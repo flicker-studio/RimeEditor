@@ -42,7 +42,7 @@ public class AreaPanelShowState : AdditiveState
     private void AddLevel()
     {
         GetDataManager.AddLevel();
-        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(GetDataManager.GetCurrentLevel.Name));
+        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(GetDataManager.GetCurrentSubLevel.Name));
         GetAreaDropdown.value = GetDataManager.GetCurrentIndex;
     }
 
