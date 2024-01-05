@@ -107,6 +107,10 @@ namespace Slicer
                 GameObject obj = ObjectPool.Instance.OnTake(m_slicerInformation.GetProductPrefab);
                 obj.GetComponent<MeshFilter>().mesh = slicedHull.upperHull;
                 obj.GetComponent<MeshFilter>().mesh.CreatePolygonCollider(obj.GetComponent<PolygonCollider2D>());
+                // if (collider is PolygonCollider2D targetpolygonCollider)
+                // {
+                //     obj.GetComponent<PolygonCollider2D>().CreatePolygonCollider(targetpolygonCollider,new UnityEngine.Plane(rot * Vector3.up,pos));
+                // }
                 obj.transform.CopyValue(collider.transform);
                 AddSliceMaterial(obj, collider.gameObject, m_slicerInformation.GetCutSurfaceMaterial);
                 targetColliderList.Add(obj.GetComponent<Collider2D>());

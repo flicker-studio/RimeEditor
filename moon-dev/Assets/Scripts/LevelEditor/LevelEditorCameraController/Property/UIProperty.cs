@@ -7,6 +7,8 @@ namespace LevelEditor
     [CreateAssetMenu(menuName = "CustomProperty/LevelEditorUIProperty",order = 4,fileName = "LevelEditorUIProperty")]
     public class UIProperty : ScriptableObject
     {
+        [field:SerializeField,Header("关卡管理面板属性")]
+        public LevelManagerPanelUI GetLevelManagerPanelUI { get; private set; }
         [field:SerializeField,Header("关卡面板属性")] 
         public LevelPanelUI GetLevelPanelUI { get; private set; }
         [field:SerializeField,Header("控制柄面板属性")] 
@@ -108,6 +110,13 @@ namespace LevelEditor
         }
         
         [Serializable]
+        public struct LevelManagerPanelUI
+        {
+            [field:SerializeField,Header("关卡管理面板UI名字")]
+            public LevelManagerPanelUIName GetLevelManagerPanelUIName { get; private set; }
+        }
+        
+        [Serializable]
         public struct SelectionProperty
         {
             [field:SerializeField,CustomLabel("选择框最小检测尺寸")]
@@ -165,6 +174,33 @@ namespace LevelEditor
             public string RELEASE_BUTTON{ get; private set; }
             [field: SerializeField, CustomLabel("运行按钮名字")]
             public string PLAY_BUTTON{ get; private set; }
+        }
+        
+        [Serializable]
+        public struct LevelManagerPanelUIName
+        {
+            [field: SerializeField, CustomLabel("全屏面板名字")]
+            public string FULL_PANEL{ get; private set; }
+            [field: SerializeField, CustomLabel("关卡管理器界面根节点名字")]
+            public string PANEL_ROOT{ get; private set; }
+            [field: SerializeField, CustomLabel("关卡列表栏名字")]
+            public string LEVEL_LIST_CONTENT{ get; private set; }
+            [field: SerializeField, CustomLabel("打开按钮名字")]
+            public string OPEN_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("创建按钮名字")]
+            public string CREATE_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("编辑器协议按钮名字")]
+            public string DECLARATION_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("离开按钮名字")]
+            public string EXIT_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("关卡名字")]
+            public string LEVEL_NAME{ get; private set; }
+            [field: SerializeField, CustomLabel("作者名字")]
+            public string AUTHOR_NAME{ get; private set; }
+            [field: SerializeField, CustomLabel("修改/创建日期名字")]
+            public string DATE_TIME{ get; private set; }
+            [field: SerializeField, CustomLabel("关卡介绍名字")]
+            public string INSTRODUCTION{ get; private set; }
         }
         
         [Serializable]

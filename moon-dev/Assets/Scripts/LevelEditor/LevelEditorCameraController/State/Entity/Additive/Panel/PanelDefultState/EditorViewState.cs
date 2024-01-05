@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using Frame.StateMachine;
 using LevelEditor;
 
-public class PanelDefultState : AdditiveState
+public class EditorViewState : AdditiveState
 {
     private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
     
-    public PanelDefultState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
+    public EditorViewState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
         InitStates();
         InitEvents();

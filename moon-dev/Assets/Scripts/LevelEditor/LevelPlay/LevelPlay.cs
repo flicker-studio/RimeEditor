@@ -8,13 +8,13 @@ namespace LevelEditor
     {
         public static LevelPlay Instance => Singleton;
         
-        private List<LevelData> m_levelDatas = new List<LevelData>();
+        private List<SubLevelData> m_levelDatas = new List<SubLevelData>();
 
-        private LevelData currentLevel;
+        private SubLevelData m_currentSubLevel;
 
         private int m_index = 0;
         
-        public async void Play(List<LevelData> levelDatas, int index = 0)
+        public async void Play(List<SubLevelData> levelDatas, int index = 0)
         {
             m_index = index;
             await SceneLoader.Instance.AddScene(GlobalSetting.Scenes.LEVEL_PLAY);
@@ -37,8 +37,8 @@ namespace LevelEditor
 
         public void ReadLevel()
         {
-            currentLevel = m_levelDatas[m_index];
-            foreach (var itemData in currentLevel.ItemAssets)
+            m_currentSubLevel = m_levelDatas[m_index];
+            foreach (var itemData in m_currentSubLevel.ItemAssets)
             {
                 itemData.SetActivePlay(true);
             }
@@ -46,7 +46,7 @@ namespace LevelEditor
 
         public void ClearLevelObjs()
         {
-            foreach (var itemData in currentLevel.ItemAssets)
+            foreach (var itemData in m_currentSubLevel.ItemAssets)
             {
                 itemData.SetActivePlay(false);
             }

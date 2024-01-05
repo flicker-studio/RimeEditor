@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using EzySlice;
 using Struct;
 using UnityEngine;
+using Plane = UnityEngine.Plane;
 
 namespace Slicer
 {
@@ -47,6 +49,132 @@ namespace Slicer
                     trianglePointsList[i].PointZ
                 });   
             }
+        }
+        
+        public static void CreatePolygonCollider(this PolygonCollider2D polygonCollider2D
+            ,PolygonCollider2D targetCollider2D,Plane slicerPlane)
+        {
+            List<Vector2[]> newPaths = new List<Vector2[]>();
+
+            bool[] needReserves = new bool[targetCollider2D.pathCount];
+            
+            for (int i = 0; i < targetCollider2D.pathCount; i++)
+            {
+                Vector2[] path = (Vector2[])targetCollider2D.GetPath(i).Clone();
+
+                List<Vector2> positiveSidePath = new List<Vector2>();
+                List<Vector2> negativeSidePath = new List<Vector2>();
+                
+                for (var j = 0; j < path.Length; j++)
+                {
+                    path[j] = targetCollider2D.transform.TransformPoint(path[j]);
+                    (slicerPlane.GetSide(path[j]) ? positiveSidePath : negativeSidePath).Add(path[j]);
+                }
+
+                Vector2 linePoint;
+                Vector2 lineOne;
+                Vector2 lineTwo;
+                Vector2 intersectPointOne;
+                Vector2 intersectPointTwo;
+                float denomOne;
+                float denomTwo;
+                float tOne;
+                float tTwo;
+                
+                switch (positiveSidePath.Count)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        linePoint = positiveSidePath[0]; 
+                        lineOne = negativeSidePath[0] - linePoint;
+                        denomOne = Vector3.Dot(slicerPlane.normal, lineOne);
+                        tOne = (-slicerPlane.GetDistanceToPoint(linePoint)) / denomOne;
+                        intersectPointOne = linePoint + lineOne * tOne;
+                        lineTwo = negativeSidePath[1] - linePoint;
+                        denomTwo = Vector3.Dot(slicerPlane.normal, lineTwo);
+                        tTwo = (-slicerPlane.GetDistanceToPoint(linePoint)) / denomTwo;
+                        intersectPointTwo = linePoint + lineTwo * tTwo;
+                        Vector2[] newPath = new []  { linePoint, intersectPointOne, intersectPointTwo };
+                        for (var index = 0; index < newPath.Length; index++)
+                        {
+                            newPath[index] = targetCollider2D.transform.InverseTransformPoint(newPath[index]);
+                        }
+                        newPaths.Add(newPath);
+                        break;
+                    case 2:
+                        linePoint = negativeSidePath[0]; 
+                        lineOne = positiveSidePath[0] - linePoint;
+                        denomOne = Vector3.Dot(slicerPlane.normal, lineOne);
+                        tOne = (-slicerPlane.GetDistanceToPoint(linePoint)) / denomOne;
+                        intersectPointOne = linePoint + lineOne * tOne;
+                        lineTwo = positiveSidePath[1] - linePoint;
+                        denomTwo = Vector3.Dot(slicerPlane.normal, lineTwo);
+                        tTwo = (-slicerPlane.GetDistanceToPoint(linePoint)) / denomTwo;
+                        intersectPointTwo = linePoint + lineTwo * tTwo;
+                        (Vector2[] newPathOne,Vector2[] newPathTwo) = 
+                            CreateTriangles(intersectPointOne, intersectPointTwo, positiveSidePath[0],positiveSidePath[1]);
+                        for (var index = 0; index < newPathOne.Length; index++)
+                        {
+                            newPathOne[index] = targetCollider2D.transform.InverseTransformPoint(newPathOne[index]);
+                        }
+                        for (var index = 0; index < newPathTwo.Length; index++)
+                        {
+                            newPathTwo[index] = targetCollider2D.transform.InverseTransformPoint(newPathTwo[index]);
+                        }
+                        newPaths.Add(newPathOne);
+                        newPaths.Add(newPathTwo);
+                        break;
+                    case 3:
+                        needReserves[i] = true;
+                        break;
+                }
+            }
+
+            for (int i = 0; i < targetCollider2D.pathCount; i++)
+            {
+                if(needReserves[i]) newPaths.Add(targetCollider2D.GetPath(i));
+            }
+
+            polygonCollider2D.pathCount = newPaths.Count;
+            for (var i = 0; i < newPaths.Count; i++)
+            {
+                polygonCollider2D.SetPath(i,newPaths[i]);
+            }
+        }
+        
+        static (Vector2[],Vector2[]) CreateTriangles(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
+        {
+            List<Vector2> points = new List<Vector2>() { p1, p2, p3, p4 };
+
+            Vector2 topRightPoint = new Vector2(-float.MaxValue,-float.MaxValue);
+            Vector2 bottomLeftPoint = new Vector2(float.MaxValue,float.MaxValue);
+            
+            foreach (var point in points)
+            {
+                if (point.x >= topRightPoint.x && point.y >= topRightPoint.y)
+                {
+                    topRightPoint = point;
+                }
+                if (point.x <= bottomLeftPoint.x && point.y <= bottomLeftPoint.y)
+                {
+                    bottomLeftPoint = point;
+                }
+            }
+
+            int count = 2;
+            for (int i = points.Count - 1; i >= 0; i--)
+            {
+                if (points[i] == topRightPoint || points[i] == bottomLeftPoint)
+                {
+                    if(count <= 0) continue;
+                    points.RemoveAt(i);
+                    count--;
+                }
+            }
+            
+            return (new[] { topRightPoint,points[0],points[1] },
+                new[] { bottomLeftPoint,points[0],points[1]});
         }
     }
 }
