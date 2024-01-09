@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using Moon.Kernel.Attribute;
@@ -7,6 +8,10 @@ using UnityEngine.AddressableAssets;
 
 namespace Moon.Kernel.Service
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// This service is used for resource management, which automatically or manually unloads resources to save memory
+    /// </summary>
     [UsedImplicitly, SystemService(typeof(ResourcesService))]
     public sealed class ResourcesService : Service
     {
@@ -15,12 +20,9 @@ namespace Moon.Kernel.Service
             internal const string Key1 = "Assets/Settings/Dev/MoonSetting.asset";
         }
 
-        private MoonSetting m_basicSetting;
-
         internal async override void OnStart()
         {
-            m_basicSetting = await Addressables.LoadAssetAsync<MoonSetting>(Const.Key1);
-            Explorer.MoonSetting = m_basicSetting;
+            Explorer.MoonSetting = await LoadAssetAsync<MoonSetting>(Const.Key1);
         }
 
         internal override void OnStop()
@@ -38,8 +40,26 @@ namespace Moon.Kernel.Service
 
         internal override Task Abort()
         {
-            Addressables.Release(m_basicSetting);
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Load an addressable resource based on the address
+        /// </summary>
+        /// <param name="key">The address of the addressable resource</param>
+        /// <typeparam name="T">The type of addressable resource</typeparam>
+        /// <returns>Resource</returns>
+        /// <exception cref="Exception">当资源不存在时会抛出错误</exception>
+        public static async Task<T> LoadAssetAsync<T>(string key)
+        {
+            var a = await Addressables.LoadAssetAsync<T>(key);
+
+            if (a == null)
+            {
+                throw new Exception($"Value of {key} doesn't seem to be right.");
+            }
+
+            return a;
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using Moon.Extension.Csharp.Method;
+﻿using Moon.Kernel.Extension.Method;
 using NUnit.Framework;
 
-namespace Test.Extension.Csharp.Method
+namespace Test.Kernel.Extension
 {
     [Author("Mors"), TestOf(nameof(String))]
     internal class StringTest

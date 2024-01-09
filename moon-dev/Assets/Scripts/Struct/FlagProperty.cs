@@ -1,13 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Moon.Extension.Csharp.Type;
-using UnityEngine;
+using Moon.Kernel.Extension.Type;
 
 /// <summary>
-/// <see cref="FlagProperty"/> has been deprecated and <see cref="Flag"/> is being considered instead.
+/// <see cref="FlagProperty"/> has been deprecated and <see cref=" Flag"/> is being considered instead.
 /// </summary>
-[Obsolete("Struct.FlagProperty has been deprecated and Moon.Extension.Type.Flag is being considered instead.")]
+[Obsolete("Struct.FlagProperty has been deprecated and  Moon.Kernel.Extension.Type.Flag is being considered instead.")]
 public struct FlagProperty
 {
     private bool m_flag;

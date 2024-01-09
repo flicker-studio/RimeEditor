@@ -10,7 +10,7 @@ namespace Moon.Kernel.Service
 {
     /// <inheritdoc />
     /// <summary>
-    ///     Use this class to switch scenes
+    ///   This service is used for scene management, including loading and unloading
     /// </summary>
     [UsedImplicitly, SystemService(typeof(SceneService))]
     public sealed class SceneService : Service

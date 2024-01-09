@@ -1,4 +1,4 @@
-﻿namespace Moon.Extension.Unity.Method
+﻿namespace Moon.Kernel.Extension.Method
 {
     /// <summary>
     ///     <see cref="UnityEngine.Component" /> static extension class

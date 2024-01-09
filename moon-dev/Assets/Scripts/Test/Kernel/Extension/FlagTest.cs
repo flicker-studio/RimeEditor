@@ -1,7 +1,7 @@
-﻿using Moon.Extension.Csharp.Type;
+﻿using Moon.Kernel.Extension.Type;
 using NUnit.Framework;
 
-namespace Test.Extension.Csharp.Type
+namespace Test.Kernel.Extension
 {
     [Author("Mors"), TestOf(nameof(Flag))]
     internal class FlagTest

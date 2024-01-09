@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Moon.Extension.Csharp.Method
+namespace Moon.Kernel.Extension.Method
 {
     /// <summary>
     ///     <see langword="string" /> static extension class
