@@ -16,12 +16,12 @@ namespace Test.Kernel.Service
         {
             return UniTask.ToCoroutine(async () =>
             {
-                await Explorer.BootkCompletionTask;
+                await Explorer.BootCompletionTask;
 
                 var setting =
                     ResourcesService.LoadAssetAsync<MoonSetting>("Assets/Settings/Dev/MoonSetting.asset").Result;
 
-                Assert.AreEqual(Explorer.MoonSetting, setting);
+                Assert.AreEqual(Explorer.Settings.MoonSetting, setting);
             });
         }
     }

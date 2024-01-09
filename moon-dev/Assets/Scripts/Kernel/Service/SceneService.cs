@@ -56,7 +56,7 @@ namespace Moon.Kernel.Service
         internal async override Task Run()
         {
             await TryLoadScene(PersistenceSceneName);
-            await TryLoadScene(Explorer.MoonSetting.startScene);
+            await TryLoadScene(Explorer.Settings.MoonSetting.startScene);
 
             SceneManager.activeSceneChanged += OnActiveSceneChange;
             SceneManager.sceneUnloaded += OnSceneUnload;

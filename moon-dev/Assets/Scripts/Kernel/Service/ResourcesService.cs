@@ -22,7 +22,7 @@ namespace Moon.Kernel.Service
 
         internal async override void OnStart()
         {
-            Explorer.MoonSetting = await LoadAssetAsync<MoonSetting>(Const.Key1);
+            Explorer.Settings.MoonSetting = await LoadAssetAsync<MoonSetting>(Const.Key1);
         }
 
         internal override void OnStop()

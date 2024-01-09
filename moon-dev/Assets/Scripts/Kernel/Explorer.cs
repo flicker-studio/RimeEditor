@@ -10,9 +10,22 @@ namespace Moon.Kernel
     /// </summary>
     public static class Explorer
     {
-        public static UniTask BootkCompletionTask => Boot.Source.Task;
+        /// <summary>
+        ///     Contains a variety of configuration items
+        /// </summary>
+        public static class Settings
+        {
+            /// <summary>
+            ///     The basic setting of the project
+            /// </summary>
+            public static MoonSetting MoonSetting;
+        }
 
-        public static MoonSetting MoonSetting;
+        /// <summary>
+        ///     The mark of completion of the initialization task
+        /// </summary>
+        public static UniTask BootCompletionTask => Boot.Source.Task;
+
 
         public static T TryGetService<T>() where T : Service.Service
         {
