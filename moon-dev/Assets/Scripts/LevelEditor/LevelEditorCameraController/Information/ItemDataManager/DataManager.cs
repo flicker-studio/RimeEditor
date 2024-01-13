@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace LevelEditor
@@ -24,6 +25,14 @@ namespace LevelEditor
             foreach (var itemAsset in ItemAssets)
             {
                 itemAsset.SetActiveEditor(value);
+            }
+        }
+        
+        public void GetTransformToDatas()
+        {
+            foreach (var itemAsset in ItemAssets)
+            {
+                itemAsset.GetTransformToData();
             }
         }
         
@@ -57,9 +66,9 @@ namespace LevelEditor
             SyncLevelData?.Invoke(GetCurrentSubLevel);
         }
 
-        public void SetLevelIndex(int index)
+        public void SetLevelIndex(int index, bool isReload = false)
         {
-            if(m_index == index) return;
+            if(m_index == index && !isReload) return;
             SetItemAssetActive(ItemAssets,false);
             TargetItems.Clear();
             m_index = Mathf.Clamp(index, 0, m_levelDatas.Count - 1);
@@ -72,6 +81,21 @@ namespace LevelEditor
             List<SubLevelData> tempList = new List<SubLevelData>();
             tempList.AddRange(m_levelDatas);
             return tempList;
+        }
+        
+        public void ToJson()
+        {
+            GetTransformToDatas();
+            LevelData levelData = new LevelData("123");
+            levelData.SetSubLevelDatas = m_levelDatas;
+            string json = JsonConvert.SerializeObject(levelData, Formatting.Indented);
+            Debug.Log(json);
+            SetLevelIndex(m_index, true);
+        }
+
+        public void FromJson(string bytes)
+        {
+            
         }
         
         private List<SubLevelData> m_levelDatas = new List<SubLevelData>();
