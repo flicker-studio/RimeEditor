@@ -32,6 +32,12 @@ namespace Frame.Static.Global
         {
             public static Vector2 REFERENCE_RESOLUTION => new Vector2(1920f, 1920f / Screen.width * Screen.height);
         }
+        
+        public struct CriticalPath
+        {
+            public readonly static string ITEM_FILE_PATH = "Items\\ScriptableObject";
+
+        }
     }
 
 }
