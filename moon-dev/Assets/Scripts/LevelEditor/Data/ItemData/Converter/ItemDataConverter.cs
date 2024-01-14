@@ -16,7 +16,7 @@ public class ItemDataConverter : CustomCreationConverter<ItemData>
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
         var jobj = JObject.ReadFrom(reader);
-        m_itemDataType = jobj["Type"].ToObject<ItemDataType>();
+        m_itemDataType = jobj["ItemDataType"].ToObject<ItemDataType>();
         m_itemProduct = ItemProductAnalysis(jobj["Product"].ToObject<ItemProduct>());
         return base.ReadJson(jobj.CreateReader(), objectType, existingValue, serializer);
     }
