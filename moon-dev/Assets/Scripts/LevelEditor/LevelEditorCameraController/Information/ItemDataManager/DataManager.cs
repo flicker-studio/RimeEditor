@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
@@ -19,6 +20,8 @@ namespace LevelEditor
         public int GetCurrentIndex => m_index;
 
         public SyncLevelData SyncLevelData;
+
+        public event Action ReloadLevelAction;
 
         public void SetActiveEditors(bool value)
         {
@@ -93,6 +96,7 @@ namespace LevelEditor
             string json = JsonConvert.SerializeObject(levelData, Formatting.Indented);
             m_levelDatas = JsonConvert.DeserializeObject<LevelData>(json).GetSubLevelDatas;
             SetLevelIndex(0, true);
+            ReloadLevelAction?.Invoke();
         }
 
         public void FromJson(string bytes)
