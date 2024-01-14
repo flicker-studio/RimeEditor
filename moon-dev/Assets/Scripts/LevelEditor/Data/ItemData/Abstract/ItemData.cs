@@ -16,7 +16,7 @@ namespace LevelEditor
     public abstract class ItemData : ICopy
     {
         public abstract ItemData Copy(ItemData saveData);
-        [JsonProperty("Type",Order = 1)]
+        [JsonProperty("ItemDataType",Order = 1)]
         public abstract ItemDataType ItemDataType { get; }
         [JsonIgnore]
         public GameObject GetItemObjPlay => m_itemObjPlay;
@@ -47,8 +47,8 @@ namespace LevelEditor
             m_itemObjEditor = ObjectPool.Instance.OnTake(m_itemProduct.ItemObject);
             TransformInit();
         }
-        
-        public void SetActiveEditor(bool active)
+
+        public void SetActiveEditor(bool active, bool isReload = false)
         {
             if (active)
             {
@@ -57,7 +57,7 @@ namespace LevelEditor
             }
             else
             {
-                GetTransformToData();
+                if(!isReload) GetTransformToData();
                 ObjectPool.Instance.OnRelease(m_itemObjEditor);
             }
         }

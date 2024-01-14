@@ -28,14 +28,6 @@ namespace LevelEditor
             }
         }
         
-        public void GetTransformToDatas()
-        {
-            foreach (var itemAsset in ItemAssets)
-            {
-                itemAsset.GetTransformToData();
-            }
-        }
-        
         public SubLevelData AddLevel()
         {
             SetItemAssetActive(ItemAssets,false);
@@ -69,10 +61,20 @@ namespace LevelEditor
         public void SetLevelIndex(int index, bool isReload = false)
         {
             if(m_index == index && !isReload) return;
-            SetItemAssetActive(ItemAssets,false);
+            if (isReload)
+            {
+                for (var i = 0; i < m_levelDatas.Count; i++)
+                {
+                    SetItemAssetActive(m_levelDatas[i].ItemAssets,false,isReload);
+                }
+            }
+            else
+            {
+                SetItemAssetActive(ItemAssets,false,isReload);
+            }
             TargetItems.Clear();
             m_index = Mathf.Clamp(index, 0, m_levelDatas.Count - 1);
-            SetItemAssetActive(ItemAssets,true);
+            SetItemAssetActive(ItemAssets,true,isReload);
             SyncLevelData?.Invoke(GetCurrentSubLevel);
         }
 
@@ -85,12 +87,12 @@ namespace LevelEditor
         
         public void ToJson()
         {
-            GetTransformToDatas();
+            SetActiveEditors(false);
             LevelData levelData = new LevelData("123");
             levelData.SetSubLevelDatas = m_levelDatas;
             string json = JsonConvert.SerializeObject(levelData, Formatting.Indented);
-            Debug.Log(json);
-            SetLevelIndex(m_index, true);
+            m_levelDatas = JsonConvert.DeserializeObject<LevelData>(json).GetSubLevelDatas;
+            SetLevelIndex(0, true);
         }
 
         public void FromJson(string bytes)
@@ -108,6 +110,17 @@ namespace LevelEditor
             InitEvent();
         }
 
+        private void ClearLevel()
+        {
+            foreach (var subLevelData in m_levelDatas)
+            {
+                foreach (var itemAsset in subLevelData.ItemAssets)
+                {
+                    itemAsset.SetActiveEditor(false);
+                }
+            }
+        }
+
         private void InitLevel()
         {
             m_index = 0;
@@ -121,11 +134,11 @@ namespace LevelEditor
             TargetItems.OnClear += SyncTargetObj;
         }
         
-        private void SetItemAssetActive(ObservableList<ItemData> itemDatas,bool active)
+        private void SetItemAssetActive(ObservableList<ItemData> itemDatas,bool active,bool isReload = false)
         {
             foreach (var itemData in itemDatas)
             {
-                itemData.SetActiveEditor(active);
+                itemData.SetActiveEditor(active,isReload);
             }
         }
 
