@@ -19,34 +19,6 @@ public class PlatformPlay : ItemPlay
         m_originMaterial = m_renderer.material;
     }
 
-    public bool CanCopy;
-    public bool CanPush;
-    private GameObject m_rigidbodyParent;
-    private Renderer m_renderer;
-    private Material m_originMaterial;
-    [SerializeField] private GameObject m_rigidbodyPrefab;
-    [SerializeField] private Material m_canCopymaterial;
-
-    private void Start()
-    {
-        m_renderer = GetComponent<Renderer>();
-        m_originMaterial = m_renderer.material;
-    }
-
-    public bool CanCopy;
-    public bool CanPush;
-    private GameObject m_rigidbodyParent;
-    private Renderer m_renderer;
-    private Material m_originMaterial;
-    [SerializeField] private GameObject m_rigidbodyPrefab;
-    [SerializeField] private Material m_canCopymaterial;
-
-    private void Start()
-    {
-        m_renderer = GetComponent<Renderer>();
-        m_originMaterial = m_renderer.material;
-    }
-
     public override void Play()
     {
         if (CanPush)
