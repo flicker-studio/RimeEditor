@@ -1,32 +1,44 @@
 using Frame.Static.Extensions;
 using Frame.Tool.Pool;
-using Item;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace LevelEditor
 {
+    public enum ItemDataType
+    {
+        Entrance,
+        Exit,
+        Platform
+    }
+    
+    [JsonConverter(typeof(ItemDataConverter))]
     public abstract class ItemData : ICopy
     {
         public abstract ItemData Copy(ItemData saveData);
+        [JsonProperty("ItemDataType",Order = 1)]
+        public abstract ItemDataType ItemDataType { get; }
+        [JsonIgnore]
         public GameObject GetItemObjPlay => m_itemObjPlay;
+        [JsonIgnore]
         public GameObject GetItemObjEditor => m_itemObjEditor;
-
+        [JsonIgnore]
         public ItemProduct GetItemProduct => m_itemProduct;
-
+        [JsonProperty("Rotation",Order = 2)]
         protected Quaternion m_rotation;
-
+        [JsonProperty("Position",Order = 3)]
         private Vector3 m_position;
-
+        [JsonProperty("Scale",Order = 4)]
         private Vector3 m_scale;
-    
+        [JsonIgnore]
         private Vector3 GetScreenMiddlePoint =>
             Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2,
                 Mathf.Abs(Camera.main.transform.position.z)));
-        
+        [JsonIgnore]
         private GameObject m_itemObjEditor;
-
+        [JsonIgnore]
         protected GameObject m_itemObjPlay;
-        
+        [JsonProperty("Product",Order = 5)]
         protected ItemProduct m_itemProduct;
 
         public ItemData(ItemProduct itemProduct)
@@ -35,8 +47,8 @@ namespace LevelEditor
             m_itemObjEditor = ObjectPool.Instance.OnTake(m_itemProduct.ItemObject);
             TransformInit();
         }
-        
-        public void SetActiveEditor(bool active)
+
+        public void SetActiveEditor(bool active, bool isReload = false)
         {
             if (active)
             {
@@ -45,7 +57,7 @@ namespace LevelEditor
             }
             else
             {
-                GetTransformToData();
+                if(!isReload) GetTransformToData();
                 ObjectPool.Instance.OnRelease(m_itemObjEditor);
             }
         }
@@ -70,14 +82,14 @@ namespace LevelEditor
             m_itemObjEditor.transform.localScale = GetItemProduct.ItemObject.transform.localScale;
         }
 
-        private void GetTransformToData()
+        public void GetTransformToData()
         {
             m_position = m_itemObjEditor.transform.position;
             m_rotation = m_itemObjEditor.transform.rotation;
             m_scale = m_itemObjEditor.transform.localScale;
         }
 
-        private void SetTransformFromData()
+        public void SetTransformFromData()
         {
             m_itemObjEditor.transform.position = m_position;
             m_itemObjEditor.transform.rotation = m_rotation;

@@ -194,11 +194,11 @@ public class HierarchyPanelShowState : AdditiveState
         return itemNodeChild;
     }
 
-    private void SyncNodeByLevelData(LevelData levelData)
+    private void SyncNodeByLevelData(SubLevelData subLevelData)
     {
         InitEvent();
         ClearNode();
-        ObservableList<ItemData> itemDatas = levelData.ItemAssets;
+        ObservableList<ItemData> itemDatas = subLevelData.ItemAssets;
         foreach (var itemData in itemDatas)
         {
             CreateNode(itemData);

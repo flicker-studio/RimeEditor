@@ -1,18 +1,13 @@
+using Slicer;
 using UnityEngine;
 
 public class MeshTest : MonoBehaviour
 {
-    void FixedUpdate()
+    public PolygonCollider2D Target;
+    private void Start()
     {
-        Mesh mesh = GetComponent<MeshFilter>().mesh;
-        Vector3[] vertices = mesh.vertices;
-        Vector3[] normals = mesh.normals;
-
-       for (var i = 0; i < vertices.Length; i++)
-        {
-            vertices[i] += (normals[i] * Mathf.Sin(Time.time)) / 60000;
-        }
+        PolygonCollider2D polygonCollider2D = GetComponent<PolygonCollider2D>();
         
-       mesh.vertices = vertices;
+        polygonCollider2D.CreatePolygonCollider(Target,new Plane(transform.up,transform.position));
     }
 }

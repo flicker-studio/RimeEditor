@@ -1,3 +1,7 @@
+using System;
+using Item;
+
+using Frame.Tool.Pool;
 using Item;
 
 namespace LevelEditor
@@ -6,10 +10,10 @@ namespace LevelEditor
     {
         public bool CanPush;
         public bool CanCopy;
-        
+
         public PlatformData(ItemProduct itemProduct) : base(itemProduct)
         {
-            
+
         }
 
         public override ItemData Copy(ItemData saveData)
@@ -19,6 +23,8 @@ namespace LevelEditor
             tempData.CanCopy = CanCopy;
             return saveData;
         }
+
+        public override ItemDataType ItemDataType => ItemDataType.Platform;
 
         public override void SetActivePlay(bool active)
         {

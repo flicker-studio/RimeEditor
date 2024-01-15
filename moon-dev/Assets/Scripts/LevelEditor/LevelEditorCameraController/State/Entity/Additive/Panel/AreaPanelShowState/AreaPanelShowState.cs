@@ -24,7 +24,18 @@ public class AreaPanelShowState : AdditiveState
 
     public override void Motion(BaseInformation information)
     {
-        
+        InitState();
+    }
+
+    private void InitState()
+    {
+        GetDataManager.ReloadLevelAction += ReloadLevel;
+    }
+    
+    protected override void RemoveState()
+    {
+        GetDataManager.ReloadLevelAction -= ReloadLevel;
+        base.RemoveState();
     }
 
     private void InitEvents()
@@ -42,7 +53,7 @@ public class AreaPanelShowState : AdditiveState
     private void AddLevel()
     {
         GetDataManager.AddLevel();
-        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(GetDataManager.GetCurrentLevel.Name));
+        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(GetDataManager.GetCurrentSubLevel.Name));
         GetAreaDropdown.value = GetDataManager.GetCurrentIndex;
     }
 
@@ -53,5 +64,10 @@ public class AreaPanelShowState : AdditiveState
         GetDataManager.DeleteLevel();
         GetAreaDropdown.value = GetDataManager.GetCurrentIndex;
         GetAreaDropdown.RefreshShownValue();
+    }
+
+    private void ReloadLevel()
+    {
+        GetAreaDropdown.value = 0;
     }
 }

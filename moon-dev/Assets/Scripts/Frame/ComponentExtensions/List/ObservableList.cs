@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Newtonsoft.Json;
+[JsonObject(MemberSerialization.OptIn)]
 public class ObservableList<T> : IEnumerable<T>
 {
-    private List<T> list = new List<T>();
-
+    [JsonProperty]
+    protected List<T> list = new List<T>();
     public event Action<T> OnAdd;
     public event Action<T> OnRemove;
     public event Action<List<T>> OnRemoveAll;
@@ -32,19 +33,19 @@ public class ObservableList<T> : IEnumerable<T>
             list[index] = value;
         }
     }
-    public void Add(T item)
+    public virtual void Add(T item)
     {
         list.Add(item);
         OnAdd?.Invoke(item);
     }
 
-    public void AddRange(List<T> itemList)
+    public virtual void AddRange(List<T> itemList)
     {
         list.AddRange(itemList);
         OnAddRange?.Invoke(itemList);
     }
 
-    public bool Remove(T item)
+    public virtual bool Remove(T item)
     {
         bool removed = list.Remove(item);
         if (removed)
@@ -54,7 +55,7 @@ public class ObservableList<T> : IEnumerable<T>
         return removed;
     }
     
-    public bool RemoveAll(List<T> itemList)
+    public virtual bool RemoveAll(List<T> itemList)
     {
         int removeCount = list.RemoveAll(item => itemList.Contains(item));
         if (removeCount > 0)
@@ -64,7 +65,7 @@ public class ObservableList<T> : IEnumerable<T>
         return false;
     }
 
-    public void Clear()
+    public virtual void Clear()
     {
         list.Clear();
         OnClear?.Invoke();

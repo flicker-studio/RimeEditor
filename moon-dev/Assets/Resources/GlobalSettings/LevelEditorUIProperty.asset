@@ -12,6 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20986d441bbf9f742a52a98133d4ffa2, type: 3}
   m_Name: LevelEditorUIProperty
   m_EditorClassIdentifier: 
+  <GetLevelManagerPanelUI>k__BackingField:
+    <GetLevelManagerPanelUIName>k__BackingField:
+      <FULL_PANEL>k__BackingField: FullPanel
+      <PANEL_ROOT>k__BackingField: FullPanel/LevelManagerPanel
+      <LEVEL_LIST_CONTENT>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/LevelList/Viewport/Content/LevelItem
+      <OPEN_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/OpenButton
+      <CREATE_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/CreateButton
+      <DECLARATION_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/DeclarationButton
+      <EXIT_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/ExitButton
+      <LEVEL_NAME>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
+        /LevelName
+      <AUTHOR_NAME>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
+        /AuthorName
+      <DATE_TIME>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
+        /DateTime
+      <INSTRODUCTION>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
+        /Instruction
   <GetLevelPanelUI>k__BackingField:
     <GetLevelPanelUIName>k__BackingField:
       <LEVEL_NAME>k__BackingField: LeftPanel/LevelPanel/DescribeText

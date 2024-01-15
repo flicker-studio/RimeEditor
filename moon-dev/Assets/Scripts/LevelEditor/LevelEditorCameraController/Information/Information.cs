@@ -61,19 +61,19 @@ namespace LevelEditor
             m_cameraManager.GetOutlinePainter.SetTargetObj = m_dataManager.TargetObjs;
         }
 
-        private void ResetCommand(LevelData levelData)
+        private void ResetCommand(SubLevelData subLevelData)
         {
             m_commandSet.Clear?.Invoke();
         }
         
-        private void ResetOutline(LevelData levelData)
+        private void ResetOutline(SubLevelData subLevelData)
         {
             GetCamera.GetOutlinePainter.SetTargetObj = GetData.TargetObjs;
         }
 
-        private void ResetCameraPos(LevelData levelData)
+        private void ResetCameraPos(SubLevelData subLevelData)
         {
-            List<GameObject> itemObjs = levelData.ItemAssets.GetItemObjs();
+            List<GameObject> itemObjs = subLevelData.ItemAssets.GetItemObjs();
             if (itemObjs.Count == 0)
             {
                 return;

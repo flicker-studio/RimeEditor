@@ -18,6 +18,8 @@ namespace LevelEditor
             return saveData;
         }
 
+        public override ItemDataType ItemDataType => ItemDataType.Entrance;
+
         public override void SetActivePlay(bool active)
         {
             base.SetActivePlay(active);

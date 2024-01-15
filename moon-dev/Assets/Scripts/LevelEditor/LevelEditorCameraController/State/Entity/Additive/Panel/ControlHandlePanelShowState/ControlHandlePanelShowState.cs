@@ -101,7 +101,7 @@ namespace LevelEditor
             m_gridPainter = new GridPainter(GetGridObj, GetGridSize, GetCellSize, GetGrowthFactor, GetGridColor);
         }
 
-        private void ClearCopyDatas(LevelData levelData)
+        private void ClearCopyDatas(SubLevelData subLevelData)
         {
             m_copyDatas.Clear();
         }

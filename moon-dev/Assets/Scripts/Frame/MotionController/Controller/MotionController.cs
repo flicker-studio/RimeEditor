@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Frame.Static.Extensions;
-using Frame.Tool;
 
 namespace Frame.StateMachine
 {

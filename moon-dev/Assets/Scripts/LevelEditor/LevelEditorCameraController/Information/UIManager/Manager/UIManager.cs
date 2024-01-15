@@ -20,6 +20,8 @@ namespace LevelEditor
         public LevelPanel GetLevelPanel => m_levelPanel;
 
         public AreaPanel GetAreaPanel => m_areaPanel;
+
+        public LevelManagerPanel GetLevelManagerPanel => m_levelManagerPanel;
     
         private ActionPanel m_actionPanel;
     
@@ -32,6 +34,8 @@ namespace LevelEditor
         private ItemWarehousePanel m_itemWarehousePanel;
 
         private AreaPanel m_areaPanel;
+
+        private LevelManagerPanel m_levelManagerPanel;
 
         private LevelPanel m_levelPanel;
 
@@ -48,6 +52,7 @@ namespace LevelEditor
             m_areaPanel = new AreaPanel(levelEditorCanvasRect, uiProperty);
             m_levelPanel = new LevelPanel(levelEditorCanvasRect, uiProperty);
             m_inspectorPanel = new InspectorPanel(levelEditorCanvasRect, uiProperty);
+            m_levelManagerPanel = new LevelManagerPanel(levelEditorCanvasRect, uiProperty);
         }
     }
 }
