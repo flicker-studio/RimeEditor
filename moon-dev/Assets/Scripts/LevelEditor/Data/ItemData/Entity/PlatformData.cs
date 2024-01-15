@@ -1,16 +1,19 @@
 using System;
 using Item;
 
+using Frame.Tool.Pool;
+using Item;
+
 namespace LevelEditor
 {
     public class PlatformData : ItemData
     {
         public bool CanPush;
         public bool CanCopy;
-        
+
         public PlatformData(ItemProduct itemProduct) : base(itemProduct)
         {
-            
+
         }
 
         public override ItemData Copy(ItemData saveData)
