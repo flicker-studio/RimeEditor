@@ -131,7 +131,7 @@ namespace DG.Tweening
         /// <summary>Tweens a Rigidbody's position through the given path waypoints, using the chosen path algorithm.
         /// Also stores the Rigidbody as the tween's target so it can be used for filtered operations.
         /// <para>NOTE: to tween a rigidbody correctly it should be set to kinematic at least while being tweened.</para>
-        /// <para>BEWARE: doesn't work on Windows Phone store (waiting for Unity to fix their own bug).
+        /// <para>BEWARE: doesn't work on Windows Phone store (waiting for Unity to fix their own .
         /// If you plan to publish there you should use a regular transform.DOPath.</para></summary>
         /// <param name="path">The waypoints to go through</param>
         /// <param name="duration">The duration of the tween</param>
