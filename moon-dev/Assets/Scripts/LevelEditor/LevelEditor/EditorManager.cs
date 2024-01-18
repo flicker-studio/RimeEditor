@@ -13,7 +13,6 @@ namespace LevelEditor
         {
             m_commandManager = new CommandManager();
             m_editorController = new EditorController(transform as RectTransform,m_commandManager.CommandSet);
-        
         }
     
         private void LateUpdate()

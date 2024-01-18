@@ -63,9 +63,9 @@ namespace LevelEditor
     {
         if (m_isUndoOrRedo)
         {
-            if (GetPositionChange) ;
-            if (GetRotationChange) ;
-            if (GetScaleChange) ;
+            if (GetPositionChange) 
+            if (GetRotationChange) 
+            if (GetScaleChange) 
             m_isUndoOrRedo = false;
         }
     }

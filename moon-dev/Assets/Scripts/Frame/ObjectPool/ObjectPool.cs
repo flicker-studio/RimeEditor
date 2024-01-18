@@ -81,7 +81,7 @@ namespace Frame.Tool.Pool
                 m_outPool[tag] = new List<GameObject>();
             }
 
-            if (!m_pool[tag].Contains(targetObj))
+            if (targetObj == null)
             {
                 return OnTake(prefab);
             }

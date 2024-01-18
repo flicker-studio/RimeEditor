@@ -18,10 +18,29 @@ namespace Frame.Tool
             await LoadScene(sceneName,LoadSceneMode.Additive);
         }
 
+        public async UniTask RemoveTargetScene(string sceneName)
+        {
+            Scene[] scenes = SceneManager.GetAllScenes();
+            bool targetSceneIsActive = false;
+            foreach (var scene in scenes)
+            {
+                if (scene.name == sceneName)
+                {
+                    targetSceneIsActive = true;
+                    break;
+                }
+            }
+            
+            if(!targetSceneIsActive) return;
+            
+            await SceneManager.UnloadSceneAsync(sceneName);
+            
+            SetCurrentSceneObjectsActive(true);
+        }
+        
         public async UniTask RemoveCurrentScene()
         {
             Scene currentScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
-            
             await SceneManager.UnloadSceneAsync(currentScene);
             
             SetCurrentSceneObjectsActive(true);

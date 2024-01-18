@@ -17,7 +17,8 @@ public class ItemDataConverter : CustomCreationConverter<ItemData>
     {
         var jobj = JObject.ReadFrom(reader);
         m_itemDataType = jobj["ItemDataType"].ToObject<ItemDataType>();
-        m_itemProduct = ItemProductAnalysis(jobj["Product"].ToObject<ItemProduct>());
+        m_itemProduct = ItemProductAnalysis(jobj["ProductName"].ToString(),
+            jobj["ProductType"].ToString());
         return base.ReadJson(jobj.CreateReader(), objectType, existingValue, serializer);
     }
 
@@ -26,28 +27,28 @@ public class ItemDataConverter : CustomCreationConverter<ItemData>
         switch (m_itemDataType)
         {
             case ItemDataType.Entrance:
-                return new EntranceData(m_itemProduct);
+                return new EntranceData(m_itemProduct,true);
             case ItemDataType.Platform:
-                return new PlatformData(m_itemProduct);
+                return new PlatformData(m_itemProduct,true);
             case ItemDataType.Exit:
-                return new ExitData(m_itemProduct);
+                return new ExitData(m_itemProduct,true);
             default:
                 return null;
         }
     }
 
-    private ItemProduct ItemProductAnalysis(ItemProduct itemProduct)
-    {
-        itemProduct =  Resources.LoadAll<ItemProduct>
-            (m_itemRootPath + '\\' + Enum.GetName(typeof(ITEMTYPEENUM), itemProduct.ItemType))
-            .ToList().First((value) =>
+    private ItemProduct ItemProductAnalysis(string itemProductName,string itemProductType)
+    {  
+        ItemProduct itemProduct =  Resources.LoadAll<ItemProduct>
+        (m_itemRootPath + '\\' + itemProductType)
+        .ToList().First((value) =>
+        {
+            if (value.Name == itemProductName)
             {
-                if (value.Name == itemProduct.Name)
-                {
-                    return value;
-                }
-                return false;
-            });
+                return value;
+            }
+            return false;
+        });
         return itemProduct;
     }
 }

@@ -8,10 +8,6 @@ namespace LevelEditor
 {
     public class EntranceData : ItemData
     {
-        public EntranceData(ItemProduct itemProduct) : base(itemProduct)
-        {
-
-        }
 
         public override ItemData Copy(ItemData saveData)
         {
@@ -31,6 +27,10 @@ namespace LevelEditor
             {
                 m_itemObjPlay.GetComponent<ItemPlay>().Stop();
             }
+        }
+
+        public EntranceData(ItemProduct itemProduct, bool fromJson = false) : base(itemProduct, fromJson)
+        {
         }
     }
 }

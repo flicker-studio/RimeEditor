@@ -1,5 +1,6 @@
 using System;
 using Editor;
+using Frame.Tool.Popover;
 using UnityEngine;
 
 namespace LevelEditor
@@ -9,6 +10,8 @@ namespace LevelEditor
     {
         [field:SerializeField,Header("关卡管理面板属性")]
         public LevelManagerPanelUI GetLevelManagerPanelUI { get; private set; }
+        [field:SerializeField,Header("关卡设置面板属性")]
+        public LevelSettingPanelUI GetLevelSettingPanelUI { get; private set; }
         [field:SerializeField,Header("关卡面板属性")] 
         public LevelPanelUI GetLevelPanelUI { get; private set; }
         [field:SerializeField,Header("控制柄面板属性")] 
@@ -31,6 +34,8 @@ namespace LevelEditor
         
         [field:SerializeField,Header("检视面板属性")]
         public InspectorUI GetInspectorPanelUI { get; private set; }
+        [field:SerializeField,Header("弹窗属性")]
+        public PopoverProperty GetPopoverProperty { get; private set; }
         
                 
         [Serializable]
@@ -90,6 +95,13 @@ namespace LevelEditor
             public ItemWarehousePanelUIName GetItemWarehousePanelUIName { get; private set; }
             [field:SerializeField,Header("物件仓库属性")]
             public ItemWarehouseProperty GetItemWarehouseProperty { get; private set; }
+        }
+        
+        [Serializable]
+        public struct LevelSettingPanelUI
+        {
+            [field:SerializeField,Header("关卡设置面板UI名字")]
+            public LevelSettingPanelUIName GetLevelSettingPanelUIName { get; private set; }
         }
         
         [Serializable]
@@ -170,10 +182,35 @@ namespace LevelEditor
             public string LEVEL_NAME{ get; private set; }
             [field: SerializeField, CustomLabel("保存按钮名字")]
             public string SAVE_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("设置按钮名字")]
+            public string SETTING_BUTTON{ get; private set; }
             [field: SerializeField, CustomLabel("释放按钮名字")]
             public string RELEASE_BUTTON{ get; private set; }
             [field: SerializeField, CustomLabel("运行按钮名字")]
             public string PLAY_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("离开按钮名字")]
+            public string EXIT_BUTTON{ get; private set; }
+        }
+        
+        [Serializable]
+        public struct PopoverProperty
+        {
+            [field: SerializeField, CustomLabel("弹窗错误颜色")]
+            public Color POPOVER_ERROR_COLOR{ get; private set; }
+            [field: SerializeField, CustomLabel("弹窗成功颜色")]
+            public Color POPOVER_SUCCESS_COLOR{ get; private set; }
+            [field: SerializeField, CustomLabel("关卡未命名")]
+            public string POPOVER_TEXT_LEVEL_NAME_MISSING{ get; private set; }
+            [field: SerializeField, CustomLabel("请选择一个关卡")]
+            public string POPOVER_TEXT_CHOOSE_LEVEL_ERROR{ get; private set; }
+            [field: SerializeField, CustomLabel("保存成功")]
+            public string POPOVER_TEXT_SAVE_SUCCESS{ get; private set; }
+            [field: SerializeField, CustomLabel("持续时间")]
+            public float DURATION{ get; private set; }
+            [field: SerializeField, CustomLabel("尺寸")]
+            public Vector2 SIZE{ get; private set; }
+            [field: SerializeField, CustomLabel("出现位置")]
+            public POPOVERLOCATION POPOVER_LOCATION{ get; private set; }
         }
         
         [Serializable]
@@ -201,6 +238,18 @@ namespace LevelEditor
             public string DATE_TIME{ get; private set; }
             [field: SerializeField, CustomLabel("关卡介绍名字")]
             public string INSTRODUCTION{ get; private set; }
+            [field: SerializeField, CustomLabel("版本名字")]
+            public string VERSION{ get; private set; }
+            [field: SerializeField, CustomLabel("列表关卡图标")]
+            public string ITEM_LEVEL_ICON{ get; private set; }
+            [field: SerializeField, CustomLabel("列表关卡名字")]
+            public string ITEM_LEVEL_NAME{ get; private set; }
+            [field: SerializeField, CustomLabel("列表关卡路径名字")]
+            public string ITEM_LEVEL_PATH{ get; private set; }
+            [field: SerializeField, CustomLabel("列表滚动面板名字")]
+            public string SCROLL_RECT{ get; private set; }
+            [field: SerializeField, CustomLabel("刷新按钮名字")]
+            public string REFRESH_BUTTON{ get; private set; }
         }
         
         [Serializable]
@@ -247,6 +296,29 @@ namespace LevelEditor
         {
             [field: SerializeField, CustomLabel("物件文件根目录索引")]
             public string ITEM_ROOT_PATH{ get; private set; }
+        }
+        
+        [Serializable]
+        public struct LevelSettingPanelUIName
+        {
+            [field: SerializeField, CustomLabel("弹出界面根节点名字")]
+            public string POPOVER_PANEL{ get; private set; }
+            [field: SerializeField, CustomLabel("关卡设置面板名字")]
+            public string SETTING_PANEL{ get; private set; }
+            [field: SerializeField, CustomLabel("关闭按钮名字")]
+            public string CLOSE_BUTTON_NAME{ get; private set; }
+            [field: SerializeField, CustomLabel("保存按钮名字")]
+            public string SAVE_BUTTON_NAME{ get; private set; }
+            [field: SerializeField, CustomLabel("图片上传按钮名字")]
+            public string COVER_IMAGE_NAME{ get; private set; }
+            [field: SerializeField, CustomLabel("关卡名字输入框名字")]
+            public string LEVEL_NAME_INPUTFIELD{ get; private set; }
+            [field: SerializeField, CustomLabel("作者名字输入框名字")]
+            public string AUTHOR_NAME_INPUTFIELD{ get; private set; }
+            [field: SerializeField, CustomLabel("版本号输入框名字")]
+            public string VERSION_INPUTFIELD{ get; private set; }
+            [field: SerializeField, CustomLabel("简介输入框名字")]
+            public string INTRODUCTION_INPUTFIELD{ get; private set; }
         }
         
         [Serializable]

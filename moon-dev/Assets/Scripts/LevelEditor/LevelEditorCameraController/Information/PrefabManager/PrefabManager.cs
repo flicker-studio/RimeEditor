@@ -19,6 +19,8 @@ namespace LevelEditor
 
         public GameObject GetBoolItem => m_prefabFactory.BOOL_ITEM;
 
+        public GameObject GetLevelItem => m_prefabFactory.LEVEL_DATA_BUTTON;
+
         private PrefabFactory m_prefabFactory;
 
         public PrefabManager()

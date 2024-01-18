@@ -352,7 +352,6 @@ namespace LevelEditor
             m_itemGroupObjList = new List<GameObject>();
             m_itemTypeList = new List<ItemTypeButton>();
             m_itemProductButtonList = new List<ItemProductButton>();
-            
             foreach (var keyValuePair in m_itemDictionary)
             {
                 string itemType = Enum.GetName(typeof(ITEMTYPEENUM), keyValuePair.Key);

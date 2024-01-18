@@ -16,7 +16,7 @@ MonoBehaviour:
     <GetLevelManagerPanelUIName>k__BackingField:
       <FULL_PANEL>k__BackingField: FullPanel
       <PANEL_ROOT>k__BackingField: FullPanel/LevelManagerPanel
-      <LEVEL_LIST_CONTENT>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/LevelList/Viewport/Content/LevelItem
+      <LEVEL_LIST_CONTENT>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/LevelList/Viewport/Content
       <OPEN_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/OpenButton
       <CREATE_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/CreateButton
       <DECLARATION_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/DeclarationButton
@@ -29,12 +29,37 @@ MonoBehaviour:
         /DateTime
       <INSTRODUCTION>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
         /Instruction
+      <VERSION>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
+        /Version
+      <ITEM_LEVEL_ICON>k__BackingField: LevelIcon
+      <ITEM_LEVEL_NAME>k__BackingField: LevelName
+      <ITEM_LEVEL_PATH>k__BackingField: Path
+      <SCROLL_RECT>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/LevelList
+      <REFRESH_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/RefreshButton
+  <GetLevelSettingPanelUI>k__BackingField:
+    <GetLevelSettingPanelUIName>k__BackingField:
+      <POPOVER_PANEL>k__BackingField: PopoverPanel
+      <SETTING_PANEL>k__BackingField: PopoverPanel/LevelSettingPanel
+      <CLOSE_BUTTON_NAME>k__BackingField: PopoverPanel/LevelSettingPanel/TopPanel/CloseButton
+      <SAVE_BUTTON_NAME>k__BackingField: PopoverPanel/LevelSettingPanel/BottomPanel/SaveButton
+      <COVER_IMAGE_NAME>k__BackingField: PopoverPanel/LevelSettingPanel/MiddlePanel/Scroll
+        View/Viewport/Content/CoverImagePanel/CoverImage
+      <LEVEL_NAME_INPUTFIELD>k__BackingField: PopoverPanel/LevelSettingPanel/MiddlePanel/Scroll
+        View/Viewport/Content/LevelNamePanel/InputField
+      <AUTHOR_NAME_INPUTFIELD>k__BackingField: PopoverPanel/LevelSettingPanel/MiddlePanel/Scroll
+        View/Viewport/Content/AuthorNamePanel/InputField
+      <VERSION_INPUTFIELD>k__BackingField: PopoverPanel/LevelSettingPanel/MiddlePanel/Scroll
+        View/Viewport/Content/VersionPanel/InputField
+      <INTRODUCTION_INPUTFIELD>k__BackingField: PopoverPanel/LevelSettingPanel/MiddlePanel/Scroll
+        View/Viewport/Content/IntroductionPanel/InputField
   <GetLevelPanelUI>k__BackingField:
     <GetLevelPanelUIName>k__BackingField:
       <LEVEL_NAME>k__BackingField: LeftPanel/LevelPanel/DescribeText
       <SAVE_BUTTON>k__BackingField: LeftPanel/LevelPanel/SaveButton
+      <SETTING_BUTTON>k__BackingField: LeftPanel/LevelPanel/SettingButton
       <RELEASE_BUTTON>k__BackingField: LeftPanel/LevelPanel/ReleaseButton
       <PLAY_BUTTON>k__BackingField: LeftPanel/LevelPanel/PlayButton
+      <EXIT_BUTTON>k__BackingField: LeftPanel/LevelPanel/ExitButton
   <GetControlHandleUI>k__BackingField:
     <GetControlHandleUIName>k__BackingField:
       <SELECTION_UI_NAME>k__BackingField: ControlHandlePanel/SelectionUI
@@ -149,3 +174,12 @@ MonoBehaviour:
       <DESCRIBE_TEXT>k__BackingField: RightPanel/InspectorPanel/DescribeText
     <GetInspectorItemProperty>k__BackingField:
       BOOLEAN_ITEM_TEXT: Text
+  <GetPopoverProperty>k__BackingField:
+    <POPOVER_ERROR_COLOR>k__BackingField: {r: 1, g: 0, b: 0, a: 0.39215687}
+    <POPOVER_SUCCESS_COLOR>k__BackingField: {r: 0, g: 1, b: 0, a: 0.39215687}
+    <POPOVER_TEXT_LEVEL_NAME_MISSING>k__BackingField: Level name is missing!
+    <POPOVER_TEXT_CHOOSE_LEVEL_ERROR>k__BackingField: Please select a level!
+    <POPOVER_TEXT_SAVE_SUCCESS>k__BackingField: Save successfully!
+    <DURATION>k__BackingField: 3
+    <SIZE>k__BackingField: {x: 1024, y: 128}
+    <POPOVER_LOCATION>k__BackingField: 4

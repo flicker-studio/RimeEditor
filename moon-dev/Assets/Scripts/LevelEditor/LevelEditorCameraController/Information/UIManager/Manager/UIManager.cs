@@ -22,6 +22,8 @@ namespace LevelEditor
         public AreaPanel GetAreaPanel => m_areaPanel;
 
         public LevelManagerPanel GetLevelManagerPanel => m_levelManagerPanel;
+
+        public LevelSettingPanel GetLevelSettingPanel => m_levelSettingPanel;
     
         private ActionPanel m_actionPanel;
     
@@ -41,6 +43,8 @@ namespace LevelEditor
 
         private InspectorPanel m_inspectorPanel;
 
+        private LevelSettingPanel m_levelSettingPanel;
+
         public UIManager(RectTransform levelEditorCanvasRect)
         {
             UIProperty uiProperty = Resources.Load<UIProperty>("GlobalSettings/LevelEditorUIProperty");
@@ -53,6 +57,7 @@ namespace LevelEditor
             m_levelPanel = new LevelPanel(levelEditorCanvasRect, uiProperty);
             m_inspectorPanel = new InspectorPanel(levelEditorCanvasRect, uiProperty);
             m_levelManagerPanel = new LevelManagerPanel(levelEditorCanvasRect, uiProperty);
+            m_levelSettingPanel = new LevelSettingPanel(levelEditorCanvasRect, uiProperty);
         }
     }
 }

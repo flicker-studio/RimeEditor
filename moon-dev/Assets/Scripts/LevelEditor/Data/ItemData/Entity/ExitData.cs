@@ -4,9 +4,6 @@ namespace LevelEditor
 {
     public class ExitData : ItemData
     {
-        public ExitData(ItemProduct itemProduct) : base(itemProduct)
-        {
-        }
 
         public override ItemData Copy(ItemData saveData)
         {
@@ -30,6 +27,10 @@ namespace LevelEditor
             {
                 m_itemObjPlay.GetComponent<ItemPlay>().Stop();
             }
+        }
+
+        public ExitData(ItemProduct itemProduct, bool fromJson = false) : base(itemProduct, fromJson)
+        {
         }
     }
 }
