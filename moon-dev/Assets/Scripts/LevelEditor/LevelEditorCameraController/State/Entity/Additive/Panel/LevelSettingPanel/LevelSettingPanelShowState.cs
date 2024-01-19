@@ -73,7 +73,7 @@ namespace LevelEditor
 
         protected void UploadCoverImage()
         {
-            m_coverImagePath = EditorUtility.OpenFilePanel("Overwrite with png", "", "png,jpg");
+            m_coverImagePath = EditorUtility.OpenFilePanel("Choose level cover image", "", "png,jpg");
             CheckImage();
         }
         

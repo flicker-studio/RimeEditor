@@ -22,6 +22,8 @@ namespace LevelEditor
         [JsonIgnore]
         public List<SubLevelData> GetSubLevelDatas => m_subLevelDatas;
         [JsonIgnore]
+        public string GetKey => m_hashKey;
+        [JsonIgnore]
         public string Path;
 
         public void UpdateTime()
@@ -54,6 +56,11 @@ namespace LevelEditor
             set => m_version = value;
         }
 
+        public string SetKey
+        {
+            set => m_hashKey = value;
+        }
+
         public List<SubLevelData> SetSubLevelDatas
         {
             set
@@ -64,17 +71,19 @@ namespace LevelEditor
         }
         [JsonIgnore]
         private Texture2D m_levelCoverImage;
-        [JsonProperty("LevelName",Order = 1)]
+        [JsonProperty("Key",Order = 1)]
+        private string m_hashKey;
+        [JsonProperty("LevelName",Order = 2)]
         private string m_levelName;
-        [JsonProperty("AuthorName",Order = 2)]
+        [JsonProperty("AuthorName",Order = 3)]
         private string m_authorName;
-        [JsonProperty("Introduction",Order = 3)]
+        [JsonProperty("Introduction",Order = 4)]
         private string m_introduction;
-        [JsonProperty("Version",Order = 4)]
+        [JsonProperty("Version",Order = 5)]
         private string m_version;
-        [JsonProperty("CreateDate",Order = 5)]
+        [JsonProperty("CreateDate",Order = 6)]
         private DateTime m_createDate;
-        [JsonProperty("SubLevelDatas",Order = 6)]
+        [JsonProperty("SubLevelDatas",Order = 7)]
         private List<SubLevelData> m_subLevelDatas = new List<SubLevelData>();
     }
 }

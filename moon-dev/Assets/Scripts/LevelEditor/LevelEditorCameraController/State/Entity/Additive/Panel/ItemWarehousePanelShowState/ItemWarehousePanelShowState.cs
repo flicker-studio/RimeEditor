@@ -13,6 +13,7 @@ namespace LevelEditor
 {
     public class ItemWarehousePanelShowState : AdditiveState
     {
+        private LevelAction GetLevelAction => m_information.GetLevelAction;
         private ItemWarehousePanel GetItemWarehousePanel => m_information.GetUI.GetItemWarehousePanel;
         
         private Transform GetItemTypeGroup => GetItemWarehousePanel.GetItemTypeGroup;
@@ -228,6 +229,10 @@ namespace LevelEditor
         private void RemoveListener()
         {
             m_currentChoose = null;
+
+            GetLevelAction.ExitEditorView -= ResetInitBool;
+            
+            GetLevelAction.ExitEditorView += ResetInitBool;
             
             GetCreateButton.onClick.RemoveAllListeners();
 
@@ -514,6 +519,11 @@ namespace LevelEditor
             }
 
             gridItemButton.SetSelected = true;
+        }
+
+        private void ResetInitBool()
+        {
+            m_isInit = true;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace LevelEditor
         public string GetLevelPathTextName => m_levelPathTextName;
 
         public string GetLevelImageName => m_levelImageName;
+
+        public RawImage GetLevelCoverImage => m_levelCoverImage;
         public ScrollRect GetLevelScrollRect => m_levelScrollRect;
         public RectTransform GetLevelManagerRootRect => m_levelManagerRootRect;
 
@@ -29,6 +31,12 @@ namespace LevelEditor
 
         public Button GetRefreshButton => m_refreshButton;
 
+        public Button GetDeleteButton => m_deleteButton;
+
+        public Button GetOpenLocalDirectoryButton => m_openLocalDirectoryButton;
+        
+        public TextMeshProUGUI GetSubLevelNumber => m_subLevelNumber;
+
         public TextMeshProUGUI GetLevelName => m_levelName;
 
         public TextMeshProUGUI GetAnthorName => m_anthorName;
@@ -40,6 +48,8 @@ namespace LevelEditor
         public TextMeshProUGUI GetVersion => m_version;
 
         public UIProperty.PopoverProperty GetPopoverProperty => m_popoverProperty;
+
+        private RawImage m_levelCoverImage;
 
         private ScrollRect m_levelScrollRect;
         
@@ -65,6 +75,10 @@ namespace LevelEditor
 
         private Button m_refreshButton;
 
+        private Button m_openLocalDirectoryButton;
+
+        private Button m_deleteButton;
+
         private TextMeshProUGUI m_levelName;
 
         private TextMeshProUGUI m_anthorName;
@@ -74,6 +88,8 @@ namespace LevelEditor
         private TextMeshProUGUI m_instroduction;
 
         private TextMeshProUGUI m_version;
+        
+        private TextMeshProUGUI m_subLevelNumber;
 
         private UIProperty.PopoverProperty m_popoverProperty;
         public LevelManagerPanel(RectTransform rect,UIProperty levelEditorUIProperty)
@@ -89,6 +105,7 @@ namespace LevelEditor
             m_levelTextName = uiProperty.ITEM_LEVEL_NAME;
             m_levelPathTextName = uiProperty.ITEM_LEVEL_PATH;
             m_levelImageName = uiProperty.ITEM_LEVEL_ICON;
+            m_levelCoverImage = rect.FindPath(uiProperty.LEVEL_COVER_NAME).GetComponent<RawImage>();
             m_levelScrollRect = rect.FindPath(uiProperty.SCROLL_RECT).GetComponent<ScrollRect>();
             m_levelManagerRootRect = rect.FindPath(uiProperty.PANEL_ROOT) as RectTransform;
             m_levelListContentRect = rect.FindPath(uiProperty.LEVEL_LIST_CONTENT) as RectTransform;
@@ -98,6 +115,9 @@ namespace LevelEditor
             m_declarationButton = rect.FindPath(uiProperty.DECLARATION_BUTTON).GetComponent<Button>();
             m_exitButton = rect.FindPath(uiProperty.EXIT_BUTTON).GetComponent<Button>();
             m_refreshButton = rect.FindPath(uiProperty.REFRESH_BUTTON).GetComponent<Button>();
+            m_deleteButton = rect.FindPath(uiProperty.DELETE_LEVEL_BUTTON).GetComponent<Button>();
+            m_openLocalDirectoryButton = rect.FindPath(uiProperty.OEPN_LOCAL_DIRECTORY_BUTTON).GetComponent<Button>();
+            m_subLevelNumber = rect.FindPath(uiProperty.SUB_LEVEL_NUMBER).GetComponent<TextMeshProUGUI>();
             m_levelName = rect.FindPath(uiProperty.LEVEL_NAME).GetComponent<TextMeshProUGUI>();
             m_anthorName = rect.FindPath(uiProperty.AUTHOR_NAME).GetComponent<TextMeshProUGUI>();
             m_dateTime = rect.FindPath(uiProperty.DATE_TIME).GetComponent<TextMeshProUGUI>();

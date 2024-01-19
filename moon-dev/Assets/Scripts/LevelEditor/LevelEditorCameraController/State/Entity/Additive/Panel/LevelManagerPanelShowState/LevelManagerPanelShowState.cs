@@ -4,6 +4,7 @@ using Frame.CompnentExtensions;
 using Frame.StateMachine;
 using Frame.Tool.Popover;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,8 +24,12 @@ namespace LevelEditor
         public string GetLevelImageName => GetLevelManagerPanel.GetLevelImageName;
 
         private UIProperty.PopoverProperty GetPopoverProperty => GetLevelManagerPanel.GetPopoverProperty;
+        
+        public RawImage GetLevelCoverImage => GetLevelManagerPanel.GetLevelCoverImage;
 
         private ScrollRect GetScrollRect => GetLevelManagerPanel.GetLevelScrollRect;
+
+        private Button GetOpenLocalFileButton => GetLevelManagerPanel.GetOpenLocalDirectoryButton;
         
         private RectTransform GetLevelManagerRoot => GetLevelManagerPanel.GetLevelManagerRootRect;
         
@@ -41,6 +46,10 @@ namespace LevelEditor
         private Button GetExitButton => GetLevelManagerPanel.GetExitButton;
 
         private Button GetRefreshButton => GetLevelManagerPanel.GetRefreshButton;
+
+        private Button GetDeleteButton => GetLevelManagerPanel.GetDeleteButton;
+        
+        public TextMeshProUGUI GetSubLevelNumber => GetLevelManagerPanel.GetSubLevelNumber;
 
         private TextMeshProUGUI GetLevelName => GetLevelManagerPanel.GetLevelName;
 
@@ -73,6 +82,8 @@ namespace LevelEditor
             GetCreateButton.onClick.AddListener(CreateLevel);
             GetOpenButton.onClick.AddListener(OpenLevel);
             GetRefreshButton.onClick.AddListener(ReloadLevels);
+            GetDeleteButton.onClick.AddListener(DeleteLevel);
+            GetOpenLocalFileButton.onClick.AddListener(OpenLevelFile);
         }
 
         private void RemoveEvent()
@@ -80,6 +91,8 @@ namespace LevelEditor
             GetCreateButton.onClick.RemoveAllListeners();
             GetOpenButton.onClick.RemoveAllListeners();
             GetRefreshButton.onClick.RemoveAllListeners();
+            GetDeleteButton.onClick.RemoveAllListeners();
+            GetOpenLocalFileButton.onClick.RemoveAllListeners();
         }
 
         protected override void RemoveState()
@@ -107,6 +120,17 @@ namespace LevelEditor
             }
             GetData.OpenLevel(m_currentChooseLevelButton.GetLevelData);
             JumpToEditorViewState();
+        }
+
+        private void DeleteLevel()
+        {
+            if (GetData.DeleteLevel(m_currentChooseLevelButton.GetLevelData))
+            {
+                PopoverLauncher.Instance.Launch(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
+                    GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_SUCCESS_COLOR,
+                    GetPopoverProperty.POPOVER_DELETE_SUCCESS, GetPopoverProperty.DURATION);
+            }
+            ReloadLevels();
         }
         
         private void JumpToEditorViewState()
@@ -164,6 +188,9 @@ namespace LevelEditor
                 GetAnthorName.gameObject.SetActive(false);
                 GetInstroduction.gameObject.SetActive(false);
                 GetVersion.gameObject.SetActive(false);
+                GetLevelCoverImage.gameObject.SetActive(false);
+                GetSubLevelNumber.gameObject.SetActive(false);
+                GetDeleteButton.gameObject.SetActive(false);
                 return;
             }
             GetLevelName.gameObject.SetActive(true);
@@ -171,11 +198,16 @@ namespace LevelEditor
             GetAnthorName.gameObject.SetActive(true);
             GetInstroduction.gameObject.SetActive(true);
             GetVersion.gameObject.SetActive(true);
-            GetLevelName.text = $"{GetLevelName.name}: {m_currentChooseLevelButton.GetLevelData.GetName}";
-            GetDateTime.text = $"{GetDateTime.name}: {m_currentChooseLevelButton.GetLevelData.GetTime}";
-            GetAnthorName.text = $"{GetAnthorName.name}: {m_currentChooseLevelButton.GetLevelData.GetAuthorName}";
-            GetInstroduction.text = $"{GetInstroduction.name}: {m_currentChooseLevelButton.GetLevelData.GetIntroduction}";
-            GetVersion.text = $"{GetVersion.name}: {m_currentChooseLevelButton.GetLevelData.GetVersion}";
+            GetLevelCoverImage.gameObject.SetActive(true);
+            GetSubLevelNumber.gameObject.SetActive(true);
+            GetDeleteButton.gameObject.SetActive(true);
+            GetLevelName.text = $"{m_currentChooseLevelButton.GetLevelData.GetName}";
+            GetDateTime.text = $"At {m_currentChooseLevelButton.GetLevelData.GetTime}";
+            GetAnthorName.text = $"By {m_currentChooseLevelButton.GetLevelData.GetAuthorName}";
+            GetInstroduction.text = $"{m_currentChooseLevelButton.GetLevelData.GetIntroduction}";
+            GetVersion.text = $"{m_currentChooseLevelButton.GetLevelData.GetVersion}";
+            GetSubLevelNumber.text = $"{m_currentChooseLevelButton.GetLevelData.GetSubLevelDatas.Count}";
+            GetLevelCoverImage.texture = m_currentChooseLevelButton.GetLevelData.GetLevelCoverImage;
         }
 
         private void ClearLevelDataButtons()
@@ -185,6 +217,20 @@ namespace LevelEditor
                 levelDataButton.Remove();
             }
             m_levelDataButtons.Clear();
+            m_currentChooseLevelButton = null;
+        }
+
+        private void OpenLevelFile()
+        {
+            string path = EditorUtility.OpenFolderPanel("Open a level directory", "", "");
+            if (!GetData.OpenLocalLevelDirectory(path))
+            {
+                PopoverLauncher.Instance.Launch(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
+                    GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
+                    GetPopoverProperty.CHECK_ERROR_LEVEL_DIRECTORY, GetPopoverProperty.DURATION);
+                return;
+            }
+            ReloadLevels();
         }
     }
 }

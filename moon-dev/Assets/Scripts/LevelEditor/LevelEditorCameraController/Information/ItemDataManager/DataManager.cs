@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Frame.Static.Extensions;
 using Frame.Static.Global;
 using Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -28,13 +30,6 @@ namespace LevelEditor
         public int GetCurrentSubLevelIndex => m_subLevelIndex;
 
         public SyncLevelData SyncLevelData;
-
-        public event Action ReloadLevelAction;
-
-        public void InvokeReloadAction()
-        {
-            ReloadLevelAction?.Invoke();
-        }
         
         public void SetActiveEditors(bool value)
         {
@@ -45,7 +40,7 @@ namespace LevelEditor
             }
         }
         
-        public SubLevelData AddLevel()
+        public SubLevelData AddSubLevel()
         {
             SetItemAssetActive(ItemAssets,false);
             TargetItems.Clear();
@@ -56,7 +51,7 @@ namespace LevelEditor
             return m_subLevelDatas.Last();
         }
 
-        public List<SubLevelData> SetLevels(List<SubLevelData> levelDatas)
+        public List<SubLevelData> SetSubLevels(List<SubLevelData> levelDatas)
         {
             m_subLevelDatas.Clear();
             m_subLevelDatas.AddRange(levelDatas);
@@ -65,7 +60,7 @@ namespace LevelEditor
             return m_subLevelDatas;
         }
 
-        public void DeleteLevel()
+        public void DeleteSubLevel()
         {
             SetItemAssetActive(ItemAssets,false);
             TargetItems.Clear();
@@ -75,7 +70,7 @@ namespace LevelEditor
             SyncLevelData?.Invoke(GetCurrentSubLevel);
         }
 
-        public void SetLevelIndex(int index, bool isReload = false)
+        public void SetSubLevelIndex(int index, bool isReload = false)
         {
             if(m_subLevelIndex == index && !isReload) return;
             if (isReload)
@@ -95,7 +90,7 @@ namespace LevelEditor
             SyncLevelData?.Invoke(GetCurrentSubLevel);
         }
 
-        public List<SubLevelData> ShowLevels()
+        public List<SubLevelData> ShowSubLevels()
         {
             List<SubLevelData> tempList = new List<SubLevelData>();
             tempList.AddRange(m_subLevelDatas);
@@ -125,6 +120,10 @@ namespace LevelEditor
                     LevelData levelData = FromJson(streamReader.ReadToEnd());
                     streamReader.Close();
                     streamReader.Dispose();
+                    if (levelData == null)
+                    {
+                        continue;
+                    }
                     levelData.Path = $"Path:{levelPath}";
                     m_levelDatas.Add(levelData);
                     if (File.Exists(imagePath))
@@ -134,6 +133,30 @@ namespace LevelEditor
                 }
             }
         }
+
+        public bool OpenLocalLevelDirectory(string path)
+        {
+            string levelDirectoryName = path.ReserveReciprocal('/');
+            string levelDataFolderPath = $"{path}/{GlobalSetting.PersistentFileProperty.GAMES_DATA_NAME}";
+            string imageDataFolderPath = $"{path}/{GlobalSetting.PersistentFileProperty.IMAGES_DATA_NAME}";
+            string soundsDataFolderPath = $"{path}/{GlobalSetting.PersistentFileProperty.SOUNDS_DATA_NAME}";
+            string levelDataFilePath = $"{levelDataFolderPath}/{levelDirectoryName}.json";
+            if (!Directory.Exists(levelDataFolderPath)) return false;
+            if (!Directory.Exists(imageDataFolderPath)) return false;
+            if (!Directory.Exists(soundsDataFolderPath)) return false;
+            if (!File.Exists($"{levelDataFilePath}")) return false;
+            StreamReader streamReader = File.OpenText(levelDataFilePath);
+            LevelData levelData = FromJson(streamReader.ReadToEnd());
+            streamReader.Close();
+            streamReader.Dispose();
+            if (levelData == null) return false;
+            foreach (var data in m_levelDatas)
+            {
+                if (data.GetKey == levelData.GetKey) return false;
+            }
+            FileUtil.MoveFileOrDirectory(path, $"{GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
+            return true;
+        } 
         
         public void ToJson()
         {
@@ -141,13 +164,19 @@ namespace LevelEditor
             {
                 itemAsset.GetTransformToData();
             }
+            string hashKey = m_chooseLevelData.GetKey;
             m_chooseLevelData.UpdateTime();
+            if (hashKey == null || hashKey == "")
+            {
+                m_chooseLevelData.SetKey = $"{m_chooseLevelData.GetName}{m_chooseLevelData.GetTime}".ToSHA256();
+                hashKey = m_chooseLevelData.GetKey;
+            }
             string json = JsonConvert.SerializeObject(m_chooseLevelData, Formatting.Indented);
             if (!Directory.Exists(GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH))
             {
                 Directory.CreateDirectory(GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH);
             }
-            string levelPath = $"{GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH}/{m_chooseLevelData.GetName}";
+            string levelPath = $"{GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH}/{hashKey}";
             string gamesPath = $"{levelPath}/{GlobalSetting.PersistentFileProperty.GAMES_DATA_NAME}";
             string imagesPath = $"{levelPath}/{GlobalSetting.PersistentFileProperty.IMAGES_DATA_NAME}";
             string soundsPath = $"{levelPath}/{GlobalSetting.PersistentFileProperty.SOUNDS_DATA_NAME}";
@@ -158,9 +187,8 @@ namespace LevelEditor
                 Directory.CreateDirectory(imagesPath);
                 Directory.CreateDirectory(soundsPath);
             }
-            Debug.Log(Application.persistentDataPath);
             StreamWriter streamWriter;
-            FileInfo levelText = new FileInfo($"{gamesPath}//{m_chooseLevelData.GetName}.json");
+            FileInfo levelText = new FileInfo($"{gamesPath}//{hashKey}.json");
             streamWriter = levelText.CreateText();
             streamWriter.WriteLine(json);
             streamWriter.Close();
@@ -193,7 +221,14 @@ namespace LevelEditor
         public LevelData FromJson(string json)
         {
             SetActiveEditors(false);
-            return JsonConvert.DeserializeObject<LevelData>(json);
+            try
+            {
+                return JsonConvert.DeserializeObject<LevelData>(json);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public void CreateLevel()
@@ -206,6 +241,11 @@ namespace LevelEditor
         {
             m_chooseLevelData = levelData;
             InitLevel(levelData);
+        }
+
+        public bool DeleteLevel(LevelData levelData)
+        {
+            return FileUtil.DeleteFileOrDirectory(levelData.Path.Replace("Path:",""));
         }
 
         private List<SubLevelData> m_subLevelDatas => GetCurrentLevel.GetSubLevelDatas;
@@ -240,7 +280,7 @@ namespace LevelEditor
         
         private void InitLevel(LevelData levelData)
         {
-            SetLevelIndex(0, true);
+            SetSubLevelIndex(0, true);
         }
         
         private void InitEvent()

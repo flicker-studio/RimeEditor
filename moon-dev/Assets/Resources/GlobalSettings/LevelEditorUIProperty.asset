@@ -26,16 +26,23 @@ MonoBehaviour:
       <AUTHOR_NAME>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
         /AuthorName
       <DATE_TIME>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
-        /DateTime
+        /AuthorName/DateTime
       <INSTRODUCTION>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
         /Instruction
       <VERSION>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
-        /Version
+        /LevelName/Version
+      <LEVEL_COVER_NAME>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
+        /LevelCoverImage
+      <SUB_LEVEL_NUMBER>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
+        /LevelName/SubLevelNum
+      <DELETE_LEVEL_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/RightPanel/LevelDetails
+        /DeleteButton
       <ITEM_LEVEL_ICON>k__BackingField: LevelIcon
       <ITEM_LEVEL_NAME>k__BackingField: LevelName
       <ITEM_LEVEL_PATH>k__BackingField: Path
       <SCROLL_RECT>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/LevelList
       <REFRESH_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/RefreshButton
+      <OEPN_LOCAL_DIRECTORY_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/OpenLocalDirectoryButton
   <GetLevelSettingPanelUI>k__BackingField:
     <GetLevelSettingPanelUIName>k__BackingField:
       <POPOVER_PANEL>k__BackingField: PopoverPanel
@@ -179,6 +186,8 @@ MonoBehaviour:
     <POPOVER_SUCCESS_COLOR>k__BackingField: {r: 0, g: 1, b: 0, a: 0.39215687}
     <POPOVER_TEXT_LEVEL_NAME_MISSING>k__BackingField: Level name is missing!
     <POPOVER_TEXT_CHOOSE_LEVEL_ERROR>k__BackingField: Please select a level!
+    <POPOVER_DELETE_SUCCESS>k__BackingField: Delete successfully!
+    <CHECK_ERROR_LEVEL_DIRECTORY>k__BackingField: Open level failure!
     <POPOVER_TEXT_SAVE_SUCCESS>k__BackingField: Save successfully!
     <DURATION>k__BackingField: 3
     <SIZE>k__BackingField: {x: 1024, y: 128}

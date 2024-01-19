@@ -9,6 +9,7 @@ namespace LevelEditor
 {
     public class LevelPanelShowState : AdditiveState
     {
+        private LevelAction GetLevelAction => m_information.GetLevelAction;
         private LevelPanel GetLevelPanel => m_information.GetUI.GetLevelPanel;
 
         private DataManager GetData => m_information.GetData;
@@ -41,7 +42,7 @@ namespace LevelEditor
         {
             GetData.SetActiveEditors(false);
             GetCamera.GetOutlinePainter.SetTargetObj = null;
-            LevelPlay.Instance.Play(GetData.ShowLevels(),GetData.GetCurrentSubLevelIndex);
+            LevelPlay.Instance.Play(GetData.ShowSubLevels(),GetData.GetCurrentSubLevelIndex);
         }
 
         private void SaveLevel()
@@ -91,6 +92,7 @@ namespace LevelEditor
             GetData.SetActiveEditors(false);
             await SceneLoader.Instance.RemoveTargetScene(GlobalSetting.Scenes.LEVEL_PLAY);
             await SceneLoader.Instance.EnterScene(GlobalSetting.Scenes.LEVEL_EDITOR);
+            GetLevelAction.InvokeExitEditor();
         }
     }
 }

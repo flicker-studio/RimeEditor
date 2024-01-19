@@ -48,12 +48,12 @@ public class AreaPanelShowState : AdditiveState
 
     private void SetLevelIndex(int index)
     {
-        GetDataManager.SetLevelIndex(index);
+        GetDataManager.SetSubLevelIndex(index);
     }
 
     private void AddLevel()
     {
-        GetDataManager.AddLevel();
+        GetDataManager.AddSubLevel();
         GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(GetDataManager.GetCurrentSubLevel.Name));
         GetAreaDropdown.value = GetDataManager.GetCurrentSubLevelIndex;
     }
@@ -65,9 +65,9 @@ public class AreaPanelShowState : AdditiveState
 
     private void DeleteLevel()
     {
-        if(GetDataManager.ShowLevels().Count <= 1) return;
+        if(GetDataManager.ShowSubLevels().Count <= 1) return;
         GetAreaDropdown.options.RemoveAt(GetDataManager.GetCurrentSubLevelIndex);
-        GetDataManager.DeleteLevel();
+        GetDataManager.DeleteSubLevel();
         GetAreaDropdown.value = GetDataManager.GetCurrentSubLevelIndex;
         GetAreaDropdown.RefreshShownValue();
     }

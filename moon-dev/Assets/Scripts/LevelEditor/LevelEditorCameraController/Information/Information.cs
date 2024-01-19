@@ -17,6 +17,8 @@ namespace LevelEditor
         public InputController GetInput => m_inputController;
 
         public CommandSet GetCommandSet => m_commandSet;
+
+        public LevelAction GetLevelAction => m_levelAction;
         
 
         private InputController m_inputController;
@@ -30,6 +32,8 @@ namespace LevelEditor
         private CameraManager m_cameraManager;
     
         private CommandSet m_commandSet;
+
+        private LevelAction m_levelAction;
     
         public Information(RectTransform levelEditorTransform,CommandSet commandSet)
         {
@@ -45,6 +49,7 @@ namespace LevelEditor
             m_inputController = new InputController();
             m_dataManager = new DataManager();
             m_cameraManager = new CameraManager();
+            m_levelAction = new LevelAction();
         }
 
         private void InitEvent()

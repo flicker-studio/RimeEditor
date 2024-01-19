@@ -203,6 +203,10 @@ namespace LevelEditor
             public string POPOVER_TEXT_LEVEL_NAME_MISSING{ get; private set; }
             [field: SerializeField, CustomLabel("请选择一个关卡")]
             public string POPOVER_TEXT_CHOOSE_LEVEL_ERROR{ get; private set; }
+            [field: SerializeField, CustomLabel("删除成功")]
+            public string POPOVER_DELETE_SUCCESS{ get; private set; }
+            [field: SerializeField, CustomLabel("检测到错误关卡文件夹")]
+            public string CHECK_ERROR_LEVEL_DIRECTORY{ get; private set; }
             [field: SerializeField, CustomLabel("保存成功")]
             public string POPOVER_TEXT_SAVE_SUCCESS{ get; private set; }
             [field: SerializeField, CustomLabel("持续时间")]
@@ -240,6 +244,12 @@ namespace LevelEditor
             public string INSTRODUCTION{ get; private set; }
             [field: SerializeField, CustomLabel("版本名字")]
             public string VERSION{ get; private set; }
+            [field: SerializeField, CustomLabel("关卡封面图片名字")]
+            public string LEVEL_COVER_NAME{ get; private set; }
+            [field: SerializeField, CustomLabel("子关卡数量名字")]
+            public string SUB_LEVEL_NUMBER{ get; private set; }
+            [field: SerializeField, CustomLabel("删除按钮名字")]
+            public string DELETE_LEVEL_BUTTON{ get; private set; }
             [field: SerializeField, CustomLabel("列表关卡图标")]
             public string ITEM_LEVEL_ICON{ get; private set; }
             [field: SerializeField, CustomLabel("列表关卡名字")]
@@ -250,6 +260,8 @@ namespace LevelEditor
             public string SCROLL_RECT{ get; private set; }
             [field: SerializeField, CustomLabel("刷新按钮名字")]
             public string REFRESH_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("打开本地文件按钮名字")]
+            public string OEPN_LOCAL_DIRECTORY_BUTTON{ get; private set; }
         }
         
         [Serializable]
