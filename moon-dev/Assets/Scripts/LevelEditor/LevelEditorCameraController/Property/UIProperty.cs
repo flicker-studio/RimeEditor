@@ -262,6 +262,10 @@ namespace LevelEditor
             public string REFRESH_BUTTON{ get; private set; }
             [field: SerializeField, CustomLabel("打开本地文件按钮名字")]
             public string OEPN_LOCAL_DIRECTORY_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("创意工坊按钮名字")]
+            public string WORKS_SHOP_BUTTON{ get; private set; }
+            [field: SerializeField, CustomLabel("本地关卡按钮名字")]
+            public string LOCAL_LEVEL_BUTTON{ get; private set; }
         }
         
         [Serializable]

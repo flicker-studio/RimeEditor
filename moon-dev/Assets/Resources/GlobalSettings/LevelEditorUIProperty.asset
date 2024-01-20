@@ -43,6 +43,8 @@ MonoBehaviour:
       <SCROLL_RECT>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/LevelList
       <REFRESH_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/RefreshButton
       <OEPN_LOCAL_DIRECTORY_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/OpenLocalDirectoryButton
+      <WORKS_SHOP_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/WorkshopButton
+      <LOCAL_LEVEL_BUTTON>k__BackingField: FullPanel/LevelManagerPanel/LeftPanel/LocalLevelButton
   <GetLevelSettingPanelUI>k__BackingField:
     <GetLevelSettingPanelUIName>k__BackingField:
       <POPOVER_PANEL>k__BackingField: PopoverPanel

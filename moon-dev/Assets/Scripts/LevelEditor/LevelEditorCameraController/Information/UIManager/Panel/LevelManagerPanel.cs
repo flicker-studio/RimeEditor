@@ -34,6 +34,8 @@ namespace LevelEditor
         public Button GetDeleteButton => m_deleteButton;
 
         public Button GetOpenLocalDirectoryButton => m_openLocalDirectoryButton;
+
+        public Button GetWorksShopButton => m_worksShopButton;
         
         public TextMeshProUGUI GetSubLevelNumber => m_subLevelNumber;
 
@@ -76,6 +78,10 @@ namespace LevelEditor
         private Button m_refreshButton;
 
         private Button m_openLocalDirectoryButton;
+        
+        private Button m_worksShopButton;
+
+        private Button m_localLevelButton;
 
         private Button m_deleteButton;
 
@@ -117,6 +123,8 @@ namespace LevelEditor
             m_refreshButton = rect.FindPath(uiProperty.REFRESH_BUTTON).GetComponent<Button>();
             m_deleteButton = rect.FindPath(uiProperty.DELETE_LEVEL_BUTTON).GetComponent<Button>();
             m_openLocalDirectoryButton = rect.FindPath(uiProperty.OEPN_LOCAL_DIRECTORY_BUTTON).GetComponent<Button>();
+            m_worksShopButton = rect.FindPath(uiProperty.WORKS_SHOP_BUTTON).GetComponent<Button>();
+            m_localLevelButton = rect.FindPath(uiProperty.LOCAL_LEVEL_BUTTON).GetComponent<Button>();
             m_subLevelNumber = rect.FindPath(uiProperty.SUB_LEVEL_NUMBER).GetComponent<TextMeshProUGUI>();
             m_levelName = rect.FindPath(uiProperty.LEVEL_NAME).GetComponent<TextMeshProUGUI>();
             m_anthorName = rect.FindPath(uiProperty.AUTHOR_NAME).GetComponent<TextMeshProUGUI>();
