@@ -13,6 +13,7 @@ namespace LevelEditor
 {
     public class ItemWarehousePanelShowState : AdditiveState
     {
+        private InputController GetInput => m_information.GetInput;
         private LevelAction GetLevelAction => m_information.GetLevelAction;
         private ItemWarehousePanel GetItemWarehousePanel => m_information.GetUI.GetItemWarehousePanel;
         
@@ -105,6 +106,7 @@ namespace LevelEditor
         {
             LoadItemsFromPoject();
             LoadItemWarehouseFromItems();
+            InitState();
             InitListener();
             SetPanelActive(true);
         }
@@ -112,6 +114,11 @@ namespace LevelEditor
         public override void Motion(BaseInformation information)
         {
 
+        }
+
+        private void InitState()
+        {
+            GetInput.SetCanInput(false);
         }
         
         private void InitListener()
@@ -173,6 +180,7 @@ namespace LevelEditor
         
         private void ResetState()
         {
+            GetInput.SetCanInput(true);
             ResetTextState();
             ResetSearchPanelState();
             ResetButtonState();

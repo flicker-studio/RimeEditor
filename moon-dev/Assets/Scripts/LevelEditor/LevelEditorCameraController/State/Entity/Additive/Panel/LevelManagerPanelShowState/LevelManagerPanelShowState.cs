@@ -12,6 +12,7 @@ namespace LevelEditor
 {
     public class LevelManagerPanelShowState : AdditiveState
     {
+        private InputController GetInput => m_information.GetInput;
         private DataManager GetData => m_information.GetData;
 
         private GameObject GetLevelDataButtonPrefab => m_information.GetPrefab.GetLevelItem;
@@ -72,6 +73,7 @@ namespace LevelEditor
 
         private void InitState()
         {
+            GetInput.SetCanInput(false);
             GetFullPanel.gameObject.SetActive(true);
             GetLevelManagerRoot.gameObject.SetActive(true);
             ReloadLevels();
@@ -99,6 +101,7 @@ namespace LevelEditor
         {
             base.RemoveState();
             RemoveEvent();
+            GetInput.SetCanInput(true);
             GetLevelManagerRoot.gameObject.SetActive(false);
             GetFullPanel.gameObject.SetActive(false);
         }

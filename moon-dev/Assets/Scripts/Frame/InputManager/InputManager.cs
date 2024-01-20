@@ -7,6 +7,8 @@ namespace Frame.Tool
     public class InputManager : UnityToolkit.MonoSingleton<InputManager>,UnityToolkit.IAutoCreateSingleton
     {
         public static InputManager Instance => Singleton;
+
+        public bool CanInput = true;
     protected override void OnInit()
     {
         base.OnInit();
@@ -14,42 +16,42 @@ namespace Frame.Tool
 
         GetPlayerActions.Move.performed += context =>
         {
-            m_moveInput.SetInput = context.ReadValue<Vector2>();
+            if(CanInput) m_moveInput.SetInput = context.ReadValue<Vector2>();
         };
 
         GetPlayerActions.Move.canceled += context =>
         {
-            m_moveInput.SetInput = Vector2.zero;
+            if(CanInput) m_moveInput.SetInput = Vector2.zero;
         };
 
         GetPlayerActions.Jump.performed += context =>
         {
-            m_jumpInput.SetInput = true;
+            if(CanInput) m_jumpInput.SetInput = true;
         };
 
         GetPlayerActions.Jump.canceled += context =>
         {
-            m_jumpInput.SetInput = false;
+            if(CanInput) m_jumpInput.SetInput = false;
         };
 
         GetPlayerActions.Run.performed += context =>
         {
-            m_runInput.SetInput = true;
+            if(CanInput) m_runInput.SetInput = true;
         };
 
         GetPlayerActions.Run.canceled += context =>
         {
-            m_runInput.SetInput = false;
+            if(CanInput) m_runInput.SetInput = false;
         };
         
         GetPlayerActions.Slice.performed += context =>
         {
-            m_sliceInput.SetInput = true;
+            if(CanInput) m_sliceInput.SetInput = true;
         };
         
         GetPlayerActions.Slice.canceled += context =>
         {
-            m_sliceInput.SetInput = false;
+            if(CanInput) m_sliceInput.SetInput = false;
         };
         
         #endregion
@@ -58,153 +60,153 @@ namespace Frame.Tool
 
         GetLevelEditorActions.MouseLeftButton.performed += context =>
         {
-            m_mouseLeftButton.SetInput = true;
+            if(CanInput) m_mouseLeftButton.SetInput = true;
         };
         
         GetLevelEditorActions.MouseLeftButton.canceled += context =>
         {
-            m_mouseLeftButton.SetInput = false;
+            if(CanInput) m_mouseLeftButton.SetInput = false;
         };
 
         GetLevelEditorActions.MouseRightButton.performed += context =>
         {
-            m_mouseRightButton.SetInput = true;
+            if(CanInput) m_mouseRightButton.SetInput = true;
         };
         
         GetLevelEditorActions.MouseRightButton.canceled += context =>
         {
-            m_mouseRightButton.SetInput = false;
+            if(CanInput) m_mouseRightButton.SetInput = false;
         };
 
         GetLevelEditorActions.MouseMiddleButton.performed += context =>
         {
-            m_mouseMiddleButton.SetInput = true;
+            if(CanInput) m_mouseMiddleButton.SetInput = true;
         };
 
         GetLevelEditorActions.MouseMiddleButton.canceled += context =>
         {
-            m_mouseMiddleButton.SetInput = false;
+            if(CanInput) m_mouseMiddleButton.SetInput = false;
         };
         
         GetLevelEditorActions.MouseScroll.performed += context =>
         {
-            m_mouseScroll.SetInput = context.ReadValue<float>();
+            if(CanInput) m_mouseScroll.SetInput = context.ReadValue<float>();
         };
         
         GetLevelEditorActions.MouseScroll.canceled += context =>
         {
-            m_mouseScroll.SetInput = 0;
+            if(CanInput) m_mouseScroll.SetInput = 0;
         };
 
         GetLevelEditorActions.ShiftButton.performed += context =>
         {
-            m_shiftButton.SetInput = true;
+            if(CanInput) m_shiftButton.SetInput = true;
         };
         
         GetLevelEditorActions.ShiftButton.canceled += context =>
         {
-            m_shiftButton.SetInput = false;
+            if(CanInput) m_shiftButton.SetInput = false;
         };
         
         GetLevelEditorActions.CtrlButton.performed += context =>
         {
-            m_ctrlButton.SetInput = true;
+            if(CanInput) m_ctrlButton.SetInput = true;
         };
         
         GetLevelEditorActions.CtrlButton.canceled += context =>
         {
-            m_ctrlButton.SetInput = false;
+            if(CanInput) m_ctrlButton.SetInput = false;
         };
 
         GetLevelEditorActions.ZButton.performed += context =>
         {
-            m_zButton.SetInput = true;
+            if(CanInput) m_zButton.SetInput = true;
         };
         
         GetLevelEditorActions.ZButton.canceled += context =>
         {
-            m_zButton.SetInput = false;
+            if(CanInput) m_zButton.SetInput = false;
         };
         
         GetLevelEditorActions.CButton.performed += context =>
         {
-            m_cButton.SetInput = true;
+            if(CanInput) m_cButton.SetInput = true;
         };
         
         GetLevelEditorActions.CButton.canceled += context =>
         {
-            m_cButton.SetInput = false;
+            if(CanInput) m_cButton.SetInput = false;
         };
         
         GetLevelEditorActions.VButton.performed += context =>
         {
-            m_vButton.SetInput = true;
+            if(CanInput) m_vButton.SetInput = true;
         };
         
         GetLevelEditorActions.VButton.canceled += context =>
         {
-            m_vButton.SetInput = false;
+            if(CanInput) m_vButton.SetInput = false;
         };
         
         GetLevelEditorActions.GButton.performed += context =>
         {
-            m_gButton.SetInput = true;
+            if(CanInput) m_gButton.SetInput = true;
         };
         
         GetLevelEditorActions.GButton.canceled += context =>
         {
-            m_gButton.SetInput = false;
+            if(CanInput) m_gButton.SetInput = false;
         };
         
         GetLevelEditorActions.PButton.performed += context =>
         {
-            m_pButton.SetInput = true;
+            if(CanInput) m_pButton.SetInput = true;
         };
         
         GetLevelEditorActions.PButton.canceled += context =>
         {
-            m_pButton.SetInput = false;
+            if(CanInput) m_pButton.SetInput = false;
         };
         
         GetLevelEditorActions.RButton.performed += context =>
         {
-            m_rButton.SetInput = true;
+            if(CanInput) m_rButton.SetInput = true;
         };
         
         GetLevelEditorActions.RButton.canceled += context =>
         {
-            m_rButton.SetInput = false;
+            if(CanInput) m_rButton.SetInput = false;
         };
         
         GetLevelEditorActions.SButton.performed += context =>
         {
-            m_sButton.SetInput = true;
+            if(CanInput) m_sButton.SetInput = true;
         };
         
         GetLevelEditorActions.SButton.canceled += context =>
         {
-            m_sButton.SetInput = false;
+            if(CanInput) m_sButton.SetInput = false;
         };
 
         GetLevelEditorActions.DeleteButton.performed += context =>
         {
-            m_deleteButton.SetInput = true;
+            if(CanInput) m_deleteButton.SetInput = true;
         };
         
         GetLevelEditorActions.DeleteButton.canceled += context =>
         {
-            m_deleteButton.SetInput = false;
+            if(CanInput) m_deleteButton.SetInput = false;
         };
         
         
         GetLevelEditorActions.EscapeButton.performed += context =>
         {
-            m_escapeButton.SetInput = true;
+            if(CanInput) m_escapeButton.SetInput = true;
         };
         
         GetLevelEditorActions.EscapeButton.canceled += context =>
         {
-            m_escapeButton.SetInput = false;
+            if(CanInput) m_escapeButton.SetInput = false;
         };
 
         #endregion
@@ -213,52 +215,52 @@ namespace Frame.Tool
 
         GetDebuggerActions.Num1.performed += context =>
         {
-            m_num1.SetInput = true;
+            if(CanInput) m_num1.SetInput = true;
         };
         
         GetDebuggerActions.Num1.canceled += context =>
         {
-            m_num1.SetInput = false;
+            if(CanInput) m_num1.SetInput = false;
         };
         
         GetDebuggerActions.Num2.performed += context =>
         {
-            m_num2.SetInput = true;
+            if(CanInput) m_num2.SetInput = true;
         };
         
         GetDebuggerActions.Num2.canceled += context =>
         {
-            m_num2.SetInput = false;
+            if(CanInput) m_num2.SetInput = false;
         };
         
         GetDebuggerActions.Num3.performed += context =>
         {
-            m_num3.SetInput = true;
+            if(CanInput) m_num3.SetInput = true;
         };
         
         GetDebuggerActions.Num3.canceled += context =>
         {
-            m_num3.SetInput = false;
+            if(CanInput) m_num3.SetInput = false;
         };
         
         GetDebuggerActions.Num4.performed += context =>
         {
-            m_num4.SetInput = true;
+            if(CanInput) m_num4.SetInput = true;
         };
         
         GetDebuggerActions.Num4.canceled += context =>
         {
-            m_num4.SetInput = false;
+            if(CanInput) m_num4.SetInput = false;
         };
         
         GetDebuggerActions.Num5.performed += context =>
         {
-            m_num5.SetInput = true;
+            if(CanInput) m_num5.SetInput = true;
         };
         
         GetDebuggerActions.Num5.canceled += context =>
         {
-            m_num5.SetInput = false;
+            if(CanInput) m_num5.SetInput = false;
         };
 
         #endregion
