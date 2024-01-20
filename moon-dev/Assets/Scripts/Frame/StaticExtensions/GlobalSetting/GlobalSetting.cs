@@ -1,5 +1,3 @@
-using Frame.StateMachine;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 namespace Frame.Static.Global

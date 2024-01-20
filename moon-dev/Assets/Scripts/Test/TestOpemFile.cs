@@ -15,7 +15,7 @@ public class TestOpemFile : MonoBehaviour
 
     public void OpenExplorer()
     {
-        path = EditorUtility.OpenFilePanel("Overwrite with png", "", "png");
+        // path = EditorUtility.OpenFilePanel("Overwrite with png", "", "png");
         GetImage();
     }
 

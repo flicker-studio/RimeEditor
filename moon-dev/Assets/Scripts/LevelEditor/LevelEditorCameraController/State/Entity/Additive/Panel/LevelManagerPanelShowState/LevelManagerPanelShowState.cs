@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Frame.CompnentExtensions;
 using Frame.StateMachine;
 using Frame.Tool.Popover;
+using SimpleFileBrowser;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -225,15 +226,24 @@ namespace LevelEditor
 
         private void OpenLevelFile()
         {
-            string path = EditorUtility.OpenFolderPanel("Open a level directory", "", "");
-            if (!GetData.OpenLocalLevelDirectory(path))
+            UniTask.Void(OpenLevelFileAsync);
+        }
+
+        private async UniTaskVoid OpenLevelFileAsync()
+        {
+            await FileBrowser.WaitForLoadDialog( FileBrowser.PickMode.Folders, false, null, null, "Open a level directory", "Load" );
+            if (FileBrowser.Success)
             {
-                PopoverLauncher.Instance.Launch(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
-                    GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
-                    GetPopoverProperty.CHECK_ERROR_LEVEL_DIRECTORY, GetPopoverProperty.DURATION);
-                return;
+                string path = FileBrowser.Result[0].Replace("\\","/");
+                if (!GetData.OpenLocalLevelDirectory(path))
+                {
+                    PopoverLauncher.Instance.Launch(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
+                        GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
+                        GetPopoverProperty.CHECK_ERROR_LEVEL_DIRECTORY, GetPopoverProperty.DURATION);
+                    return;
+                }
+                ReloadLevels();
             }
-            ReloadLevels();
         }
     }
 }

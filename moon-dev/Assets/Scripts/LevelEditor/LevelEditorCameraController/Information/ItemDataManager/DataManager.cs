@@ -137,7 +137,7 @@ namespace LevelEditor
 
         public bool DeleteLevel(LevelData levelData)
         {
-            return FileUtil.DeleteFileOrDirectory(levelData.Path.Replace("Path:",""));
+            return m_levelLoader.DeleteLevel(levelData);
         }
 
         private List<SubLevelData> m_subLevelDatas => GetCurrentLevel.GetSubLevelDatas;

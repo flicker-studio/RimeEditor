@@ -1,47 +1,53 @@
-using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public static class FileMethod
 {
-    public static void Createfile(string path, string name, string info)
+    public static bool Move(string source, string target)
     {
-        StreamWriter sw;
-        FileInfo t = new FileInfo(path + "//" + name);
-        if (!t.Exists)
+        if (!Directory.Exists(source))
         {
-            sw = t.CreateText();
+            return false;
         }
-        else
+
+        if (Directory.Exists(target))
         {
-            sw = t.AppendText();
+            return false;
         }
-        sw.WriteLine(info);
-        sw.Close();
-        sw.Dispose();
-    }
-    
-    public static ArrayList LoadFile(string path, string name)
-    {
-        StreamReader sr = null;
-        try
+
+        DirectoryInfo sourceInfo = Directory.CreateDirectory(source);
+        DirectoryInfo targetInfo = Directory.CreateDirectory(target);
+
+        if (sourceInfo.FullName == targetInfo.FullName)
         {
-            sr = File.OpenText(path + "//" + name);
+            return false;
         }
-        catch (Exception ex)
+
+        Stack<DirectoryInfo> sourceDirectories = new Stack<DirectoryInfo>();
+        sourceDirectories.Push(sourceInfo);
+
+        Stack<DirectoryInfo> targetDirectories = new Stack<DirectoryInfo>();
+        targetDirectories.Push(targetInfo);
+
+        while (sourceDirectories.Count > 0)
         {
-            Debug.LogError(ex.Message);
-            return null;
+            DirectoryInfo sourceDirectory = sourceDirectories.Pop();
+            DirectoryInfo targetDirectory = targetDirectories.Pop();
+
+            foreach (FileInfo file in sourceDirectory.GetFiles())
+            {
+                file.CopyTo(Path.Combine(targetDirectory.FullName, file.Name), overwrite: true);
+            }
+
+            foreach(DirectoryInfo subDirectory in sourceDirectory.GetDirectories())
+            {
+                sourceDirectories.Push(subDirectory);
+                targetDirectories.Push(targetDirectory.CreateSubdirectory(subDirectory.Name));
+            }
         }
-        string line;
-        ArrayList arrlist = new ArrayList();
-        while ((line = sr.ReadLine()) != null)
-        {
-            arrlist.Add(line);
-        }
-        sr.Close();
-        sr.Dispose();
-        return arrlist;
+
+        sourceInfo.Delete(true);
+        
+        return true;
     }
 }

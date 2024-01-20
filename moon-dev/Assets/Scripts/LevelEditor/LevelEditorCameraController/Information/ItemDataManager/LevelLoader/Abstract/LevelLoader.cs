@@ -36,9 +36,18 @@ namespace LevelEditor
             {
                 if (data.GetKey == levelData.GetKey) return false;
             }
-            FileUtil.MoveFileOrDirectory(path, $"{GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
-            return true;
+            return FileMethod.Move(path, $"{GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
         } 
+        
+        public bool DeleteLevel(LevelData levelData)
+        {
+            if (!Directory.Exists(levelData.Path.Replace("Path:", "")))
+            {
+                return false;
+            }
+            Directory.Delete(levelData.Path.Replace("Path:",""),true);
+            return true;
+        }
         
         public virtual void ToJson(LevelData chooseLevelData)
         {

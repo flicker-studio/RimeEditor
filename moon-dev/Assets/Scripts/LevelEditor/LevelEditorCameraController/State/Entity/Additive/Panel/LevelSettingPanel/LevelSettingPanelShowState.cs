@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
+using SimpleFileBrowser;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -76,8 +77,18 @@ namespace LevelEditor
 
         protected void UploadCoverImage()
         {
-            m_coverImagePath = EditorUtility.OpenFilePanel("Choose level cover image", "", "png,jpg");
-            CheckImage();
+            UniTask.Void(UploadCoverImageAsync);
+        }
+        
+        protected async UniTaskVoid UploadCoverImageAsync()
+        {
+            FileBrowser.SetFilters( false, new FileBrowser.Filter( "Image", ".jpg", ".png" ));
+            await FileBrowser.WaitForLoadDialog( FileBrowser.PickMode.Files, false, null, null, "Choose level cover image", "Load" );
+            if (FileBrowser.Success)
+            {
+                m_coverImagePath = FileBrowser.Result[0].Replace("\\","/");
+                CheckImage();
+            }
         }
         
         public override void Motion(BaseInformation information)
