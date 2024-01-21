@@ -7,6 +7,7 @@ namespace LevelEditor
 {
     public class LevelSettingPanel
     {
+        public UIProperty.PopoverProperty GetPopoverProperty => m_popoverProperty;
         public GameObject GetPopoverPanelObj => m_popoverPanelTransform.gameObject;
 
         public GameObject GetLevelSettingPanelObj => m_levelSettingPanelTransform.gameObject;
@@ -46,6 +47,8 @@ namespace LevelEditor
         private TMP_InputField m_versionInputField;
         
         private TMP_InputField m_introductionInputField;
+
+        private UIProperty.PopoverProperty m_popoverProperty;
         
         public LevelSettingPanel(Transform levelEditorCanvasRect, UIProperty levelEditorUIProperty)
         {
@@ -55,6 +58,7 @@ namespace LevelEditor
         private void InitComponent(Transform levelEditor, UIProperty levelEditorUIProperty)
         {
             UIProperty.LevelSettingPanelUIName property = levelEditorUIProperty.GetLevelSettingPanelUI.GetLevelSettingPanelUIName;
+            m_popoverProperty = levelEditorUIProperty.GetPopoverProperty;
             m_popoverPanelTransform = levelEditor.FindPath(property.POPOVER_PANEL);
             m_levelSettingPanelTransform = levelEditor.FindPath(property.SETTING_PANEL);
             m_coverImage = levelEditor.FindPath(property.COVER_IMAGE_NAME).GetComponent<RawImage>();

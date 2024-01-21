@@ -1,8 +1,9 @@
+using System;
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
+using Frame.Tool.Popover;
 using SimpleFileBrowser;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ namespace LevelEditor
         private DataManager GetData => m_information.GetData;
         private LevelData GetCurrentLevel => GetData.GetCurrentLevel;
         private LevelSettingPanel GetLevelSettingPanel => m_information.GetUI.GetLevelSettingPanel;
+
+        private UIProperty.PopoverProperty GetPopoverProperty => GetLevelSettingPanel.GetPopoverProperty;
 
         private GameObject GetPopoverPanelObj => GetLevelSettingPanel.GetPopoverPanelObj;
 
@@ -116,7 +119,17 @@ namespace LevelEditor
         private async UniTaskVoid UpdateImage()
         {
             UnityWebRequest uwr = UnityWebRequestTexture.GetTexture("file:///" + m_coverImagePath);
-            await uwr.SendWebRequest();;
+            try
+            {
+                await uwr.SendWebRequest();
+            }
+            catch (Exception e)
+            {
+                PopoverLauncher.Instance.Launch(GetLevelSettingPanelObj.transform, GetPopoverProperty.POPOVER_LOCATION,
+                    GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
+                    GetPopoverProperty.CANT_LOAD_IMAGE_ERROR, GetPopoverProperty.DURATION);
+                return;
+            }
             GetCoverImage.texture = DownloadHandlerTexture.GetContent(uwr);
         }
     }

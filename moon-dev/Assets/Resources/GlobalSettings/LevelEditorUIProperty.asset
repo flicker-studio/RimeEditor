@@ -188,6 +188,7 @@ MonoBehaviour:
     <POPOVER_SUCCESS_COLOR>k__BackingField: {r: 0, g: 1, b: 0, a: 0.39215687}
     <POPOVER_TEXT_LEVEL_NAME_MISSING>k__BackingField: Level name is missing!
     <POPOVER_TEXT_CHOOSE_LEVEL_ERROR>k__BackingField: Please select a level!
+    <CANT_LOAD_IMAGE_ERROR>k__BackingField: Can't load image!
     <POPOVER_DELETE_SUCCESS>k__BackingField: Delete successfully!
     <CHECK_ERROR_LEVEL_DIRECTORY>k__BackingField: Open level failure!
     <POPOVER_TEXT_SAVE_SUCCESS>k__BackingField: Save successfully!

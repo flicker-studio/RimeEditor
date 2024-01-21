@@ -203,6 +203,8 @@ namespace LevelEditor
             public string POPOVER_TEXT_LEVEL_NAME_MISSING{ get; private set; }
             [field: SerializeField, CustomLabel("请选择一个关卡")]
             public string POPOVER_TEXT_CHOOSE_LEVEL_ERROR{ get; private set; }
+            [field: SerializeField, CustomLabel("无法打开图片")]
+            public string CANT_LOAD_IMAGE_ERROR{ get; private set; }
             [field: SerializeField, CustomLabel("删除成功")]
             public string POPOVER_DELETE_SUCCESS{ get; private set; }
             [field: SerializeField, CustomLabel("检测到错误关卡文件夹")]
