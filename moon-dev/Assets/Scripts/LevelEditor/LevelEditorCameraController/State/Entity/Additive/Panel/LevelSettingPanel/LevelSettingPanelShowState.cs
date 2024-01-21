@@ -125,7 +125,7 @@ namespace LevelEditor
             }
             catch (Exception e)
             {
-                PopoverLauncher.Instance.Launch(GetLevelSettingPanelObj.transform, GetPopoverProperty.POPOVER_LOCATION,
+                PopoverLauncher.Instance.LaunchTip(GetLevelSettingPanelObj.transform, GetPopoverProperty.POPOVER_LOCATION,
                     GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
                     GetPopoverProperty.CANT_LOAD_IMAGE_ERROR, GetPopoverProperty.DURATION);
                 return;

@@ -85,8 +85,9 @@ namespace LevelEditor
             GetCreateButton.onClick.AddListener(CreateLevel);
             GetOpenButton.onClick.AddListener(OpenLevel);
             GetRefreshButton.onClick.AddListener(ReloadLevels);
-            GetDeleteButton.onClick.AddListener(DeleteLevel);
+            GetDeleteButton.onClick.AddListener(DeleteLevelPopover);
             GetOpenLocalFileButton.onClick.AddListener(OpenLevelFile);
+            GetExitButton.onClick.AddListener(ExitGamePopover);
         }
 
         private void RemoveEvent()
@@ -96,6 +97,7 @@ namespace LevelEditor
             GetRefreshButton.onClick.RemoveAllListeners();
             GetDeleteButton.onClick.RemoveAllListeners();
             GetOpenLocalFileButton.onClick.RemoveAllListeners();
+            GetExitButton.onClick.RemoveAllListeners();
         }
 
         protected override void RemoveState()
@@ -117,7 +119,7 @@ namespace LevelEditor
         {
             if (m_currentChooseLevelButton == null)
             {
-                PopoverLauncher.Instance.Launch(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
+                PopoverLauncher.Instance.LaunchTip(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
                     GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
                     GetPopoverProperty.POPOVER_TEXT_CHOOSE_LEVEL_ERROR, GetPopoverProperty.DURATION);
                 return;
@@ -126,11 +128,16 @@ namespace LevelEditor
             JumpToEditorViewState();
         }
 
+        private void DeleteLevelPopover()
+        {
+            PopoverLauncher.Instance.LaunchSelector(GetLevelManagerRoot, GetPopoverProperty.POPOVER_TEXT_DELETE,DeleteLevel);
+        }
+        
         private void DeleteLevel()
         {
             if (GetData.DeleteLevel(m_currentChooseLevelButton.GetLevelData))
             {
-                PopoverLauncher.Instance.Launch(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
+                PopoverLauncher.Instance.LaunchTip(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
                     GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_SUCCESS_COLOR,
                     GetPopoverProperty.POPOVER_DELETE_SUCCESS, GetPopoverProperty.DURATION);
             }
@@ -214,6 +221,16 @@ namespace LevelEditor
             GetLevelCoverImage.texture = m_currentChooseLevelButton.GetLevelData.GetLevelCoverImage;
         }
 
+        private void ExitGamePopover()
+        {
+            PopoverLauncher.Instance.LaunchSelector(GetLevelManagerRoot, GetPopoverProperty.POPOVER_TEXT_EXIT,ExitGame);
+        }
+        
+        private void ExitGame()
+        {
+            Application.Quit();
+        }
+        
         private void ClearLevelDataButtons()
         {
             foreach (var levelDataButton in m_levelDataButtons)
@@ -237,7 +254,7 @@ namespace LevelEditor
                 string path = FileBrowser.Result[0].Replace("\\","/");
                 if (!GetData.OpenLocalLevelDirectory(path))
                 {
-                    PopoverLauncher.Instance.Launch(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
+                    PopoverLauncher.Instance.LaunchTip(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
                         GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
                         GetPopoverProperty.CHECK_ERROR_LEVEL_DIRECTORY, GetPopoverProperty.DURATION);
                     return;

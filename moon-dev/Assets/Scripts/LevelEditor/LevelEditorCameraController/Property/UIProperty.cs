@@ -213,6 +213,10 @@ namespace LevelEditor
             public string POPOVER_TEXT_SAVE_SUCCESS{ get; private set; }
             [field: SerializeField, CustomLabel("持续时间")]
             public float DURATION{ get; private set; }
+            [field: SerializeField, CustomLabel("是否离开")]
+            public string POPOVER_TEXT_EXIT{ get; private set; }
+            [field: SerializeField, CustomLabel("是否删除")]
+            public string POPOVER_TEXT_DELETE{ get; private set; }
             [field: SerializeField, CustomLabel("尺寸")]
             public Vector2 SIZE{ get; private set; }
             [field: SerializeField, CustomLabel("出现位置")]

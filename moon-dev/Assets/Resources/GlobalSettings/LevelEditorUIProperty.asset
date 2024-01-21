@@ -193,5 +193,7 @@ MonoBehaviour:
     <CHECK_ERROR_LEVEL_DIRECTORY>k__BackingField: Open level failure!
     <POPOVER_TEXT_SAVE_SUCCESS>k__BackingField: Save successfully!
     <DURATION>k__BackingField: 3
+    <POPOVER_TEXT_EXIT>k__BackingField: Whether to leave?
+    <POPOVER_TEXT_DELETE>k__BackingField: Whether to delete?
     <SIZE>k__BackingField: {x: 1024, y: 128}
     <POPOVER_LOCATION>k__BackingField: 4

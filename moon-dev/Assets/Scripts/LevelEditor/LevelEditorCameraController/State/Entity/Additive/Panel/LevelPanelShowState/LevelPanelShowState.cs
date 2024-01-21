@@ -26,7 +26,7 @@ namespace LevelEditor
             GetLevelPanel.GetPlayButton.onClick.AddListener(PlayLevel);
             GetLevelPanel.GetSaveButton.onClick.AddListener(SaveLevel);
             GetLevelPanel.GetSettingButton.onClick.AddListener(ToLevelSetting);
-            GetLevelPanel.GetExitButton.onClick.AddListener(ExitCurrentLevel);
+            GetLevelPanel.GetExitButton.onClick.AddListener(ExitCurrentLevelPopover);
         }
 
         protected override void RemoveState()
@@ -74,12 +74,19 @@ namespace LevelEditor
         private void LaunchPopover(string text,Color color)
         {
             PopoverLauncher.Instance
-                .Launch(GetLevelPanel.GetSaveButton.transform,
+                .LaunchTip(GetLevelPanel.GetSaveButton.transform,
                     GetLevelPanel.GetPopoverProperty.POPOVER_LOCATION,
                     GetLevelPanel.GetPopoverProperty.SIZE,
                     color,
                     text,
                     GetLevelPanel.GetPopoverProperty.DURATION);
+        }
+
+        private void ExitCurrentLevelPopover()
+        {
+            PopoverLauncher.Instance.LaunchSelector(GetLevelPanel.GetExitButton.transform,
+                GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_EXIT,
+                ExitCurrentLevel);
         }
 
         private void ExitCurrentLevel()

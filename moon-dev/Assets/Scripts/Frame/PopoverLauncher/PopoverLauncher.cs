@@ -1,9 +1,10 @@
-using Data.ScriptableObject;
+using System;
 using DG.Tweening;
 using Frame.Tool.Pool;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Frame.Static.Extensions;
 
 namespace Frame.Tool.Popover
 {
@@ -18,20 +19,23 @@ namespace Frame.Tool.Popover
 
     public class PopoverLauncher : Singleton<PopoverLauncher>
     {
-        private GameObject m_popoverWindow;
+        private PopoverProperty.SelectorPopoverProperty m_selectorPopoverProperty;
+
+        private PopoverProperty.TipsPopoverProperty m_tipsPopoverProperty;
         public PopoverLauncher()
         {
-            PrefabFactory prefabFactory = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
-            m_popoverWindow = prefabFactory.POPOVER_WINDOW;
+            PopoverProperty popoverProperty = Resources.Load<PopoverProperty>("GlobalSettings/PopoverProperty");
+            m_selectorPopoverProperty = popoverProperty.GetSelectorPopoverProperty;
+            m_tipsPopoverProperty = popoverProperty.GetTipsPopoverProperty;
         }
 
-        public void Launch(Transform referenceTransform,POPOVERLOCATION popoverLocation,Vector2 size,Color color,string text,float duration)
+        public void LaunchTip(Transform referenceTransform,POPOVERLOCATION popoverLocation,Vector2 size,Color color,string text,float duration)
         {
-            GameObject popoverWindow = ObjectPool.Instance.OnTake(m_popoverWindow);
-            RectTransform popoverRect = popoverWindow.transform as RectTransform;
-            TextMeshProUGUI popoverText = popoverRect.GetChild(0).GetComponent<TextMeshProUGUI>();
+            GameObject tipsPopover = ObjectPool.Instance.OnTake(m_tipsPopoverProperty.TIPS_POPOVER_PREFAB);
+            RectTransform popoverRect = tipsPopover.transform as RectTransform;
+            TextMeshProUGUI popoverText = popoverRect.Find(m_tipsPopoverProperty.DESCIBE_TEXT).GetComponent<TextMeshProUGUI>();
             popoverRect.SetParent(referenceTransform.GetComponentInParent<Canvas>().rootCanvas.transform);
-            Image popoverImage = popoverWindow.GetComponent<Image>();
+            Image popoverImage = tipsPopover.GetComponent<Image>();
             
             popoverRect.sizeDelta = size;
             popoverText.text = text;
@@ -70,9 +74,38 @@ namespace Frame.Tool.Popover
             
             popoverImage.DOColor(Color.clear, duration).OnComplete(() =>
             {
-                ObjectPool.Instance.OnRelease(popoverWindow);
+                ObjectPool.Instance.OnRelease(tipsPopover);
             });
             popoverText.DOColor(Color.clear, duration);
+        }
+
+        public void LaunchSelector(Transform referenceTransform,string describe,Action yesAction,string yesStr = "Yes",string noStr = "No")
+        {
+            GameObject selectorPopover = ObjectPool.Instance.OnTake(m_selectorPopoverProperty.SELECTOR_POPOVER_PREFAB);
+            selectorPopover.transform.SetParent(referenceTransform.GetComponentInParent<Canvas>().rootCanvas.transform);
+            RectTransform selectorPopoverRect = selectorPopover.transform as RectTransform;
+            selectorPopoverRect.offsetMin = Vector2.zero;
+            selectorPopoverRect.offsetMax = Vector2.zero;
+            RectTransform backGround = selectorPopoverRect.Find(m_selectorPopoverProperty.BACKGROUND) as RectTransform;
+            TextMeshProUGUI popoverText = backGround.Find(m_selectorPopoverProperty.DESCIBE_TEXT).GetComponent<TextMeshProUGUI>();
+            Button yesButton = backGround.Find(m_selectorPopoverProperty.YES_BUTTON).GetComponent<Button>();
+            Button noButton = backGround.Find(m_selectorPopoverProperty.NO_BUTTON).GetComponent<Button>();
+            TextMeshProUGUI yesText = yesButton.transform.Find(m_selectorPopoverProperty.BUTTON_DESCIBE_TEXT).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI noText = noButton.transform.Find(m_selectorPopoverProperty.BUTTON_DESCIBE_TEXT).GetComponent<TextMeshProUGUI>();
+            popoverText.text = describe;
+            yesText.text = yesStr;
+            noText.text = noStr;
+            yesButton.onClick.RemoveAllListeners();
+            yesButton.onClick.AddListener(() =>
+            {
+                yesAction?.Invoke();
+                ObjectPool.Instance.OnRelease(selectorPopover);
+            });
+            noButton.onClick.RemoveAllListeners();
+            noButton.onClick.AddListener(() =>
+            {
+                ObjectPool.Instance.OnRelease(selectorPopover);
+            });
         }
     }
 }
