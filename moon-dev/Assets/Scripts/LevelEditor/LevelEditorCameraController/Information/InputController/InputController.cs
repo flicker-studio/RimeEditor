@@ -4,6 +4,7 @@ namespace LevelEditor
 {
     public class InputController
     {
+        public bool GetCanInput => InputManager.Instance.CanInput;
         public void SetCanInput(bool canInput)
         {
             InputManager.Instance.CanInput = canInput;

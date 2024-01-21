@@ -136,7 +136,12 @@ namespace Slicer
                 PolygonCollider2D targetPolygonCollider2D = collider.GetComponent<PolygonCollider2D>();
                 if (targetPolygonCollider2D != null)
                 {
-                    obj.GetComponent<PolygonCollider2D>().CopyComponent(targetPolygonCollider2D);
+                    PolygonCollider2D polygonCollider2D = obj.GetComponent<PolygonCollider2D>();
+                    obj.GetComponent<PolygonCollider2D>().pathCount= targetPolygonCollider2D.pathCount;
+                    for (int i = 0; i < targetPolygonCollider2D.pathCount; i++)
+                    {
+                        polygonCollider2D.SetPath(i,targetPolygonCollider2D.GetPath(i));
+                    }
                 }
                 else
                 {
