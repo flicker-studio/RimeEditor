@@ -1,5 +1,3 @@
-using Frame.StateMachine;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 namespace Frame.Static.Global
@@ -36,7 +34,16 @@ namespace Frame.Static.Global
         public struct CriticalPath
         {
             public readonly static string ITEM_FILE_PATH = "Items\\ScriptableObject";
-
+        }
+        
+        public struct PersistentFileProperty
+        {
+            public readonly static string LEVEL_DATA_NAME = "LevelDatas";
+            public readonly static string LEVEL_DATA_PATH = Application.persistentDataPath + "/LevelDatas";
+            public readonly static string GAMES_DATA_NAME = "GameDatas";
+            public readonly static string IMAGES_DATA_NAME = "Images";
+            public readonly static string SOUNDS_DATA_NAME = "Sounds";
+            public readonly static string COVER_IMAGE_NAME = "CoverImage.png";
         }
     }
 

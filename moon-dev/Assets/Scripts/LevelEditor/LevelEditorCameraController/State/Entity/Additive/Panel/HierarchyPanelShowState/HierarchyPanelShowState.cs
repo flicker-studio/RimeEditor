@@ -41,6 +41,7 @@ public class HierarchyPanelShowState : AdditiveState
         InitSyncEvent();
         InitEvent();
         InitButton();
+        InitState();
     }
 
     public override void Motion(BaseInformation information)
@@ -49,6 +50,11 @@ public class HierarchyPanelShowState : AdditiveState
         {
             GetExcute?.Invoke(new ItemDeleteCommand(TargetItems,ItemAssets,GetOutlinePainter));
         }
+    }
+
+    private void InitState()
+    {
+        SyncNodeByLevelData(GetData.GetCurrentSubLevel);
     }
 
     private void InitButton()

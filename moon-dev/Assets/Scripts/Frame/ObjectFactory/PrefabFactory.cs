@@ -6,6 +6,8 @@ namespace Data.ScriptableObject
     [CreateAssetMenu(menuName = "CustomProperty/ObjectFactory",order = 1,fileName = "ObjectFactory")]
     public class PrefabFactory : UnityEngine.ScriptableObject
     {
+        [field:SerializeField,CustomLabel("弹窗预制体")] 
+        public GameObject POPOVER_WINDOW { get; private set; }
         [field:SerializeField,CustomLabel("裁切生成物体")] 
         public GameObject SLICE_OBJ { get; private set; }
 
@@ -38,6 +40,8 @@ namespace Data.ScriptableObject
         public GameObject SLICER{ get; private set; }
         [field:SerializeField,CustomLabel("布尔项")] 
         public GameObject BOOL_ITEM{ get; private set; }
+        [field:SerializeField,CustomLabel("关卡列表按钮")] 
+        public GameObject LEVEL_DATA_BUTTON { get; private set; }
     }
 }
 

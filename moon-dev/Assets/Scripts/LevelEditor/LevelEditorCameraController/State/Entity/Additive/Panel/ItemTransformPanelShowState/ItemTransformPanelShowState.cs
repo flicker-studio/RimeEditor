@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Frame.StateMachine;
+using Frame.Tool.Popover;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -7,6 +8,7 @@ namespace LevelEditor
 {
     public class ItemTransformPanelShowState : AdditiveState
 {
+    private InputController GetInput => m_information.GetInput;
     private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
 
     private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
@@ -63,9 +65,9 @@ namespace LevelEditor
     {
         if (m_isUndoOrRedo)
         {
-            if (GetPositionChange) ;
-            if (GetRotationChange) ;
-            if (GetScaleChange) ;
+            if (GetPositionChange) 
+            if (GetRotationChange) 
+            if (GetScaleChange) 
             m_isUndoOrRedo = false;
         }
     }
@@ -139,13 +141,27 @@ namespace LevelEditor
     {
         if (TargetObjs.Count == 0)
         {
+            if (!CheckStates.Contains(typeof(LevelSettingPanelShowState)) &&
+                !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
+            {
+                GetInput.SetCanInput(true);
+            }
             RemoveState();
             return;
         }
         if (GetItemTransformPanel.GetOnSelect)
         {
+            GetInput.SetCanInput(false);
             SetItemValue();
             return;
+        }
+
+        if (!GetInput.GetCanInput 
+            && PopoverLauncher.Instance.CanInput
+            && !CheckStates.Contains(typeof(LevelSettingPanelShowState))
+            && !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
+        {
+            GetInput.SetCanInput(true);
         }
         (m_lastPositon,m_lastRotation,m_lastScale) = GetTransformPropertyFromGameObjectList(TargetObjs);
         SetFieldUIValue();

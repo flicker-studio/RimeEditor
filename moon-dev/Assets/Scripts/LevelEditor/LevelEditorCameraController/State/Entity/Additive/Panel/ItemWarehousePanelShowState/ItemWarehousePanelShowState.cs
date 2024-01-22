@@ -13,6 +13,8 @@ namespace LevelEditor
 {
     public class ItemWarehousePanelShowState : AdditiveState
     {
+        private InputController GetInput => m_information.GetInput;
+        private LevelAction GetLevelAction => m_information.GetLevelAction;
         private ItemWarehousePanel GetItemWarehousePanel => m_information.GetUI.GetItemWarehousePanel;
         
         private Transform GetItemTypeGroup => GetItemWarehousePanel.GetItemTypeGroup;
@@ -104,6 +106,7 @@ namespace LevelEditor
         {
             LoadItemsFromPoject();
             LoadItemWarehouseFromItems();
+            InitState();
             InitListener();
             SetPanelActive(true);
         }
@@ -111,6 +114,11 @@ namespace LevelEditor
         public override void Motion(BaseInformation information)
         {
 
+        }
+
+        private void InitState()
+        {
+            GetInput.SetCanInput(false);
         }
         
         private void InitListener()
@@ -172,6 +180,7 @@ namespace LevelEditor
         
         private void ResetState()
         {
+            GetInput.SetCanInput(true);
             ResetTextState();
             ResetSearchPanelState();
             ResetButtonState();
@@ -228,6 +237,10 @@ namespace LevelEditor
         private void RemoveListener()
         {
             m_currentChoose = null;
+
+            GetLevelAction.ExitEditorView -= ResetInitBool;
+            
+            GetLevelAction.ExitEditorView += ResetInitBool;
             
             GetCreateButton.onClick.RemoveAllListeners();
 
@@ -352,7 +365,6 @@ namespace LevelEditor
             m_itemGroupObjList = new List<GameObject>();
             m_itemTypeList = new List<ItemTypeButton>();
             m_itemProductButtonList = new List<ItemProductButton>();
-            
             foreach (var keyValuePair in m_itemDictionary)
             {
                 string itemType = Enum.GetName(typeof(ITEMTYPEENUM), keyValuePair.Key);
@@ -515,6 +527,11 @@ namespace LevelEditor
             }
 
             gridItemButton.SetSelected = true;
+        }
+
+        private void ResetInitBool()
+        {
+            m_isInit = true;
         }
     }
 }

@@ -38,12 +38,20 @@ namespace LevelEditor
         private GameObject m_itemObjEditor;
         [JsonIgnore]
         protected GameObject m_itemObjPlay;
-        [JsonProperty("Product",Order = 5)]
+        [JsonIgnore]
         protected ItemProduct m_itemProduct;
+        [JsonProperty("ProductName",Order = 5)]
+        private string m_productName;
 
-        public ItemData(ItemProduct itemProduct)
+        [JsonProperty("ProductType", Order = 6)]
+        private ITEMTYPEENUM m_productType;
+
+        public ItemData(ItemProduct itemProduct,bool fromJson = false)
         {
             m_itemProduct = itemProduct;
+            m_productName = m_itemProduct.Name;
+            m_productType = m_itemProduct.ItemType;
+            if(fromJson) return;
             m_itemObjEditor = ObjectPool.Instance.OnTake(m_itemProduct.ItemObject);
             TransformInit();
         }
@@ -84,6 +92,10 @@ namespace LevelEditor
 
         public void GetTransformToData()
         {
+            if (m_itemObjEditor == null)
+            {
+                m_itemObjEditor = ObjectPool.Instance.OnTake(m_itemProduct.ItemObject);
+            }
             m_position = m_itemObjEditor.transform.position;
             m_rotation = m_itemObjEditor.transform.rotation;
             m_scale = m_itemObjEditor.transform.localScale;
@@ -91,6 +103,10 @@ namespace LevelEditor
 
         public void SetTransformFromData()
         {
+            if (m_itemObjEditor == null)
+            {
+                m_itemObjEditor = ObjectPool.Instance.OnTake(m_itemProduct.ItemObject);
+            }
             m_itemObjEditor.transform.position = m_position;
             m_itemObjEditor.transform.rotation = m_rotation;
             m_itemObjEditor.transform.localScale = m_scale;

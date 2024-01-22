@@ -6,6 +6,6 @@ public class IconTest : MonoBehaviour
 {
     private void Start()
     {
-        GetComponent<RawImage>().texture = EditorGUIUtility.IconContent("Shader Icon").image;
+        // GetComponent<RawImage>().texture = EditorGUIUtility.IconContent("Shader Icon").image;
     }
 }

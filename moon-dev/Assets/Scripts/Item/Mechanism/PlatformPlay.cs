@@ -10,8 +10,8 @@ public class PlatformPlay : ItemPlay
     private GameObject m_rigidbodyParent;
     private Renderer m_renderer;
     private Material m_originMaterial;
-    [SerializeField] private GameObject m_rigidbodyPrefab;
-    [SerializeField] private Material m_canCopymaterial;
+    [SerializeField]private GameObject m_rigidbodyPrefab;
+    [SerializeField]private Material m_canCopymaterial;
 
     private void Start()
     {
@@ -23,13 +23,23 @@ public class PlatformPlay : ItemPlay
     {
         if (CanPush)
         {
-            m_rigidbodyParent = ObjectPool.Instance.OnTake(m_rigidbodyParent, m_rigidbodyPrefab);
+            m_rigidbodyParent = ObjectPool.Instance.OnTake(m_rigidbodyParent,m_rigidbodyPrefab);
             m_rigidbodyParent.transform.parent = transform.parent;
             transform.parent = m_rigidbodyParent.transform;
             if (!gameObject.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG))
             {
                 gameObject.name += GlobalSetting.ObjNameTag.RIGIDBODY_TAG;
             }
+        }
+
+        if (CanCopy)
+        {
+            if (!gameObject.name.Contains(GlobalSetting.ObjNameTag.CAN_COPY_TAG))
+            {
+                gameObject.name += GlobalSetting.ObjNameTag.CAN_COPY_TAG;
+            }
+
+            m_renderer.material = m_canCopymaterial;
         }
     }
 

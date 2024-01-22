@@ -1,7 +1,3 @@
-using System;
-using Item;
-
-using Frame.Tool.Pool;
 using Item;
 
 namespace LevelEditor
@@ -10,11 +6,6 @@ namespace LevelEditor
     {
         public bool CanPush;
         public bool CanCopy;
-
-        public PlatformData(ItemProduct itemProduct) : base(itemProduct)
-        {
-
-        }
 
         public override ItemData Copy(ItemData saveData)
         {
@@ -40,6 +31,10 @@ namespace LevelEditor
             {
                 m_itemObjPlay.GetComponent<ItemPlay>().Stop();
             }
+        }
+
+        public PlatformData(ItemProduct itemProduct, bool fromJson = false) : base(itemProduct, fromJson)
+        {
         }
     }
 }

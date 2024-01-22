@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Frame.StateMachine;
 using LevelEditor;
 using TMPro;
@@ -20,21 +21,21 @@ public class AreaPanelShowState : AdditiveState
     public AreaPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
         InitEvents();
+        InitState();
     }
 
     public override void Motion(BaseInformation information)
     {
-        InitState();
+        
     }
 
     private void InitState()
     {
-        GetDataManager.ReloadLevelAction += ReloadLevel;
+        ReloadLevel();
     }
     
     protected override void RemoveState()
     {
-        GetDataManager.ReloadLevelAction -= ReloadLevel;
         base.RemoveState();
     }
 
@@ -47,27 +48,39 @@ public class AreaPanelShowState : AdditiveState
 
     private void SetLevelIndex(int index)
     {
-        GetDataManager.SetLevelIndex(index);
+        GetDataManager.SetSubLevelIndex(index);
     }
 
     private void AddLevel()
     {
-        GetDataManager.AddLevel();
+        GetDataManager.AddSubLevel();
         GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(GetDataManager.GetCurrentSubLevel.Name));
-        GetAreaDropdown.value = GetDataManager.GetCurrentIndex;
+        GetAreaDropdown.value = GetDataManager.GetCurrentSubLevelIndex;
+    }
+    
+    private void AddLevel(string levelName)
+    {
+        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(levelName));
     }
 
     private void DeleteLevel()
     {
-        if(GetDataManager.ShowLevels().Count <= 1) return;
-        GetAreaDropdown.options.RemoveAt(GetDataManager.GetCurrentIndex);
-        GetDataManager.DeleteLevel();
-        GetAreaDropdown.value = GetDataManager.GetCurrentIndex;
+        if(GetDataManager.ShowSubLevels().Count <= 1) return;
+        GetAreaDropdown.options.RemoveAt(GetDataManager.GetCurrentSubLevelIndex);
+        GetDataManager.DeleteSubLevel();
+        GetAreaDropdown.value = GetDataManager.GetCurrentSubLevelIndex;
         GetAreaDropdown.RefreshShownValue();
     }
 
     private void ReloadLevel()
     {
+        GetAreaDropdown.ClearOptions();
+        List<SubLevelData> subLevelDatas = GetDataManager.GetCurrentLevel.GetSubLevelDatas;
+        for (var index = 0; index < subLevelDatas.Count; index++)
+        {
+            AddLevel(subLevelDatas[index].Name);
+        }
         GetAreaDropdown.value = 0;
+        GetAreaDropdown.RefreshShownValue();
     }
 }
