@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
@@ -10,7 +11,7 @@ namespace Moon.Kernel.Service
 {
     /// <inheritdoc />
     /// <summary>
-    ///   This service is used for scene management, including loading and unloading
+    ///     This service is used for scene management, including loading and unloading
     /// </summary>
     [UsedImplicitly, SystemService(typeof(SceneService))]
     public sealed class SceneService : Service
@@ -18,7 +19,8 @@ namespace Moon.Kernel.Service
         /// <summary>
         ///     Get the currently active scene
         /// </summary>
-        public Scene ActiveScene => m_activeScene;
+        [UsedImplicitly]
+        public Scene ActiveScene => SceneManager.GetActiveScene();
 
         /// <summary>
         ///     Get all current scenes
@@ -27,10 +29,15 @@ namespace Moon.Kernel.Service
         public List<Scene> CurrentScenes { get; } = new();
 
         /// <summary>
+        /// 
+        /// </summary>
+        [UsedImplicitly]
+        public Scene PersistenceScene { get; private set; }
+
+        /// <summary>
         /// </summary>
         public const string PersistenceSceneName = "Persistent";
 
-        private Scene m_activeScene;
 
         #region public API
 
@@ -39,9 +46,15 @@ namespace Moon.Kernel.Service
         /// </summary>
         /// <remarks>Use Forget method to return void</remarks>
         /// <param name="loadName">scene name to load</param>
+        [UsedImplicitly]
         public async UniTask TransitionActiveScene(string loadName)
         {
-            var unloadName = m_activeScene.name;
+            var unloadName = ActiveScene.name;
+
+            if (!Boot.SceneName.Contains(loadName))
+            {
+                throw new Exception();
+            }
 
             await SceneManager.LoadSceneAsync(loadName, LoadSceneMode.Additive);
             await SceneManager.UnloadSceneAsync(unloadName);
@@ -51,12 +64,60 @@ namespace Moon.Kernel.Service
             SceneManager.SetActiveScene(targetScene);
         }
 
+        /// <summary>
+        ///     Try to load a scene
+        /// </summary>
+        /// <param name="name">The name of the scene</param>
+        /// <returns>If it loads successfully, the scene will be returned</returns>
+        /// <exception cref="Exception">An exception is thrown when the scene loads incorrectly</exception>
+        [UsedImplicitly]
+        public async UniTask<Scene> TryLoadScene(string name)
+        {
+            var target = SceneManager.GetSceneByName(name);
+
+            if (!target.IsValid())
+            {
+                try
+                {
+                    await SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
+                    target = SceneManager.GetSceneByName(name);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw new Exception($"Can't load target scene named {name}");
+                }
+
+                CurrentScenes.Add(SceneManager.GetSceneByName(name));
+            }
+
+            return target;
+        }
+
+        /// <summary>
+        ///     Try to load a scene and set it active
+        /// </summary>
+        /// <param name="name">The name of the scene</param>
+        /// <returns>If it loads successfully, the scene will be returned</returns>
+        /// <exception cref="Exception">An exception is thrown when the scene loads incorrectly</exception>
+        [UsedImplicitly]
+        public async UniTask<Scene> TryLoadActiveScene(string name)
+        {
+            var target = await TryLoadScene(name);
+            SceneManager.SetActiveScene(target);
+            return target;
+        }
+
         #endregion
 
         internal async override Task Run()
         {
-            await TryLoadScene(PersistenceSceneName);
-            await TryLoadScene(Explorer.Settings.MoonSetting.startScene);
+            PersistenceScene = await TryLoadScene(PersistenceSceneName);
+
+            if (Explorer.Settings.MoonSetting.AutoStartScene)
+            {
+                await TryLoadScene(Explorer.Settings.MoonSetting.startScene);
+            }
 
             SceneManager.activeSceneChanged += OnActiveSceneChange;
             SceneManager.sceneUnloaded += OnSceneUnload;
@@ -79,29 +140,6 @@ namespace Moon.Kernel.Service
         internal override void Dispose(bool all)
         {
             throw new NotImplementedException();
-        }
-
-        private async UniTask TryLoadScene(string name)
-        {
-            var target = SceneManager.GetSceneByName(name);
-
-            if (!target.IsValid())
-            {
-                try
-                {
-                    await SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
-                    target = SceneManager.GetSceneByName(name);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw new Exception($"Can't load target scene named {name}");
-                }
-
-                CurrentScenes.Add(SceneManager.GetSceneByName(name));
-                SceneManager.SetActiveScene(target);
-                m_activeScene = target;
-            }
         }
 
         private void OnSceneLoad(Scene scene, LoadSceneMode loadSceneMode)
@@ -127,14 +165,6 @@ namespace Moon.Kernel.Service
 
         private void OnActiveSceneChange(Scene current, Scene next)
         {
-            if (m_activeScene == current)
-            {
-                m_activeScene = next;
-            }
-            else
-            {
-                throw new Exception($"{current} scene mismatch!");
-            }
         }
     }
 }

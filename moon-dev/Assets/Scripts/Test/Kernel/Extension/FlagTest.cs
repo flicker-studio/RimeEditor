@@ -1,4 +1,4 @@
-﻿using Moon.Kernel.Extension.Type;
+﻿using Moon.Kernel.Extension;
 using NUnit.Framework;
 
 namespace Test.Kernel.Extension

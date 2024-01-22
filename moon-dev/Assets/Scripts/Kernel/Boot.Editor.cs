@@ -16,7 +16,7 @@ namespace Moon.Kernel
         private static string PersistenceSceneName => SceneService.PersistenceSceneName;
 
         [InitializeOnLoadMethod]
-        private static async void EditorBoot()
+        private static void EditorBoot()
         {
             Scene();
             PreCheck();

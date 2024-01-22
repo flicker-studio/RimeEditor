@@ -29,13 +29,23 @@ namespace Moon.Kernel.Editor.Provider
         public override void OnGUI(string searchContext)
         {
             EditorGUILayout.PropertyField(_settings.FindProperty("isCheck"), Styles.Start);
-            EditorGUILayout.PropertyField(_settings.FindProperty("startScene"), Styles.Start);
+            EditorGUILayout.PropertyField(_settings.FindProperty("AutoStartScene"), Styles.Enable);
+
+            if (_settings.FindProperty("AutoStartScene").boolValue)
+            {
+                EditorGUILayout.PropertyField(_settings.FindProperty("startScene"), Styles.Scene);
+            }
+
             _settings.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private class Styles
         {
             public static readonly GUIContent Start = new("Enable status checks");
+
+            public static readonly GUIContent Enable = new("Enable auto load scene");
+
+            public static readonly GUIContent Scene = new("Start Scene");
         }
 
         [SettingsProvider]

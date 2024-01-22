@@ -1,5 +1,5 @@
 using System;
-using Moon.Kernel.Extension.Type;
+using Moon.Kernel.Extension;
 
 /// <summary>
 /// <see cref="FlagProperty"/> has been deprecated and <see cref=" Flag"/> is being considered instead.

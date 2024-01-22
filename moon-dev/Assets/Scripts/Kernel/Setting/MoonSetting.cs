@@ -11,6 +11,8 @@ namespace Moon.Kernel.Setting
     {
         [SerializeField] public bool isCheck = true;
 
+        [SerializeField] public bool AutoStartScene = false;
+
         [SerializeField, SceneSelect] public string startScene;
     }
 }

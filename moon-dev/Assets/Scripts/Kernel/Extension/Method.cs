@@ -1,9 +1,11 @@
-﻿namespace Moon.Kernel.Extension.Method
+﻿using System.Text.RegularExpressions;
+
+namespace Moon.Kernel.Extension
 {
     /// <summary>
-    ///     <see cref="UnityEngine.Component" /> static extension class
+    /// Static extension methods
     /// </summary>
-    public static class Component
+    public static class Method
     {
         /// <summary>
         ///     Set the fields of all components in <paramref name="original" /> to the corresponding values in
@@ -17,6 +19,20 @@
             var fields = type.GetFields();
 
             foreach (var field in fields) field.SetValue(original, field.GetValue(target));
+        }
+
+        /// <summary>
+        ///     Remove the number at the end of a string
+        /// </summary>
+        /// <remarks>
+        ///     Note! The function doesn't remove spaces!
+        /// </remarks>
+        /// <param name="input">The string you entered</param>
+        /// <returns>Strings stripped of numbers</returns>
+        public static string RemoveTrailingNumbers(this string input)
+        {
+            //TODO:Optimized memory performance
+            return Regex.Replace(input, @"\d+$", "");
         }
     }
 }
