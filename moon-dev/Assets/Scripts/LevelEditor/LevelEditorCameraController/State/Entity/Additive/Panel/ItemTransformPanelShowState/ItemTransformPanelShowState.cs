@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Frame.StateMachine;
+using Frame.Tool.Popover;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -155,8 +156,10 @@ namespace LevelEditor
             return;
         }
 
-        if (!GetInput.GetCanInput && !CheckStates.Contains(typeof(LevelSettingPanelShowState)) &&
-            !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
+        if (!GetInput.GetCanInput 
+            && PopoverLauncher.Instance.CanInput
+            && !CheckStates.Contains(typeof(LevelSettingPanelShowState))
+            && !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
         {
             GetInput.SetCanInput(true);
         }

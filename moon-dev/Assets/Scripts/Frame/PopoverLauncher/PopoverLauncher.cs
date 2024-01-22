@@ -4,7 +4,6 @@ using Frame.Tool.Pool;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Frame.Static.Extensions;
 
 namespace Frame.Tool.Popover
 {
@@ -19,6 +18,8 @@ namespace Frame.Tool.Popover
 
     public class PopoverLauncher : Singleton<PopoverLauncher>
     {
+        public bool CanInput { get; private set; } = true;
+        
         private PopoverProperty.SelectorPopoverProperty m_selectorPopoverProperty;
 
         private PopoverProperty.TipsPopoverProperty m_tipsPopoverProperty;
@@ -81,6 +82,8 @@ namespace Frame.Tool.Popover
 
         public void LaunchSelector(Transform referenceTransform,string describe,Action yesAction,string yesStr = "Yes",string noStr = "No")
         {
+            InputManager.Instance.CanInput = false;
+            CanInput = false;
             GameObject selectorPopover = ObjectPool.Instance.OnTake(m_selectorPopoverProperty.SELECTOR_POPOVER_PREFAB);
             selectorPopover.transform.SetParent(referenceTransform.GetComponentInParent<Canvas>().rootCanvas.transform);
             RectTransform selectorPopoverRect = selectorPopover.transform as RectTransform;
@@ -100,11 +103,15 @@ namespace Frame.Tool.Popover
             {
                 yesAction?.Invoke();
                 ObjectPool.Instance.OnRelease(selectorPopover);
+                CanInput = true;
+                InputManager.Instance.CanInput = true;
             });
             noButton.onClick.RemoveAllListeners();
             noButton.onClick.AddListener(() =>
             {
                 ObjectPool.Instance.OnRelease(selectorPopover);
+                CanInput = true;
+                InputManager.Instance.CanInput = true;
             });
         }
     }
