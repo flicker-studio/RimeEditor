@@ -9,33 +9,28 @@ on:
 jobs:
   build:
     if: ${{ github.repository_owner == 'fictional-vision' && (github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch') }}
-    runs-on: windows-latest
+    name: Create docs
+    runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2022.3.10f1-linux-il2cpp-2
     steps:
-      - name: Checkout Self
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: moon-dev/Library
-          key: Library-Moon-Win
+          key: Library-Moon
           restore-keys: |
-            Library-Win
+            Library-
 
-      - name: Setup Unity
-        id: setup-unity
-        uses: kuler90/setup-unity@v1
-        with:
-          project-path: moon-dev/
-       
-      - name: Execute Unity
-        uses: Morsiusiurandum/unity-runner@main
-        with:
-          unity-path: ${{steps.setup-unity.outputs.unity-path}}
-          unity-username: ${{ secrets.UNITY_EMAIL }}
-          unity-password: ${{ secrets.UNITY_PASSWORD }}
-          unity-serial: ${{ secrets.UNITY_SERIAL }}
-          project-path: "moon-dev/"
-          execute-method: SyncVS_Workaround.SyncSolution
+      - name: Unity Activation    
+        run : unity-editor -batchmode -nographics -quit -serial ${{ secrets.UNITY_SERIAL }} -username ${{ secrets.UNITY_EMAIL }} -password ${{ secrets.UNITY_PASSWORD }} -projectPath moon-dev
+
+      - name: Generate .csproj
+        run : unity-editor -batchmode -nographics -quit -projectPath moon-dev -executeMethod Packages.Rider.Editor.RiderScriptEditor.SyncSolution
+      
+      - name: Return License 
+        run: unity-editor -quit -batchmode -returnlicense -username ${{ secrets.UNITY_EMAIL }} -password ${{ secrets.UNITY_PASSWORD }} 
 
       - name: Dotnet Setup
         uses: actions/setup-dotnet@v3
@@ -43,35 +38,38 @@ jobs:
           dotnet-version: 7.x
 
       - name: Setup Docfx
-        run: dotnet tool update -g docfx
-
+        run: dotnet tool update docfx --tool-path ./
+      
       - name: Build Site
-        run: docfx docs/docfx.json
+        run: ./docfx docs/docfx.json
 
       - name: Upload site artifact
         uses: actions/upload-artifact@v1
         with:
           name: _site
           path: docs/_site
-
+      
   deploy:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v3
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
 
-        # Download the generated documentation
-        - name: Download site artifact
-          uses: actions/download-artifact@v1
-          with:
-            name: _site     
+      # Download the generated documentation
+    - name: Download site artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: _site     
 
-        - name: Azure Deploy
-          uses: Azure/static-web-apps-deploy@v1
-          with:
-            azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-            action: "upload"
-            app_location: "_site"  
-            skip_app_build: true
-            skip_api_build: true
+    - name: Publish to Cloudflare Pages
+      uses: cloudflare/pages-action@v1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+        projectName: moon-manual
+        directory: ./
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        workingDirectory: ./_site
+        wranglerVersion: '3'
