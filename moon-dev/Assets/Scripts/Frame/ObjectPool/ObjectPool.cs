@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Frame.Static.Extensions;
 using UnityEditor;
 using UnityEngine;
@@ -108,7 +109,7 @@ namespace Frame.Tool.Pool
             }
 
             string tag = CheckTag(obj);
-            if (m_pool.ContainsKey(tag))
+            if (m_pool.ContainsKey(tag) && !m_pool[tag].Contains(obj))
             {
                 CheckTypeCachePanel(tag);
                 obj.transform.SetParent(m_typeCachePanel[tag].transform);
@@ -139,11 +140,14 @@ namespace Frame.Tool.Pool
                 m_pool[tag] = new List<GameObject>();
                 m_outPool[tag] = new List<GameObject>();
             }
-            CheckTypeCachePanel(tag);
-            obj.transform.parent = m_typeCachePanel[tag].transform;
-            obj.SetActive(false);
-            m_pool[tag].Add(obj);
-            m_outPool[tag].Remove(obj);
+            if (m_pool.ContainsKey(tag) && !m_pool[tag].Contains(obj))
+            {
+                CheckTypeCachePanel(tag);
+                obj.transform.parent = m_typeCachePanel[tag].transform;
+                obj.SetActive(false);
+                m_pool[tag].Add(obj);
+                m_outPool[tag].Remove(obj);
+            }
         }
 
         /// <summary>
