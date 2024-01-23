@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Data.ScriptableObject;
+using Frame.Tool.Pool;
 using UnityEngine;
 
 namespace Frame.Static.Extensions
@@ -6,6 +8,21 @@ namespace Frame.Static.Extensions
     public static class ColliderMethod
     {
         private static ContactFilter2D m_contactFilter2D = new ContactFilter2D();
+
+        private static GameObject m_sliceObj;
+
+        private static GameObject GetSliceObj
+        {
+            get
+            {
+                if (m_sliceObj == null)
+                {
+                    m_sliceObj = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory").SLICE_OBJ;
+                }
+
+                return m_sliceObj;
+            }
+        }
     
         public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider,Vector3 scale,LayerMask layerMask)
         {
@@ -37,11 +54,23 @@ namespace Frame.Static.Extensions
                 List<Collider2D> collider2D = new List<Collider2D>();
                 current.OverlapCollider(m_contactFilter2D, collider2D);
 
-                foreach (Collider2D c in collider2D)
+                if (ObjectPool.Instance.CompareObj(current.gameObject, GetSliceObj))
                 {
-                    stack.Push(c);
+                    foreach (Collider2D c in collider2D)
+                    {
+                        stack.Push(c);
+                    }
                 }
-
+                else
+                {
+                    foreach (Collider2D c in collider2D)
+                    {
+                        if (ObjectPool.Instance.CompareObj(c.gameObject, GetSliceObj))
+                        {
+                            stack.Push(c);
+                        }
+                    }
+                }
                 current.transform.localScale = oldLocalScale;
             }
             return m_connectCollider;
