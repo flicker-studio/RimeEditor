@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Frame.Static.Extensions
@@ -24,6 +26,7 @@ namespace Frame.Static.Extensions
         public static string ReserveReciprocal(this string str, char c)
         {
             string newStr = "";
+
             for (var index = str.Length - 1; index >= 0; index--)
             {
                 if (str[index] != c) newStr = $"{str[index]}{newStr}";
@@ -34,4 +37,3 @@ namespace Frame.Static.Extensions
         }
     }
 }
-
