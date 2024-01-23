@@ -1,7 +1,7 @@
 name: Meta Check
 
 on:
-  pull_request:
+  pull_request_target:
     paths: [moon-dev/Assets/**]
   workflow_dispatch:
 

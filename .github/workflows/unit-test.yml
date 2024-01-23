@@ -1,15 +1,14 @@
 name: Unit Test
 
 on:
-  pull_request_target:
+  push:
     branches: [main]
-    types: [closed]
     paths: ['moon-dev/**']
   workflow_dispatch:
 
 jobs:
   unit-test:
-    if: ${{ github.repository_owner == 'fictional-vision' && (github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch')}}
+    if: ${{ github.repository_owner == 'fictional-vision'}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Self
