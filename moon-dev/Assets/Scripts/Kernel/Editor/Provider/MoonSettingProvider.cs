@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Moon.Kernel.Setting;
 using UnityEditor;
 using UnityEngine;
@@ -11,32 +12,37 @@ namespace Moon.Kernel.Editor.Provider
     /// </summary>
     public class MoonSettingProvider : SettingsProvider
     {
-        private static SerializedObject _settings;
+        private static MoonSetting _setting;
+
+        private static SerializedObject _serializedSetting;
 
         private MoonSettingProvider(string path, SettingsScope scopes, IEnumerable<string> keywords = null) :
             base(path, scopes, keywords)
         {
         }
 
-        /// <inheritdoc />
-        public override void OnActivate(string searchContext, VisualElement rootElement)
-        {
-            var setting = AssetDatabase.LoadAssetAtPath<MoonSetting>("Assets/Settings/Dev/MoonSetting.asset");
-            _settings = new SerializedObject(setting);
-        }
+        
 
         /// <inheritdoc />
         public override void OnGUI(string searchContext)
         {
-            EditorGUILayout.PropertyField(_settings.FindProperty("isCheck"), Styles.Start);
-            EditorGUILayout.PropertyField(_settings.FindProperty("AutoStartScene"), Styles.Enable);
+            _setting = (MoonSetting)EditorGUILayout.ObjectField(_setting, typeof(MoonSetting), false);
 
-            if (_settings.FindProperty("AutoStartScene").boolValue)
+            if (_setting == null)
             {
-                EditorGUILayout.PropertyField(_settings.FindProperty("startScene"), Styles.Scene);
+                return;
             }
 
-            _settings.ApplyModifiedPropertiesWithoutUndo();
+            _serializedSetting = new SerializedObject(_setting);
+            EditorGUILayout.PropertyField(_serializedSetting.FindProperty("isCheck"), Styles.Start);
+            EditorGUILayout.PropertyField(_serializedSetting.FindProperty("AutoStartScene"), Styles.Enable);
+
+            if (_serializedSetting.FindProperty("AutoStartScene").boolValue)
+            {
+                EditorGUILayout.PropertyField(_serializedSetting.FindProperty("startScene"), Styles.Scene);
+            }
+
+            _serializedSetting.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private class Styles
@@ -53,7 +59,7 @@ namespace Moon.Kernel.Editor.Provider
         {
             var provider = new MoonSettingProvider("Project/Moon", SettingsScope.Project);
 
-            if (_settings != null)
+            if (_serializedSetting != null)
             {
                 provider.keywords = GetSearchKeywordsFromGUIContentProperties<Styles>();
             }
