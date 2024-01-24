@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Frame.Static.Extensions;
@@ -7,10 +8,10 @@ using UnityEngine;
 namespace Frame.Tool.Pool
 {
     //TODO: 考虑在未来使用UnityEngine.Pool代替
-    public class ObjectPool : UnityToolkit.MonoSingleton<ObjectPool>,UnityToolkit.IAutoCreateSingleton
+    public class ObjectPool : UnityToolkit.MonoSingleton<ObjectPool>, UnityToolkit.IAutoCreateSingleton
     {
         public static ObjectPool Instance => Singleton;
-        
+
         private GameObject m_cachePanel;
 
         private Dictionary<string, GameObject> m_typeCachePanel = new Dictionary<string, GameObject>();
@@ -33,6 +34,7 @@ namespace Frame.Tool.Pool
             m_objTag.Clear();
             m_outPool.Clear();
         }
+
         /// <summary>
         /// 向对象池请求对象
         /// </summary>
@@ -41,6 +43,7 @@ namespace Frame.Tool.Pool
         public GameObject OnTake(GameObject prefab)
         {
             string tag = prefab.name;
+
             if (!m_pool.ContainsKey(tag))
             {
                 m_objTag.Add(prefab, tag);
@@ -49,6 +52,7 @@ namespace Frame.Tool.Pool
             }
 
             GameObject obj;
+
             if (m_pool[tag].Count > 0)
             {
                 obj = m_pool[tag][0];
@@ -62,6 +66,7 @@ namespace Frame.Tool.Pool
                 obj.name = prefab.name + m_uniqueId++;
                 GameObject.DontDestroyOnLoad(obj);
             }
+
             m_outPool[tag].Add(obj);
             ResetObject(obj, prefab);
             return obj;
@@ -75,6 +80,7 @@ namespace Frame.Tool.Pool
         public GameObject OnTake(GameObject targetObj, GameObject prefab)
         {
             string tag = prefab.name;
+
             if (!m_pool.ContainsKey(tag))
             {
                 m_objTag.Add(prefab, tag);
@@ -134,6 +140,7 @@ namespace Frame.Tool.Pool
             }
 
             string tag = CheckTag(obj);
+
             if (!m_pool.ContainsKey(tag))
             {
                 m_objTag.Add(prefab, tag);
@@ -164,14 +171,17 @@ namespace Frame.Tool.Pool
             }
 
             string tag = CheckTag(obj);
+
             if (m_pool.ContainsKey(tag))
             {
                 CheckTypeCachePanel(tag);
                 List<GameObject> tempList = new List<GameObject>();
                 tempList.AddRange(m_outPool[tag]);
+
                 foreach (var tempObj in tempList)
                 {
                     if (tempObj.transform.childCount > 0) continue;
+
                     tempObj.transform.parent = m_typeCachePanel[tag].transform;
                     tempObj.SetActive(false);
                     m_pool[tag].Add(tempObj);
@@ -179,6 +189,7 @@ namespace Frame.Tool.Pool
                 }
             }
         }
+
         /// <summary>
         /// 比较物体和预制体是否同一类型
         /// </summary>
@@ -189,6 +200,7 @@ namespace Frame.Tool.Pool
         {
             return CheckTag(obj).Equals(prefab.name);
         }
+
         /// <summary>
         /// 检查实例物体标签
         /// </summary>
@@ -196,7 +208,9 @@ namespace Frame.Tool.Pool
         /// <returns></returns>
         private string CheckTag(GameObject obj)
         {
-            return obj.name.RemoveInvalidCharacter();
+            throw new Exception("Unable to compile");
+
+            //  return obj.name.RemoveInvalidCharacter();
         }
 
         private void CheckTypeCachePanel(string tag)
@@ -219,22 +233,22 @@ namespace Frame.Tool.Pool
             }
         }
 
-        private void ResetObject(GameObject obj,GameObject prefab)
+        private void ResetObject(GameObject obj, GameObject prefab)
         {
             foreach (var component in obj.GetComponents<Component>())
             {
                 if (component is Collider2D collider)
                 {
-                    ResetColloder(collider,prefab.GetComponent<Collider2D>());
+                    ResetColloder(collider, prefab.GetComponent<Collider2D>());
                 }
             }
         }
 
-        private void ResetColloder(Collider2D objColloder,Collider2D prefabCollider)
+        private void ResetColloder(Collider2D objColloder, Collider2D prefabCollider)
         {
-            if(prefabCollider == null) return;
+            if (prefabCollider == null) return;
+
             objColloder.isTrigger = prefabCollider.isTrigger;
         }
     }
-
 }

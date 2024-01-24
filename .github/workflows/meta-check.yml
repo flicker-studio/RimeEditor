@@ -9,6 +9,7 @@ jobs:
   meta-check:
     name: "Check all .meta"
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: Check out
         uses: actions/checkout@v3

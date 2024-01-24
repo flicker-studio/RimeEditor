@@ -1,7 +1,9 @@
 {
     "name": "Struct",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+      "GUID:c90ed4b6a8fbdbf469d00343b57d4494"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
