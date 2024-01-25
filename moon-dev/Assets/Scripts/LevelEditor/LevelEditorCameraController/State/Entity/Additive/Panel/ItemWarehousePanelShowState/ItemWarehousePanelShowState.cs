@@ -5,6 +5,7 @@ using Frame.CompnentExtensions;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using Frame.Tool.Pool;
+using Moon.Kernel.Extension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

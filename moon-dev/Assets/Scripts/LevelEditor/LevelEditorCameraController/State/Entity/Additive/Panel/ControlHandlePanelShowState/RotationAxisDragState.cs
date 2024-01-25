@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
