@@ -1,4 +1,3 @@
-
 using System;
 
 namespace Struct
@@ -6,7 +5,7 @@ namespace Struct
     public struct InputProperty<T> where T : struct
     {
         private T m_input;
-    
+
         private bool m_inputDown;
 
         private bool m_inputUp;
@@ -17,17 +16,15 @@ namespace Struct
 
         public T ResetInput
         {
-            set
-            {
-                m_input = value;
-            }
+            set => m_input = value;
         }
-        
+
         public T SetInput
         {
             set
             {
                 m_input = value;
+
                 if (m_input.Equals(default(T)))
                 {
                     UpAction?.Invoke();
@@ -42,34 +39,27 @@ namespace Struct
                 }
             }
         }
-    
-        public T GetInput
-        {
-            get
-            {
-                return m_input;
-            }
-        }
-    
+
+        public T GetInput => m_input;
+
         public bool GetInputDown
         {
             get
             {
-                bool temp = m_inputDown;
+                var temp = m_inputDown;
                 m_inputDown = false;
                 return temp;
             }
         }
-    
+
         public bool GetInputUp
         {
             get
             {
-                bool temp = m_inputUp;
+                var temp = m_inputUp;
                 m_inputUp = false;
                 return temp;
             }
         }
     }
-
 }

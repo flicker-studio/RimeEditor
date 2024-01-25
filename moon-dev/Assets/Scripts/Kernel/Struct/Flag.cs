@@ -1,4 +1,4 @@
-﻿namespace Moon.Kernel.Extension
+﻿namespace Moon.Kernel.Struct
 {
     /// <summary>
     ///    Custom value types to store special flag bits.

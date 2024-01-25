@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using Moon.Kernel.Extension;
+using Moon.Kernel.Struct;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RectTransform = UnityEngine.RectTransform;
@@ -38,7 +39,7 @@ namespace LevelEditor
 
         private Vector3 m_oriRotationAxisPos;
 
-        private FlagProperty m_waitToNextFrame;
+        private Flag m_waitToNextFrame;
 
         private float GetRotationSpeed => m_information.GetUI.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
 

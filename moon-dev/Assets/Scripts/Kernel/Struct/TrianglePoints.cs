@@ -45,12 +45,14 @@ namespace Struct
         {
             //TODO:Use value tuples
             if (obj is TrianglePoints other)
+            {
                 return (PointX == other.PointX && PointY == other.PointY && PointZ == other.PointZ) ||
                        (PointX == other.PointY && PointY == other.PointX && PointZ == other.PointZ) ||
                        (PointX == other.PointZ && PointY == other.PointY && PointZ == other.PointX) ||
                        (PointX == other.PointX && PointY == other.PointZ && PointZ == other.PointY) ||
                        (PointX == other.PointY && PointY == other.PointZ && PointZ == other.PointX) ||
                        (PointX == other.PointZ && PointY == other.PointX && PointZ == other.PointY);
+            }
 
             return false;
         }
