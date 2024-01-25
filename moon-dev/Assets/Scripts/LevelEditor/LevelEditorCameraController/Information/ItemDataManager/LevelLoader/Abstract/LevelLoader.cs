@@ -16,7 +16,7 @@ namespace LevelEditor
 
         public virtual bool OpenLocalLevelDirectory(string path, List<LevelData> levelDatas)
         {
-            string levelDirectoryName = path.ReserveReciprocal('/');
+            string levelDirectoryName = path.GetSuffix('/');
             var levelDataFolderPath = $"{path}/{PersistentFileProperty.GAMES_DATA_NAME}";
             var imageDataFolderPath = $"{path}/{PersistentFileProperty.IMAGES_DATA_NAME}";
             var soundsDataFolderPath = $"{path}/{PersistentFileProperty.SOUNDS_DATA_NAME}";
