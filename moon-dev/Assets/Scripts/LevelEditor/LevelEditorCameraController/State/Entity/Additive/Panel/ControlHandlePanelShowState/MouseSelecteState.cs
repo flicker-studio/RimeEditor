@@ -6,6 +6,7 @@ using Frame.Tool.Pool;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
 {

@@ -3,6 +3,7 @@ using System.Linq;
 using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
+using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
 {
@@ -121,7 +122,7 @@ namespace LevelEditor
 
         private void CheckButton()
         {
-            if (m_information.GetInput.GetMouseLeftButtonDown && !UIMethod.IsPointerOverUIElement())
+            if (m_information.GetInput.GetMouseLeftButtonDown && !UI.IsPointerOverUIElement())
             {
                 if (!CheckStates.Contains(typeof(MouseSelecteState)))
                 {

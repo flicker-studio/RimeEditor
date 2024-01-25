@@ -4,6 +4,7 @@ using Frame.StateMachine;
 using Frame.Static.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
 {
