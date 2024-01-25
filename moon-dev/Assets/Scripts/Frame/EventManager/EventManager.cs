@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,6 +19,7 @@ namespace Frame.Tool
 
         #region TypeEventSystem
 
+        /*
         private readonly UnityToolkit.TypeEventSystem m_typeEventSystem = new UnityToolkit.TypeEventSystem();
 
 
@@ -35,6 +35,7 @@ namespace Frame.Tool
         }
 
         public void Remove<T>(Action<T> onEvent) => m_typeEventSystem.UnRegister(onEvent);
+        */
 
         #endregion
 
