@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Moon.Kernel.Extension
 {
+    /// <summary>
+    ///     The axis direction of the Rigidbody that needs to be frozen.
+    /// </summary>
     public enum FREEZEAXIS
     {
         None,
@@ -21,8 +24,16 @@ namespace Moon.Kernel.Extension
         All
     }
 
+    /// <summary>
+    ///     A static extension method of Rigidbody.
+    /// </summary>
     public static class Rigidbody
     {
+        /// <summary>
+        ///     The method of freezing the Rigidbody2D axis.
+        /// </summary>
+        /// <param name="rigidbody2D"></param>
+        /// <param name="freezeaxis"></param>
         public static void Freeze(this Rigidbody2D rigidbody2D, FREEZEAXIS freezeaxis)
         {
             switch (freezeaxis)

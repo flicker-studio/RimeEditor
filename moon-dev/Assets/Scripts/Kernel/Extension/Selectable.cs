@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 namespace Moon.Kernel.Extension
 {
+    /// <summary>
+    /// </summary>
     public static class Selectable
     {
         public static EventTrigger AddTriggerEvent(this UnityEngine.UI.Selectable theSelectable, EventTriggerType eventTriggerType, Action<BaseEventData> onTriggerAction = null)
