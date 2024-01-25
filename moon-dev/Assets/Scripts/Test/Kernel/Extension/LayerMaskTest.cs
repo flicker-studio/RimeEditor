@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace Test.Kernel.Extension
 {
-    [Author("AstoraGray"), TestOf(nameof(LayerMaskExtension))]
+    [TestOf(nameof(LayerMaskExtension))]
     internal class LayerMaskTest
     {
+        [Author("AstoraGray")]
         [TestCase(0)]
         public void ContainsLayerTest(int layer)
         {

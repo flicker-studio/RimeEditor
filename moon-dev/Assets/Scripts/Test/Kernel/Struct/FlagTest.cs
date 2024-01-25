@@ -1,7 +1,7 @@
 ﻿using Moon.Kernel.Struct;
 using NUnit.Framework;
 
-namespace Test.Kernel.Extension
+namespace Test.Kernel.Struct
 {
     [Author("Mors"), TestOf(nameof(Flag))]
     internal class FlagTest
