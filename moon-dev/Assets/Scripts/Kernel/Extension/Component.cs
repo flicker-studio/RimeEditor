@@ -1,22 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Frame.Static.Extensions
+namespace Moon.Kernel.Extension
 {
     public static class Component
     {
-         [Obsolete("Consider using the extension method under Moon.Extension.Unity.Method.Component.CopyComponentValue instead this.")]
         public static void CopyComponent(this UnityEngine.Component original, UnityEngine.Component target)
         {
-            System.Type type = target.GetType();
-            System.Reflection.FieldInfo[] fields = type.GetFields();
-            foreach (System.Reflection.FieldInfo field in fields)
-            {
-                field.SetValue(original, field.GetValue(target));
-            }
+            var type = target.GetType();
+            var fields = type.GetFields();
+            foreach (var field in fields) field.SetValue(original, field.GetValue(target));
         }
-
     }
 }
