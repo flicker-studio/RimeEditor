@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UnityToolkit
@@ -8,14 +9,12 @@ namespace UnityToolkit
 
     public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
     {
-        private static T _singleton;
-
         protected virtual bool dontDestroyOnLoad()
         {
             return false;
         }
 
-        public static T SingletonNullable => _singleton;
+        public static T SingletonNullable { get; private set; }
 
         public static T Singleton
         {
@@ -26,23 +25,28 @@ namespace UnityToolkit
                     return null;
                 }
 
-                if (_singleton != null) return _singleton; //第一次访问
-                _singleton = FindObjectOfType<T>(); // 从场景中查找
-                if (_singleton != null)
+                if (SingletonNullable != null)
                 {
-                    _singleton.OnSingletonInit(); //手动初始化
-                    return _singleton;
+                    return SingletonNullable; //第一次访问
+                }
+
+                SingletonNullable = FindObjectOfType<T>(); // 从场景中查找
+
+                if (SingletonNullable != null)
+                {
+                    SingletonNullable.OnSingletonInit(); //手动初始化
+                    return SingletonNullable;
                 }
 
                 if (typeof(T).GetInterface(nameof(IAutoCreateSingleton)) != null)
                 {
-                    GameObject go = new GameObject(typeof(T).Name);
-                    _singleton = go.AddComponent<T>();
-                    _singleton.OnSingletonInit();
-                    return _singleton;
+                    var go = new GameObject(typeof(T).Name);
+                    SingletonNullable = go.AddComponent<T>();
+                    SingletonNullable.OnSingletonInit();
+                    return SingletonNullable;
                 }
 
-                throw new System.NullReferenceException(
+                throw new NullReferenceException(
                     $"Singleton<{typeof(T).Name}>.Singleton -> {typeof(T).Name} is null");
             }
         }
@@ -51,6 +55,7 @@ namespace UnityToolkit
         {
             // Debug.Log($"Singleton<{typeof(T).Name}>.OnInit() -> {gameObject.name}");
             transform.SetParent(null);
+
             if (dontDestroyOnLoad())
             {
                 DontDestroyOnLoad(gameObject);
@@ -63,16 +68,17 @@ namespace UnityToolkit
         protected virtual void Awake()
         {
             //Awake时如果还没有被访问 则将自己赋值给_singleton
-            if (_singleton == null)
+            if (SingletonNullable == null)
             {
-                _singleton = this as T;
+                SingletonNullable = this as T;
+
                 // Debug.Log($"Singleton<{typeof(T).Name}>.Awake() -> {gameObject.name}");
-                _singleton.OnSingletonInit();
+                SingletonNullable.OnSingletonInit();
                 return;
             }
 
             //如果已经被访问过 则销毁自己
-            if (_singleton != this)
+            if (SingletonNullable != this)
             {
                 Destroy(gameObject);
             }
@@ -89,10 +95,10 @@ namespace UnityToolkit
 
         private void OnDestroy()
         {
-            if (_singleton == this)
+            if (SingletonNullable == this)
             {
-                _singleton.OnDispose();
-                _singleton = null;
+                SingletonNullable.OnDispose();
+                SingletonNullable = null;
             }
         }
 
@@ -100,10 +106,10 @@ namespace UnityToolkit
         // Unity 2022 后 生命周期变更 OnApplicationQuit -> OnDisable -> OnDestroy
         private void OnApplicationQuit()
         {
-            if (_singleton == this)
+            if (SingletonNullable == this)
             {
-                _singleton.OnDispose();
-                _singleton = null;
+                SingletonNullable.OnDispose();
+                SingletonNullable = null;
             }
         }
 
@@ -112,7 +118,7 @@ namespace UnityToolkit
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         private static void ResetStatic()
         {
-            _singleton = null;
+            SingletonNullable = null;
         }
 #endif
     }
