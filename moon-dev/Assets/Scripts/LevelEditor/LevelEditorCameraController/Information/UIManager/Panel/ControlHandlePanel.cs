@@ -1,6 +1,6 @@
 using Frame.Tool;
 using Moon.Kernel.Extension;
-using Struct;
+using Moon.Kernel.Struct;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using RectTransform = UnityEngine.RectTransform;
@@ -235,37 +235,37 @@ namespace LevelEditor
 
         private Image m_selectionImage;
 
-        private InputProperty<bool> m_positionInputX;
+        private Input<bool> m_positionInputX;
 
-        private InputProperty<bool> m_positionInputY;
+        private Input<bool> m_positionInputY;
 
-        private InputProperty<bool> m_positionInputXY;
+        private Input<bool> m_positionInputXY;
 
-        private InputProperty<bool> m_rotationInputZ;
+        private Input<bool> m_rotationInputZ;
 
-        private InputProperty<bool> m_scaleInputX;
+        private Input<bool> m_scaleInputX;
 
-        private InputProperty<bool> m_scaleInputY;
+        private Input<bool> m_scaleInputY;
 
-        private InputProperty<bool> m_scaleInputXY;
+        private Input<bool> m_scaleInputXY;
 
-        private InputProperty<bool> m_rectTopRightCornerInput;
+        private Input<bool> m_rectTopRightCornerInput;
 
-        private InputProperty<bool> m_rectTopLeftCornerInput;
+        private Input<bool> m_rectTopLeftCornerInput;
 
-        private InputProperty<bool> m_rectBottomRightCornerInput;
+        private Input<bool> m_rectBottomRightCornerInput;
 
-        private InputProperty<bool> m_rectBottomLeftCornerInput;
+        private Input<bool> m_rectBottomLeftCornerInput;
 
-        private InputProperty<bool> m_rectTopEdgeInput;
+        private Input<bool> m_rectTopEdgeInput;
 
-        private InputProperty<bool> m_rectRightEdgeInput;
+        private Input<bool> m_rectRightEdgeInput;
 
-        private InputProperty<bool> m_rectBottomEdgeInput;
+        private Input<bool> m_rectBottomEdgeInput;
 
-        private InputProperty<bool> m_rectLeftEdgeInput;
+        private Input<bool> m_rectLeftEdgeInput;
 
-        private InputProperty<bool> m_rectCenterInput;
+        private Input<bool> m_rectCenterInput;
 
         private ControlHandleAction m_controlHandleAction = new ControlHandleAction();
 

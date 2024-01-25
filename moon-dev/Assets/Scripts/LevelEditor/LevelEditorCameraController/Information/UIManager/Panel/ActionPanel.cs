@@ -1,5 +1,5 @@
 using Moon.Kernel.Extension;
-using Struct;
+using Moon.Kernel.Struct;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using RectTransform = UnityEngine.RectTransform;
@@ -22,33 +22,33 @@ namespace LevelEditor
 
         private Button m_rectButton;
 
-        private InputProperty<bool> m_undoInputProperty;
+        private Input<bool> m_undoInput;
 
-        private InputProperty<bool> m_redoInputProperty;
+        private Input<bool> m_redoInput;
 
-        private InputProperty<bool> m_viewInputProperty;
+        private Input<bool> m_viewInput;
 
-        private InputProperty<bool> m_positionInputProperty;
+        private Input<bool> m_positionInput;
 
-        private InputProperty<bool> m_rotationInputProperty;
+        private Input<bool> m_rotationInput;
 
-        private InputProperty<bool> m_scaleInputProperty;
+        private Input<bool> m_scaleInput;
 
-        private InputProperty<bool> m_rectInputProperty;
+        private Input<bool> m_rectInput;
 
-        public bool GetUndoInputDown => m_undoInputProperty.GetInputDown;
+        public bool GetUndoInputDown => m_undoInput.GetInputDown;
 
-        public bool GetRedoInputDown => m_redoInputProperty.GetInputDown;
+        public bool GetRedoInputDown => m_redoInput.GetInputDown;
 
-        public bool GetViewInputDown => m_viewInputProperty.GetInputDown;
+        public bool GetViewInputDown => m_viewInput.GetInputDown;
 
-        public bool GetPositionInputDown => m_positionInputProperty.GetInputDown;
+        public bool GetPositionInputDown => m_positionInput.GetInputDown;
 
-        public bool GetRotationInputDown => m_rotationInputProperty.GetInputDown;
+        public bool GetRotationInputDown => m_rotationInput.GetInputDown;
 
-        public bool GetScaleInputDown => m_scaleInputProperty.GetInputDown;
+        public bool GetScaleInputDown => m_scaleInput.GetInputDown;
 
-        public bool GetRectInputDown => m_rectInputProperty.GetInputDown;
+        public bool GetRectInputDown => m_rectInput.GetInputDown;
 
         public ActionPanel(RectTransform levelEditorCanvasRect, UIProperty levelEditorUIProperty)
         {
@@ -71,25 +71,25 @@ namespace LevelEditor
         private void InitEvent()
         {
             m_undoButton.AddTriggerEvent(EventTriggerType.PointerClick,
-                data => m_undoInputProperty.SetInput = true);
+                data => m_undoInput.SetInput = true);
 
             m_redoButton.AddTriggerEvent(EventTriggerType.PointerClick,
-                data => m_redoInputProperty.SetInput = true);
+                data => m_redoInput.SetInput = true);
 
             m_viewButton.AddTriggerEvent(EventTriggerType.PointerClick,
-                data => m_viewInputProperty.SetInput = true);
+                data => m_viewInput.SetInput = true);
 
             m_positionButton.AddTriggerEvent(EventTriggerType.PointerClick,
-                data => m_positionInputProperty.SetInput = true);
+                data => m_positionInput.SetInput = true);
 
             m_rotationButton.AddTriggerEvent(EventTriggerType.PointerClick,
-                data => m_rotationInputProperty.SetInput = true);
+                data => m_rotationInput.SetInput = true);
 
             m_scaleButton.AddTriggerEvent(EventTriggerType.PointerClick,
-                data => m_scaleInputProperty.SetInput = true);
+                data => m_scaleInput.SetInput = true);
 
             m_rectButton.AddTriggerEvent(EventTriggerType.PointerClick,
-                data => m_rectInputProperty.SetInput = true);
+                data => m_rectInput.SetInput = true);
         }
     }
 }

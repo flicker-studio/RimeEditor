@@ -1,8 +1,12 @@
 using System;
+using JetBrains.Annotations;
 
-namespace Struct
+namespace Moon.Kernel.Struct
 {
-    public struct InputProperty<T> where T : struct
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public struct Input<T> where T : struct
     {
         private T m_input;
 
@@ -10,15 +14,24 @@ namespace Struct
 
         private bool m_inputUp;
 
+        /// <summary>
+        /// </summary>
         public event Action DownAction;
 
+        /// <summary>
+        /// </summary>
+        [UsedImplicitly]
         public event Action UpAction;
 
+        /// <summary>
+        /// </summary>
         public T ResetInput
         {
             set => m_input = value;
         }
 
+        /// <summary>
+        /// </summary>
         public T SetInput
         {
             set
@@ -40,8 +53,12 @@ namespace Struct
             }
         }
 
+        /// <summary>
+        /// </summary>
         public T GetInput => m_input;
 
+        /// <summary>
+        /// </summary>
         public bool GetInputDown
         {
             get
@@ -52,6 +69,8 @@ namespace Struct
             }
         }
 
+        /// <summary>
+        /// </summary>
         public bool GetInputUp
         {
             get
