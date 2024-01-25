@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Frame.Tool;
 using UnityEngine;
 
@@ -8,10 +6,13 @@ namespace Character
     public struct MotionInputData
     {
         public Vector2 MoveInput;
+
         public bool JumpInput;
+
         public bool RunInput;
+
         public bool SliceInput;
-    
+
         public bool MoveInputDown => InputManager.Instance.GetMoveInputDown;
         public bool MoveInputUp => InputManager.Instance.GetMoveInputUp;
         public bool JumpInputDown => InputManager.Instance.GetJumpInputDown;
@@ -19,7 +20,7 @@ namespace Character
         public bool RunInputDown => InputManager.Instance.GetRunInputDown;
         public bool RunInputUp => InputManager.Instance.GetRunInputUp;
         public bool SliceInputDown => InputManager.Instance.GetSliceInputDown;
-    
+
         public bool SliceInputUp => InputManager.Instance.GetSliceInputUp;
     }
 

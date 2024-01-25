@@ -1,4 +1,3 @@
-using Frame.Static.Extensions;
 using Frame.Static.Global;
 using Moon.Kernel.Extension;
 using UnityEngine;
@@ -9,6 +8,7 @@ namespace LevelEditor
     public class CameraManager
     {
         public CameraProperty GetProperty => m_cameraProperty;
+
         public OutlinePainter GetOutlinePainter
         {
             get
@@ -17,19 +17,21 @@ namespace LevelEditor
                 {
                     m_outlinePainter = new OutlinePainter();
                     m_outlinePainter.OutlineMode = GetProperty.GetOutlineProperty.OUTLINE_MODE;
-                    m_outlinePainter.OutlineColor = GetProperty.GetOutlineProperty.OUTLINE_COLOR;;
-                    m_outlinePainter.OutlineWidth = GetProperty.GetOutlineProperty.OUTLINE_WIDTH;;
+                    m_outlinePainter.OutlineColor = GetProperty.GetOutlineProperty.OUTLINE_COLOR;
+                    ;
+                    m_outlinePainter.OutlineWidth = GetProperty.GetOutlineProperty.OUTLINE_WIDTH;
+                    ;
                 }
 
                 return m_outlinePainter;
             }
         }
-        
+
         public Vector3 GetMousePosition => Mouse.current.position.ReadValue();
 
         public Vector2 GetScreenScale => new Vector2(GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.x / Screen.width,
-                                                    GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.y / Screen.height);
-        
+            GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.y / Screen.height);
+
         public Vector3 GetMouseWorldPoint =>
             Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Mathf.Abs(Camera.main.transform.position.z)));
 
@@ -37,7 +39,7 @@ namespace LevelEditor
         {
             return Camera.main.ScreenToWorldPoint(sreenPoint.NewZ(Mathf.Abs(Camera.main.transform.position.z)));
         }
-        
+
         private OutlinePainter m_outlinePainter;
 
         private CameraProperty m_cameraProperty;

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
@@ -13,6 +12,7 @@ namespace UnityToolkit.Editor
             if (EditorUtility.InstanceIDToObject(instanceId) is UIDatabase asset)
             {
                 Debug.LogWarning("Open UIPanelDatabase not implemented yet.");
+
                 // UIDataBaseEditorWindow.ShowWindow(asset);
                 // return true;
             }

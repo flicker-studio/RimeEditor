@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UnityToolkit.Editor
@@ -8,14 +7,21 @@ namespace UnityToolkit.Editor
     static internal class ScrollListMenuOptions
     {
         #region code from MenuOptions.cs
+
         private const string kUILayerName = "UI";
 
         private const string kStandardSpritePath = "UI/Skin/UISprite.psd";
+
         private const string kBackgroundSpritePath = "UI/Skin/Background.psd";
+
         private const string kInputFieldBackgroundPath = "UI/Skin/InputFieldBackground.psd";
+
         private const string kKnobPath = "UI/Skin/Knob.psd";
+
         private const string kCheckmarkPath = "UI/Skin/Checkmark.psd";
+
         private const string kDropdownArrowPath = "UI/Skin/DropdownArrow.psd";
+
         private const string kMaskPath = "UI/Skin/UIMask.psd";
 
         private static DefaultControls.Resources s_StandardResources;
@@ -32,6 +38,7 @@ namespace UnityToolkit.Editor
                 s_StandardResources.dropdown = AssetDatabase.GetBuiltinExtraResource<Sprite>(kDropdownArrowPath);
                 s_StandardResources.mask = AssetDatabase.GetBuiltinExtraResource<Sprite>(kMaskPath);
             }
+
             return s_StandardResources;
         }
 
@@ -39,6 +46,7 @@ namespace UnityToolkit.Editor
         {
             // Find the best scene view
             SceneView sceneView = SceneView.lastActiveSceneView;
+
             if (sceneView == null && SceneView.sceneViews.Count > 0)
                 sceneView = SceneView.sceneViews[0] as SceneView;
 
@@ -50,6 +58,7 @@ namespace UnityToolkit.Editor
             Vector2 localPlanePosition;
             Camera camera = sceneView.camera;
             Vector3 position = Vector3.zero;
+
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRTransform, new Vector2(camera.pixelWidth / 2, camera.pixelHeight / 2), camera, out localPlanePosition))
             {
                 // Adjust for canvas pivot
@@ -83,6 +92,7 @@ namespace UnityToolkit.Editor
         private static void PlaceUIElementRoot(GameObject element, MenuCommand menuCommand)
         {
             GameObject parent = menuCommand.context as GameObject;
+
             if (parent == null || parent.GetComponentInParent<Canvas>() == null)
             {
                 parent = GetOrCreateCanvasGameObject();
@@ -93,6 +103,7 @@ namespace UnityToolkit.Editor
             Undo.RegisterCreatedObjectUndo(element, "Create " + element.name);
             Undo.SetTransformParent(element.transform, parent.transform, "Parent " + element.name);
             GameObjectUtility.SetParentAndAlign(element, parent);
+
             if (parent != menuCommand.context) // not a context click, so center in sceneview
                 SetPositionVisibleinSceneView(parent.GetComponent<RectTransform>(), element.GetComponent<RectTransform>());
 
@@ -122,19 +133,22 @@ namespace UnityToolkit.Editor
 
             // Try to find a gameobject that is the selected GO or one if its parents.
             Canvas canvas = (selectedGo != null) ? selectedGo.GetComponentInParent<Canvas>() : null;
+
             if (canvas != null && canvas.gameObject.activeInHierarchy)
                 return canvas.gameObject;
 
             // No canvas in selection or its parents? Then use just any canvas..
             canvas = Object.FindObjectOfType(typeof(Canvas)) as Canvas;
+
             if (canvas != null && canvas.gameObject.activeInHierarchy)
                 return canvas.gameObject;
 
             // No canvas in the scene at all? Then create a new one.
             return ScrollListMenuOptions.CreateNewUI();
         }
+
         #endregion
-        
+
         [MenuItem("GameObject/UI/Loop Horizontal Scroll Rect")]
         public static void AddLoopHorizontalScrollRect(MenuCommand menuCommand)
         {

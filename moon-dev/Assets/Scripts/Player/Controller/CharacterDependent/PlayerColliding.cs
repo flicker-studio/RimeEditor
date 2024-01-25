@@ -1,4 +1,3 @@
-using Frame.Static.Extensions;
 using Moon.Kernel.Extension;
 using UnityEngine;
 

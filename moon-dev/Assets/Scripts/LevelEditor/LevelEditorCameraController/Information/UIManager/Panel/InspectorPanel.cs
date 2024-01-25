@@ -1,6 +1,5 @@
-using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using TMPro;
-using UnityEngine;
 using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
@@ -16,19 +15,19 @@ namespace LevelEditor
         public UIProperty.InspectorItemProperty GetInspectorItemProperty => m_inspectorItemProperty;
 
         private UIProperty.InspectorItemProperty m_inspectorItemProperty;
-        
+
         private RectTransform m_inspectorRootRect;
 
         private RectTransform m_inspectorContentRect;
 
         private TextMeshProUGUI m_inspectorDescribeText;
-        
-        public InspectorPanel(RectTransform rect,UIProperty levelEditorUIProperty)
+
+        public InspectorPanel(RectTransform rect, UIProperty levelEditorUIProperty)
         {
             InitComponent(rect, levelEditorUIProperty);
         }
-        
-        private void InitComponent(RectTransform rect,UIProperty levelEditorUIProperty)
+
+        private void InitComponent(RectTransform rect, UIProperty levelEditorUIProperty)
         {
             UIProperty.InspectorPanelUIName property = levelEditorUIProperty.GetInspectorPanelUI.GetInspectorPanelUIName;
             m_inspectorItemProperty = levelEditorUIProperty.GetInspectorPanelUI.GetInspectorItemProperty;

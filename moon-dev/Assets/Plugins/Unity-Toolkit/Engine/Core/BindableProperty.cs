@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityToolkit
@@ -24,6 +23,7 @@ namespace UnityToolkit
     public sealed class BindableProperty<T>
     {
         [SerializeField] private T _value;
+
         private Action<T> _onValueChanged = (_) => { };
 
         public T Value
@@ -33,6 +33,7 @@ namespace UnityToolkit
             {
                 if (value == null && _value == null) return;
                 if (value != null && value.Equals(_value)) return;
+
                 Set(value);
                 _onValueChanged.Invoke(value);
             }

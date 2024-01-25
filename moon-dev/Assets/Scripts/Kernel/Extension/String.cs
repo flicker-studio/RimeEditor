@@ -7,7 +7,6 @@ namespace Moon.Kernel.Extension
 {
     public static class String
     {
-        [Obsolete("Consider using the extension method under Moon.Extension.Csharp Method instead this.")]
         public static string RemoveTrailingNumbers(this string input)
         {
             return Regex.Replace(input, @"\d+$", "");

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -14,6 +13,7 @@ namespace UnityToolkit
     internal class PoolObjConfig : MonoBehaviour
     {
         internal int initialPoolSize = 10;
+
         internal int maxPoolSize = 100;
     }
 
@@ -23,6 +23,7 @@ namespace UnityToolkit
     public interface IGameObjectPoolObject
     {
         public void OnGet();
+
         public void OnReturn();
     }
 
@@ -72,10 +73,10 @@ namespace UnityToolkit
             type2Id = new Dictionary<Type, int>();
             prefabDict = new Dictionary<int, ObjectPool<GameObject>>();
 
-
             foreach (var prefab in prefabList)
             {
                 int id = prefab.GetInstanceID();
+
                 if (prefab.TryGetComponent(out IGameObjectPoolObject poolObject))
                 {
                     type2Id[poolObject.GetType()] = id;
@@ -83,6 +84,7 @@ namespace UnityToolkit
 
                 int initialPoolSize = 10; //默认值
                 int maxPoolSize = 100; //默认值
+
                 if (prefab.TryGetComponent(out PoolObjConfig poolConfig))
                 {
                     initialPoolSize = poolConfig.initialPoolSize;
@@ -98,6 +100,7 @@ namespace UnityToolkit
             //去重
             HashSet<GameObject> set = new HashSet<GameObject>(prefabList);
             prefabList = set.ToList();
+
             //去空
             for (int i = prefabList.Count - 1; i >= 0; --i)
             {
@@ -119,6 +122,7 @@ namespace UnityToolkit
 
         {
             int id = prefab.GetInstanceID();
+
             if (prefabDict.ContainsKey(id))
             {
                 throw new Exception($"{prefab.name},instanceId:{id} already exist!");

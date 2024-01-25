@@ -1,18 +1,12 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Frame.Static.Extensions;
-using Frame.Static.Global;
-using Newtonsoft.Json;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace LevelEditor
 {
     public delegate void SyncLevelData(SubLevelData subLevelData);
+
     public class DataManager
     {
         public ObservableList<ItemData> TargetItems = new ObservableList<ItemData>();
@@ -20,7 +14,7 @@ namespace LevelEditor
         public List<GameObject> TargetObjs = new List<GameObject>();
 
         public ObservableList<ItemData> ItemAssets => GetCurrentSubLevel?.ItemAssets;
-        
+
         public SubLevelData GetCurrentSubLevel => GetCurrentLevel?.GetSubLevelDatas[m_subLevelIndex];
 
         public LevelData GetCurrentLevel => m_chooseLevelData;
@@ -30,23 +24,24 @@ namespace LevelEditor
         public int GetCurrentSubLevelIndex => m_subLevelIndex;
 
         public SyncLevelData SyncLevelData;
-        
+
         public void SetActiveEditors(bool value)
         {
-            if(ItemAssets == null) return;
+            if (ItemAssets == null) return;
+
             foreach (var itemAsset in ItemAssets)
             {
                 itemAsset.SetActiveEditor(value);
             }
         }
-        
+
         public SubLevelData AddSubLevel()
         {
-            SetItemAssetActive(ItemAssets,false);
+            SetItemAssetActive(ItemAssets, false);
             TargetItems.Clear();
             m_subLevelDatas.Add(new SubLevelData($"Level {m_subLevelDatas.Count}"));
             m_subLevelIndex = m_subLevelDatas.Count - 1;
-            SetItemAssetActive(ItemAssets,true);
+            SetItemAssetActive(ItemAssets, true);
             SyncLevelData?.Invoke(GetCurrentSubLevel);
             return m_subLevelDatas.Last();
         }
@@ -62,31 +57,33 @@ namespace LevelEditor
 
         public void DeleteSubLevel()
         {
-            SetItemAssetActive(ItemAssets,false);
+            SetItemAssetActive(ItemAssets, false);
             TargetItems.Clear();
             m_subLevelDatas.RemoveAt(m_subLevelIndex);
             m_subLevelIndex = Mathf.Clamp(m_subLevelIndex, 0, m_subLevelDatas.Count - 1);
-            SetItemAssetActive(ItemAssets,true);
+            SetItemAssetActive(ItemAssets, true);
             SyncLevelData?.Invoke(GetCurrentSubLevel);
         }
 
         public void SetSubLevelIndex(int index, bool isReload = false)
         {
-            if(m_subLevelIndex == index && !isReload) return;
+            if (m_subLevelIndex == index && !isReload) return;
+
             if (isReload)
             {
                 for (var i = 0; i < m_subLevelDatas.Count; i++)
                 {
-                    SetItemAssetActive(m_subLevelDatas[i].ItemAssets,false,isReload);
+                    SetItemAssetActive(m_subLevelDatas[i].ItemAssets, false, isReload);
                 }
             }
             else
             {
-                SetItemAssetActive(ItemAssets,false,isReload);
+                SetItemAssetActive(ItemAssets, false, isReload);
             }
+
             TargetItems.Clear();
             m_subLevelIndex = Mathf.Clamp(index, 0, m_subLevelDatas.Count - 1);
-            SetItemAssetActive(ItemAssets,true,isReload);
+            SetItemAssetActive(ItemAssets, true, isReload);
             SyncLevelData?.Invoke(GetCurrentSubLevel);
         }
 
@@ -96,7 +93,7 @@ namespace LevelEditor
             tempList.AddRange(m_subLevelDatas);
             return tempList;
         }
-        
+
         public async UniTask LoadLevelFiles()
         {
             SetActiveEditors(false);
@@ -106,17 +103,18 @@ namespace LevelEditor
         public bool OpenLocalLevelDirectory(string path)
         {
             return m_levelLoader.OpenLocalLevelDirectory(path, m_levelDatas);
-        } 
-        
+        }
+
         public void ToJson()
         {
             foreach (var itemAsset in GetCurrentSubLevel.ItemAssets)
             {
                 itemAsset.GetTransformToData();
             }
+
             m_levelLoader.ToJson(m_chooseLevelData);
         }
-        
+
         public LevelData FromJson(string json)
         {
             SetActiveEditors(false);
@@ -128,7 +126,7 @@ namespace LevelEditor
             m_chooseLevelData = new LevelData();
             InitLevel();
         }
-        
+
         public void OpenLevel(LevelData levelData)
         {
             m_chooseLevelData = levelData;
@@ -141,7 +139,7 @@ namespace LevelEditor
         }
 
         private List<SubLevelData> m_subLevelDatas => GetCurrentLevel.GetSubLevelDatas;
-        
+
         private List<LevelData> m_levelDatas = new List<LevelData>();
 
         private LevelData m_chooseLevelData;
@@ -171,24 +169,24 @@ namespace LevelEditor
             m_subLevelIndex = 0;
             m_subLevelDatas.Add(new SubLevelData($"Level {m_subLevelDatas.Count}"));
         }
-        
+
         private void InitLevel(LevelData levelData)
         {
             SetSubLevelIndex(0, true);
         }
-        
+
         private void InitEvent()
         {
             TargetItems.OnAddRange += SyncTargetObj;
             TargetItems.OnAdd += SyncTargetObj;
             TargetItems.OnClear += SyncTargetObj;
         }
-        
-        private void SetItemAssetActive(ObservableList<ItemData> itemDatas,bool active,bool isReload = false)
+
+        private void SetItemAssetActive(ObservableList<ItemData> itemDatas, bool active, bool isReload = false)
         {
             foreach (var itemData in itemDatas)
             {
-                itemData.SetActiveEditor(active,isReload);
+                itemData.SetActiveEditor(active, isReload);
             }
         }
 
@@ -196,12 +194,12 @@ namespace LevelEditor
         {
             SyncTargetObj();
         }
-        
+
         private void SyncTargetObj(ItemData list)
         {
             SyncTargetObj();
         }
-        
+
         private void SyncTargetObj()
         {
             TargetObjs = TargetItems.GetItemObjs();

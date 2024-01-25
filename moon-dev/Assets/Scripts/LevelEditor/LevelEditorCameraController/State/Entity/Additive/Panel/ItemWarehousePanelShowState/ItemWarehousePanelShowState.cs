@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Frame.CompnentExtensions;
 using Frame.StateMachine;
-using Frame.Static.Extensions;
 using Frame.Tool.Pool;
 using Moon.Kernel.Extension;
 using TMPro;
@@ -18,11 +17,11 @@ namespace LevelEditor
         private InputController GetInput => m_information.GetInput;
         private LevelAction GetLevelAction => m_information.GetLevelAction;
         private ItemWarehousePanel GetItemWarehousePanel => m_information.GetUI.GetItemWarehousePanel;
-        
+
         private Transform GetItemTypeGroup => GetItemWarehousePanel.GetItemTypeGroup;
 
         private Transform GetItemDetailGroupContent => GetItemWarehousePanel.GetItemDetailGroupContent;
-        
+
         private GameObject GetItemDtailGroup => m_information.GetPrefab.GetItemDetailGroup;
 
         private GameObject GetItemLattice => m_information.GetPrefab.GetItemLattice;
@@ -30,15 +29,15 @@ namespace LevelEditor
         private GameObject GetItemType => m_information.GetPrefab.GetItemType;
 
         private TextMeshProUGUI GetSelectPromptText => GetItemWarehousePanel.GetSelectPromptText;
-        
+
         private TextMeshProUGUI GetNothingFindText => GetItemWarehousePanel.GetNothingFindText;
 
         private GameObject GetPopoverPanelObj => GetItemWarehousePanel.GetPopoverPanelObj;
-        
+
         private GameObject GetItemWarehousePanelObj => GetItemWarehousePanel.GetItemWarehousePanelObj;
-        
+
         private Button GetCloseButton => GetItemWarehousePanel.GetCloseButton;
-        
+
         private Button GetCreateButton => GetItemWarehousePanel.GetCreateButton;
 
         private Button GetClearSearchButton => GetItemWarehousePanel.GetClearSearchButton;
@@ -56,13 +55,13 @@ namespace LevelEditor
         private string GetDetailGroupContentName => GetItemWarehousePanel.GetDetailGroupContentName;
 
         private string GetItemLatticeImageName => GetItemWarehousePanel.GetItemLatticeImageName;
-        
+
         private string GetItemLatticeTextName => GetItemWarehousePanel.GetItemLatticeTextName;
-        
+
         private string GetItemTypeTextName => GetItemWarehousePanel.GetItemTypeTextName;
-        
+
         private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
-        
+
         private ObservableList<ItemData> TargetAssets => m_information.GetData.TargetItems;
 
         private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
@@ -77,7 +76,7 @@ namespace LevelEditor
             new Dictionary<ITEMTYPEENUM, List<ItemProductButton>>();
 
         private static List<ItemProduct> m_searchItemProduct = new List<ItemProduct>();
-        
+
         private static GameObject m_searchItemGroupObj;
 
         private static ItemTypeButton m_searchItemTypeButton;
@@ -85,11 +84,11 @@ namespace LevelEditor
         private static Dictionary<ITEMTYPEENUM, List<ItemProduct>> m_itemDictionary;
 
         private static List<GameObject> m_itemGroupObjList;
-        
+
         private static List<ItemTypeButton> m_itemTypeList;
 
         private static List<ItemProductButton> m_itemProductButtonList;
-        
+
         [RuntimeInitializeOnLoadMethod]
         static void ResetStaticVar()
         {
@@ -103,7 +102,7 @@ namespace LevelEditor
             m_searchItemProductDic.Clear();
             m_searchItemProduct.Clear();
         }
-        
+
         public ItemWarehousePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
             LoadItemsFromPoject();
@@ -115,18 +114,17 @@ namespace LevelEditor
 
         public override void Motion(BaseInformation information)
         {
-
         }
 
         private void InitState()
         {
             GetInput.SetCanInput(false);
         }
-        
+
         private void InitListener()
         {
             GetCreateButton.interactable = false;
-            
+
             GetCreateButton.onClick.AddListener(() =>
             {
                 CreateNewItem();
@@ -139,13 +137,13 @@ namespace LevelEditor
                 ClosePanel();
                 return;
             });
-            
+
             GetClearSearchButton.onClick.AddListener(() =>
             {
                 ClearSearchInput();
                 ResetSearchPanelState();
             });
-            
+
             GetSearchField.onSubmit.AddListener((value) =>
             {
                 if (value == "")
@@ -159,13 +157,10 @@ namespace LevelEditor
                     SearchItem(value);
                 }
             });
-            
-            GetScrollbar.onValueChanged.AddListener((value) =>
-            {
-                SetItemTypeByScrollBarValue();
-            });
+
+            GetScrollbar.onValueChanged.AddListener((value) => { SetItemTypeByScrollBarValue(); });
         }
-        
+
         protected override void RemoveState()
         {
             ResetState();
@@ -179,7 +174,7 @@ namespace LevelEditor
             ClearSearchInput();
             RemoveState();
         }
-        
+
         private void ResetState()
         {
             GetInput.SetCanInput(true);
@@ -188,29 +183,29 @@ namespace LevelEditor
             ResetButtonState();
             m_isInit = false;
         }
-        
+
         private void ResetTextState()
         {
             GetSelectPromptText.text = "";
         }
-        
+
         private void ResetSearchPanelState()
         {
-            if(m_searchItemGroupObj == null || !m_searchItemGroupObj.activeInHierarchy) return;
-            
+            if (m_searchItemGroupObj == null || !m_searchItemGroupObj.activeInHierarchy) return;
+
             m_searchItemGroupObj.SetActive(false);
-            
+
             m_searchItemTypeButton.SetActive(false);
-            
+
             foreach (var itemGroupObj in m_itemGroupObjList)
             {
                 itemGroupObj.SetActive(true);
             }
-            
+
             m_itemTypeList[0].Invoke();
 
             GetScrollbar.value = 1f;
-            
+
             GetNothingFindText.gameObject.SetActive(false);
         }
 
@@ -241,17 +236,17 @@ namespace LevelEditor
             m_currentChoose = null;
 
             GetLevelAction.ExitEditorView -= ResetInitBool;
-            
+
             GetLevelAction.ExitEditorView += ResetInitBool;
-            
+
             GetCreateButton.onClick.RemoveAllListeners();
 
             GetCloseButton.onClick.RemoveAllListeners();
-            
+
             GetClearSearchButton.onClick.RemoveAllListeners();
-            
+
             GetSearchField.onSubmit.RemoveAllListeners();
-            
+
             GetScrollbar.onValueChanged.RemoveAllListeners();
         }
 
@@ -278,15 +273,17 @@ namespace LevelEditor
                     m_itemProductButtonList.Remove(itemProductButton);
                 }
             }
-            
+
             m_searchItemProductDic.Clear();
             m_searchItemProduct.Clear();
-            
+
             if (m_searchItemGroupObj == null)
             {
                 m_searchItemGroupObj = CreateItemDtailGroup(searchValue);
             }
+
             m_searchItemGroupObj.SetActive(true);
+
             m_searchItemGroupObj.transform.Find(GetDetailGroupTextName)
                 .GetComponent<TextMeshProUGUI>().text = searchValue;
         }
@@ -296,7 +293,7 @@ namespace LevelEditor
             Transform content = m_searchItemGroupObj.transform.Find(GetDetailGroupContentName);
 
             int addItem = 0;
-            
+
             foreach (var keyValuePair in m_itemDictionary)
             {
                 foreach (var itemProduct in keyValuePair.Value)
@@ -304,14 +301,15 @@ namespace LevelEditor
                     if (itemProduct.Name.Contains(searchValue))
                     {
                         addItem++;
+
                         if (m_searchItemProductDic.ContainsKey(itemProduct.ItemType))
                         {
-                            m_searchItemProductDic[itemProduct.ItemType].Add(CreateItemProductObj(itemProduct,content));
+                            m_searchItemProductDic[itemProduct.ItemType].Add(CreateItemProductObj(itemProduct, content));
                         }
                         else
                         {
                             m_searchItemProductDic.Add(itemProduct.ItemType
-                                ,new List<ItemProductButton>(){CreateItemProductObj(itemProduct,content)});
+                                , new List<ItemProductButton>() { CreateItemProductObj(itemProduct, content) });
                         }
                     }
                 }
@@ -323,24 +321,28 @@ namespace LevelEditor
         private void FinishSearchAndSetPanel()
         {
             GetScrollbar.value = 1f;
-            
+
             if (m_searchItemTypeButton == null)
             {
                 m_searchItemTypeButton = CreateItemType("All");
                 m_searchItemTypeButton.GetButtonObj.transform.SetAsFirstSibling();
             }
+
             m_searchItemTypeButton.SetActive(true);
             m_searchItemTypeButton.Invoke();
         }
 
         private void SetItemTypeByScrollBarValue()
         {
-            if(m_searchItemTypeButton != null && m_searchItemTypeButton.GetButtonObj.activeInHierarchy) return;
+            if (m_searchItemTypeButton != null && m_searchItemTypeButton.GetButtonObj.activeInHierarchy) return;
+
             float contentPosY = GetItemDetailGroupContent.GetComponent<RectTransform>().anchoredPosition.y;
             float itemDtailHeightSum = 0;
+
             for (int i = 0; i < GetItemDetailGroupContent.transform.childCount; i++)
             {
                 itemDtailHeightSum += (GetItemDetailGroupContent.transform.GetChild(i) as RectTransform).sizeDelta.y;
+
                 if (itemDtailHeightSum > contentPosY)
                 {
                     m_itemTypeList[i].Invoke();
@@ -348,37 +350,43 @@ namespace LevelEditor
                 }
             }
         }
-        
+
         private void LoadItemsFromPoject()
         {
-            if(!m_isInit) return;
+            if (!m_isInit) return;
+
             m_itemDictionary = new Dictionary<ITEMTYPEENUM, List<ItemProduct>>();
+
             foreach (ITEMTYPEENUM type in Enum.GetValues(typeof(ITEMTYPEENUM)))
             {
                 List<ItemProduct> items = Resources.LoadAll<ItemProduct>
                     (GetItemRootPath + '\\' + Enum.GetName(typeof(ITEMTYPEENUM), type)).ToList();
-                m_itemDictionary.Add(type,items);
+
+                m_itemDictionary.Add(type, items);
             }
         }
-        
+
         private void LoadItemWarehouseFromItems()
         {
-            if(!m_isInit) return;
+            if (!m_isInit) return;
+
             m_itemGroupObjList = new List<GameObject>();
             m_itemTypeList = new List<ItemTypeButton>();
             m_itemProductButtonList = new List<ItemProductButton>();
+
             foreach (var keyValuePair in m_itemDictionary)
             {
                 string itemType = Enum.GetName(typeof(ITEMTYPEENUM), keyValuePair.Key);
-                
+
                 GameObject itemDtailGroup = CreateItemDtailGroup(itemType);
-                
+
                 m_itemGroupObjList.Add(itemDtailGroup);
                 m_itemTypeList.Add(CreateItemType(itemType));
-                
+
                 List<ItemProduct> itemList = keyValuePair.Value;
 
                 Transform content = itemDtailGroup.transform.Find(GetDetailGroupContentName);
+
                 foreach (var itemProduct in itemList)
                 {
                     m_itemProductButtonList.Add(CreateItemProductObj(itemProduct, content));
@@ -386,16 +394,17 @@ namespace LevelEditor
             }
         }
 
-        private ItemProductButton CreateItemProductObj(ItemProduct itemProduct,Transform content)
+        private ItemProductButton CreateItemProductObj(ItemProduct itemProduct, Transform content)
         {
-            ItemProductButton newItemProductButton = new ItemProductButton(GetItemLattice,itemProduct, ChooseItemProduct, content,GetScrollView,
+            ItemProductButton newItemProductButton = new ItemProductButton(GetItemLattice, itemProduct, ChooseItemProduct, content, GetScrollView,
                 GetItemLatticeTextName, GetItemLatticeImageName);
+
             return newItemProductButton;
         }
 
         private ItemTypeButton CreateItemType(string itemTypeName)
         {
-            ItemTypeButton itemTypeButton = new ItemTypeButton(GetItemType, ItemTypeSelectEvent, GetItemTypeGroup,null, GetItemTypeTextName);
+            ItemTypeButton itemTypeButton = new ItemTypeButton(GetItemType, ItemTypeSelectEvent, GetItemTypeGroup, null, GetItemTypeTextName);
             itemTypeButton.GetText.text = itemTypeName;
             return itemTypeButton;
         }
@@ -403,9 +412,9 @@ namespace LevelEditor
         private void ItemTypeSelectEvent(GridItemButton gridItemButton)
         {
             ItemTypeButton itemTypeButton = gridItemButton as ItemTypeButton;
-            
+
             ItemTypeChoose(itemTypeButton);
-                
+
             if (m_searchItemTypeButton == null ||
                 m_searchItemTypeButton != null && !m_searchItemTypeButton.GetActive())
             {
@@ -416,7 +425,7 @@ namespace LevelEditor
                 ClassifiedSearch(itemTypeButton);
             }
         }
-        
+
         private void ItemTypeChoose(ItemTypeButton newItemTypeButton)
         {
             foreach (var itemTypObj in m_itemTypeList)
@@ -431,16 +440,19 @@ namespace LevelEditor
             {
                 m_searchItemTypeButton.SetSelected = false;
             }
+
             newItemTypeButton.SetSelected = true;
         }
 
         private void SetContentPosByItemType(ItemTypeButton newItemTypeButton)
         {
             float itemDtailHeightSum = 0;
-            for (int i = 0;m_itemTypeList[i] != newItemTypeButton ; i++)
+
+            for (int i = 0; m_itemTypeList[i] != newItemTypeButton; i++)
             {
                 itemDtailHeightSum += (GetItemDetailGroupContent.transform.GetChild(i) as RectTransform).sizeDelta.y;
             }
+
             RectTransform content = GetItemDetailGroupContent.GetComponent<RectTransform>();
             content.anchoredPosition = content.anchoredPosition.NewY(itemDtailHeightSum);
         }
@@ -448,7 +460,7 @@ namespace LevelEditor
         private void ClassifiedSearch(ItemTypeButton newItemTypeButton)
         {
             int activeObjNum = 0;
-            
+
             if (newItemTypeButton == m_searchItemTypeButton)
             {
                 foreach (var itemProductPair in m_searchItemProductDic)
@@ -459,15 +471,17 @@ namespace LevelEditor
                         itemProductObj.SetActive(true);
                     }
                 }
-                
-                if(activeObjNum == 0) GetNothingFindText.gameObject.SetActive(true);
+
+                if (activeObjNum == 0) GetNothingFindText.gameObject.SetActive(true);
                 else GetNothingFindText.gameObject.SetActive(false);
+
                 GetScrollbar.value = 1f;
                 return;
             }
-                        
+
             string itemType = newItemTypeButton.GetButtonObj.transform.Find(GetItemTypeTextName)
                 .GetComponent<TextMeshProUGUI>().text;
+
             foreach (var itemProductPair in m_searchItemProductDic)
             {
                 foreach (var itemProductObj in itemProductPair.Value)
@@ -483,8 +497,10 @@ namespace LevelEditor
                     }
                 }
             }
-            if(activeObjNum == 0) GetNothingFindText.gameObject.SetActive(true);
+
+            if (activeObjNum == 0) GetNothingFindText.gameObject.SetActive(true);
             else GetNothingFindText.gameObject.SetActive(false);
+
             GetScrollbar.value = 1f;
         }
 
@@ -492,15 +508,16 @@ namespace LevelEditor
         {
             GameObject itemDtailGroup = ObjectPool.Instance.OnTake(GetItemDtailGroup);
             itemDtailGroup.transform.SetParent(GetItemDetailGroupContent);
+
             itemDtailGroup.transform.Find(GetDetailGroupTextName)
                 .GetComponent<TextMeshProUGUI>().text = itemType;
-            
+
             return itemDtailGroup;
         }
 
         private void CreateNewItem()
         {
-            GetExcute?.Invoke(new ItemCreateCommand(TargetAssets,ItemAssets,GetOutlinePainter,m_currentChoose));
+            GetExcute?.Invoke(new ItemCreateCommand(TargetAssets, ItemAssets, GetOutlinePainter, m_currentChoose));
         }
 
         private void ChooseItemProduct(GridItemButton gridItemButton)
@@ -510,6 +527,7 @@ namespace LevelEditor
             GetSelectPromptText.text = $"{GetSelectPromptText.gameObject.name}: {itemProduct.Name}";
             m_currentChoose = itemProduct;
             GetCreateButton.interactable = true;
+
             foreach (var itemProductObj in m_itemProductButtonList)
             {
                 if (itemProductObj != gridItemButton)
@@ -517,6 +535,7 @@ namespace LevelEditor
                     itemProductObj.SetSelected = false;
                 }
             }
+
             foreach (var keyValuePair in m_searchItemProductDic)
             {
                 foreach (var itemProductObj in keyValuePair.Value)

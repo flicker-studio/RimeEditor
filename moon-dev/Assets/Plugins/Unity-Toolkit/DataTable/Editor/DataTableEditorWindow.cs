@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -12,11 +11,17 @@ namespace UnityToolkit.Editor
         [SerializeField] private TableDataConfig config;
 
         [SerializeField] private VisualTreeAsset uxml;
+
         [SerializeField] private StyleSheet uss;
+
         private Button _importDataTableButton;
+
         private Button _codeGenButton;
+
         private ObjectField _configObjectField;
+
         private TextField _codeGenPathTextField;
+
         private TextField _assetGenPathTextField;
 
         [MenuItem("Tools/Nico/DataTable")]
@@ -30,10 +35,13 @@ namespace UnityToolkit.Editor
         {
             //加载自己当前所在的路径 
             string selfPath = AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this));
+
             //去除文件名
             selfPath = Path.GetDirectoryName(selfPath);
+
             //  读取自己的 uxml 和 uss 文件
             VisualElement root = rootVisualElement;
+
             if (uxml == null)
             {
                 string path = Path.Combine(selfPath, "DataTableEditorWindow.uxml");
@@ -54,13 +62,13 @@ namespace UnityToolkit.Editor
             {
                 string path = $"{selfPath}/TableDataConfig.asset";
                 config = AssetDatabase.LoadAssetAtPath<TableDataConfig>(path);
+
                 if (config == null)
                 {
                     config = ScriptableObject.CreateInstance<TableDataConfig>();
                     AssetDatabase.CreateAsset(config, path);
                 }
             }
-
 
             _configObjectField = rootVisualElement.Q<ObjectField>("config");
             _configObjectField.objectType = typeof(TableDataConfig);
@@ -98,8 +106,10 @@ namespace UnityToolkit.Editor
             _codeGenButton.SetEnabled(false);
             string projectPath = Application.dataPath; //从Assets 回退到工程目录
             projectPath = projectPath.Substring(0, projectPath.Length - 6);
+
             string excelPath = EditorUtility.OpenFilePanelWithFilters("select excel", projectPath,
                 new string[] { "Excel Files", "csv,xlsx,xls" });
+
             if (string.IsNullOrEmpty(excelPath))
             {
                 _codeGenButton.SetEnabled(true);
@@ -116,8 +126,10 @@ namespace UnityToolkit.Editor
             _importDataTableButton.SetEnabled(false);
             string projectPath = Application.dataPath; //从Assets 回退到工程目录
             projectPath = projectPath.Substring(0, projectPath.Length - 6);
+
             string excelPath = EditorUtility.OpenFilePanelWithFilters("select excel", projectPath,
                 new string[] { "Excel Files", "csv,xlsx,xls" });
+
             if (string.IsNullOrEmpty(excelPath))
             {
                 _importDataTableButton.SetEnabled(true);

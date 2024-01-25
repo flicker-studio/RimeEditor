@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UnityToolkit
@@ -9,19 +8,28 @@ namespace UnityToolkit
     public enum ProgressTitleType
     {
         Value,
+
         Percent,
     }
 
     public class ProgressBar : MonoBehaviour, IUIComponent
     {
         [SerializeField] private TextMeshProUGUI title;
+
         [SerializeField] private Image bar;
+
         [SerializeField] private bool usingTitle;
+
         [SerializeField] private int _max = 100;
+
         [SerializeField] private int _value = 50;
+
         [SerializeField] private int _min = 0;
+
         [SerializeField] private ProgressTitleType _titleType = ProgressTitleType.Value;
+
         [SerializeField] private Image.FillMethod _fillMethod = Image.FillMethod.Horizontal; //默认水平填充
+
         // public bool tween = true;
 
         public bool UsingTitle
@@ -100,6 +108,7 @@ namespace UnityToolkit
         {
             title.enabled = usingTitle;
             if (!usingTitle) return;
+
             switch (_titleType)
             {
                 case ProgressTitleType.Value:
@@ -121,6 +130,7 @@ namespace UnityToolkit
             if (value < _min) value = _min;
 
             if (this._value == value) return;
+
             this._value = value;
             UpdateVisualDirect();
             OnValueChanged?.Invoke(value);

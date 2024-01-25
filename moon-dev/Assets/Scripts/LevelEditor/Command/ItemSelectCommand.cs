@@ -1,25 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
-using Frame.Static.Extensions;
-using UnityEngine;
-using Frame.Tool;
+
 namespace LevelEditor
 {
     public class ItemSelectCommand : LevelEditCommand
     {
         private ObservableList<ItemData> m_targetList;
+
         private OutlinePainter m_outlinePainter;
+
         private List<ItemData> m_lastList = new List<ItemData>();
+
         private List<ItemData> m_nextList = new List<ItemData>();
-    
-        public ItemSelectCommand(ObservableList<ItemData> targetList,List<ItemData> nextList,OutlinePainter outlinePainter)
+
+        public ItemSelectCommand(ObservableList<ItemData> targetList, List<ItemData> nextList, OutlinePainter outlinePainter)
         {
             m_targetList = targetList;
             m_outlinePainter = outlinePainter;
             m_lastList.AddRange(targetList);
             m_nextList.AddRange(nextList);
         }
-    
+
         public override void Execute()
         {
             m_targetList.Clear();
@@ -34,5 +34,4 @@ namespace LevelEditor
             m_outlinePainter.SetTargetObj = m_targetList.GetItemObjs();
         }
     }
-
 }

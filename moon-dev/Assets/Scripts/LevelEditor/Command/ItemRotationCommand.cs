@@ -1,25 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Frame.Tool;
+
 namespace LevelEditor
 {
     public class ItemRotationCommand : LevelEditCommand
     {
         private List<ItemData> m_itemDatas = new List<ItemData>();
+
         private List<Quaternion> m_lastRotation = new List<Quaternion>();
+
         private List<Quaternion> m_nextRotation = new List<Quaternion>();
+
         private List<Vector3> m_lastPosition = new List<Vector3>();
+
         private List<Vector3> m_nextPosition = new List<Vector3>();
 
-        public ItemRotationCommand(ObservableList<ItemData> itemDatas,List<Vector3> lastPosition,List<Vector3> nextPosition,
-            List<Quaternion> lastRotation,List<Quaternion> nextRotation)
+        public ItemRotationCommand(ObservableList<ItemData> itemDatas, List<Vector3> lastPosition, List<Vector3> nextPosition,
+            List<Quaternion> lastRotation, List<Quaternion> nextRotation)
         {
             m_itemDatas.AddRange(itemDatas);
             m_lastPosition.AddRange(lastPosition);
             m_nextPosition.AddRange(nextPosition);
             m_lastRotation.AddRange(lastRotation);
-            m_nextRotation.AddRange(nextRotation);   
+            m_nextRotation.AddRange(nextRotation);
         }
+
         public override void Execute()
         {
             for (int i = 0; i < m_itemDatas.Count; i++)
@@ -38,5 +43,4 @@ namespace LevelEditor
             }
         }
     }
-
 }

@@ -1,6 +1,5 @@
-using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 using RectTransform = UnityEngine.RectTransform;
 
@@ -37,7 +36,7 @@ namespace LevelEditor
         public Button GetOpenLocalDirectoryButton => m_openLocalDirectoryButton;
 
         public Button GetWorksShopButton => m_worksShopButton;
-        
+
         public TextMeshProUGUI GetSubLevelNumber => m_subLevelNumber;
 
         public TextMeshProUGUI GetLevelName => m_levelName;
@@ -55,13 +54,13 @@ namespace LevelEditor
         private RawImage m_levelCoverImage;
 
         private ScrollRect m_levelScrollRect;
-        
+
         private string m_levelTextName;
 
         private string m_levelPathTextName;
 
         private string m_levelImageName;
-        
+
         private RectTransform m_levelManagerRootRect;
 
         private RectTransform m_levelListContentRect;
@@ -79,7 +78,7 @@ namespace LevelEditor
         private Button m_refreshButton;
 
         private Button m_openLocalDirectoryButton;
-        
+
         private Button m_worksShopButton;
 
         private Button m_localLevelButton;
@@ -95,19 +94,21 @@ namespace LevelEditor
         private TextMeshProUGUI m_instroduction;
 
         private TextMeshProUGUI m_version;
-        
+
         private TextMeshProUGUI m_subLevelNumber;
 
         private UIProperty.PopoverProperty m_popoverProperty;
-        public LevelManagerPanel(RectTransform rect,UIProperty levelEditorUIProperty)
+
+        public LevelManagerPanel(RectTransform rect, UIProperty levelEditorUIProperty)
         {
             InitComponent(rect, levelEditorUIProperty);
         }
-        
-        private void InitComponent(RectTransform rect,UIProperty levelEditorUIProperty)
+
+        private void InitComponent(RectTransform rect, UIProperty levelEditorUIProperty)
         {
             UIProperty.LevelManagerPanelUIName uiProperty =
                 levelEditorUIProperty.GetLevelManagerPanelUI.GetLevelManagerPanelUIName;
+
             m_popoverProperty = levelEditorUIProperty.GetPopoverProperty;
             m_levelTextName = uiProperty.ITEM_LEVEL_NAME;
             m_levelPathTextName = uiProperty.ITEM_LEVEL_PATH;

@@ -5,7 +5,7 @@ using Moon.Kernel.Extension.ArrayExtensions;
 
 namespace Moon.Kernel.Extension
 {
-    public static class Object
+    internal static class Object
     {
         private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
 

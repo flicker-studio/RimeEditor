@@ -2,7 +2,6 @@
 // Created: 2018/07/13
 
 #if true // MODULE_MARKER
-using System;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins;
 using DG.Tweening.Plugins.Core.PathCore;
@@ -12,7 +11,7 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening
 {
-	public static class DOTweenModulePhysics2D
+    public static class DOTweenModulePhysics2D
     {
         #region Shortcuts
 
@@ -79,23 +78,30 @@ namespace DG.Tweening
             float offsetY = -1;
             bool offsetYSet = false;
             Sequence s = DOTween.Sequence();
+
             Tween yTween = DOTween.To(() => target.position, x => target.position = x, new Vector2(0, jumpPower), duration / (numJumps * 2))
                 .SetOptions(AxisConstraint.Y, snapping).SetEase(Ease.OutQuad).SetRelative()
                 .SetLoops(numJumps * 2, LoopType.Yoyo)
                 .OnStart(() => startPosY = target.position.y);
+
             s.Append(DOTween.To(() => target.position, x => target.position = x, new Vector2(endValue.x, 0), duration)
                     .SetOptions(AxisConstraint.X, snapping).SetEase(Ease.Linear)
                 ).Join(yTween)
                 .SetTarget(target).SetEase(DOTween.defaultEaseType);
-            yTween.OnUpdate(() => {
-                if (!offsetYSet) {
+
+            yTween.OnUpdate(() =>
+            {
+                if (!offsetYSet)
+                {
                     offsetYSet = true;
                     offsetY = s.isRelative ? endValue.y : endValue.y - startPosY;
                 }
+
                 Vector3 pos = target.position;
                 pos.y += DOVirtual.EasedValue(0, offsetY, yTween.ElapsedPercentage(), Ease.OutQuad);
                 target.MovePosition(pos);
             });
+
             return s;
         }
 
@@ -120,6 +126,7 @@ namespace DG.Tweening
             int len = path.Length;
             Vector3[] path3D = new Vector3[len];
             for (int i = 0; i < len; ++i) path3D[i] = path[i];
+
             TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.MovePosition(x), new Path(pathType, path3D, resolution, gizmoColor), duration)
                 .SetTarget(target).SetUpdate(UpdateType.Fixed);
 
@@ -127,6 +134,7 @@ namespace DG.Tweening
             t.plugOptions.mode = pathMode;
             return t;
         }
+
         /// <summary>Tweens a Rigidbody2D's localPosition through the given path waypoints, using the chosen path algorithm.
         /// Also stores the Rigidbody2D as the tween's target so it can be used for filtered operations
         /// <para>NOTE: to tween a Rigidbody2D correctly it should be set to kinematic at least while being tweened.</para>
@@ -149,7 +157,10 @@ namespace DG.Tweening
             Vector3[] path3D = new Vector3[len];
             for (int i = 0; i < len; ++i) path3D[i] = path[i];
             Transform trans = target.transform;
-            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => trans.localPosition, x => target.MovePosition(trans.parent == null ? x : trans.parent.TransformPoint(x)), new Path(pathType, path3D, resolution, gizmoColor), duration)
+
+            TweenerCore<Vector3, Path, PathOptions> t = DOTween
+                .To(PathPlugin.Get(), () => trans.localPosition, x => target.MovePosition(trans.parent == null ? x : trans.parent.TransformPoint(x)),
+                    new Path(pathType, path3D, resolution, gizmoColor), duration)
                 .SetTarget(target).SetUpdate(UpdateType.Fixed);
 
             t.plugOptions.isRigidbody2D = true;
@@ -157,6 +168,7 @@ namespace DG.Tweening
             t.plugOptions.useLocalPosition = true;
             return t;
         }
+
         // Used by path editor when creating the actual tween, so it can pass a pre-compiled path
         internal static TweenerCore<Vector3, Path, PathOptions> DOPath(
             this Rigidbody2D target, Path path, float duration, PathMode pathMode = PathMode.Full3D
@@ -169,12 +181,15 @@ namespace DG.Tweening
             t.plugOptions.mode = pathMode;
             return t;
         }
+
         internal static TweenerCore<Vector3, Path, PathOptions> DOLocalPath(
             this Rigidbody2D target, Path path, float duration, PathMode pathMode = PathMode.Full3D
         )
         {
             Transform trans = target.transform;
-            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => trans.localPosition, x => target.MovePosition(trans.parent == null ? x : trans.parent.TransformPoint(x)), path, duration)
+
+            TweenerCore<Vector3, Path, PathOptions> t = DOTween
+                .To(PathPlugin.Get(), () => trans.localPosition, x => target.MovePosition(trans.parent == null ? x : trans.parent.TransformPoint(x)), path, duration)
                 .SetTarget(target);
 
             t.plugOptions.isRigidbody2D = true;
@@ -188,6 +203,6 @@ namespace DG.Tweening
         #endregion
 
         #endregion
-	}
+    }
 }
 #endif

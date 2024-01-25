@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Moon.Kernel.Extension
 {
-    public static class File
+    internal static class File
     {
         public static bool Move(string source, string target)
         {

@@ -1,4 +1,3 @@
-using Frame.Tool;
 namespace LevelEditor
 {
     public class ActionChangeCommand : LevelEditCommand
@@ -30,6 +29,7 @@ namespace LevelEditor
             m_lastActionType = m_controlHandleAction.ControlHandleActionType;
             m_nextActionType = m_controlHandleAction.ControlHandleActionType;
         }
+
         public override void Execute()
         {
             m_controlHandleAction.ControlHandleActionType = m_nextActionType;
@@ -42,6 +42,4 @@ namespace LevelEditor
             m_controlHandleAction.UseGrid = m_lastGrid;
         }
     }
-
 }
-

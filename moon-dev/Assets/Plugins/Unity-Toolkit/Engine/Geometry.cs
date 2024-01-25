@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UnityToolkit
 {
@@ -25,7 +24,7 @@ namespace UnityToolkit
         {
             //angel转换到-180~180
             angel = (angel + 180) % 360 - 180;
-            
+
             float rectAngel = Mathf.Atan2(rect.height, rect.width) * Mathf.Rad2Deg;
 
             if (angel >= -rectAngel && angel <= rectAngel)

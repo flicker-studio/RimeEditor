@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +12,15 @@ namespace UnityToolkit
         [field: SerializeField] public CanvasScaler rootCanvasScaler { get; private set; } //UI根画布缩放器
         [field: SerializeField] public GraphicRaycaster rootGraphicRaycaster { get; private set; } //UI根画布射线检测器
         [field: SerializeField] public UIDatabase UIDatabase { get; private set; } //UI数据库
+
         private readonly Dictionary<Type, IUIPanel> _openedPanelDict = new Dictionary<Type, IUIPanel>(); //已打开面板字典
+
         private readonly Dictionary<Type, IUIPanel> _closedPanelDict = new Dictionary<Type, IUIPanel>(); //已关闭面板字典
+
         private readonly Stack<IUIPanel> _openedPanelStack = new Stack<IUIPanel>(); //已打开面板栈
+
         private readonly Stack<IUIPanel> _helpStack = new Stack<IUIPanel>();
+
         protected override bool dontDestroyOnLoad() => true;
 
         /// <summary>
@@ -26,9 +30,11 @@ namespace UnityToolkit
         private void Push(IUIPanel panel)
         {
             panel.SetState(UIPanelState.Opening);
+
             if (_openedPanelStack.Count > 0)
             {
                 IUIPanel top = _openedPanelStack.Peek();
+
                 //找到当前面板的显示层级
                 while (top.GetSortingOrder() > panel.GetSortingOrder() && _openedPanelStack.Count > 0)
                 {
@@ -37,6 +43,7 @@ namespace UnityToolkit
                 }
 
                 _openedPanelStack.Push(panel);
+
                 while (_helpStack.Count > 0)
                 {
                     _openedPanelStack.Push(_helpStack.Pop());
@@ -46,7 +53,6 @@ namespace UnityToolkit
             {
                 _openedPanelStack.Push(panel);
             }
-
 
             panel.SetState(UIPanelState.Opened);
             panel.OnOpened();
@@ -79,6 +85,7 @@ namespace UnityToolkit
             panel.SetState(UIPanelState.Closing);
 
             IUIPanel top = _openedPanelStack.Peek();
+
             while (top != panel && _openedPanelStack.Count > 0)
             {
                 _helpStack.Push(top);
@@ -167,12 +174,14 @@ namespace UnityToolkit
         public void Dispose<T>()
         {
             Type type = typeof(T);
+
             if (_openedPanelDict.TryGetValue(type, out var value))
             {
                 Pop(value);
                 value.SetState(UIPanelState.Disposing);
                 value.OnDispose();
                 _openedPanelDict.Remove(type);
+
                 // Debug.Log("Destroy " + value.GetGameObject().name);
                 Destroy(value.GetGameObject());
                 return;
@@ -218,6 +227,7 @@ namespace UnityToolkit
         public bool GetOpenedPanel<T>(out T panel) where T : class, IUIPanel
         {
             Type type = typeof(T);
+
             if (_openedPanelDict.TryGetValue(type, out IUIPanel value))
             {
                 panel = (T)value;
@@ -279,9 +289,11 @@ namespace UnityToolkit
             UnityEditor.Selection.activeGameObject = uiRoot;
 
             UIRoot root = uiRoot.GetComponent<UIRoot>();
+
             if (root.UIDatabase == null)
             {
                 root.UIDatabase = root.CreateDatabase();
+
                 if (root.UIDatabase == null)
                 {
                     Destroy(uiRoot);
@@ -293,9 +305,11 @@ namespace UnityToolkit
         {
             //如果没有找到UIPanelDatabase，就创建一个
             UIDatabase = ScriptableObject.CreateInstance<UIDatabase>();
+
             //打开创建文件的窗口
             string path = UnityEditor.EditorUtility.SaveFilePanelInProject("Create UIPanelDatabase", "UIPanelDatabase",
                 "asset", "Create UIPanelDatabase");
+
             UnityEditor.AssetDatabase.CreateAsset(UIDatabase, path);
             UnityEditor.AssetDatabase.SaveAssets();
             return UIDatabase;
@@ -313,6 +327,7 @@ namespace UnityToolkit
             if (UIDatabase == null)
             {
                 UIDatabase = CreateDatabase();
+
                 if (UIDatabase == null)
                 {
                     return;

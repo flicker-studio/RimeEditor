@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.UI;
 
 namespace UnityToolkit.Editor
@@ -7,20 +6,30 @@ namespace UnityToolkit.Editor
     public static class ScrollListDefaultControls
     {
         #region code from DefaultControls.cs
+
         public struct Resources
         {
             public Sprite standard;
+
             public Sprite background;
+
             public Sprite inputField;
+
             public Sprite knob;
+
             public Sprite checkmark;
+
             public Sprite dropdown;
+
             public Sprite mask;
         }
 
         private const float kWidth = 160f;
+
         private const float kThickHeight = 30f;
+
         private const float kThinHeight = 20f;
+
         //private static Vector2 s_ThickElementSize = new Vector2(kWidth, kThickHeight);
         //private static Vector2 s_ThinElementSize = new Vector2(kWidth, kThinHeight);
         //private static Vector2 s_ImageElementSize = new Vector2(100f, 100f);
@@ -75,15 +84,17 @@ namespace UnityToolkit.Editor
         {
             go.layer = layer;
             Transform t = go.transform;
+
             for (int i = 0; i < t.childCount; i++)
                 SetLayerRecursively(t.GetChild(i).gameObject, layer);
         }
+
         #endregion
-        
+
         public static GameObject CreateLoopHorizontalScrollRect(DefaultControls.Resources resources)
         {
             GameObject root = CreateUIElementRoot("Loop Horizontal Scroll Rect", new Vector2(200, 200));
-            
+
             GameObject content = CreateUIObject("Content", root);
 
             RectTransform contentRT = content.GetComponent<RectTransform>();
@@ -105,7 +116,7 @@ namespace UnityToolkit.Editor
             scrollRect.verticalScrollbarVisibility = LoopScrollRectBase.ScrollbarVisibility.Permanent;
             scrollRect.horizontalScrollbarSpacing = 0;
             scrollRect.verticalScrollbarSpacing = 0;
-            
+
             root.AddComponent<RectMask2D>();
 
             HorizontalLayoutGroup layoutGroup = content.AddComponent<HorizontalLayoutGroup>();
@@ -123,9 +134,9 @@ namespace UnityToolkit.Editor
         public static GameObject CreateLoopVerticalScrollRect(DefaultControls.Resources resources)
         {
             GameObject root = CreateUIElementRoot("Loop Vertical Scroll Rect", new Vector2(200, 200));
-            
+
             GameObject content = CreateUIObject("Content", root);
-            
+
             RectTransform contentRT = content.GetComponent<RectTransform>();
             contentRT.anchorMin = new Vector2(0.5f, 1);
             contentRT.anchorMax = new Vector2(0.5f, 1);
