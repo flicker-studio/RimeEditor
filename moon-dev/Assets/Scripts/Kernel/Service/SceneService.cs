@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
@@ -51,13 +50,15 @@ namespace Moon.Kernel.Service
         {
             var unloadName = ActiveScene.name;
 
-            if (!Boot.SceneName.Contains(loadName))
+            try
+            {
+                await SceneManager.LoadSceneAsync(loadName, LoadSceneMode.Additive);
+                await SceneManager.UnloadSceneAsync(unloadName);
+            }
+            catch (Exception e)
             {
                 throw new Exception();
             }
-
-            await SceneManager.LoadSceneAsync(loadName, LoadSceneMode.Additive);
-            await SceneManager.UnloadSceneAsync(unloadName);
 
             //select the newest scene and set it active
             var targetScene = SceneManager.GetSceneByName(loadName);
