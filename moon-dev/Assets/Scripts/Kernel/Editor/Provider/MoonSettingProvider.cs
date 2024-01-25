@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Moon.Kernel.Setting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Moon.Kernel.Editor.Provider
 {
@@ -21,7 +19,6 @@ namespace Moon.Kernel.Editor.Provider
         {
         }
 
-        
 
         /// <inheritdoc />
         public override void OnGUI(string searchContext)

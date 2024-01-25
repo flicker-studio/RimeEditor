@@ -1,4 +1,4 @@
-using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,19 +13,19 @@ namespace LevelEditor
         public GameObject GetLevelSettingPanelObj => m_levelSettingPanelTransform.gameObject;
 
         public RawImage GetCoverImage => m_coverImage;
-        
+
         public Button GetCloseButton => m_closeButton;
-        
+
         public Button GetSaveButton => m_saveButton;
 
         public Button GetCoverImageButton => m_coverImageButton;
-        
+
         public TMP_InputField GetLevelNameInputField => m_levelNameInputField;
-        
+
         public TMP_InputField GetAuthorNameInputField => m_authorNameInputField;
-        
+
         public TMP_InputField GetVersionInputField => m_versionInputField;
-        
+
         public TMP_InputField GetIntroductionInputField => m_introductionInputField;
 
         private Transform m_popoverPanelTransform;
@@ -33,23 +33,23 @@ namespace LevelEditor
         private Transform m_levelSettingPanelTransform;
 
         private RawImage m_coverImage;
-        
+
         private Button m_closeButton;
-        
+
         private Button m_saveButton;
 
         private Button m_coverImageButton;
-        
+
         private TMP_InputField m_levelNameInputField;
-        
+
         private TMP_InputField m_authorNameInputField;
-        
+
         private TMP_InputField m_versionInputField;
-        
+
         private TMP_InputField m_introductionInputField;
 
         private UIProperty.PopoverProperty m_popoverProperty;
-        
+
         public LevelSettingPanel(Transform levelEditorCanvasRect, UIProperty levelEditorUIProperty)
         {
             InitComponent(levelEditorCanvasRect, levelEditorUIProperty);

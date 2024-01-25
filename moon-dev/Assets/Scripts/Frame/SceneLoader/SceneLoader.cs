@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
@@ -15,13 +14,14 @@ namespace Frame.Tool
         public async UniTask AddScene(string sceneName)
         {
             SetCurrentSceneObjectsActive(false);
-            await LoadScene(sceneName,LoadSceneMode.Additive);
+            await LoadScene(sceneName, LoadSceneMode.Additive);
         }
 
         public async UniTask RemoveTargetScene(string sceneName)
         {
             Scene[] scenes = SceneManager.GetAllScenes();
             bool targetSceneIsActive = false;
+
             foreach (var scene in scenes)
             {
                 if (scene.name == sceneName)
@@ -30,25 +30,26 @@ namespace Frame.Tool
                     break;
                 }
             }
-            
-            if(!targetSceneIsActive) return;
-            
+
+            if (!targetSceneIsActive) return;
+
             await SceneManager.UnloadSceneAsync(sceneName);
-            
+
             SetCurrentSceneObjectsActive(true);
         }
-        
+
         public async UniTask RemoveCurrentScene()
         {
             Scene currentScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
             await SceneManager.UnloadSceneAsync(currentScene);
-            
+
             SetCurrentSceneObjectsActive(true);
         }
-        
+
         private void SetCurrentSceneObjectsActive(bool value)
         {
             Scene scene = SceneManager.GetActiveScene();
+
             if (scene.isLoaded)
             {
                 foreach (GameObject go in scene.GetRootGameObjects())
@@ -57,8 +58,8 @@ namespace Frame.Tool
                 }
             }
         }
-        
-        private async UniTask LoadScene(string sceneName,LoadSceneMode loadSceneMode = LoadSceneMode.Single)
+
+        private async UniTask LoadScene(string sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
         {
             await SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
         }

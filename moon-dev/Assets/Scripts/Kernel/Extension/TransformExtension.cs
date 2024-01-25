@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Moon.Kernel.Extension
 {
-    public static class TransformMethod
+    public static class TransformExtension
     {
         public static void CopyValue(this Transform transform, Transform targetTransform)
         {

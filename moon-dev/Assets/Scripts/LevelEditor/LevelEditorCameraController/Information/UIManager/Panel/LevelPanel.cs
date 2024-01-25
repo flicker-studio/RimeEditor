@@ -1,4 +1,4 @@
-using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,14 +11,14 @@ namespace LevelEditor
         public TextMeshProUGUI GetLevelName => m_levelName;
 
         public Button GetSaveButton => m_saveButton;
-        
+
         public Button GetReleaseButton => m_releaseButton;
         public Button GetSettingButton => m_settingButton;
-        
+
         public Button GetPlayButton => m_playButton;
 
         public Button GetExitButton => m_exitButton;
-        
+
         private TextMeshProUGUI m_levelName;
 
         private Button m_saveButton;
@@ -32,7 +32,7 @@ namespace LevelEditor
         private Button m_exitButton;
 
         private UIProperty.PopoverProperty m_popoverProperty;
-        
+
         public LevelPanel(Transform levelEditorCanvasRect, UIProperty levelEditorUIProperty)
         {
             InitComponent(levelEditorCanvasRect, levelEditorUIProperty);

@@ -1,4 +1,4 @@
-using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using UnityEngine;
 using UnityEngine.UI;
 using RectTransform = UnityEngine.RectTransform;
@@ -14,17 +14,17 @@ namespace LevelEditor
         public Button GetDeleteButton => m_deleteButton;
 
         public ScrollRect GetScrollView => m_scrollView;
-        
+
         private Button m_addButton;
 
         private Button m_deleteButton;
 
         private ScrollRect m_scrollView;
-        
+
         private Transform m_hierarchyContent;
 
         private UIProperty.HierarchyPanelUI m_property;
-        
+
         public HierarchyPanel(RectTransform levelEditorCanvasRect, UIProperty levelEditorUIProperty)
         {
             InitComponent(levelEditorCanvasRect, levelEditorUIProperty);

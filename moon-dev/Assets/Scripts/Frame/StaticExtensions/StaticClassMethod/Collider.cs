@@ -3,7 +3,7 @@ using Data.ScriptableObject;
 using Frame.Tool.Pool;
 using UnityEngine;
 
-namespace Moon.Kernel.Extension
+namespace Frame.StaticExtensions.StaticClassMethod
 {
     public static class Collider
     {

@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Moon.Kernel.Extension
 {
-    public static class Raycast
+    public static class RaycastExtension
     {
         public static List<Vector2> CastRaysBetweenPoints(Vector2 startPoint, Vector2 endPoint, int rayCount,
             Vector2 startPointCompensation,
-            Vector2 direction, float distance, float angle, UnityEngine.LayerMask layerMask)
+            Vector2 direction, float distance, float angle, LayerMask layerMask)
         {
             var hitPoints = new List<Vector2>();
 
@@ -36,7 +36,7 @@ namespace Moon.Kernel.Extension
 
         public static List<Vector2> CastRaysBetweenPoints(Vector2 startPoint, Vector2 endPoint, int rayCount,
             Vector2 startPointCompensation,
-            Vector2 direction, float distance, UnityEngine.LayerMask layerMask)
+            Vector2 direction, float distance, LayerMask layerMask)
         {
             var hitPoints = new List<Vector2>();
 

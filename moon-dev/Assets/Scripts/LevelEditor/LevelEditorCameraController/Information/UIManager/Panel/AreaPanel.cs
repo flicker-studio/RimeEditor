@@ -1,4 +1,4 @@
-using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,9 +9,9 @@ namespace LevelEditor
     public class AreaPanel
     {
         public TextMeshProUGUI GetDescribeText => m_describeText;
-        
+
         public TMP_Dropdown GetAreaDropdown => m_areaDropdown;
-        
+
         public Button GetAddButton => m_addButton;
 
         public Button GetDeleteButton => m_deleteButton;
@@ -21,7 +21,7 @@ namespace LevelEditor
         public Button GetAreaSettingButton => m_areaSettingButton;
 
         public Button GetEnvironmentSettingButton => m_environmentSettingButton;
-        
+
         private TextMeshProUGUI m_describeText;
 
         private TMP_Dropdown m_areaDropdown;
@@ -35,7 +35,7 @@ namespace LevelEditor
         private Button m_areaSettingButton;
 
         private Button m_environmentSettingButton;
-        
+
         public AreaPanel(RectTransform levelEditorCanvasRect, UIProperty levelEditorUIProperty)
         {
             InitComponent(levelEditorCanvasRect, levelEditorUIProperty);

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace Moon.Kernel.Extension
 {
-    public static class UI
+    public static class UIExtension
     {
         public static bool IsPointerOverUIElement()
         {

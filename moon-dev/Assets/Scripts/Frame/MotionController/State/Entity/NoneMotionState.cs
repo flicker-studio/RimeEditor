@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Frame.StateMachine;
-using UnityEngine;
 
 public class NoneMotionState : MotionState
 {
@@ -9,5 +6,7 @@ public class NoneMotionState : MotionState
     {
     }
 
-    public override void Motion(BaseInformation information){}
+    public override void Motion(BaseInformation information)
+    {
+    }
 }

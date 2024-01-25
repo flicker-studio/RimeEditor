@@ -1,17 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Frame.Tool;
+
 namespace LevelEditor
 {
     public class ItemScaleCommand : LevelEditCommand
     {
         private List<ItemData> m_itemDatas = new List<ItemData>();
+
         private List<Vector3> m_lastScale = new List<Vector3>();
+
         private List<Vector3> m_nextScale = new List<Vector3>();
+
         private List<Vector3> m_lastPosition = new List<Vector3>();
+
         private List<Vector3> m_nextPosition = new List<Vector3>();
-    
-        public ItemScaleCommand(ObservableList<ItemData> itemDatas,List<Vector3> lastPosition,List<Vector3> nextPosition,List<Vector3> lastScale,List<Vector3> nextScale)
+
+        public ItemScaleCommand(ObservableList<ItemData> itemDatas, List<Vector3> lastPosition, List<Vector3> nextPosition, List<Vector3> lastScale, List<Vector3> nextScale)
         {
             m_itemDatas.AddRange(itemDatas);
             m_lastScale.AddRange(lastScale);
@@ -19,6 +23,7 @@ namespace LevelEditor
             m_lastPosition.AddRange(lastPosition);
             m_nextPosition.AddRange(nextPosition);
         }
+
         public override void Execute()
         {
             for (int i = 0; i < m_itemDatas.Count; i++)
@@ -37,5 +42,4 @@ namespace LevelEditor
             }
         }
     }
-
 }

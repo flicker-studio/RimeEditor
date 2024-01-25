@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Frame.Tool;
+
 namespace LevelEditor
 {
     public class CommandManager
@@ -12,9 +12,9 @@ namespace LevelEditor
 
         public CommandManager()
         {
-            CommandSet = new CommandSet(Excute, Undo, Redo,Clear);
+            CommandSet = new CommandSet(Excute, Undo, Redo, Clear);
         }
-        
+
         public void Excute(LevelEditCommand command)
         {
             command.Execute();
@@ -25,6 +25,7 @@ namespace LevelEditor
         public void Undo()
         {
             if (m_undoCommands.Count <= 0) return;
+
             LevelEditCommand command = m_undoCommands.Pop();
             m_redoCommands.Push(command);
             command.Undo();
@@ -33,6 +34,7 @@ namespace LevelEditor
         public void Redo()
         {
             if (m_redoCommands.Count <= 0) return;
+
             LevelEditCommand command = m_redoCommands.Pop();
             m_undoCommands.Push(command);
             command.Execute();
@@ -44,5 +46,4 @@ namespace LevelEditor
             m_redoCommands.Clear();
         }
     }
-
 }

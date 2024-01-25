@@ -1,4 +1,5 @@
 using System;
+using Moon.Kernel.Extension;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,13 +10,11 @@ namespace Frame.CompnentExtensions
     {
         public bool IsSelected
         {
-            get
-            {
-                return m_isSelected;
-            }
+            get { return m_isSelected; }
             set
             {
                 m_isSelected = value;
+
                 if (m_isSelected)
                 {
                     m_image.color = m_button.colors.selectedColor;
@@ -26,41 +25,46 @@ namespace Frame.CompnentExtensions
                 }
             }
         }
-        
+
         private Button m_button;
+
         private Image m_image;
+
         private T m_item;
+
         private bool m_isSelected;
-        
-        public EventButton(T item,Transform itemRect,Action<T> onSelect,ScrollRect scrollRect = null)
+
+        public EventButton(T item, Transform itemRect, Action<T> onSelect, ScrollRect scrollRect = null)
         {
             m_item = item;
             m_button = itemRect.GetComponent<Button>();
             m_image = itemRect.GetComponent<Image>();
             InitEvents(onSelect);
+
             if (scrollRect != null)
             {
                 InitScroll(scrollRect);
             }
         }
-        
+
         private void InitEvents(Action<T> onSelect)
         {
             m_button.enabled = false;
             m_image.color = m_button.colors.normalColor;
             m_button.RemoveAllTriggerEvents();
-            m_button.AddTriggerEvent(EventTriggerType.PointerClick, context =>
-            {
-                onSelect?.Invoke(m_item);
-            });
+            m_button.AddTriggerEvent(EventTriggerType.PointerClick, context => { onSelect?.Invoke(m_item); });
+
             m_button.AddTriggerEvent(EventTriggerType.PointerEnter, context =>
             {
-                if(m_isSelected) return;
+                if (m_isSelected) return;
+
                 m_image.color = m_button.colors.highlightedColor;
             });
+
             m_button.AddTriggerEvent(EventTriggerType.PointerExit, context =>
             {
-                if(m_isSelected) return;
+                if (m_isSelected) return;
+
                 m_image.color = m_button.colors.normalColor;
             });
         }
@@ -68,8 +72,12 @@ namespace Frame.CompnentExtensions
         private void InitScroll(ScrollRect scrollView)
         {
             EventTrigger trigger = m_button.GetComponent<EventTrigger>();
-            EventTrigger.Entry entryBegin = new EventTrigger.Entry(), entryDrag = new EventTrigger.Entry(), entryEnd = new EventTrigger.Entry(), entrypotential = new EventTrigger.Entry()
-                , entryScroll = new EventTrigger.Entry();
+
+            EventTrigger.Entry entryBegin = new EventTrigger.Entry(),
+                entryDrag = new EventTrigger.Entry(),
+                entryEnd = new EventTrigger.Entry(),
+                entrypotential = new EventTrigger.Entry(),
+                entryScroll = new EventTrigger.Entry();
 
             entryBegin.eventID = EventTriggerType.BeginDrag;
             entryBegin.callback.AddListener((data) => { scrollView.OnBeginDrag((PointerEventData)data); });
@@ -91,12 +99,12 @@ namespace Frame.CompnentExtensions
             entryScroll.callback.AddListener((data) => { scrollView.OnScroll((PointerEventData)data); });
             trigger.triggers.Add(entryScroll);
         }
-    
+
         public void AddEvents(EventTriggerType triggerType, Action<BaseEventData> eventData)
         {
             m_button.AddTriggerEvent(triggerType, eventData);
         }
-    
+
         public void RemoveEvents()
         {
             m_button.enabled = true;
@@ -108,5 +116,4 @@ namespace Frame.CompnentExtensions
             m_button?.Invoke(EventTriggerType.PointerClick);
         }
     }
-
 }

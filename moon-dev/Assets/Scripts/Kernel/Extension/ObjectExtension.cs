@@ -1,12 +1,24 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Moon.Kernel.Extension.ArrayExtensions;
 
 namespace Moon.Kernel.Extension
 {
-    public static class Object
+    public static class ObjectExtension
     {
+        private class ReferenceEqualityComparer : EqualityComparer<object>
+        {
+            public override bool Equals(object x, object y)
+            {
+                return ReferenceEquals(x, y);
+            }
+
+            public override int GetHashCode(object obj)
+            {
+                return obj.GetHashCode();
+            }
+        }
+
         private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
 
         public static bool IsPrimitive(this Type type)
@@ -100,64 +112,6 @@ namespace Moon.Kernel.Extension
         public static T Copy<T>(this T original)
         {
             return (T)Copy((object)original);
-        }
-    }
-
-    public class ReferenceEqualityComparer : EqualityComparer<object>
-    {
-        public override bool Equals(object x, object y)
-        {
-            return ReferenceEquals(x, y);
-        }
-
-        public override int GetHashCode(object obj) => obj.GetHashCode();
-    }
-
-    namespace ArrayExtensions
-    {
-        public static class ArrayExtensions
-        {
-            public static void ForEach(this Array array, Action<Array, int[]> action)
-            {
-                if (array.LongLength == 0)
-                {
-                    return;
-                }
-
-                var walker = new ArrayTraverse(array);
-
-                do
-                {
-                    action(array, walker.Position);
-                } while (walker.Step());
-            }
-        }
-
-        internal class ArrayTraverse
-        {
-            public readonly int[] Position;
-
-            private readonly int[] m_maxLengths;
-
-            public ArrayTraverse(Array array)
-            {
-                m_maxLengths = new int[array.Rank];
-                for (var i = 0; i < array.Rank; ++i) m_maxLengths[i] = array.GetLength(i) - 1;
-                Position = new int[array.Rank];
-            }
-
-            public bool Step()
-            {
-                for (var i = 0; i < Position.Length; ++i)
-                    if (Position[i] < m_maxLengths[i])
-                    {
-                        Position[i]++;
-                        for (var j = 0; j < i; j++) Position[j] = 0;
-                        return true;
-                    }
-
-                return false;
-            }
         }
     }
 }

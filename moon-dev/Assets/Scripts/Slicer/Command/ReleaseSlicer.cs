@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Frame.Static.Global;
-using Moon.Kernel.Extension;
+using Frame.StaticExtensions.StaticClassMethod;
 using UnityEngine;
 
 namespace Slicer

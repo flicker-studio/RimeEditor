@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Moon.Kernel.Extension
 {
-    public static class Vector
+    public static class VectorExtension
     {
         public static Vector2 NewX(this Vector2 vector2, float x)
         {

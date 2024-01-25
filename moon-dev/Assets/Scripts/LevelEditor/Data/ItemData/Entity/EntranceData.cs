@@ -1,14 +1,9 @@
-using Cinemachine;
-using Data.ScriptableObject;
-using Frame.Tool.Pool;
 using Item;
-using UnityEngine;
 
 namespace LevelEditor
 {
     public class EntranceData : ItemData
     {
-
         public override ItemData Copy(ItemData saveData)
         {
             return saveData;
@@ -19,6 +14,7 @@ namespace LevelEditor
         public override void SetActivePlay(bool active)
         {
             base.SetActivePlay(active);
+
             if (active)
             {
                 m_itemObjPlay.GetComponent<ItemPlay>().Play();
