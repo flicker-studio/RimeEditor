@@ -1,56 +1,64 @@
 using System.Collections.Generic;
+using Data.ScriptableObject;
+using Frame.Tool.Pool;
 using UnityEngine;
 
 namespace Moon.Kernel.Extension
 {
     public static class Collider
     {
-        private static ContactFilter2D m_contactFilter2D = new ContactFilter2D();
+        private static ContactFilter2D _contactFilter2D;
 
-        private static GameObject m_sliceObj;
+        private static GameObject _sliceObj;
 
         private static GameObject GetSliceObj
         {
             get
             {
-                if (m_sliceObj == null)
+                if (_sliceObj == null)
                 {
-                    m_sliceObj = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory").SLICE_OBJ;
+                    _sliceObj = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory").SLICE_OBJ;
                 }
 
-                return m_sliceObj;
+                return _sliceObj;
             }
         }
-    
-        public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider,Vector3 scale,UnityEngine.LayerMask layerMask)
+
+        public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider, Vector3 scale, LayerMask layerMask)
         {
-            m_contactFilter2D.SetLayerMask(~layerMask);
-            List<Collider2D> m_connectCollider = new List<Collider2D>();
-            HashSet<Collider2D> m_visited = new HashSet<Collider2D>();
+            _contactFilter2D.SetLayerMask(~layerMask);
+            var connectCollider = new List<Collider2D>();
+            var visited = new HashSet<Collider2D>();
             Stack<Collider2D> stack = new Stack<Collider2D>();
             stack.Push(targetCollider);
+
             while (stack.Count > 0)
             {
                 Collider2D current = stack.Pop();
-            
-                Vector3 oldLocalScale = current.transform.localScale;
-                current.transform.localScale = 
-                    new Vector3(current.transform.localScale.x * scale.x,
-                        current.transform.localScale.y * scale.y,
-                        current.transform.localScale.z * scale.z);
+
+                var transform = current.transform;
+                var localScale = transform.localScale;
+                var oldLocalScale = localScale;
+
+                localScale =
+                    new Vector3(localScale.x * scale.x,
+                        localScale.y * scale.y,
+                        localScale.z * scale.z);
+
+                transform.localScale = localScale;
                 Physics2D.SyncTransforms();
-            
-                if (m_visited.Contains(current))
+
+                if (visited.Contains(current))
                 {
                     current.transform.localScale = oldLocalScale;
                     continue;
                 }
 
-                m_visited.Add(current);
-                m_connectCollider.Add(current);
+                visited.Add(current);
+                connectCollider.Add(current);
 
                 List<Collider2D> collider2D = new List<Collider2D>();
-                current.OverlapCollider(m_contactFilter2D, collider2D);
+                current.OverlapCollider(_contactFilter2D, collider2D);
 
                 if (ObjectPool.Instance.CompareObj(current.gameObject, GetSliceObj))
                 {
@@ -69,10 +77,11 @@ namespace Moon.Kernel.Extension
                         }
                     }
                 }
+
                 current.transform.localScale = oldLocalScale;
             }
-            return m_connectCollider;
+
+            return connectCollider;
         }
     }
-
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+
 namespace Moon.Kernel.Extension
 {
     public static class File
@@ -10,45 +11,42 @@ namespace Moon.Kernel.Extension
             {
                 return false;
             }
-    
+
             if (Directory.Exists(target))
             {
                 return false;
             }
-    
-            DirectoryInfo sourceInfo = Directory.CreateDirectory(source);
-            DirectoryInfo targetInfo = Directory.CreateDirectory(target);
-    
+
+            var sourceInfo = Directory.CreateDirectory(source);
+            var targetInfo = Directory.CreateDirectory(target);
+
             if (sourceInfo.FullName == targetInfo.FullName)
             {
                 return false;
             }
-    
-            Stack<DirectoryInfo> sourceDirectories = new Stack<DirectoryInfo>();
+
+            var sourceDirectories = new Stack<DirectoryInfo>();
             sourceDirectories.Push(sourceInfo);
-    
-            Stack<DirectoryInfo> targetDirectories = new Stack<DirectoryInfo>();
+
+            var targetDirectories = new Stack<DirectoryInfo>();
             targetDirectories.Push(targetInfo);
-    
+
             while (sourceDirectories.Count > 0)
             {
-                DirectoryInfo sourceDirectory = sourceDirectories.Pop();
-                DirectoryInfo targetDirectory = targetDirectories.Pop();
-    
-                foreach (FileInfo file in sourceDirectory.GetFiles())
-                {
-                    file.CopyTo(Path.Combine(targetDirectory.FullName, file.Name), overwrite: true);
-                }
-    
-                foreach(DirectoryInfo subDirectory in sourceDirectory.GetDirectories())
+                var sourceDirectory = sourceDirectories.Pop();
+                var targetDirectory = targetDirectories.Pop();
+
+                foreach (var file in sourceDirectory.GetFiles()) file.CopyTo(Path.Combine(targetDirectory.FullName, file.Name), true);
+
+                foreach (var subDirectory in sourceDirectory.GetDirectories())
                 {
                     sourceDirectories.Push(subDirectory);
                     targetDirectories.Push(targetDirectory.CreateSubdirectory(subDirectory.Name));
                 }
             }
-    
+
             sourceInfo.Delete(true);
-            
+
             return true;
         }
     }

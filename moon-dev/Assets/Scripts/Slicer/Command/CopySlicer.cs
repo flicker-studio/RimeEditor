@@ -4,8 +4,8 @@ using System.Linq;
 using EzySlice;
 using Frame.Static.Extensions;
 using Frame.Static.Global;
-using Frame.Tool;
 using Frame.Tool.Pool;
+using Moon.Kernel.Extension;
 using UnityEngine;
 
 namespace Slicer
@@ -13,8 +13,11 @@ namespace Slicer
     enum SLICEDIR
     {
         Left,
+
         Up,
+
         Right,
+
         Down
     }
 
@@ -99,14 +102,18 @@ namespace Slicer
             (pos, size, rot) = GetSliceData(slicedir);
             List<Collider2D> tempList = new List<Collider2D>();
             tempList.AddRange(targetColliderList);
+
             foreach (var collider in tempList)
             {
                 if (!targetColliderList.Contains(collider)) continue;
+
                 SlicedHull slicedHull = collider.gameObject.Slice(pos, rot * Vector3.up);
                 if (slicedHull == null) continue;
+
                 GameObject obj = ObjectPool.Instance.OnTake(m_slicerInformation.GetProductPrefab);
                 obj.GetComponent<MeshFilter>().mesh = slicedHull.upperHull;
                 obj.GetComponent<MeshFilter>().mesh.CreatePolygonCollider(obj.GetComponent<PolygonCollider2D>());
+
                 // if (collider is PolygonCollider2D targetpolygonCollider)
                 // {
                 //     obj.GetComponent<PolygonCollider2D>().CreatePolygonCollider(targetpolygonCollider,new UnityEngine.Plane(rot * Vector3.up,pos));
@@ -114,6 +121,7 @@ namespace Slicer
                 obj.transform.CopyValue(collider.transform);
                 AddSliceMaterial(obj, collider.gameObject, m_slicerInformation.GetCutSurfaceMaterial);
                 targetColliderList.Add(obj.GetComponent<Collider2D>());
+
                 if (ObjectPool.Instance.CompareObj(collider.gameObject, m_slicerInformation.GetProductPrefab)
                     && !oriColliderList.Contains(collider))
                 {
@@ -131,16 +139,19 @@ namespace Slicer
                 if (!targetColliderList.Contains(collider)) continue;
                 if (ObjectPool.Instance.CompareObj(collider.gameObject, m_slicerInformation.GetProductPrefab)) continue;
                 if (!oriColliderList.Contains(collider)) continue;
+
                 GameObject obj = ObjectPool.Instance.OnTake(m_slicerInformation.GetProductPrefab);
                 obj.GetComponent<MeshFilter>().mesh = collider.GetComponent<MeshFilter>().mesh;
                 PolygonCollider2D targetPolygonCollider2D = collider.GetComponent<PolygonCollider2D>();
+
                 if (targetPolygonCollider2D != null)
                 {
                     PolygonCollider2D polygonCollider2D = obj.GetComponent<PolygonCollider2D>();
-                    obj.GetComponent<PolygonCollider2D>().pathCount= targetPolygonCollider2D.pathCount;
+                    obj.GetComponent<PolygonCollider2D>().pathCount = targetPolygonCollider2D.pathCount;
+
                     for (int i = 0; i < targetPolygonCollider2D.pathCount; i++)
                     {
-                        polygonCollider2D.SetPath(i,targetPolygonCollider2D.GetPath(i));
+                        polygonCollider2D.SetPath(i, targetPolygonCollider2D.GetPath(i));
                     }
                 }
                 else
@@ -160,8 +171,10 @@ namespace Slicer
             List<Collider2D> overlapColliderList = m_slicerInformation.GetTransform.position.ToVector2()
                 .OverlapRotatedBox(m_slicerInformation.GetDetectionRange
                     , m_slicerInformation.GetTransform.rotation.eulerAngles.z).ToList();
+
             List<Collider2D> tempList = new List<Collider2D>();
             tempList.AddRange(overlapColliderList);
+
             foreach (var collider in overlapColliderList)
             {
                 if (!collider.gameObject.name.Contains(tag))
@@ -169,6 +182,7 @@ namespace Slicer
                     tempList.Remove(collider);
                 }
             }
+
             foreach (var collider in overlapColliderList)
             {
                 if (ObjectPool.Instance.CompareObj(collider.gameObject, m_slicerInformation.GetProductPrefab))
@@ -176,6 +190,7 @@ namespace Slicer
                     tempList.Remove(collider);
                 }
             }
+
             return tempList;
         }
 

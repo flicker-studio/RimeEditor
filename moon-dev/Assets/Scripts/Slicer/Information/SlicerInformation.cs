@@ -6,6 +6,7 @@ using Frame.Static.Extensions;
 using Frame.Static.Global;
 using Frame.Tool;
 using Frame.Tool.Pool;
+using Moon.Kernel.Extension;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,75 +15,77 @@ namespace Slicer
     public class SlicerInformation : BaseInformation
     {
         private SlicerProperty m_slicerProperty;
-    
+
         private PrefabFactory m_prefabFactory;
-    
+
         private Material m_cutMaterial;
-    
+
         private Transform m_transform;
 
         private Transform m_playerTransform;
-    
+
         public List<Collider2D> TargetList = new List<Collider2D>();
-    
+
         public PrefabFactory GetPrefabFactory => m_prefabFactory;
-        
+
         public GameObject GetProductPrefab => m_prefabFactory.SLICE_OBJ;
-    
+
         public GameObject GetCombinationRigidbodyParentPrefab => m_prefabFactory.COMBINATION_COLLIDES_RIGIDBODY_PARENT;
-        
+
         public GameObject GetCombinationNotRigidbodyParentPrefab => m_prefabFactory.COMBINATION_COLLIDES_NOT_RIGIDBODY_PARENT;
-        
+
         public GameObject GetRigidbodyParentPrefab => m_prefabFactory.RIGIDBODY_PARENT;
-    
+
         public Material GetCutSurfaceMaterial => m_cutMaterial;
-    
+
         public Transform GetTransform => m_transform;
 
         public Transform GetPlayerTransform => m_playerTransform;
 
         public Vector2 GetSliceOffset => m_slicerProperty.SlicerMotion.SLICE_OFFSET;
-        
-        
+
+
         public Vector3 GetMousePosition => Mouse.current.position.ReadValue();
+
         public Vector3 GetMouseWorldPoint =>
             Camera.main.ScreenToWorldPoint(GetMousePosition.NewZ(Mathf.Abs(Camera.main.transform.position.z)));
-        
+
         public Vector3 GetDetectionRange => m_slicerProperty.SlicerSize.RANGE_OF_DETECTION;
-    
+
         public Vector3 GetDetectionCompensationScale => m_slicerProperty.ConnectedObject.DETECTION_COMPENSATIONS_SCALE;
 
         public float GetRotationSpeed => m_slicerProperty.SlicerMotion.ROTATION_SPEED;
-        
+
         public float GetSliceThinckNess => m_slicerProperty.SlicerSize.SLICE_THICKNESS;
-    
+
         public float GetSliceSpacingCompensation => m_slicerProperty.SlicerSize.SLICE_SPACING_COMPENSATION;
 
-        public int GetRotationThreshold =>  m_slicerProperty.SlicerMotion.ROTATION_THRESHOLD;
-        
+        public int GetRotationThreshold => m_slicerProperty.SlicerMotion.ROTATION_THRESHOLD;
+
         public bool GetMouseLeftButtonDown => InputManager.Instance.GetMouseLeftButtonDown;
 
         public bool GetRotationDirection { get; set; } = true;
-    
-        public (Vector3,Vector3,Quaternion) GetSliceLeftData()
+
+        public (Vector3, Vector3, Quaternion) GetSliceLeftData()
         {
             return m_slicerProperty.GetSliceLeftData(m_transform);
         }
-        
-        public (Vector3,Vector3,Quaternion) GetSliceUpData()
+
+        public (Vector3, Vector3, Quaternion) GetSliceUpData()
         {
             return m_slicerProperty.GetSliceUpData(m_transform);
         }
-        
-        public (Vector3,Vector3,Quaternion) GetSliceRightData()
+
+        public (Vector3, Vector3, Quaternion) GetSliceRightData()
         {
             return m_slicerProperty.GetSliceRightData(m_transform);
         }
-        
-        public (Vector3,Vector3,Quaternion) GetSliceDownData()
+
+        public (Vector3, Vector3, Quaternion) GetSliceDownData()
         {
             return m_slicerProperty.GetSliceDownData(m_transform);
         }
+
         public SlicerInformation(Transform transform)
         {
             m_slicerProperty = Resources.Load<SlicerProperty>("GlobalSettings/SlicerProperty");
@@ -90,7 +93,7 @@ namespace Slicer
             m_cutMaterial = Resources.Load<Material>("Materials/Test");
             m_transform = transform;
         }
-        
+
         public SlicerInformation(Transform transform, Transform playerTransform)
         {
             m_slicerProperty = Resources.Load<SlicerProperty>("GlobalSettings/SlicerProperty");
@@ -128,14 +131,13 @@ namespace Slicer
             {
                 tempList.Remove(collider);
             }
-            
+
             colliderListGroup = tempList.CheckColliderConnectivity(GetDetectionCompensationScale
                 , GlobalSetting.LayerMasks.GROUND);
 
             colliderListGroup.GetCombinationConnectivity(GetPrefabFactory);
-            
+
             TargetList.Clear();
         }
     }
-
 }
