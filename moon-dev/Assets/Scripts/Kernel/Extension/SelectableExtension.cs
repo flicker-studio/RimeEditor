@@ -1,14 +1,15 @@
 using System;
 using System.Linq;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Moon.Kernel.Extension
 {
     /// <summary>
     /// </summary>
-    public static class Selectable
+    public static class SelectableExtension
     {
-        public static EventTrigger AddTriggerEvent(this UnityEngine.UI.Selectable theSelectable, EventTriggerType eventTriggerType, Action<BaseEventData> onTriggerAction = null)
+        public static EventTrigger AddTriggerEvent(this Selectable theSelectable, EventTriggerType eventTriggerType, Action<BaseEventData> onTriggerAction = null)
         {
             var eventrTrigger = theSelectable.gameObject.GetComponent<EventTrigger>();
 
@@ -28,7 +29,7 @@ namespace Moon.Kernel.Extension
             return eventrTrigger;
         }
 
-        public static void Invoke(this UnityEngine.UI.Selectable theSelectable, EventTriggerType eventTriggerType)
+        public static void Invoke(this Selectable theSelectable, EventTriggerType eventTriggerType)
         {
             var eventrTrigger = theSelectable.gameObject.GetComponent<EventTrigger>();
 
@@ -48,7 +49,7 @@ namespace Moon.Kernel.Extension
             trigger.callback?.Invoke(null);
         }
 
-        public static void RemoveAllTriggerEvents(this UnityEngine.UI.Selectable theSelectable)
+        public static void RemoveAllTriggerEvents(this Selectable theSelectable)
         {
             var eventTrigger = theSelectable.gameObject.GetComponent<EventTrigger>();
 

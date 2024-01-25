@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace Test.Kernel.Extension
 {
-    [Author("Mors"), TestOf(nameof(String))]
+    [Author("Mors"), TestOf(nameof(StringExtension))]
     internal class MethodTest
     {
         [TestCase("Object 123", ExpectedResult = "Object ")]

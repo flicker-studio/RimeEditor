@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Moon.Kernel.Extension
 {
-    public static class UI
+    public static class UIExtension
     {
         public static bool IsPointerOverUIElement()
         {
@@ -17,7 +18,7 @@ namespace Moon.Kernel.Extension
             {
                 var curRaysastResult = raycastResults[index];
 
-                if (curRaysastResult.gameObject.layer == UnityEngine.LayerMask.NameToLayer("UI"))
+                if (curRaysastResult.gameObject.layer == LayerMask.NameToLayer("UI"))
                 {
                     return true;
                 }

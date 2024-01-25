@@ -27,7 +27,7 @@ namespace Moon.Kernel.Extension
     /// <summary>
     ///     A static extension method of Rigidbody.
     /// </summary>
-    public static class Rigidbody
+    public static class RigidbodyExtension
     {
         /// <summary>
         ///     The method of freezing the Rigidbody2D axis.

@@ -58,7 +58,7 @@ namespace Character
                                    .CHECK_CAPSULE_RELATIVE_POSITION_Y
                                + GetRigidbody.transform.right * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE.x / 2;
 
-            m_raycastPointsGround = Raycast.CastRaysBetweenPoints(startPoint
+            m_raycastPointsGround = RaycastExtension.CastRaysBetweenPoints(startPoint
                 , endPoint, GetPerpendicularOnGround.CHECK_RAYCAST_POINTS, GetPerpendicularOnGround.START_POINT_COMPENSATION,
                 Vector2.down, GetPerpendicularOnGround.CHECK_GROUND_RAYCAST_DISTANCE, GetPerpendicularOnGround.CHECK_POINT_ANGLE,
                 GetGroundCheck.CHECK_LAYER);
@@ -76,7 +76,7 @@ namespace Character
                                    .CHECK_CAPSULE_RELATIVE_POSITION_Y
                                + GetRigidbody.transform.right * m_characterProperty.GroundCheckParameter.CHECK_CAPSULE_SIZE.x / 2;
 
-            m_raycastPointsCheck = Raycast.CastRaysBetweenPoints(startPoint
+            m_raycastPointsCheck = RaycastExtension.CastRaysBetweenPoints(startPoint
                 , endPoint, GetPerpendicularOnGround.CHECK_RAYCAST_POINTS, GetPerpendicularOnGround.START_POINT_COMPENSATION,
                 Vector2.down, GetPerpendicularOnGround.CHECK_ANGLE_RAYCAST_DISTANCE,
                 GetGroundCheck.CHECK_LAYER);

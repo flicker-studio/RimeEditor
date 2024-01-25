@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Moon.Kernel.Extension
 {
-    public static class String
+    public static class StringExtension
     {
         public static string RemoveTrailingNumbers(this string input)
         {

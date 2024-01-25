@@ -1,8 +1,10 @@
+using UnityEngine;
+
 namespace Moon.Kernel.Extension
 {
-    public static class Component
+    public static class ComponentExtension
     {
-        public static void CopyComponent(this UnityEngine.Component original, UnityEngine.Component target)
+        public static void CopyComponent(this Component original, Component target)
         {
             var type = target.GetType();
             var fields = type.GetFields();

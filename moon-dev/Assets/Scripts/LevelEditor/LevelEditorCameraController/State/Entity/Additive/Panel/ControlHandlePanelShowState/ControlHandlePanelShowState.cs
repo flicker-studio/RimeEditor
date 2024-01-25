@@ -122,7 +122,7 @@ namespace LevelEditor
 
         private void CheckButton()
         {
-            if (m_information.GetInput.GetMouseLeftButtonDown && !UI.IsPointerOverUIElement())
+            if (m_information.GetInput.GetMouseLeftButtonDown && !UIExtension.IsPointerOverUIElement())
             {
                 if (!CheckStates.Contains(typeof(MouseSelecteState)))
                 {
