@@ -24,7 +24,7 @@ namespace Moon.Kernel.Extension
             }
         }
 
-        public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider, Vector3 scale, LayerMask layerMask)
+        public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider, Vector3 scale, UnityEngine.LayerMask layerMask)
         {
             _contactFilter2D.SetLayerMask(~layerMask);
             var connectCollider = new List<Collider2D>();

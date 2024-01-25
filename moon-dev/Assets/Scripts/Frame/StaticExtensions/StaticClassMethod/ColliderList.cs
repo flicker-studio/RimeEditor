@@ -22,7 +22,7 @@ namespace Moon.Kernel.Extension
 
         private static GameObject GetSlicerObj => m_prefabFactory.SLICE_OBJ;
 
-        public static List<List<Collider2D>> CheckColliderConnectivity(this List<Collider2D> targetCollider, Vector3 scale, LayerMask layerMask)
+        public static List<List<Collider2D>> CheckColliderConnectivity(this List<Collider2D> targetCollider, Vector3 scale, UnityEngine.LayerMask layerMask)
         {
             List<List<Collider2D>> colliderListGroup = new List<List<Collider2D>>();
 

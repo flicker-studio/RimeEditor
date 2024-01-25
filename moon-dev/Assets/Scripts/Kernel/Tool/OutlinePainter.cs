@@ -4,7 +4,9 @@ using System.Linq;
 using Frame.Tool;
 using UnityEngine;
 
-public enum OUTLINEMODE {
+namespace Kernel.Tool
+{
+    public enum OUTLINEMODE {
   OutlineAll,
   OutlineVisible,
   OutlineHidden,
@@ -242,4 +244,6 @@ public class OutlinePainter
         break;
     }
   }
+}
+
 }
