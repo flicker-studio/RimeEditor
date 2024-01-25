@@ -4,6 +4,7 @@ using System.Linq;
 using Frame.Static.Extensions;
 using UnityEditor;
 using UnityEngine;
+using Component = UnityEngine.Component;
 
 namespace Frame.Tool.Pool
 {

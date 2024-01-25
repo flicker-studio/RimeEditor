@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace Frame.Static.Extensions
 {
-    public static class ComponentMethod
+    public static class Component
     {
          [Obsolete("Consider using the extension method under Moon.Extension.Unity.Method.Component.CopyComponentValue instead this.")]
-        public static void CopyComponent(this Component original, Component target)
+        public static void CopyComponent(this UnityEngine.Component original, UnityEngine.Component target)
         {
             System.Type type = target.GetType();
             System.Reflection.FieldInfo[] fields = type.GetFields();

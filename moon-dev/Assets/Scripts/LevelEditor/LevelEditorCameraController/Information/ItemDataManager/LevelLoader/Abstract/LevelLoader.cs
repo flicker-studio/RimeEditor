@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using File = Frame.Static.Extensions.File;
 
 namespace LevelEditor
 {
@@ -26,8 +27,8 @@ namespace LevelEditor
             if (!Directory.Exists(levelDataFolderPath)) return false;
             if (!Directory.Exists(imageDataFolderPath)) return false;
             if (!Directory.Exists(soundsDataFolderPath)) return false;
-            if (!File.Exists($"{levelDataFilePath}")) return false;
-            StreamReader streamReader = File.OpenText(levelDataFilePath);
+            if (!System.IO.File.Exists($"{levelDataFilePath}")) return false;
+            StreamReader streamReader = System.IO.File.OpenText(levelDataFilePath);
             LevelData levelData = FromJson(streamReader.ReadToEnd());
             streamReader.Close();
             streamReader.Dispose();
@@ -36,7 +37,7 @@ namespace LevelEditor
             {
                 if (data.GetKey == levelData.GetKey) return false;
             }
-            return FileMethod.Move(path, $"{GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
+            return File.Move(path, $"{GlobalSetting.PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
         } 
         
         public bool DeleteLevel(LevelData levelData)
@@ -84,7 +85,7 @@ namespace LevelEditor
             {
                 byte[] dataBytes = chooseLevelData.GetLevelCoverImage.EncodeToPNG();
                 string savePath = $"{imagesPath}/{GlobalSetting.PersistentFileProperty.COVER_IMAGE_NAME}";
-                FileStream fileStream = File.Open(savePath,FileMode.OpenOrCreate);
+                FileStream fileStream = System.IO.File.Open(savePath,FileMode.OpenOrCreate);
                 fileStream.Write(dataBytes,0,dataBytes.Length);
                 fileStream.Close();
             }
@@ -100,7 +101,7 @@ namespace LevelEditor
                 renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
                 RenderTexture.active = null;
                 byte[] byteArray = renderedTexture.EncodeToPNG();
-                File.WriteAllBytes($"{imagesPath}/{GlobalSetting.PersistentFileProperty.COVER_IMAGE_NAME}", byteArray);
+                System.IO.File.WriteAllBytes($"{imagesPath}/{GlobalSetting.PersistentFileProperty.COVER_IMAGE_NAME}", byteArray);
                 cullUICamera.gameObject.SetActive(false);
             }
         }

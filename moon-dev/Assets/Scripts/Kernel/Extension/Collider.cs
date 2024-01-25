@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using Data.ScriptableObject;
-using Frame.Tool.Pool;
 using UnityEngine;
 
-namespace Frame.Static.Extensions
+namespace Moon.Kernel.Extension
 {
-    public static class ColliderMethod
+    public static class Collider
     {
         private static ContactFilter2D m_contactFilter2D = new ContactFilter2D();
 
@@ -24,7 +22,7 @@ namespace Frame.Static.Extensions
             }
         }
     
-        public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider,Vector3 scale,LayerMask layerMask)
+        public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider,Vector3 scale,UnityEngine.LayerMask layerMask)
         {
             m_contactFilter2D.SetLayerMask(~layerMask);
             List<Collider2D> m_connectCollider = new List<Collider2D>();

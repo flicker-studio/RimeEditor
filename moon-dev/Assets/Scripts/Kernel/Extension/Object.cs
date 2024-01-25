@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ArrayExtensions;
+using Moon.Kernel.Extension.ArrayExtensions;
 
-public static class ObjectMethod
+namespace Moon.Kernel.Extension
 {
-        private static readonly MethodInfo CloneMethod = typeof(Object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+    public static class Object
+{
+        private static readonly MethodInfo CloneMethod = typeof(System.Object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
 
         public static bool IsPrimitive(this Type type)
         {
@@ -13,11 +15,11 @@ public static class ObjectMethod
             return (type.IsValueType & type.IsPrimitive);
         }
 
-        public static Object Copy(this Object originalObject)
+        public static System.Object Copy(this System.Object originalObject)
         {
-            return InternalCopy(originalObject, new Dictionary<Object, Object>(new ReferenceEqualityComparer()));
+            return InternalCopy(originalObject, new Dictionary<System.Object, System.Object>(new ReferenceEqualityComparer()));
         }
-        private static Object InternalCopy(Object originalObject, IDictionary<Object, Object> visited)
+        private static System.Object InternalCopy(System.Object originalObject, IDictionary<System.Object, System.Object> visited)
         {
             if (originalObject == null) return null;
             var typeToReflect = originalObject.GetType();
@@ -63,11 +65,11 @@ public static class ObjectMethod
         }
         public static T Copy<T>(this T original)
         {
-            return (T)Copy((Object)original);
+            return (T)Copy((System.Object)original);
         }
     }
 
-    public class ReferenceEqualityComparer : EqualityComparer<Object>
+    public class ReferenceEqualityComparer : EqualityComparer<System.Object>
     {
         public override bool Equals(object x, object y)
         {
@@ -125,4 +127,5 @@ public static class ObjectMethod
                 return false;
             }
         }
+}
 }

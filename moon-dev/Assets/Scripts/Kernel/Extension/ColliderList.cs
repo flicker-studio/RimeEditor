@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Data.ScriptableObject;
 using UnityEngine;
-using Frame.Static.Global;
-using Frame.Tool.Pool;
 
-namespace Frame.Static.Extensions
+namespace Moon.Kernel.Extension
 {
-    public static class ColliderListStaticMethod
+    public static class ColliderList
 {
     private static PrefabFactory m_prefabFactory;
 
@@ -21,7 +18,7 @@ namespace Frame.Static.Extensions
         m_prefabFactory.RIGIDBODY_PARENT;
 
     private static GameObject GetSlicerObj => m_prefabFactory.SLICE_OBJ;
-    public static List<List<Collider2D>> CheckColliderConnectivity(this List<Collider2D> targetCollider,Vector3 scale,LayerMask layerMask)
+    public static List<List<Collider2D>> CheckColliderConnectivity(this List<Collider2D> targetCollider,Vector3 scale,UnityEngine.LayerMask layerMask)
     {
         List<List<Collider2D>> colliderListGroup = new List<List<Collider2D>>();
         foreach (var collider in targetCollider)
