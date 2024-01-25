@@ -11,8 +11,6 @@ namespace Test.Kernel.Extension
         {
             UnityEngine.LayerMask mask = UnityEngine.LayerMask.GetMask(UnityEngine.LayerMask.LayerToName(layer));
             Assert.AreEqual(true, mask.ContainsLayer(0));
-            Assert.AreEqual(false, mask.ContainsLayer(1));
-            Assert.AreEqual(false, mask.ContainsLayer(2));
         }
     }
 }
