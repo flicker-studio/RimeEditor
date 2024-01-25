@@ -3,9 +3,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Frame.Static.Extensions
+namespace Moon.Kernel.Extension
 {
-    public static class StringMethod
+    public static class String
     {
         [Obsolete("Consider using the extension method under Moon.Extension.Csharp Method instead this.")]
         public static string RemoveTrailingNumbers(this string input)
@@ -15,23 +15,27 @@ namespace Frame.Static.Extensions
 
         public static string ToSHA256(this string str)
         {
-            byte[] SHA256Data = Encoding.UTF8.GetBytes(str);
+            var SHA256Data = Encoding.UTF8.GetBytes(str);
 
-            SHA256Managed Sha256 = new SHA256Managed();
-            byte[] by = Sha256.ComputeHash(SHA256Data);
+            var Sha256 = new SHA256Managed();
+            var by = Sha256.ComputeHash(SHA256Data);
 
             return BitConverter.ToString(by).Replace("-", "").ToLower();
         }
 
         public static string ReserveReciprocal(this string str, char c)
         {
-            string newStr = "";
+            var newStr = "";
 
             for (var index = str.Length - 1; index >= 0; index--)
-            {
-                if (str[index] != c) newStr = $"{str[index]}{newStr}";
-                else break;
-            }
+                if (str[index] != c)
+                {
+                    newStr = $"{str[index]}{newStr}";
+                }
+                else
+                {
+                    break;
+                }
 
             return newStr;
         }

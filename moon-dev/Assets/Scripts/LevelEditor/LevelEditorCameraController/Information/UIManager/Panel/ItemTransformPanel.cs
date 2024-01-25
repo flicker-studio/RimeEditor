@@ -2,6 +2,7 @@ using Frame.Static.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
 {

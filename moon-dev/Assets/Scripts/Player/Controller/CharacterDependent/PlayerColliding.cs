@@ -1,4 +1,5 @@
 using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using UnityEngine;
 
 namespace Character

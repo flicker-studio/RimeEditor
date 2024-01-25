@@ -3,6 +3,7 @@ using Struct;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
 {

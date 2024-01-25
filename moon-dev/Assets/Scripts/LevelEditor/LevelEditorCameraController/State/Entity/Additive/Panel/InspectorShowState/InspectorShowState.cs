@@ -8,6 +8,7 @@ using Frame.Tool.Pool;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
 {
