@@ -1,6 +1,6 @@
 using System;
-using Kernel.Tool;
 using Moon.Kernel.Attribute;
+using Moon.Kernel.Utils;
 using UnityEngine;
 
 namespace LevelEditor
@@ -29,7 +29,7 @@ namespace LevelEditor
         public struct OutlineProperty
         {
             [field: SerializeField, CustomLabel("描边模式")]
-            public OUTLINEMODE OUTLINE_MODE { get; private set; }
+            public OutlineMode OUTLINE_MODE { get; private set; }
 
             [field: SerializeField, CustomLabel("描边颜色")]
             public Color OUTLINE_COLOR { get; private set; }
