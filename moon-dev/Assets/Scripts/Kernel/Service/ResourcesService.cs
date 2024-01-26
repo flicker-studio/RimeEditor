@@ -17,12 +17,11 @@ namespace Moon.Kernel.Service
     {
         private static class Const
         {
-            internal const string Key1 = "Assets/Settings/Dev/MoonSetting.asset";
         }
 
         internal async override void OnStart()
         {
-            Explorer.Settings.MoonSetting = await LoadAssetAsync<MoonSetting>(Const.Key1);
+            await SettingHelper.LoadSettingsAsync();
         }
 
         internal override void OnStop()

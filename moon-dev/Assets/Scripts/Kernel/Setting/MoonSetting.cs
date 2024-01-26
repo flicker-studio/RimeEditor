@@ -6,7 +6,8 @@ namespace Moon.Kernel.Setting
     /// <summary>
     /// 
     /// </summary>
-    [CreateAssetMenu(fileName = "MoonSetting", menuName = "Moon/Setting/MoonSetting")]
+    [CreateAssetMenu(fileName = "MoonSetting", menuName = "Moon/Setting/Moon Setting"),
+     SystemSetting("Assets/Settings/Dev/MoonSetting.asset")]
     public class MoonSetting : SettingBase
     {
         [SerializeField] public bool isCheck = true;

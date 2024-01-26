@@ -114,12 +114,12 @@ namespace Moon.Kernel.Service
         internal async override Task Run()
         {
             PersistenceScene = await TryLoadScene(PersistenceSceneName);
-
+/*
             if (Explorer.Settings.MoonSetting.AutoStartScene)
             {
                 await TryLoadScene(Explorer.Settings.MoonSetting.startScene);
             }
-
+*/
             SceneManager.activeSceneChanged += OnActiveSceneChange;
             SceneManager.sceneUnloaded += OnSceneUnload;
             SceneManager.sceneLoaded += OnSceneLoad;
