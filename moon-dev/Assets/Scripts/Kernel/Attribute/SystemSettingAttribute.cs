@@ -7,7 +7,7 @@ namespace Moon.Kernel.Attribute
     {
         internal readonly string Path;
 
-        internal SystemSettingAttribute(string path)
+        public SystemSettingAttribute(string path)
         {
             Path = path;
         }

@@ -1,11 +1,13 @@
 using System;
 using Moon.Kernel.Attribute;
+using Moon.Kernel.Setting;
 using UnityEngine;
 
 namespace Frame.Tool.Popover
 {
     [CreateAssetMenu(menuName = "CustomProperty/PopoverProperty", order = 5, fileName = "PopoverProperty")]
-    public class PopoverProperty : ScriptableObject
+    [SystemSetting("Assets/Settings/GlobalSettings/PopoverProperty.asset")]
+    public class PopoverProperty : SettingBase
     {
         [field: SerializeField, Header("提示弹窗属性")]
         public TipsPopoverProperty GetTipsPopoverProperty { get; private set; }

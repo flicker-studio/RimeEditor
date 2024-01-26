@@ -1,10 +1,12 @@
 using Moon.Kernel.Attribute;
+using Moon.Kernel.Setting;
 using UnityEngine;
 
 namespace Data.ScriptableObject
 {
     [CreateAssetMenu(menuName = "CustomProperty/ObjectFactory", order = 1, fileName = "ObjectFactory")]
-    public class PrefabFactory : UnityEngine.ScriptableObject
+    [SystemSetting("Assets/Settings/GlobalSettings/PrefabFactory.asset")]
+    public class PrefabFactory : SettingBase
     {
         [field: SerializeField, CustomLabel("弹窗预制体")]
         public GameObject POPOVER_WINDOW { get; private set; }

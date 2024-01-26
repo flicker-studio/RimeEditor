@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Data.ScriptableObject;
 using Frame.Tool.Pool;
+using Moon.Kernel;
 using UnityEngine;
 
 namespace Frame.StaticExtensions.StaticClassMethod
@@ -17,14 +18,14 @@ namespace Frame.StaticExtensions.StaticClassMethod
             {
                 if (_sliceObj == null)
                 {
-                    _sliceObj = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory").SLICE_OBJ;
+                    _sliceObj = Explorer.TryGetSetting<PrefabFactory>().SLICE_OBJ;
                 }
 
                 return _sliceObj;
             }
         }
 
-        public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider, Vector3 scale, UnityEngine.LayerMask layerMask)
+        public static List<Collider2D> CheckColliderConnectivity(this Collider2D targetCollider, Vector3 scale, LayerMask layerMask)
         {
             _contactFilter2D.SetLayerMask(~layerMask);
             var connectCollider = new List<Collider2D>();

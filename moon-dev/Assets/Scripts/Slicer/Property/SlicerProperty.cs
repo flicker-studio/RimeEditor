@@ -1,11 +1,13 @@
 using System;
 using Moon.Kernel.Attribute;
+using Moon.Kernel.Setting;
 using UnityEngine;
 
 namespace Slicer
 {
     [CreateAssetMenu(menuName = "CustomProperty/SlicerProperty", order = 2, fileName = "SlicerProperty")]
-    public class SlicerProperty : ScriptableObject
+    [SystemSetting("Assets/Settings/GlobalSettings/SlicerProperty.asset")]
+    public class SlicerProperty : SettingBase
     {
         [Header("裁切框尺寸")] public SlicerSizePanel SlicerSize;
 

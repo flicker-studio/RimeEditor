@@ -23,6 +23,42 @@ MonoBehaviour:
     m_SerializedLabels:
     - Setting
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8a8d841a62c5da45bc9bc47c1f31555
+    m_Address: Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Setting
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8af9e6b937538f7479bd42fc352bf88f
+    m_Address: Assets/Settings/GlobalSettings/CharacterProperty.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Setting
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28c61e44fcb27a941b96060317827e49
+    m_Address: Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Setting
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7814e4b6e363d7d4fa12ff59ea1fe4df
+    m_Address: Assets/Settings/GlobalSettings/PopoverProperty.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Setting
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75e83535b6b936a40b2234b137315ccd
+    m_Address: Assets/Settings/GlobalSettings/PrefabFactory.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Setting
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 655aa60d2f1c3ea42ac5c951fcb11fb8
+    m_Address: Assets/Settings/GlobalSettings/SlicerProperty.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Setting
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 42fdccc2ec5b79a45b4d9a79ad4d5757, type: 2}
   m_SchemaSet:

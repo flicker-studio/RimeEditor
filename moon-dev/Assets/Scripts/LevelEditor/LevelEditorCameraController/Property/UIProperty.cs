@@ -1,12 +1,14 @@
 using System;
 using Frame.Tool.Popover;
 using Moon.Kernel.Attribute;
+using Moon.Kernel.Setting;
 using UnityEngine;
 
 namespace LevelEditor
 {
     [CreateAssetMenu(menuName = "CustomProperty/LevelEditorUIProperty", order = 4, fileName = "LevelEditorUIProperty")]
-    public class UIProperty : ScriptableObject
+    [SystemSetting("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset")]
+    public class UIProperty : SettingBase
     {
         [field: SerializeField, Header("关卡管理面板属性")]
         public LevelManagerPanelUI GetLevelManagerPanelUI { get; private set; }

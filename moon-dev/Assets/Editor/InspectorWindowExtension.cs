@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Data.ScriptableObject;
 using Frame.Static.Global;
+using Moon.Kernel;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,9 +10,9 @@ using Random = UnityEngine.Random;
 namespace WindowExtension
 {
     [CustomEditor(typeof(PolygonCollider2D))]
-    public class PolygonCollider2DEditor : UnityEditor.Editor
+    public class PolygonCollider2DEditor : Editor
     {
-        private UnityEditor.Editor defaultEditor;
+        private Editor defaultEditor;
 
         private void OnEnable()
         {
@@ -60,7 +61,7 @@ namespace WindowExtension
         {
             throw new Exception("The methods do not exist!");
 
-            var rigidbodyParentPrefab = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory").RIGIDBODY_PARENT;
+            var rigidbodyParentPrefab = Explorer.TryGetSetting<PrefabFactory>().RIGIDBODY_PARENT;
             var rigidbodyParent = Instantiate(rigidbodyParentPrefab);
 
             // TODO:Fix compilation errors
@@ -78,9 +79,9 @@ namespace WindowExtension
     }
 
     [CustomEditor(typeof(RectTransform), true)]
-    public class CustomRectTransformEditor : UnityEditor.Editor
+    public class CustomRectTransformEditor : Editor
     {
-        private UnityEditor.Editor defaultEditor;
+        private Editor defaultEditor;
 
         private void OnEnable()
         {
@@ -134,7 +135,7 @@ namespace WindowExtension
     }
 
     [CustomEditor(typeof(ItemProduct))]
-    public class ItemProductEditor : UnityEditor.Editor
+    public class ItemProductEditor : Editor
     {
         public override void OnInspectorGUI()
         {

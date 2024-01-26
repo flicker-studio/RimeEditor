@@ -1,12 +1,14 @@
 using System;
 using Moon.Kernel.Attribute;
+using Moon.Kernel.Setting;
 using Moon.Kernel.Utils;
 using UnityEngine;
 
 namespace LevelEditor
 {
     [CreateAssetMenu(menuName = "CustomProperty/LevelEditorCameraProperty", order = 3, fileName = "LevelEditorCameraProperty")]
-    public class CameraProperty : ScriptableObject
+    [SystemSetting("Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset")]
+    public class CameraProperty : SettingBase
     {
         [Header("相机运动属性")] public CameraMotionProperty GetCameraMotionProperty;
 

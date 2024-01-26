@@ -6,6 +6,7 @@ using Frame.Static.Global;
 using Frame.StaticExtensions.StaticClassMethod;
 using Frame.Tool;
 using Frame.Tool.Pool;
+using Moon.Kernel;
 using Moon.Kernel.Extension;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -88,16 +89,16 @@ namespace Slicer
 
         public SlicerInformation(Transform transform)
         {
-            m_slicerProperty = Resources.Load<SlicerProperty>("GlobalSettings/SlicerProperty");
-            m_prefabFactory = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
+            m_slicerProperty = Explorer.TryGetSetting<SlicerProperty>();
+            m_prefabFactory = Explorer.TryGetSetting<PrefabFactory>();
             m_cutMaterial = Resources.Load<Material>("Materials/Test");
             m_transform = transform;
         }
 
         public SlicerInformation(Transform transform, Transform playerTransform)
         {
-            m_slicerProperty = Resources.Load<SlicerProperty>("GlobalSettings/SlicerProperty");
-            m_prefabFactory = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
+            m_slicerProperty = Explorer.TryGetSetting<SlicerProperty>();
+            m_prefabFactory = Explorer.TryGetSetting<PrefabFactory>();
             m_cutMaterial = Resources.Load<Material>("Materials/Test");
             m_transform = transform;
             m_playerTransform = playerTransform;

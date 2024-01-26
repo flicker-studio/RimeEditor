@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Frame.StateMachine;
+using Moon.Kernel;
 using Moon.Kernel.Extension;
 using UnityEngine;
 
@@ -54,7 +55,7 @@ namespace Character
         {
             MotionInputController = new MotionInputController();
             ComponentController = new ComponentController(transform);
-            CharacterProperty = Resources.Load<CharacterProperty>("GlobalSettings/CharacterProperty");
+            CharacterProperty = Explorer.TryGetSetting<CharacterProperty>();
             PlayerColliding = new PlayerColliding(transform, CharacterProperty);
             PlayerRaycasting = new PlayerRaycasting(CharacterProperty, ComponentController);
         }

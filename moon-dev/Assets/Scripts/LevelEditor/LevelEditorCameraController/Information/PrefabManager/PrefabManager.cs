@@ -1,4 +1,5 @@
 using Data.ScriptableObject;
+using Moon.Kernel;
 using UnityEngine;
 
 namespace LevelEditor
@@ -23,7 +24,7 @@ namespace LevelEditor
 
         public PrefabManager()
         {
-            m_prefabFactory = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory");
+            m_prefabFactory = Explorer.TryGetSetting<PrefabFactory>();
         }
     }
 }

@@ -1,12 +1,14 @@
 using System;
 using Moon.Kernel.Attribute;
+using Moon.Kernel.Setting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Character
 {
     [CreateAssetMenu(menuName = "CustomProperty/CharacterProperty", order = 3, fileName = "CharacterProperty")]
-    public class CharacterProperty : ScriptableObject
+    [SystemSetting("Assets/Settings/GlobalSettings/CharacterProperty.asset")]
+    public class CharacterProperty : SettingBase
     {
         [Header("角色移动属性")] public PlayerMoveProperty MoveProperty;
 

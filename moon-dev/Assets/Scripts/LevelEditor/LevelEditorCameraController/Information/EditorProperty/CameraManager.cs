@@ -1,4 +1,5 @@
 using Frame.Static.Global;
+using Moon.Kernel;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Utils;
 using UnityEngine;
@@ -47,8 +48,7 @@ namespace LevelEditor
 
         public CameraManager()
         {
-            m_cameraProperty =
-                Resources.Load<CameraProperty>("GlobalSettings/LevelEditorCameraProperty");
+            m_cameraProperty = Explorer.TryGetSetting<CameraProperty>();
         }
     }
 }
