@@ -7,12 +7,12 @@ namespace LevelEditor
     {
         private EditorController m_editorController;
 
-        private CommandManager m_commandManager;
+        private CommandInvoker m_commandInvoker;
 
         void Start()
         {
-            m_commandManager = new CommandManager();
-            m_editorController = new EditorController(transform as RectTransform, m_commandManager.CommandSet);
+            m_commandInvoker = new CommandInvoker();
+            m_editorController = new EditorController(transform as RectTransform, m_commandInvoker.CommandSet);
         }
 
         private void LateUpdate()
@@ -30,20 +30,20 @@ namespace LevelEditor
                 // if(InputManager.Instance.GetDebuggerNum2Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
-                m_commandManager.CommandSet.GetRedo?.Invoke();
+                m_commandInvoker.CommandSet.GetRedo?.Invoke();
             }
             else if (InputManager.Instance.GetCtrlButton && zButtonDown)
 
                 // }else if(InputManager.Instance.GetDebuggerNum1Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
-                m_commandManager.CommandSet.GetUndo?.Invoke();
+                m_commandInvoker.CommandSet.GetUndo?.Invoke();
             }
         }
 
         private void OnEnable()
         {
-            if (m_commandManager != null) m_commandManager.CommandSet.EnableExcute?.Invoke();
+            if (m_commandInvoker != null) m_commandInvoker.CommandSet.EnableExcute?.Invoke();
         }
     }
 }
