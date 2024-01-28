@@ -19,7 +19,7 @@ namespace LevelEditor
 
         private UIManager GetUI => m_information.GetUI;
 
-        private InputController GetInput => m_information.GetInput;
+        private InputManager GetInput => m_information.GetInput;
 
         private CommandSet GetCommandSet => m_information.GetCommandSet;
 

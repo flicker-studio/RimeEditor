@@ -14,14 +14,14 @@ namespace LevelEditor
 
         public CameraManager GetCamera => m_cameraManager;
 
-        public InputController GetInput => m_inputController;
+        public InputManager GetInput => m_inputManager;
 
         public CommandSet GetCommandSet => m_commandSet;
 
         public LevelAction GetLevelAction => m_levelAction;
         
 
-        private InputController m_inputController;
+        private InputManager m_inputManager;
 
         private UIManager m_uiManager;
 
@@ -46,7 +46,7 @@ namespace LevelEditor
             m_commandSet = commandSet;
             m_prefabManager = new PrefabManager();
             m_uiManager = new UIManager(levelEditorTransform);
-            m_inputController = new InputController();
+            m_inputManager = new InputManager();
             m_dataManager = new DataManager();
             m_cameraManager = new CameraManager();
             m_levelAction = new LevelAction();

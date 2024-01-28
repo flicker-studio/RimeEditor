@@ -12,7 +12,7 @@ namespace LevelEditor
 {
     public class LevelSettingPanelShowState : AdditiveState
     {
-        private InputController GetInput => m_information.GetInput;
+        private InputManager GetInput => m_information.GetInput;
         private DataManager GetData => m_information.GetData;
         private LevelData GetCurrentLevel => GetData.GetCurrentLevel;
         private LevelSettingPanel GetLevelSettingPanel => m_information.GetUI.GetLevelSettingPanel;

@@ -273,7 +273,7 @@ namespace LevelEditor
 
         private UIProperty.ControlHandleUI m_property;
 
-        private bool GetMouseLeftButton => InputManager.Instance.GetMouseLeftButton;
+        private bool GetMouseLeftButton => Frame.Tool.InputManager.Instance.GetMouseLeftButton;
 
         public ControlHandlePanel(RectTransform levelEditorCanvasRect, UIProperty levelEditorUIProperty)
         {

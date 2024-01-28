@@ -11,7 +11,7 @@ namespace LevelEditor
     {
         private DataManager GetData => m_information.GetData;
 
-        private InputController GetInput => m_information.GetInput;
+        private InputManager GetInput => m_information.GetInput;
 
         private CameraManager GetCamera => m_information.GetCamera;
 

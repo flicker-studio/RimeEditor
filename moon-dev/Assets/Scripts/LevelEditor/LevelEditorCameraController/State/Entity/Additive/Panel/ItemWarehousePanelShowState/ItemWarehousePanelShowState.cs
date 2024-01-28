@@ -14,7 +14,7 @@ namespace LevelEditor
 {
     public class ItemWarehousePanelShowState : AdditiveState
     {
-        private InputController GetInput => m_information.GetInput;
+        private InputManager GetInput => m_information.GetInput;
         private LevelAction GetLevelAction => m_information.GetLevelAction;
         private ItemWarehousePanel GetItemWarehousePanel => m_information.GetUI.GetItemWarehousePanel;
 

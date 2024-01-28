@@ -4,7 +4,7 @@ using UnityEngine;
 namespace LevelEditor
 {
     //TODO: rename
-    public class EditorManager : MonoBehaviour
+    public class LevelEditorBehaviour : MonoBehaviour
     {
         private EditorController m_editorController;
 
@@ -24,16 +24,16 @@ namespace LevelEditor
         private void Update()
         {
             //TODO:目前与输入框互动时Redo和Undo会有BUG，出于架构考虑，暂时在想解决办法，在想用不用全局事件
-            bool zButtonDown = InputManager.Instance.GetZButtonDown;
+            bool zButtonDown = Frame.Tool.InputManager.Instance.GetZButtonDown;
 
-            if (InputManager.Instance.GetCtrlButton && InputManager.Instance.GetShiftButton && zButtonDown)
+            if (Frame.Tool.InputManager.Instance.GetCtrlButton && Frame.Tool.InputManager.Instance.GetShiftButton && zButtonDown)
 
                 // if(InputManager.Instance.GetDebuggerNum2Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
                 m_commandInvoker.CommandSet.GetRedo?.Invoke();
             }
-            else if (InputManager.Instance.GetCtrlButton && zButtonDown)
+            else if (Frame.Tool.InputManager.Instance.GetCtrlButton && zButtonDown)
 
                 // }else if(InputManager.Instance.GetDebuggerNum1Up)
             {

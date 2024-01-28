@@ -20,7 +20,7 @@ namespace LevelEditor
             await SceneLoader.Instance.AddScene(GlobalSetting.Scenes.LEVEL_PLAY);
             m_levelDatas.Clear();
             m_levelDatas.AddRange(levelDatas);
-            InputManager.Instance.AddEscapeButtonDownAction = Stop;
+            Frame.Tool.InputManager.Instance.AddEscapeButtonDownAction = Stop;
             ReadLevel();
         }
 
@@ -54,7 +54,7 @@ namespace LevelEditor
 
         public void Stop()
         {
-            InputManager.Instance.RemoveEscapeButtonDownAction = Stop;
+            Frame.Tool.InputManager.Instance.RemoveEscapeButtonDownAction = Stop;
             m_index = 0;
             ClearLevelObjs();
             SceneLoader.Instance.RemoveCurrentScene();
