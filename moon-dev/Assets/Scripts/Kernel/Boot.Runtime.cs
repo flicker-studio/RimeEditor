@@ -9,12 +9,11 @@ namespace Moon.Kernel
     /// </summary>
     public static partial class Boot
     {
-        internal static UniTaskCompletionSource Source;
+        internal static UniTaskCompletionSource Source = new();
 
         [RuntimeInitializeOnLoadMethod]
         private static async void RuntimeBoot()
         {
-            Source = new UniTaskCompletionSource();
             Debug.Log("<color=green>[SYS]</color> System is Booting...");
 
             await SCM.RegisterServices();

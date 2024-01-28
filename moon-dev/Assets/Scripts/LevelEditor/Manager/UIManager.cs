@@ -1,4 +1,3 @@
-using Moon.Kernel;
 using UnityEngine;
 
 namespace LevelEditor
@@ -25,9 +24,8 @@ namespace LevelEditor
 
         public LevelSettingPanel GetLevelSettingPanel { get; }
 
-        public UIManager(RectTransform levelEditorCanvasRect)
+        public UIManager(RectTransform levelEditorCanvasRect, UIProperty uiProperty)
         {
-            var uiProperty = Explorer.TryGetSetting<UIProperty>();
             GetActionPanel = new ActionPanel(levelEditorCanvasRect, uiProperty);
             GetControlHandlePanel = new ControlHandlePanel(levelEditorCanvasRect, uiProperty);
             GetItemTransformPanel = new ItemTransformPanel(levelEditorCanvasRect, uiProperty);

@@ -22,9 +22,9 @@ namespace LevelEditor
 
         private readonly PrefabFactory m_prefabFactory;
 
-        public PrefabManager()
+        public PrefabManager(PrefabFactory prefabFactory)
         {
-            m_prefabFactory = Explorer.TryGetSetting<PrefabFactory>();
+            m_prefabFactory = prefabFactory;
         }
     }
 }

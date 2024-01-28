@@ -106,9 +106,9 @@ namespace LevelEditor
             return newPos;
         }
 
-        public CameraManager()
+        public CameraManager(CameraProperty cameraProperty)
         {
-            m_cameraProperty = Explorer.TryGetSetting<CameraProperty>();
+            m_cameraProperty = cameraProperty;
 
             m_outLinePainter = new OutlinePainter
             {

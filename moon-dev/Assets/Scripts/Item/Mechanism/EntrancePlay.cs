@@ -2,6 +2,7 @@ using Cinemachine;
 using Data.ScriptableObject;
 using Frame.Tool.Pool;
 using Moon.Kernel;
+using Moon.Kernel.Service;
 using Slicer;
 using UnityEngine;
 
@@ -23,9 +24,9 @@ namespace Item
 
         private SlicerController m_slicerController;
 
-        private void Start()
+        private async void Start()
         {
-            m_prefabFactory = Explorer.TryGetSetting<PrefabFactory>();
+            m_prefabFactory = await ResourcesService.LoadAssetAsync<PrefabFactory>("Assets/Settings/GlobalSettings/PrefabFactory.asset");
             m_collider2D = GetComponent<Collider2D>();
         }
 

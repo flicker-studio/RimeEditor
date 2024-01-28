@@ -29,9 +29,9 @@ namespace Moon.Kernel.Utils
     {
         private static readonly Dictionary<GameObject, HashSet<Mesh>> RegisteredMeshesDic = new();
 
-        private readonly Material m_outlineMaskMaterial;
+        private Material m_outlineMaskMaterial;
 
-        private readonly Material m_outlineFillMaterial;
+        private Material m_outlineFillMaterial;
 
         private static readonly int ZTest = Shader.PropertyToID("_ZTest");
 
@@ -93,9 +93,14 @@ namespace Moon.Kernel.Utils
 
         public OutlinePainter()
         {
+            A();
+        }
+
+        private async void A()
+        {
             // Instantiate outline materials
-            m_outlineMaskMaterial = Object.Instantiate(ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineMask").Result);
-            m_outlineFillMaterial = Object.Instantiate(ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineFill").Result);
+            m_outlineMaskMaterial = await (ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineMask.mat"));
+            m_outlineFillMaterial = await (ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineFill.mat"));
 
             m_outlineMaskMaterial.name = "OutlineMask (Instance)";
             m_outlineFillMaterial.name = "OutlineFill (Instance)";

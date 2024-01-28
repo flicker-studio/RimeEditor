@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
 using UnityEngine;
 
@@ -5,28 +7,23 @@ namespace LevelEditor
 {
     public class EditorController
     {
+        private readonly Information m_information = new();
+
         private MotionController m_motionController;
 
-        private Information m_information;
-
-        public EditorController(RectTransform levelEditorTransform,CommandSet commandSet)
+        public async UniTask Init(RectTransform levelEditorTransform, CommandSet commandSet)
         {
-            ControllerInit(levelEditorTransform,commandSet);
+            await m_information.Init(levelEditorTransform, commandSet);
+            m_motionController = new MotionController(m_information);
             MotionInit();
         }
-    
-        void ControllerInit(RectTransform levelEditorTransform,CommandSet commandSet)
-        {
-            m_information = new Information(levelEditorTransform,commandSet);
-            m_motionController = new MotionController(m_information);
-        }
-    
+
         private void MotionInit()
         {
             m_motionController.ChangeMotionState(typeof(CameraDefultState));
             m_motionController.ChangeMotionState(typeof(LevelManagerPanelShowState));
         }
-    
+
         public void LateUpdate()
         {
             m_motionController.Motion(m_information);

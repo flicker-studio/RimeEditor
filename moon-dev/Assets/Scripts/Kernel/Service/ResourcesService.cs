@@ -49,7 +49,7 @@ namespace Moon.Kernel.Service
         /// <typeparam name="T">The type of addressable resource</typeparam>
         /// <returns>Resource</returns>
         /// <exception cref="Exception">当资源不存在时会抛出错误</exception>
-        public static async Task<T> LoadAssetAsync<T>(string key)
+        public static async UniTask<T> LoadAssetAsync<T>(string key)
         {
             var a = await Addressables.LoadAssetAsync<T>(key);
 
@@ -60,5 +60,7 @@ namespace Moon.Kernel.Service
 
             return a;
         }
+        
+      
     }
 }
