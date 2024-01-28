@@ -3,7 +3,7 @@ using Moon.Kernel.Utils;
 
 namespace LevelEditor
 {
-    public class ItemCreateCommand : LevelEditCommand
+    public class ItemCreateCommand : ICommand
     {
         private ItemProduct m_itemProduct;
 
@@ -27,7 +27,7 @@ namespace LevelEditor
             m_itemProduct = itemProduct;
         }
 
-        public override void Execute()
+        public void Execute()
         {
             if (m_itemData == null)
             {
@@ -46,7 +46,7 @@ namespace LevelEditor
             m_outlinePainter.SetTargetObj = m_targetAssets.GetItemObjs();
         }
 
-        public override void Undo()
+        public void Undo()
         {
             m_targetAssets.Clear();
             m_targetAssets.AddRange(m_lastAssets);

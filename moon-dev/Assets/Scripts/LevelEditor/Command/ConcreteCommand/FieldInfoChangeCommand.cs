@@ -4,7 +4,7 @@ using Moon.Kernel.Extension;
 
 namespace LevelEditor
 {
-    public class FieldInfoChangeCommand : LevelEditCommand
+    public class FieldInfoChangeCommand : ICommand
     {
         private List<ItemData> m_targetList = new List<ItemData>();
 
@@ -31,7 +31,7 @@ namespace LevelEditor
             m_updateInspectorSignal = updateInspectorSignal;
         }
 
-        public override void Execute()
+        public void Execute()
         {
             for (var index = 0; index < m_targetFieldInfos.Count; index++)
             {
@@ -41,7 +41,7 @@ namespace LevelEditor
             m_updateInspectorSignal.UpdateInspectorItemExcute?.Invoke();
         }
 
-        public override void Undo()
+        public void Undo()
         {
             for (var index = 0; index < m_targetFieldInfos.Count; index++)
             {

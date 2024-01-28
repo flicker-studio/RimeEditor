@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    public class ItemRotationCommand : LevelEditCommand
+    public class ItemRotationCommand : ICommand
     {
         private List<ItemData> m_itemDatas = new List<ItemData>();
 
@@ -25,7 +25,7 @@ namespace LevelEditor
             m_nextRotation.AddRange(nextRotation);
         }
 
-        public override void Execute()
+        public void Execute()
         {
             for (int i = 0; i < m_itemDatas.Count; i++)
             {
@@ -34,7 +34,7 @@ namespace LevelEditor
             }
         }
 
-        public override void Undo()
+        public void Undo()
         {
             for (int i = 0; i < m_itemDatas.Count; i++)
             {

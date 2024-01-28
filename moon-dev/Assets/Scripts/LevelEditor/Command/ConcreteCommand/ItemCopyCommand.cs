@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    public class ItemCopyCommand : LevelEditCommand
+    public class ItemCopyCommand : ICommand
     {
         private List<ItemData> m_copyTarget = new List<ItemData>();
 
@@ -29,7 +29,7 @@ namespace LevelEditor
             m_copyTarget.AddRange(copyTarget);
         }
 
-        public override void Execute()
+        public void Execute()
         {
             if (m_saveDatas.Count == 0)
             {
@@ -48,7 +48,7 @@ namespace LevelEditor
             m_outlinePainter.SetTargetObj = m_targetAssets.GetItemObjs();
         }
 
-        public override void Undo()
+        public void Undo()
         {
             m_targetAssets.Clear();
             m_targetAssets.AddRange(m_lastAssets);

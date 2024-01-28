@@ -6,7 +6,7 @@ namespace Slicer
     {
         public abstract void Execute();
 
-        void ICommand.Undo()
+        void Undo()
         {
         }
     }

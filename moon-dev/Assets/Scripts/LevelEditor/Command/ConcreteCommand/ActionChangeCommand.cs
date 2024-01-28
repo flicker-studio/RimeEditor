@@ -1,6 +1,6 @@
 namespace LevelEditor
 {
-    public class ActionChangeCommand : LevelEditCommand
+    public class ActionChangeCommand : ICommand
     {
         private ControlHandleAction m_controlHandleAction;
 
@@ -30,13 +30,13 @@ namespace LevelEditor
             m_nextActionType = m_controlHandleAction.ControlHandleActionType;
         }
 
-        public override void Execute()
+        public   void Execute()
         {
             m_controlHandleAction.ControlHandleActionType = m_nextActionType;
             m_controlHandleAction.UseGrid = m_nextGrid;
         }
 
-        public override void Undo()
+        public   void Undo()
         {
             m_controlHandleAction.ControlHandleActionType = m_lastActionType;
             m_controlHandleAction.UseGrid = m_lastGrid;

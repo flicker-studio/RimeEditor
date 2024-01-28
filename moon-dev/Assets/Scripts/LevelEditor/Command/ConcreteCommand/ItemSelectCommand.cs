@@ -3,7 +3,7 @@ using Moon.Kernel.Utils;
 
 namespace LevelEditor
 {
-    public class ItemSelectCommand : LevelEditCommand
+    public class ItemSelectCommand : ICommand
     {
         private ObservableList<ItemData> m_targetList;
 
@@ -21,14 +21,14 @@ namespace LevelEditor
             m_nextList.AddRange(nextList);
         }
 
-        public override void Execute()
+        public void Execute()
         {
             m_targetList.Clear();
             m_targetList.AddRange(m_nextList);
             m_outlinePainter.SetTargetObj = m_targetList.GetItemObjs();
         }
 
-        public override void Undo()
+        public void Undo()
         {
             m_targetList.Clear();
             m_targetList.AddRange(m_lastList);

@@ -2,7 +2,7 @@ using System;
 
 namespace LevelEditor
 {
-    public delegate void CommandExcute(LevelEditCommand command);
+    public delegate void CommandExcute(ICommand command);
 
     public delegate void UndoExcute();
 

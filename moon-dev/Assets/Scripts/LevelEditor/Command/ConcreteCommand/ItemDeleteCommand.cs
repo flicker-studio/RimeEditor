@@ -3,7 +3,7 @@ using Moon.Kernel.Utils;
 
 namespace LevelEditor
 {
-    public class ItemDeleteCommand : LevelEditCommand
+    public class ItemDeleteCommand : ICommand
     {
         private ObservableList<ItemData> m_targetAssets;
 
@@ -20,7 +20,7 @@ namespace LevelEditor
             m_outlinePainter = outlinePainter;
         }
 
-        public override void Execute()
+        public void Execute()
         {
             foreach (var targetAsset in m_targetAssets)
             {
@@ -36,7 +36,7 @@ namespace LevelEditor
             m_outlinePainter.SetTargetObj = m_targetAssets.GetItemObjs();
         }
 
-        public override void Undo()
+        public void Undo()
         {
             foreach (var lastAsset in m_lastAssets)
             {

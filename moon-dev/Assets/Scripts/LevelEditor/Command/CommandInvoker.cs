@@ -7,9 +7,9 @@ namespace LevelEditor
     /// </summary>
     public class CommandInvoker
     {
-        private readonly Stack<LevelEditCommand> m_undoCommands = new();
+        private static readonly Stack<ICommand> UndoCommands = new();
 
-        private readonly Stack<LevelEditCommand> m_redoCommands = new();
+        private static readonly Stack<ICommand> RedoCommands = new();
 
         /// <summary>
         /// </summary>
@@ -27,50 +27,50 @@ namespace LevelEditor
         ///     Execute the command and press it into the cache stack
         /// </summary>
         /// <param name="command">Target command</param>
-        public void Execute(LevelEditCommand command)
+        public static void Execute(ICommand command)
         {
             command.Execute();
-            m_undoCommands.Push(command);
-            m_redoCommands.Clear();
+            UndoCommands.Push(command);
+            RedoCommands.Clear();
         }
 
         /// <summary>
         ///     Cancel the previous command
         /// </summary>
-        public void Undo()
+        public static void Undo()
         {
-            if (m_undoCommands.Count <= 0)
+            if (UndoCommands.Count <= 0)
             {
                 return;
             }
 
-            var command = m_undoCommands.Pop();
-            m_redoCommands.Push(command);
+            var command = UndoCommands.Pop();
+            RedoCommands.Push(command);
             command.Undo();
         }
 
         /// <summary>
         ///     Re-execute the revocation command
         /// </summary>
-        public void Redo()
+        public static void Redo()
         {
-            if (m_redoCommands.Count <= 0)
+            if (RedoCommands.Count <= 0)
             {
                 return;
             }
 
-            var command = m_redoCommands.Pop();
-            m_undoCommands.Push(command);
+            var command = RedoCommands.Pop();
+            UndoCommands.Push(command);
             command.Execute();
         }
 
         /// <summary>
         ///     Clear all command caches
         /// </summary>
-        public void Clear()
+        public static void Clear()
         {
-            m_undoCommands.Clear();
-            m_redoCommands.Clear();
+            UndoCommands.Clear();
+            RedoCommands.Clear();
         }
     }
 }

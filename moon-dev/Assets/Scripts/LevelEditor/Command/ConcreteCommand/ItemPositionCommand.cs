@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    public class ItemPositionCommand : LevelEditCommand
+    public class ItemPositionCommand : ICommand
     {
         private List<ItemData> m_gameObjects = new List<ItemData>();
 
@@ -18,7 +18,7 @@ namespace LevelEditor
             m_nextPosition.AddRange(nextPosition);
         }
 
-        public override void Execute()
+        public void Execute()
         {
             for (int i = 0; i < m_gameObjects.Count; i++)
             {
@@ -26,7 +26,7 @@ namespace LevelEditor
             }
         }
 
-        public override void Undo()
+        public void Undo()
         {
             for (int i = 0; i < m_gameObjects.Count; i++)
             {
