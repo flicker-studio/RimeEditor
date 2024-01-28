@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Frame.StateMachine;
 using Moon.Kernel;
 using UnityEngine;
 
@@ -7,20 +8,27 @@ namespace LevelEditor
     //TODO: rename
     public class LevelEditorBehaviour : MonoBehaviour
     {
-        private readonly EditorController m_editorController = new();
-
         private readonly CommandInvoker m_commandInvoker = new();
 
         private readonly UniTaskCompletionSource m_completionSource = new();
 
-        
-        
-        
-        
+        private readonly Information m_information = new();
+
+        private MotionController m_motionController;
+
+        public async UniTask Init(RectTransform levelEditorTransform, CommandSet commandSet)
+        {
+            await m_information.Init(levelEditorTransform, commandSet);
+            m_motionController = new MotionController(m_information);
+            m_motionController.ChangeMotionState(typeof(CameraDefultState));
+            m_motionController.ChangeMotionState(typeof(LevelManagerPanelShowState));
+        }
+
+
         private async void Start()
         {
             await Explorer.BootCompletionTask;
-            await m_editorController.Init(transform as RectTransform, m_commandInvoker.CommandSet);
+            await Init(transform as RectTransform, m_commandInvoker.CommandSet);
             m_completionSource.TrySetResult();
         }
 
@@ -29,7 +37,7 @@ namespace LevelEditor
         {
             if (m_completionSource.Task.Status == UniTaskStatus.Succeeded)
             {
-                m_editorController.LateUpdate();
+                m_motionController.Motion(m_information);
             }
         }
 
