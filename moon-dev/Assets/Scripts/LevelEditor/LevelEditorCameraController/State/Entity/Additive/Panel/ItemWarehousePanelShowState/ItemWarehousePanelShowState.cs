@@ -14,19 +14,19 @@ namespace LevelEditor
 {
     public class ItemWarehousePanelShowState : AdditiveState
     {
-        private InputManager GetInput => m_information.GetInput;
-        private LevelAction GetLevelAction => m_information.GetLevelAction;
-        private ItemWarehousePanel GetItemWarehousePanel => m_information.GetUI.GetItemWarehousePanel;
+        private InputManager GetInput => m_information.InputManager;
+        private LevelAction GetLevelAction => m_information.LevelAction;
+        private ItemWarehousePanel GetItemWarehousePanel => m_information.UIManager.GetItemWarehousePanel;
 
         private Transform GetItemTypeGroup => GetItemWarehousePanel.GetItemTypeGroup;
 
         private Transform GetItemDetailGroupContent => GetItemWarehousePanel.GetItemDetailGroupContent;
 
-        private GameObject GetItemDtailGroup => m_information.GetPrefab.GetItemDetailGroup;
+        private GameObject GetItemDtailGroup => m_information.PrefabManager.GetItemDetailGroup;
 
-        private GameObject GetItemLattice => m_information.GetPrefab.GetItemLattice;
+        private GameObject GetItemLattice => m_information.PrefabManager.GetItemLattice;
 
-        private GameObject GetItemType => m_information.GetPrefab.GetItemType;
+        private GameObject GetItemType => m_information.PrefabManager.GetItemType;
 
         private TextMeshProUGUI GetSelectPromptText => GetItemWarehousePanel.GetSelectPromptText;
 
@@ -60,13 +60,13 @@ namespace LevelEditor
 
         private string GetItemTypeTextName => GetItemWarehousePanel.GetItemTypeTextName;
 
-        private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
+        private ObservableList<ItemData> ItemAssets => m_information.DataManager.ItemAssets;
 
-        private ObservableList<ItemData> TargetAssets => m_information.GetData.TargetItems;
+        private ObservableList<ItemData> TargetAssets => m_information.DataManager.TargetItems;
 
-        private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
+        private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
 
-        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private static ItemProduct m_currentChoose;
 

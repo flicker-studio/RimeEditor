@@ -10,23 +10,23 @@ namespace LevelEditor
 {
     public class RectAxisDragState : AdditiveState
     {
-        private UIManager GetUI => m_information.GetUI;
+        private UIManager GetUI => m_information.UIManager;
         private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
 
-        private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
+        private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
 
-        private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
+        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 
-        private Vector3 GetMouseWorldPoint => m_information.GetCamera.MouseWorldPosition;
+        private Vector3 GetMouseWorldPoint => m_information.CameraManager.MouseWorldPosition;
 
-        private Vector2 GetMousePosition => m_information.GetCamera.MousePosition;
+        private Vector2 GetMousePosition => m_information.CameraManager.MousePosition;
 
-        private Vector2 GetMouseCursorCompensation => m_information.GetUI.GetControlHandlePanel
+        private Vector2 GetMouseCursorCompensation => m_information.UIManager.GetControlHandlePanel
             .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
 
-        private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
+        private bool GetMouseLeftButtonUp => m_information.InputManager.GetMouseLeftButtonUp;
 
-        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
 

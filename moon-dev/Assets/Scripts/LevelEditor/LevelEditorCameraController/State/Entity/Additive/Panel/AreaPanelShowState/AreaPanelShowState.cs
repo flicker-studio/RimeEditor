@@ -6,18 +6,18 @@ using UnityEngine.UI;
 
 public class AreaPanelShowState : AdditiveState
 {
-    private DataManager GetDataManager => m_information.GetData;
-    private TMP_Dropdown GetAreaDropdown => m_information.GetUI.GetAreaPanel.GetAreaDropdown;
+    private DataManager GetDataManager => m_information.DataManager;
+    private TMP_Dropdown GetAreaDropdown => m_information.UIManager.GetAreaPanel.GetAreaDropdown;
 
-    private Button GetAddButton => m_information.GetUI.GetAreaPanel.GetAddButton;
+    private Button GetAddButton => m_information.UIManager.GetAreaPanel.GetAddButton;
     
-    private Button GetDeleteButton => m_information.GetUI.GetAreaPanel.GetDeleteButton;
+    private Button GetDeleteButton => m_information.UIManager.GetAreaPanel.GetDeleteButton;
 
-    private Button GetManageButton => m_information.GetUI.GetAreaPanel.GetManageButton;
+    private Button GetManageButton => m_information.UIManager.GetAreaPanel.GetManageButton;
 
-    private Button GetAreaSettingButton => m_information.GetUI.GetAreaPanel.GetAreaSettingButton;
+    private Button GetAreaSettingButton => m_information.UIManager.GetAreaPanel.GetAreaSettingButton;
 
-    private Button GetEnvironmentSetting => m_information.GetUI.GetAreaPanel.GetEnvironmentSettingButton;
+    private Button GetEnvironmentSetting => m_information.UIManager.GetAreaPanel.GetEnvironmentSettingButton;
     public AreaPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
         InitEvents();

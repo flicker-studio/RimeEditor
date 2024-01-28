@@ -21,18 +21,18 @@ namespace LevelEditor
 
         public delegate void UpdateInspectorItemExcute();
 
-        private InspectorPanel GetInspectorPanel => m_information.GetUI.GetInspectorPanel;
+        private InspectorPanel GetInspectorPanel => m_information.UIManager.GetInspectorPanel;
         private GameObject GetInspectorRootObj => GetInspectorPanel.GetInspectorRootRect.gameObject;
 
         private RectTransform GetInspectorContent => GetInspectorPanel.GetInspectorContentRect;
 
         private UIProperty.InspectorItemProperty GetInspectorItemProperty => GetInspectorPanel.GetInspectorItemProperty;
 
-        private ObservableList<ItemData> TargetDatas => m_information.GetData.TargetItems;
+        private ObservableList<ItemData> TargetDatas => m_information.DataManager.TargetItems;
 
-        private GameObject GetBoolItemPrefab => m_information.GetPrefab.GetBoolItem;
+        private GameObject GetBoolItemPrefab => m_information.PrefabManager.GetBoolItem;
 
-        private CommandSet GetCommandSet => m_information.GetCommandSet;
+        private CommandSet GetCommandSet => m_information.CommandSet;
         private CommandExcute GetExcute => GetCommandSet.GetExcute;
 
         private Dictionary<Type, List<GameObject>> m_inspectorItemDic = new Dictionary<Type, List<GameObject>>();

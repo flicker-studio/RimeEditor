@@ -13,15 +13,15 @@ namespace LevelEditor
     {
         #region Get properties.
 
-        private CameraManager GetCamera => m_information.GetCamera;
+        private CameraManager GetCamera => m_information.CameraManager;
 
-        private DataManager GetData => m_information.GetData;
+        private DataManager GetData => m_information.DataManager;
 
-        private UIManager GetUI => m_information.GetUI;
+        private UIManager GetUI => m_information.UIManager;
 
-        private InputManager GetInput => m_information.GetInput;
+        private InputManager GetInput => m_information.InputManager;
 
-        private CommandSet GetCommandSet => m_information.GetCommandSet;
+        private CommandSet GetCommandSet => m_information.CommandSet;
 
         private ObservableList<ItemData> TargetItems => GetData.TargetItems;
 
@@ -33,10 +33,10 @@ namespace LevelEditor
 
         private RectTransform GetScaleYAxisRect => GetUI.GetControlHandlePanel.GetScaleYAxisRect;
 
-        private float GetScaleSpeed => m_information.GetUI.GetControlHandlePanel.GetScaleDragProperty.SCALE_SPEED;
+        private float GetScaleSpeed => m_information.UIManager.GetControlHandlePanel.GetScaleDragProperty.SCALE_SPEED;
 
         private float GetCenterAxisCompensation =>
-            m_information.GetUI.GetControlHandlePanel.GetScaleDragProperty.CENTER_AXIS_COMPENSATION;
+            m_information.UIManager.GetControlHandlePanel.GetScaleDragProperty.CENTER_AXIS_COMPENSATION;
 
         private Vector2 GetMousePosition => GetCamera.MousePosition;
 

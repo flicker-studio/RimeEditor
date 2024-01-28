@@ -16,37 +16,28 @@ namespace LevelEditor
 
         private MotionController m_motionController;
 
-        public async UniTask Init(RectTransform levelEditorTransform, CommandSet commandSet)
+        private void OnEnable()
         {
-            await m_information.Init(levelEditorTransform, commandSet);
-            m_motionController = new MotionController(m_information);
-            m_motionController.ChangeMotionState(typeof(CameraDefultState));
-            m_motionController.ChangeMotionState(typeof(LevelManagerPanelShowState));
+            if (m_commandInvoker != null)
+            {
+                m_commandInvoker.CommandSet.EnableExcute?.Invoke();
+            }
         }
-
 
         private async void Start()
         {
             await Explorer.BootCompletionTask;
-            await Init(transform as RectTransform, m_commandInvoker.CommandSet);
+            await m_information.Init(transform as RectTransform, m_commandInvoker.CommandSet);
+            m_motionController = new MotionController(m_information);
+            m_motionController.ChangeMotionState(typeof(CameraDefultState));
+            m_motionController.ChangeMotionState(typeof(LevelManagerPanelShowState));
             m_completionSource.TrySetResult();
         }
 
 
-        private void LateUpdate()
-        {
-            if (m_completionSource.Task.Status == UniTaskStatus.Succeeded)
-            {
-                m_motionController.Motion(m_information);
-            }
-        }
-
         private void Update()
         {
-            if (m_completionSource.Task.Status != UniTaskStatus.Succeeded)
-            {
-                return;
-            }
+            if (m_completionSource.Task.Status != UniTaskStatus.Succeeded) return;
 
             //TODO:目前与输入框互动时Redo和Undo会有BUG，出于架构考虑，暂时在想解决办法，在想用不用全局事件
             var zButtonDown = Frame.Tool.InputManager.Instance.GetZButtonDown;
@@ -67,11 +58,11 @@ namespace LevelEditor
             }
         }
 
-        private void OnEnable()
+        private void LateUpdate()
         {
-            if (m_commandInvoker != null)
+            if (m_completionSource.Task.Status == UniTaskStatus.Succeeded)
             {
-                m_commandInvoker.CommandSet.EnableExcute?.Invoke();
+                m_motionController.Motion(m_information);
             }
         }
     }

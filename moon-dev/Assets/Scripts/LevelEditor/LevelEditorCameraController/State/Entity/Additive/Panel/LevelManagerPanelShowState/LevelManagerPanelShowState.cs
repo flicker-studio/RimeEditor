@@ -12,11 +12,11 @@ namespace LevelEditor
 {
     public class LevelManagerPanelShowState : AdditiveState
     {
-        private InputManager GetInput => m_information.GetInput;
-        private DataManager GetData => m_information.GetData;
+        private InputManager GetInput => m_information.InputManager;
+        private DataManager GetData => m_information.DataManager;
 
-        private GameObject GetLevelDataButtonPrefab => m_information.GetPrefab.GetLevelItem;
-        private LevelManagerPanel GetLevelManagerPanel => m_information.GetUI.GetLevelManagerPanel;
+        private GameObject GetLevelDataButtonPrefab => m_information.PrefabManager.GetLevelItem;
+        private LevelManagerPanel GetLevelManagerPanel => m_information.UIManager.GetLevelManagerPanel;
 
         public string GetLevelTextName => GetLevelManagerPanel.GetLevelTextName;
 

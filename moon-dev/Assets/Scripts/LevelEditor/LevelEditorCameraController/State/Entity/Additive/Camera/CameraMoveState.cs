@@ -9,7 +9,7 @@ namespace LevelEditor
 
         private Transform GetTransform => Camera.main.transform;
 
-        private Vector3 MouseWorldPoint => m_information.GetCamera.MouseWorldPosition;
+        private Vector3 MouseWorldPoint => m_information.CameraManager.MouseWorldPosition;
 
         public CameraMoveState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
@@ -18,7 +18,7 @@ namespace LevelEditor
 
         public override void Motion(BaseInformation information)
         {
-            if (m_information.GetInput.GetMouseMiddleButtonUp)
+            if (m_information.InputManager.GetMouseMiddleButtonUp)
             {
                 RemoveState();
                 return;

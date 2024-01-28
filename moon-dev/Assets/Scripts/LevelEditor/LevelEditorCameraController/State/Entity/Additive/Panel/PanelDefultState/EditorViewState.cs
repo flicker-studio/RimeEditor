@@ -4,7 +4,7 @@ using LevelEditor;
 
 public class EditorViewState : AdditiveState
 {
-    private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
+    private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
     
     public EditorViewState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {

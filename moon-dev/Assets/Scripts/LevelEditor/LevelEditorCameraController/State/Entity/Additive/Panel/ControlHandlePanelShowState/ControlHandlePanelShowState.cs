@@ -9,15 +9,15 @@ namespace LevelEditor
 {
     public class ControlHandlePanelShowState : AdditiveState
     {
-        private DataManager GetData => m_information.GetData;
+        private DataManager GetData => m_information.DataManager;
 
-        private InputManager GetInput => m_information.GetInput;
+        private InputManager GetInput => m_information.InputManager;
 
-        private CameraManager GetCamera => m_information.GetCamera;
+        private CameraManager GetCamera => m_information.CameraManager;
 
-        private UIManager GetUI => m_information.GetUI;
+        private UIManager GetUI => m_information.UIManager;
 
-        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private ControlHandlePanel GetControlHandlePanel => GetUI.GetControlHandlePanel;
 
@@ -122,7 +122,7 @@ namespace LevelEditor
 
         private void CheckButton()
         {
-            if (m_information.GetInput.GetMouseLeftButtonDown && !UIExtension.IsPointerOverUIElement())
+            if (m_information.InputManager.GetMouseLeftButtonDown && !UIExtension.IsPointerOverUIElement())
             {
                 if (!CheckStates.Contains(typeof(MouseSelecteState)))
                 {

@@ -11,7 +11,7 @@ namespace LevelEditor
     public delegate void ClearExcute();
 
     public delegate void EnableExcute();
-    
+
     public class CommandSet
     {
         public CommandExcute GetExcute { get; private set; }
@@ -19,7 +19,7 @@ namespace LevelEditor
         public UndoExcute GetUndo { get; private set; }
 
         public RedoExcute GetRedo { get; private set; }
-        
+
         public ClearExcute Clear { get; private set; }
 
         public event Action UndoAdditiveEvent;
@@ -28,7 +28,7 @@ namespace LevelEditor
 
         public EnableExcute EnableExcute;
 
-        public CommandSet(CommandExcute excute, UndoExcute undo, RedoExcute redo,ClearExcute clear)
+        public CommandSet(CommandExcute excute, UndoExcute undo, RedoExcute redo, ClearExcute clear)
         {
             GetUndo = ExcuteUndoAdditiveEvent;
             GetRedo = ExcuteRedoAdditiveEvent;

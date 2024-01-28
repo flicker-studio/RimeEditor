@@ -9,12 +9,12 @@ namespace LevelEditor
 {
     public class LevelPanelShowState : AdditiveState
     {
-        private LevelAction GetLevelAction => m_information.GetLevelAction;
-        private LevelPanel GetLevelPanel => m_information.GetUI.GetLevelPanel;
+        private LevelAction GetLevelAction => m_information.LevelAction;
+        private LevelPanel GetLevelPanel => m_information.UIManager.GetLevelPanel;
 
-        private DataManager GetData => m_information.GetData;
+        private DataManager GetData => m_information.DataManager;
 
-        private CameraManager GetCamera => m_information.GetCamera;
+        private CameraManager GetCamera => m_information.CameraManager;
         
         public LevelPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {

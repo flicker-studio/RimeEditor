@@ -6,19 +6,19 @@ namespace LevelEditor
 {
     public class CameraChangeZState : AdditiveState
     {
-        private float GetMouseScroll => m_information.GetInput.GetMouseSroll;
+        private float GetMouseScroll => m_information.InputManager.GetMouseSroll;
 
-        private bool GetMouseScrollUp => m_information.GetInput.GetMouseSrollUp;
+        private bool GetMouseScrollUp => m_information.InputManager.GetMouseSrollUp;
 
         private Transform GetCameraTransform => Camera.main.transform;
 
-        private float GetCameraMaxZ => m_information.GetCamera.CameraZMax;
+        private float GetCameraMaxZ => m_information.CameraManager.CameraZMax;
 
-        private float GetCameraMinZ => m_information.GetCamera.CameraZMin;
+        private float GetCameraMinZ => m_information.CameraManager.CameraZMin;
 
-        private float GetCameraZChangeSpeed => m_information.GetCamera.CameraZChangeSpeed;
+        private float GetCameraZChangeSpeed => m_information.CameraManager.CameraZChangeSpeed;
 
-        private Vector3 GetMouseWorldPoint => m_information.GetCamera.MouseWorldPosition;
+        private Vector3 GetMouseWorldPoint => m_information.CameraManager.MouseWorldPosition;
 
         private readonly Vector3 m_originMousePosition;
 

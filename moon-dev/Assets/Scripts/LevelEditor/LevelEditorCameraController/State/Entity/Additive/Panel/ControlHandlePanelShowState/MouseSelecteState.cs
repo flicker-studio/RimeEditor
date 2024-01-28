@@ -11,38 +11,38 @@ namespace LevelEditor
 {
     public class MouseSelecteState : AdditiveState
     {
-        private RectTransform GetSelectionUIRect => m_information.GetUI.GetControlHandlePanel.GetSelectionRect;
+        private RectTransform GetSelectionUIRect => m_information.UIManager.GetControlHandlePanel.GetSelectionRect;
 
-        private Image GetSelectionImage => m_information.GetUI.GetControlHandlePanel.GetSelectionImage;
+        private Image GetSelectionImage => m_information.UIManager.GetControlHandlePanel.GetSelectionImage;
         private Transform GetCameraTransform => Camera.main.transform;
 
-        private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
+        private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
 
-        private Vector2 GetSelectionMinSize => m_information.GetUI.GetControlHandlePanel.GetSelectionProperty.SELECTION_MIN_SIZE;
+        private Vector2 GetSelectionMinSize => m_information.UIManager.GetControlHandlePanel.GetSelectionProperty.SELECTION_MIN_SIZE;
 
-        private Color GetSelectionColor => m_information.GetUI.GetControlHandlePanel.GetSelectionProperty.SELECTION_COLOR;
+        private Color GetSelectionColor => m_information.UIManager.GetControlHandlePanel.GetSelectionProperty.SELECTION_COLOR;
 
-        private bool GetShiftButton => m_information.GetInput.GetShiftButton;
+        private bool GetShiftButton => m_information.InputManager.GetShiftButton;
 
-        private bool GetCtrlButton => m_information.GetInput.GetCtrlButton;
+        private bool GetCtrlButton => m_information.InputManager.GetCtrlButton;
 
-        private Vector2 GetScreenScale => m_information.GetCamera.ScreenScale;
+        private Vector2 GetScreenScale => m_information.CameraManager.ScreenScale;
 
         private GameObject m_selectObj;
 
         private BoxCollider2D m_selectCollider;
 
-        private Vector3 GetMousePosition => m_information.GetCamera.MousePosition
-            .NewX(Mathf.Clamp(m_information.GetCamera.MousePosition.x * GetScreenScale.x, 0, Screen.width * GetScreenScale.x))
-            .NewY(Mathf.Clamp(m_information.GetCamera.MousePosition.y * GetScreenScale.y, 0, Screen.height * GetScreenScale.y));
+        private Vector3 GetMousePosition => m_information.CameraManager.MousePosition
+            .NewX(Mathf.Clamp(m_information.CameraManager.MousePosition.x * GetScreenScale.x, 0, Screen.width * GetScreenScale.x))
+            .NewY(Mathf.Clamp(m_information.CameraManager.MousePosition.y * GetScreenScale.y, 0, Screen.height * GetScreenScale.y));
 
-        private ObservableList<ItemData> TargetList => m_information.GetData.TargetItems;
+        private ObservableList<ItemData> TargetList => m_information.DataManager.TargetItems;
 
         private List<Collider2D> m_selectList = new List<Collider2D>();
 
-        private ObservableList<ItemData> ItemAssets => m_information.GetData.ItemAssets;
+        private ObservableList<ItemData> ItemAssets => m_information.DataManager.ItemAssets;
 
-        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private Vector2 m_originMousePositon;
 
@@ -64,7 +64,7 @@ namespace LevelEditor
 
         public override void Motion(BaseInformation information)
         {
-            if (m_information.GetInput.GetMouseLeftButtonUp)
+            if (m_information.InputManager.GetMouseLeftButtonUp)
             {
                 ReturnTargetList();
                 StateDestroy();
@@ -161,7 +161,7 @@ namespace LevelEditor
         {
             GetSelectionImage.color = GetSelectionColor;
             m_originMousePositon = GetMousePosition;
-            m_selectObj = ObjectPool.Instance.OnTake(m_information.GetPrefab.GetEmptyGameObject);
+            m_selectObj = ObjectPool.Instance.OnTake(m_information.PrefabManager.GetEmptyGameObject);
 
             m_selectCollider = m_selectObj.GetComponent<BoxCollider2D>() == null
                 ? m_selectObj.AddComponent<BoxCollider2D>()

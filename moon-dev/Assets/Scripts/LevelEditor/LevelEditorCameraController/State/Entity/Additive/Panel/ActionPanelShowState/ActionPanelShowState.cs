@@ -4,34 +4,34 @@ namespace LevelEditor
 {
     public class ActionPanelShowState : AdditiveState
     {
-        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
-        private UndoExcute GetUndo => m_information.GetCommandSet.GetUndo;
+        private UndoExcute GetUndo => m_information.CommandSet.GetUndo;
         
-        private RedoExcute GetRedo => m_information.GetCommandSet.GetRedo;
+        private RedoExcute GetRedo => m_information.CommandSet.GetRedo;
 
-        private ControlHandleAction GetControlHandleAction => m_information.GetUI.GetControlHandlePanel.GetControlHandleAction;
+        private ControlHandleAction GetControlHandleAction => m_information.UIManager.GetControlHandlePanel.GetControlHandleAction;
 
-        private bool GetUndoButtonDown => m_information.GetUI.GetActionPanel.GetUndoInputDown;
+        private bool GetUndoButtonDown => m_information.UIManager.GetActionPanel.GetUndoInputDown;
     
-        private bool GetRedoButtonDown => m_information.GetUI.GetActionPanel.GetRedoInputDown;
+        private bool GetRedoButtonDown => m_information.UIManager.GetActionPanel.GetRedoInputDown;
 
-        private bool GetViewButtonDown => m_information.GetUI.GetActionPanel.GetViewInputDown;
+        private bool GetViewButtonDown => m_information.UIManager.GetActionPanel.GetViewInputDown;
 
-        private bool GetPositionButtonDown => m_information.GetUI.GetActionPanel.GetPositionInputDown;
+        private bool GetPositionButtonDown => m_information.UIManager.GetActionPanel.GetPositionInputDown;
 
-        private bool GetRotationButtonDown => m_information.GetUI.GetActionPanel.GetRotationInputDown;
+        private bool GetRotationButtonDown => m_information.UIManager.GetActionPanel.GetRotationInputDown;
 
-        private bool GetScaleButtonDown => m_information.GetUI.GetActionPanel.GetScaleInputDown;
+        private bool GetScaleButtonDown => m_information.UIManager.GetActionPanel.GetScaleInputDown;
 
-        private bool GetRectButtonDown => m_information.GetUI.GetActionPanel.GetRectInputDown;
+        private bool GetRectButtonDown => m_information.UIManager.GetActionPanel.GetRectInputDown;
 
-        private bool GetShiftButton => m_information.GetInput.GetShiftButton;
-        public bool GetPButtonDown => m_information.GetInput.GetPButtonDown;
+        private bool GetShiftButton => m_information.InputManager.GetShiftButton;
+        public bool GetPButtonDown => m_information.InputManager.GetPButtonDown;
         
-        public bool GetRButtonDown => m_information.GetInput.GetRButtonDown;
+        public bool GetRButtonDown => m_information.InputManager.GetRButtonDown;
         
-        public bool GetSButtonDown => m_information.GetInput.GetSButtonDown;
+        public bool GetSButtonDown => m_information.InputManager.GetSButtonDown;
     
         public ActionPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {

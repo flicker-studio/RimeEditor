@@ -20,22 +20,22 @@ namespace LevelEditor
 
         private POSITIONDRAGTYPE m_positionDragType;
 
-        private ControlHandlePanel GetControlHandlePanel => m_information.GetUI.GetControlHandlePanel;
+        private ControlHandlePanel GetControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
 
-        private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
+        private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
 
-        private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
+        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 
-        private Vector3 GetMouseWorldPoint => m_information.GetCamera.MouseWorldPosition;
+        private Vector3 GetMouseWorldPoint => m_information.CameraManager.MouseWorldPosition;
 
-        private Vector2 GetMousePosition => m_information.GetCamera.MousePosition;
+        private Vector2 GetMousePosition => m_information.CameraManager.MousePosition;
 
         private Vector2 GetMouseCursorCompensation => GetControlHandlePanel
             .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
 
-        private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
+        private bool GetMouseLeftButtonUp => m_information.InputManager.GetMouseLeftButtonUp;
 
-        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
@@ -80,15 +80,15 @@ namespace LevelEditor
 
         private void StateInit()
         {
-            if (m_information.GetUI.GetControlHandlePanel.GetPositionInputX)
+            if (m_information.UIManager.GetControlHandlePanel.GetPositionInputX)
             {
                 m_positionDragType = POSITIONDRAGTYPE.XAxis;
             }
-            else if (m_information.GetUI.GetControlHandlePanel.GetPositionInputY)
+            else if (m_information.UIManager.GetControlHandlePanel.GetPositionInputY)
             {
                 m_positionDragType = POSITIONDRAGTYPE.YAxis;
             }
-            else if (m_information.GetUI.GetControlHandlePanel.GetPositionInputXY)
+            else if (m_information.UIManager.GetControlHandlePanel.GetPositionInputXY)
             {
                 m_positionDragType = POSITIONDRAGTYPE.XYAxis;
             }

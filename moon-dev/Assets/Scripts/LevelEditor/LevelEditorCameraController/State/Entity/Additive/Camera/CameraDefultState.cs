@@ -9,9 +9,9 @@ namespace LevelEditor
 {
     public class CameraDefultState : AdditiveState
     {
-        private bool GetMouseMiddleButtonDown => m_information.GetInput.GetMouseMiddleButtonDown;
+        private bool GetMouseMiddleButtonDown => m_information.InputManager.GetMouseMiddleButtonDown;
 
-        private bool GetMouseSrollDown => m_information.GetInput.GetMouseSrollDown;
+        private bool GetMouseSrollDown => m_information.InputManager.GetMouseSrollDown;
         
         public CameraDefultState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {

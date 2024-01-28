@@ -8,18 +8,18 @@ using UnityEngine.UI;
 
 public class HierarchyPanelShowState : AdditiveState
 {
-    private DataManager GetData => m_information.GetData;
-    private HierarchyPanel GetHierarchyPanel => m_information.GetUI.GetHierarchyPanel;
+    private DataManager GetData => m_information.DataManager;
+    private HierarchyPanel GetHierarchyPanel => m_information.UIManager.GetHierarchyPanel;
 
     private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
 
-    private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+    private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
     private ObservableList<ItemData> TargetItems => GetData.TargetItems;
 
     private ObservableList<ItemData> ItemAssets => GetData.ItemAssets;
 
-    private OutlinePainter GetOutlinePainter => m_information.GetCamera.GetOutlinePainter;
+    private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
 
     private Button GetAddButton => GetHierarchyPanel.GetAddButton;
 
@@ -27,11 +27,11 @@ public class HierarchyPanelShowState : AdditiveState
 
     private ScrollRect GetScrollView => GetHierarchyPanel.GetScrollView;
 
-    private bool GetShiftInput => m_information.GetInput.GetShiftButton;
+    private bool GetShiftInput => m_information.InputManager.GetShiftButton;
 
-    private bool GetCtrlInput => m_information.GetInput.GetCtrlButton;
+    private bool GetCtrlInput => m_information.InputManager.GetCtrlButton;
 
-    private bool GetDeleteInputDown => m_information.GetInput.GetDeleteButtonDown;
+    private bool GetDeleteInputDown => m_information.InputManager.GetDeleteButtonDown;
 
     private List<ItemNode> m_itemNodeProperties = new List<ItemNode>();
 

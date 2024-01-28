@@ -7,21 +7,21 @@ namespace LevelEditor
 {
     public class ItemTransformPanelShowState : AdditiveState
     {
-        private InputManager GetInput => m_information.GetInput;
-        private ObservableList<ItemData> TargetItems => m_information.GetData.TargetItems;
+        private InputManager GetInput => m_information.InputManager;
+        private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
 
-        private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
+        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 
-        private CommandSet GetCommandSet => m_information.GetCommandSet;
+        private CommandSet GetCommandSet => m_information.CommandSet;
         private CommandExcute GetExcute => GetCommandSet.GetExcute;
 
-        private ItemTransformPanel GetItemTransformPanel => m_information.GetUI.GetItemTransformPanel;
+        private ItemTransformPanel GetItemTransformPanel => m_information.UIManager.GetItemTransformPanel;
 
-        private bool GetPositionChange => m_information.GetUI.GetItemTransformPanel.GetPositionChange;
+        private bool GetPositionChange => m_information.UIManager.GetItemTransformPanel.GetPositionChange;
 
-        private bool GetRotationChange => m_information.GetUI.GetItemTransformPanel.GetRotationChange;
+        private bool GetRotationChange => m_information.UIManager.GetItemTransformPanel.GetRotationChange;
 
-        private bool GetScaleChange => m_information.GetUI.GetItemTransformPanel.GetScaleChange;
+        private bool GetScaleChange => m_information.UIManager.GetItemTransformPanel.GetScaleChange;
 
         private List<Vector3> m_lastPositon = new List<Vector3>();
 

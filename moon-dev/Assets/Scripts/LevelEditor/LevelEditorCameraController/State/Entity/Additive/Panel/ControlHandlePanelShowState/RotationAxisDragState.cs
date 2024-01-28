@@ -11,21 +11,21 @@ namespace LevelEditor
 {
     public class RotationAxisDragState : AdditiveState
     {
-        private ObservableList<ItemData> TagetItems => m_information.GetData.TargetItems;
+        private ObservableList<ItemData> TagetItems => m_information.DataManager.TargetItems;
 
-        private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
+        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 
-        private ControlHandlePanel GetControlHandlePanel => m_information.GetUI.GetControlHandlePanel;
+        private ControlHandlePanel GetControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
         private RectTransform GetRotationAxisRectTransform => GetControlHandlePanel.GetRotationRect;
 
         private Vector2 GetMouseCursorCompensation => GetControlHandlePanel
             .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
 
-        private Vector3 GetMousePosition => m_information.GetCamera.MousePosition;
+        private Vector3 GetMousePosition => m_information.CameraManager.MousePosition;
 
-        private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
+        private bool GetMouseLeftButtonUp => m_information.InputManager.GetMouseLeftButtonUp;
 
-        private CommandExcute GetExcute => m_information.GetCommandSet.GetExcute;
+        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
@@ -41,7 +41,7 @@ namespace LevelEditor
 
         private Flag m_waitToNextFrame;
 
-        private float GetRotationSpeed => m_information.GetUI.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
+        private float GetRotationSpeed => m_information.UIManager.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
 
         private Transform GetCameraTransform => Camera.main.transform;
 
