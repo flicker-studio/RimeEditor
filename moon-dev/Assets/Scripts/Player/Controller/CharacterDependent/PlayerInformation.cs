@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
 using Moon.Kernel;
 using Moon.Kernel.Extension;
+using Moon.Kernel.Service;
 using UnityEngine;
 
 namespace Character
@@ -51,11 +53,18 @@ namespace Character
 
         #endregion
 
+
         public PlayerInformation(Transform transform)
         {
             MotionInputController = new MotionInputController();
             ComponentController = new ComponentController(transform);
-            CharacterProperty = Explorer.TryGetSetting<CharacterProperty>();
+
+            //  CharacterProperty = Explorer.TryGetSetting<CharacterProperty>();
+        }
+
+        public async UniTask Init(Transform transform)
+        {
+            CharacterProperty = await ResourcesService.LoadAssetAsync<CharacterProperty>("Assets/Settings/GlobalSettings/CharacterProperty.asset");
             PlayerColliding = new PlayerColliding(transform, CharacterProperty);
             PlayerRaycasting = new PlayerRaycasting(CharacterProperty, ComponentController);
         }
