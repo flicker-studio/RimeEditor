@@ -38,7 +38,7 @@ namespace LevelEditor
         private float GetCenterAxisCompensation =>
             m_information.GetUI.GetControlHandlePanel.GetScaleDragProperty.CENTER_AXIS_COMPENSATION;
 
-        private Vector2 GetMousePosition => GetCamera.GetMousePosition;
+        private Vector2 GetMousePosition => GetCamera.MousePosition;
 
         private Vector2 GetMouseCursorCompensation => GetUI.GetControlHandlePanel
             .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;

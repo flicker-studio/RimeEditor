@@ -26,15 +26,15 @@ namespace LevelEditor
 
         private bool GetCtrlButton => m_information.GetInput.GetCtrlButton;
 
-        private Vector2 GetScreenScale => m_information.GetCamera.GetScreenScale;
+        private Vector2 GetScreenScale => m_information.GetCamera.ScreenScale;
 
         private GameObject m_selectObj;
 
         private BoxCollider2D m_selectCollider;
 
-        private Vector3 GetMousePosition => m_information.GetCamera.GetMousePosition
-            .NewX(Mathf.Clamp(m_information.GetCamera.GetMousePosition.x * GetScreenScale.x, 0, Screen.width * GetScreenScale.x))
-            .NewY(Mathf.Clamp(m_information.GetCamera.GetMousePosition.y * GetScreenScale.y, 0, Screen.height * GetScreenScale.y));
+        private Vector3 GetMousePosition => m_information.GetCamera.MousePosition
+            .NewX(Mathf.Clamp(m_information.GetCamera.MousePosition.x * GetScreenScale.x, 0, Screen.width * GetScreenScale.x))
+            .NewY(Mathf.Clamp(m_information.GetCamera.MousePosition.y * GetScreenScale.y, 0, Screen.height * GetScreenScale.y));
 
         private ObservableList<ItemData> TargetList => m_information.GetData.TargetItems;
 

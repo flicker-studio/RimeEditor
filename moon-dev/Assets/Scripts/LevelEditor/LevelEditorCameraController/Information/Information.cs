@@ -19,7 +19,7 @@ namespace LevelEditor
         public CommandSet GetCommandSet => m_commandSet;
 
         public LevelAction GetLevelAction => m_levelAction;
-        
+
 
         private InputManager m_inputManager;
 
@@ -30,18 +30,18 @@ namespace LevelEditor
         private PrefabManager m_prefabManager;
 
         private CameraManager m_cameraManager;
-    
+
         private CommandSet m_commandSet;
 
         private LevelAction m_levelAction;
-    
-        public Information(RectTransform levelEditorTransform,CommandSet commandSet)
+
+        public Information(RectTransform levelEditorTransform, CommandSet commandSet)
         {
-            InitComponent(levelEditorTransform,commandSet);
+            InitComponent(levelEditorTransform, commandSet);
             InitEvent();
         }
 
-        private void InitComponent(RectTransform levelEditorTransform,CommandSet commandSet)
+        private void InitComponent(RectTransform levelEditorTransform, CommandSet commandSet)
         {
             m_commandSet = commandSet;
             m_prefabManager = new PrefabManager();
@@ -63,27 +63,30 @@ namespace LevelEditor
         private void EnableExcute()
         {
             m_dataManager.SetActiveEditors(true);
-            m_cameraManager.GetOutlinePainter.SetTargetObj = m_dataManager.TargetObjs;
+            m_cameraManager.SetTargetObject = m_dataManager.TargetObjs;
         }
 
         private void ResetCommand(SubLevelData subLevelData)
         {
             m_commandSet.Clear?.Invoke();
         }
-        
+
         private void ResetOutline(SubLevelData subLevelData)
         {
-            GetCamera.GetOutlinePainter.SetTargetObj = GetData.TargetObjs;
+            GetCamera.SetTargetObject = GetData.TargetObjs;
         }
 
         private void ResetCameraPos(SubLevelData subLevelData)
         {
             List<GameObject> itemObjs = subLevelData.ItemAssets.GetItemObjs();
+
             if (itemObjs.Count == 0)
             {
                 return;
             }
+
             Vector3 targetPos = Vector3.zero;
+
             foreach (var itemObj in itemObjs)
             {
                 targetPos += itemObj.transform.position;
@@ -91,17 +94,17 @@ namespace LevelEditor
 
             targetPos /= itemObjs.Count;
 
-            Vector3 oriPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2,
+            Vector3 oriPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2,
                 Mathf.Abs(Camera.main.transform.position.z)));
 
             Vector3 direction = targetPos - oriPos;
-            
-            float zLength = (GetCamera.GetProperty.GetCameraMotionProperty.CAMERA_MAX_Z +
-                             GetCamera.GetProperty.GetCameraMotionProperty.CAMERA_MIN_Z) / 2;
+
+            float zLength = (GetCamera.CameraZMax +
+                             GetCamera.CameraZMin) / 2;
 
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + direction.x
-                ,Camera.main.transform.position.y + direction.y
-                    ,zLength);
+                , Camera.main.transform.position.y + direction.y
+                , zLength);
         }
     }
 }

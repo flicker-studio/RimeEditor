@@ -21,7 +21,7 @@ namespace LevelEditor
         private Vector2 GetMouseCursorCompensation => GetControlHandlePanel
             .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
 
-        private Vector3 GetMousePosition => m_information.GetCamera.GetMousePosition;
+        private Vector3 GetMousePosition => m_information.GetCamera.MousePosition;
 
         private bool GetMouseLeftButtonUp => m_information.GetInput.GetMouseLeftButtonUp;
 

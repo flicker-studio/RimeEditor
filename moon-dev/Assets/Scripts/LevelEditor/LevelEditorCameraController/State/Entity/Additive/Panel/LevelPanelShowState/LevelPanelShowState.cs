@@ -41,7 +41,7 @@ namespace LevelEditor
         private void PlayLevel()
         {
             GetData.SetActiveEditors(false);
-            GetCamera.GetOutlinePainter.SetTargetObj = null;
+            GetCamera.SetTargetObject = null;
             LevelPlay.Instance.Play(GetData.ShowSubLevels(),GetData.GetCurrentSubLevelIndex);
         }
 

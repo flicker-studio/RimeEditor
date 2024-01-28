@@ -17,9 +17,9 @@ namespace LevelEditor
 
         private List<GameObject> TargetObjs => m_information.GetData.TargetObjs;
 
-        private Vector3 GetMouseWorldPoint => m_information.GetCamera.GetMouseWorldPoint;
+        private Vector3 GetMouseWorldPoint => m_information.GetCamera.MouseWorldPosition;
 
-        private Vector2 GetMousePosition => m_information.GetCamera.GetMousePosition;
+        private Vector2 GetMousePosition => m_information.GetCamera.MousePosition;
 
         private Vector2 GetMouseCursorCompensation => m_information.GetUI.GetControlHandlePanel
             .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
