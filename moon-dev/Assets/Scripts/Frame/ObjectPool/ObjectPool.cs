@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Component = UnityEngine.Component;
 
@@ -208,9 +209,12 @@ namespace Frame.Tool.Pool
         /// <returns></returns>
         private string CheckTag(GameObject obj)
         {
-            throw new Exception("Unable to compile");
-
-            //  return obj.name.RemoveInvalidCharacter();
+            return RemoveTrailingNumbers(obj.name);
+        }
+        
+        private string RemoveTrailingNumbers(string input)
+        {
+            return Regex.Replace(input, @"\d+$", "");
         }
 
         private void CheckTypeCachePanel(string tag)

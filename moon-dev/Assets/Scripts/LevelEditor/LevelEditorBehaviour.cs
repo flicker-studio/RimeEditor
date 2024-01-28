@@ -21,6 +21,7 @@ namespace LevelEditor
         {
             await Explorer.BootCompletionTask;
             await m_editorController.Init(transform as RectTransform, m_commandInvoker.CommandSet);
+            m_completionSource.TrySetResult();
         }
 
 
