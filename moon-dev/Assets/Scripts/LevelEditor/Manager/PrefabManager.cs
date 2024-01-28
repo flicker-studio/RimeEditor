@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    public class PrefabManager
+    public class PrefabManager : IManager
     {
         public GameObject GetEmptyGameObject => m_prefabFactory.EMPTY_GAMEOBJECT;
 
@@ -20,7 +20,7 @@ namespace LevelEditor
 
         public GameObject GetLevelItem => m_prefabFactory.LEVEL_DATA_BUTTON;
 
-        private PrefabFactory m_prefabFactory;
+        private readonly PrefabFactory m_prefabFactory;
 
         public PrefabManager()
         {

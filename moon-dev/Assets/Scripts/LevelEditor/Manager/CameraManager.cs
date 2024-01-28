@@ -7,9 +7,9 @@ using UnityEngine.InputSystem;
 
 namespace LevelEditor
 {
-    public class CameraManager
+    public class CameraManager : IManager
     {
-        public CameraProperty GetProperty => m_cameraProperty;
+        public CameraProperty GetProperty { get; }
 
         public OutlinePainter GetOutlinePainter
         {
@@ -31,7 +31,7 @@ namespace LevelEditor
 
         public Vector3 GetMousePosition => Mouse.current.position.ReadValue();
 
-        public Vector2 GetScreenScale => new Vector2(GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.x / Screen.width,
+        public Vector2 GetScreenScale => new(GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.x / Screen.width,
             GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.y / Screen.height);
 
         public Vector3 GetMouseWorldPoint =>
@@ -44,11 +44,9 @@ namespace LevelEditor
 
         private OutlinePainter m_outlinePainter;
 
-        private CameraProperty m_cameraProperty;
-
         public CameraManager()
         {
-            m_cameraProperty = Explorer.TryGetSetting<CameraProperty>();
+            GetProperty = Explorer.TryGetSetting<CameraProperty>();
         }
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace LevelEditor
 {
+    //TODO: rename
     public class EditorManager : MonoBehaviour
     {
         private EditorController m_editorController;
