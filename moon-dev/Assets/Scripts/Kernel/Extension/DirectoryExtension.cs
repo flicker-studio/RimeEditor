@@ -3,9 +3,9 @@ using System.IO;
 
 namespace Moon.Kernel.Extension
 {
-    internal static class FileExtension
+    public static class DirectoryExtension
     {
-        public static bool Move(string source, string target)
+        public static bool MoveSpanningDisk(string source, string target)
         {
             if (!Directory.Exists(source))
             {

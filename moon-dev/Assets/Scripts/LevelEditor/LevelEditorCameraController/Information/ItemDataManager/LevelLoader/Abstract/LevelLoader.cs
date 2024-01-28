@@ -36,10 +36,8 @@ namespace LevelEditor
             {
                 if (data.GetKey == levelData.GetKey) return false;
             }
-
-            throw new NotImplementedException();
-
-            //return File.Move(path, $"{PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
+            
+            return DirectoryExtension.MoveSpanningDisk(path, $"{PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
         }
 
         public bool DeleteLevel(LevelData levelData)
