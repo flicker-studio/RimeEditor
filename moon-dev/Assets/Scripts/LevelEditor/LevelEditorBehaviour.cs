@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
-using Moon.Kernel;
 using UnityEngine;
 
 namespace LevelEditor
@@ -8,37 +7,30 @@ namespace LevelEditor
     //TODO: rename
     public class LevelEditorBehaviour : MonoBehaviour
     {
-        private readonly CommandInvoker m_commandInvoker = new();
+        private CommandInvoker m_commandInvoker;
 
-        private readonly UniTaskCompletionSource m_completionSource = new();
+        private Information m_information;
 
-        private readonly Information m_information = new();
+        private LevelEditorController m_controller;
 
         private MotionController m_motionController;
 
         private void OnEnable()
         {
+            m_controller = LevelEditorController.Instance;
+            m_commandInvoker = m_controller.CommandInvoker;
+            m_information = m_controller.Information;
+            m_motionController = m_controller.MotionController;
+
             if (m_commandInvoker != null)
             {
                 m_commandInvoker.CommandSet.EnableExcute?.Invoke();
             }
         }
 
-        private async void Start()
-        {
-            await Explorer.BootCompletionTask;
-            await m_information.Init(transform as RectTransform, m_commandInvoker.CommandSet);
-            m_motionController = new MotionController(m_information);
-            m_motionController.ChangeMotionState(typeof(CameraDefultState));
-            m_motionController.ChangeMotionState(typeof(LevelManagerPanelShowState));
-            m_completionSource.TrySetResult();
-        }
-
 
         private void Update()
         {
-            if (m_completionSource.Task.Status != UniTaskStatus.Succeeded) return;
-
             //TODO:目前与输入框互动时Redo和Undo会有BUG，出于架构考虑，暂时在想解决办法，在想用不用全局事件
             var zButtonDown = Frame.Tool.InputManager.Instance.GetZButtonDown;
 
@@ -60,10 +52,7 @@ namespace LevelEditor
 
         private void LateUpdate()
         {
-            if (m_completionSource.Task.Status == UniTaskStatus.Succeeded)
-            {
-                m_motionController.Motion(m_information);
-            }
+            m_motionController.Motion(m_information);
         }
     }
 }

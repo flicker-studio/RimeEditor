@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - ControlHandle
+  - Temp_Editor
   layers:
   - Default
   - TransparentFX
