@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace LevelEditor
@@ -10,6 +11,8 @@ namespace LevelEditor
         private static readonly Stack<ICommand> UndoCommands = new();
 
         private static readonly Stack<ICommand> RedoCommands = new();
+
+        public static event Action UndoAdditiveEvent;
 
         /// <summary>
         /// </summary>
@@ -47,6 +50,8 @@ namespace LevelEditor
             var command = UndoCommands.Pop();
             RedoCommands.Push(command);
             command.Undo();
+
+            UndoAdditiveEvent?.Invoke();
         }
 
         /// <summary>

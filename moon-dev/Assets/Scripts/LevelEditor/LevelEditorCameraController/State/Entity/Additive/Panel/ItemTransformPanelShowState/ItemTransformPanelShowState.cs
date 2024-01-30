@@ -49,7 +49,7 @@ namespace LevelEditor
         {
             GetItemTransformPanel.GetPanelObj.SetActive(true);
             GetCommandSet.RedoAdditiveEvent += SetDo;
-            GetCommandSet.UndoAdditiveEvent += SetDo;
+            CommandInvoker.UndoAdditiveEvent += SetDo;
         }
 
         protected override void RemoveState()
@@ -57,7 +57,7 @@ namespace LevelEditor
             base.RemoveState();
             GetItemTransformPanel.GetPanelObj.SetActive(false);
             GetCommandSet.RedoAdditiveEvent -= SetDo;
-            GetCommandSet.UndoAdditiveEvent -= SetDo;
+            CommandInvoker.UndoAdditiveEvent -= SetDo;
         }
 
         private void CheckChange()

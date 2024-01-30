@@ -5,8 +5,6 @@ namespace LevelEditor
 {
     public class ActionPanelShowState : AdditiveState
     {
-        private Action GetUndo => m_information.CommandSet.GetUndo;
-
         private Action GetRedo => m_information.CommandSet.GetRedo;
 
         private ControlHandleAction GetControlHandleAction => m_information.UIManager.GetControlHandlePanel.GetControlHandleAction;
@@ -60,7 +58,7 @@ namespace LevelEditor
             }
             else if (GetUndoButtonDown)
             {
-                GetUndo?.Invoke();
+                CommandInvoker.Undo();
             }
             else if (GetRedoButtonDown)
             {

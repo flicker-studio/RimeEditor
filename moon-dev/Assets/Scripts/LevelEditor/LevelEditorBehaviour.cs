@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
 using UnityEngine;
 
@@ -46,7 +45,7 @@ namespace LevelEditor
                 // }else if(InputManager.Instance.GetDebuggerNum1Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
-                m_commandInvoker.CommandSet.GetUndo?.Invoke();
+                CommandInvoker.Undo();
             }
         }
 
