@@ -7,14 +7,18 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
+/// <summary>
+///     Custom deserialization transformations
+/// </summary>
 public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
 {
     private ItemDataType m_itemDataType;
 
     private ItemProduct m_itemProduct;
 
-    private string m_itemRootPath => GlobalSetting.CriticalPath.ITEM_FILE_PATH;
+    private static string ItemRootPath => GlobalSetting.CriticalPath.ITEM_FILE_PATH;
 
+    /// <inheritdoc />
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
         var token = JToken.ReadFrom(reader);
@@ -26,6 +30,7 @@ public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
         return base.ReadJson(token.CreateReader(), objectType, existingValue, serializer);
     }
 
+    /// <inheritdoc />
     public override ItemDataBase Create(Type objectType)
     {
         switch (m_itemDataType)
@@ -43,17 +48,8 @@ public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
 
     private ItemProduct ItemProductAnalysis(string itemProductName, string itemProductType)
     {
-        ItemProduct itemProduct = Resources.LoadAll<ItemProduct>
-                (m_itemRootPath + '\\' + itemProductType)
-            .ToList().First((value) =>
-            {
-                if (value.Name == itemProductName)
-                {
-                    return value;
-                }
-
-                return false;
-            });
+        var itemProduct = Resources.LoadAll<ItemProduct>(ItemRootPath + '\\' + itemProductType).ToList()
+            .First(value => value.Name == itemProductName ? value : false);
 
         return itemProduct;
     }
