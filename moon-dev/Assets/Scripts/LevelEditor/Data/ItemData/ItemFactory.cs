@@ -2,7 +2,7 @@ namespace LevelEditor
 {
     public class ItemFactory
     {
-        public ItemData CreateItem(ItemProduct itemProduct)
+        public ItemDataBase CreateItem(ItemProduct itemProduct)
         {
             switch (itemProduct.ItemType)
             {
@@ -15,7 +15,7 @@ namespace LevelEditor
             }
         }
 
-        private ItemData MechanismFactory(ItemProduct itemProduct)
+        private ItemDataBase MechanismFactory(ItemProduct itemProduct)
         {
             switch (itemProduct.Name)
             {

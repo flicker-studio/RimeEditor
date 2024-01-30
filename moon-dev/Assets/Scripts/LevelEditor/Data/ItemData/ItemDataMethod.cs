@@ -5,7 +5,7 @@ namespace LevelEditor
 {
     public static class ItemDataMethod
     {
-        public static ItemData CheckItemObj(this List<ItemData> itemDatas, GameObject targetObj)
+        public static ItemDataBase CheckItemObj(this List<ItemDataBase> itemDatas, GameObject targetObj)
         {
             foreach (var itemData in itemDatas)
             {
@@ -15,9 +15,9 @@ namespace LevelEditor
             return null;
         }
 
-        public static List<ItemData> CheckItemObjs(this List<ItemData> itemDatas, List<GameObject> targetObjs)
+        public static List<ItemDataBase> CheckItemObjs(this List<ItemDataBase> itemDatas, List<GameObject> targetObjs)
         {
-            List<ItemData> tempList = new List<ItemData>();
+            var tempList = new List<ItemDataBase>();
 
             foreach (var targetObj in targetObjs)
             {
@@ -34,7 +34,7 @@ namespace LevelEditor
             return tempList;
         }
 
-        public static List<GameObject> GetItemObjs(this List<ItemData> itemDatas)
+        public static List<GameObject> GetItemObjs(this List<ItemDataBase> itemDatas)
         {
             List<GameObject> itemObjs = new List<GameObject>();
 
@@ -46,7 +46,7 @@ namespace LevelEditor
             return itemObjs;
         }
 
-        public static ItemData CheckItemObj(this ObservableList<ItemData> itemDatas, GameObject targetObj)
+        public static ItemDataBase CheckItemObj(this ObservableList<ItemDataBase> itemDatas, GameObject targetObj)
         {
             foreach (var itemData in itemDatas)
             {
@@ -56,9 +56,9 @@ namespace LevelEditor
             return null;
         }
 
-        public static List<ItemData> CheckItemObjs(this ObservableList<ItemData> itemDatas, List<GameObject> targetObjs)
+        public static List<ItemDataBase> CheckItemObjs(this ObservableList<ItemDataBase> itemDatas, List<GameObject> targetObjs)
         {
-            List<ItemData> tempList = new List<ItemData>();
+            var tempList = new List<ItemDataBase>();
 
             foreach (var targetObj in targetObjs)
             {
@@ -75,7 +75,7 @@ namespace LevelEditor
             return tempList;
         }
 
-        public static List<GameObject> GetItemObjs(this ObservableList<ItemData> itemDatas)
+        public static List<GameObject> GetItemObjs(this ObservableList<ItemDataBase> itemDatas)
         {
             List<GameObject> itemObjs = new List<GameObject>();
 

@@ -5,7 +5,7 @@ namespace LevelEditor
 {
     public class ItemRotationCommand : ICommand
     {
-        private List<ItemData> m_itemDatas = new List<ItemData>();
+        private readonly List<ItemDataBase> m_itemDatas = new();
 
         private List<Quaternion> m_lastRotation = new List<Quaternion>();
 
@@ -15,7 +15,7 @@ namespace LevelEditor
 
         private List<Vector3> m_nextPosition = new List<Vector3>();
 
-        public ItemRotationCommand(ObservableList<ItemData> itemDatas, List<Vector3> lastPosition, List<Vector3> nextPosition,
+        public ItemRotationCommand(ObservableList<ItemDataBase> itemDatas, List<Vector3> lastPosition, List<Vector3> nextPosition,
             List<Quaternion> lastRotation, List<Quaternion> nextRotation)
         {
             m_itemDatas.AddRange(itemDatas);

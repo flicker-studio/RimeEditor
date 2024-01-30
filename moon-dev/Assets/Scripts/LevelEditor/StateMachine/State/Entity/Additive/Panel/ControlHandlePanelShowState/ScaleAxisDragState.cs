@@ -23,7 +23,7 @@ namespace LevelEditor
         private InputManager GetInput => m_information.InputManager;
 
 
-        private ObservableList<ItemData> TargetItems => GetData.TargetItems;
+        private ObservableList<ItemDataBase> TargetItems => GetData.TargetItems;
 
         private List<GameObject> TargetObjs => GetData.TargetObjs;
 

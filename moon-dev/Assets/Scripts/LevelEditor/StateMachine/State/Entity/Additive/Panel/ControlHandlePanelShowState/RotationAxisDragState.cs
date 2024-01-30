@@ -12,7 +12,7 @@ namespace LevelEditor
 {
     public class RotationAxisDragState : AdditiveState
     {
-        private ObservableList<ItemData> TagetItems => m_information.DataManager.TargetItems;
+        private ObservableList<ItemDataBase> TagetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 

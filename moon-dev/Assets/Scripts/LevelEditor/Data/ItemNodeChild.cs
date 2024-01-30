@@ -8,13 +8,13 @@ using UnityEngine.UI;
 
 public class ItemNodeChild : ItemNode
 {
-    public ItemData ItemData { get; private set; }
+    public ItemDataBase ItemData { get; }
 
     private float m_doubleClickTimer;
 
     private int m_clickCount = 0;
 
-    public ItemNodeChild(ItemProduct itemProduct, Transform itemNodeTransform, Action<ItemNode> onSelect, ItemData targetItem, ScrollRect scrollView)
+    public ItemNodeChild(ItemProduct itemProduct, Transform itemNodeTransform, Action<ItemNode> onSelect, ItemDataBase targetItem, ScrollRect scrollView)
         : base(itemProduct, itemNodeTransform, onSelect, scrollView)
     {
         ItemData = targetItem;

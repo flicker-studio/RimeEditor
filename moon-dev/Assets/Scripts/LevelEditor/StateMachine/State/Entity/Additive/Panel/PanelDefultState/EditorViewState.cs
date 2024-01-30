@@ -4,7 +4,7 @@ using LevelEditor;
 
 public class EditorViewState : AdditiveState
 {
-    private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
+    private ObservableList<ItemDataBase> TargetItems => m_information.DataManager.TargetItems;
 
     public EditorViewState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
@@ -31,12 +31,12 @@ public class EditorViewState : AdditiveState
     {
     }
 
-    private void ShowTransformPanel(List<ItemData> itemDatas)
+    private void ShowTransformPanel(List<ItemDataBase> itemDatas)
     {
         ShowTransformPanel();
     }
 
-    private void ShowTransformPanel(ItemData itemData)
+    private void ShowTransformPanel(ItemDataBase itemData)
     {
         ShowTransformPanel();
     }

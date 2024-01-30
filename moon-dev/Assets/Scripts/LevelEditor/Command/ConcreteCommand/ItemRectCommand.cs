@@ -5,7 +5,7 @@ namespace LevelEditor
 {
     public class ItemRectCommand : ICommand
     {
-        private List<ItemData> m_itemDatas = new List<ItemData>();
+        private readonly List<ItemDataBase> m_itemDatas = new();
 
         private List<Vector3> m_lastScale = new List<Vector3>();
 
@@ -15,7 +15,7 @@ namespace LevelEditor
 
         private List<Vector3> m_nextPosition = new List<Vector3>();
 
-        public ItemRectCommand(ObservableList<ItemData> itemDatas, List<Vector3> lastPosition, List<Vector3> nextPosition, List<Vector3> lastScale, List<Vector3> nextScale)
+        public ItemRectCommand(ObservableList<ItemDataBase> itemDatas, List<Vector3> lastPosition, List<Vector3> nextPosition, List<Vector3> lastScale, List<Vector3> nextScale)
         {
             m_itemDatas.AddRange(itemDatas);
             m_lastScale.AddRange(lastScale);

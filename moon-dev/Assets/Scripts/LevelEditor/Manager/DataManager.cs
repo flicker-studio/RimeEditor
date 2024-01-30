@@ -9,7 +9,7 @@ namespace LevelEditor
 {
     public class DataManager : IManager
     {
-        public ObservableList<ItemData> ItemAssets => GetCurrentSubLevel?.ItemAssets;
+        public ObservableList<ItemDataBase> ItemAssets => GetCurrentSubLevel?.ItemAssets;
 
         public SubLevelData GetCurrentSubLevel => GetCurrentLevel?.GetSubLevelDatas[GetCurrentSubLevelIndex];
 
@@ -19,7 +19,7 @@ namespace LevelEditor
 
         public int GetCurrentSubLevelIndex { get; private set; }
 
-        public ObservableList<ItemData> TargetItems = new();
+        public ObservableList<ItemDataBase> TargetItems = new();
 
         public List<GameObject> TargetObjs = new();
 
@@ -170,17 +170,17 @@ namespace LevelEditor
             TargetItems.OnClear += SyncTargetObj;
         }
 
-        private void SetItemAssetActive(ObservableList<ItemData> itemDatas, bool active, bool isReload = false)
+        private void SetItemAssetActive(ObservableList<ItemDataBase> itemDatas, bool active, bool isReload = false)
         {
             foreach (var itemData in itemDatas) itemData.SetActiveEditor(active, isReload);
         }
 
-        private void SyncTargetObj(List<ItemData> list)
+        private void SyncTargetObj(List<ItemDataBase> list)
         {
             SyncTargetObj();
         }
 
-        private void SyncTargetObj(ItemData list)
+        private void SyncTargetObj(ItemDataBase list)
         {
             SyncTargetObj();
         }

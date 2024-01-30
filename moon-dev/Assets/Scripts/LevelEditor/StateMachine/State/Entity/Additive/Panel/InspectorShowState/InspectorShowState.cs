@@ -29,7 +29,7 @@ namespace LevelEditor
 
         private UISetting.InspectorItemProperty GetInspectorItemProperty => GetInspectorPanel.GetInspectorItemProperty;
 
-        private ObservableList<ItemData> TargetDatas => m_information.DataManager.TargetItems;
+        private ObservableList<ItemDataBase> TargetDatas => m_information.DataManager.TargetItems;
 
         private GameObject GetBoolItemPrefab => m_information.PrefabManager.GetBoolItem;
 
@@ -40,7 +40,7 @@ namespace LevelEditor
 
         private Dictionary<string, Type> m_commonFields = new Dictionary<string, Type>();
 
-        private Dictionary<string, Dictionary<ItemData, FieldInfo>> m_fieldInfoDic = new Dictionary<string, Dictionary<ItemData, FieldInfo>>();
+        private readonly Dictionary<string, Dictionary<ItemDataBase, FieldInfo>> m_fieldInfoDic = new();
 
         private static UpdateInspectorSignal m_updateInspectorSignal = new UpdateInspectorSignal();
 
@@ -95,12 +95,12 @@ namespace LevelEditor
             GetInspectorRootObj.SetActive(false);
         }
 
-        public void FindSameField(ItemData itemData)
+        public void FindSameField(ItemDataBase itemData)
         {
             FindSameField();
         }
 
-        public void FindSameField(List<ItemData> itemData)
+        public void FindSameField(List<ItemDataBase> itemData)
         {
             FindSameField();
         }
@@ -110,7 +110,7 @@ namespace LevelEditor
             m_fieldInfoDic.Clear();
             m_commonFields.Clear();
 
-            foreach (ItemData item in TargetDatas)
+            foreach (var item in TargetDatas)
             {
                 Type type = item.GetType();
 
@@ -128,7 +128,7 @@ namespace LevelEditor
                     if (!m_fieldInfoDic.ContainsKey(field.Name))
                     {
                         m_commonFields.Add(field.Name, field.FieldType);
-                        m_fieldInfoDic.Add(field.Name, new Dictionary<ItemData, FieldInfo>());
+                        m_fieldInfoDic.Add(field.Name, new Dictionary<ItemDataBase, FieldInfo>());
                     }
 
                     m_fieldInfoDic[field.Name].Add(item, field);
@@ -182,7 +182,7 @@ namespace LevelEditor
             return null;
         }
 
-        private void AddEventToInspectorItem(GameObject inspectorItem, Type type, Dictionary<ItemData, FieldInfo> fieldInfoDic)
+        private void AddEventToInspectorItem(GameObject inspectorItem, Type type, Dictionary<ItemDataBase, FieldInfo> fieldInfoDic)
         {
             if (type == typeof(bool))
             {
@@ -208,7 +208,7 @@ namespace LevelEditor
             }
         }
 
-        private void UpdateInspectorItem(GameObject inspectorItem, Type type, string name, Dictionary<ItemData, FieldInfo> fieldInfoDic)
+        private void UpdateInspectorItem(GameObject inspectorItem, Type type, string name, Dictionary<ItemDataBase, FieldInfo> fieldInfoDic)
         {
             if (type == typeof(bool))
             {

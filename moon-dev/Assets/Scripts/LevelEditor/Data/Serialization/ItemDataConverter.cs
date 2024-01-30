@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public class ItemDataConverter : CustomCreationConverter<ItemData>
+public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
 {
     private ItemDataType m_itemDataType;
 
@@ -17,16 +17,16 @@ public class ItemDataConverter : CustomCreationConverter<ItemData>
 
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
-        var jobj = JObject.ReadFrom(reader);
-        m_itemDataType = jobj["ItemDataType"].ToObject<ItemDataType>();
+        var token = JToken.ReadFrom(reader);
+        m_itemDataType = token["ItemDataType"].ToObject<ItemDataType>();
 
-        m_itemProduct = ItemProductAnalysis(jobj["ProductName"].ToString(),
-            jobj["ProductType"].ToString());
+        m_itemProduct = ItemProductAnalysis(token["ProductName"].ToString(),
+            token["ProductType"].ToString());
 
-        return base.ReadJson(jobj.CreateReader(), objectType, existingValue, serializer);
+        return base.ReadJson(token.CreateReader(), objectType, existingValue, serializer);
     }
 
-    public override ItemData Create(Type objectType)
+    public override ItemDataBase Create(Type objectType)
     {
         switch (m_itemDataType)
         {

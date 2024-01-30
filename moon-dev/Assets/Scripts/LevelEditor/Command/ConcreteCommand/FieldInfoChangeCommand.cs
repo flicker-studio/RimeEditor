@@ -6,7 +6,7 @@ namespace LevelEditor
 {
     public class FieldInfoChangeCommand : ICommand
     {
-        private List<ItemData> m_targetList = new List<ItemData>();
+        private readonly List<ItemDataBase> m_targetList = new();
 
         private List<FieldInfo> m_targetFieldInfos = new List<FieldInfo>();
 
@@ -16,7 +16,7 @@ namespace LevelEditor
 
         private InspectorShowState.UpdateInspectorSignal m_updateInspectorSignal;
 
-        public FieldInfoChangeCommand(List<ItemData> targetList, List<FieldInfo> targetFieldInfos
+        public FieldInfoChangeCommand(List<ItemDataBase> targetList, List<FieldInfo> targetFieldInfos
             , object nextValue, InspectorShowState.UpdateInspectorSignal updateInspectorSignal)
         {
             m_targetList.AddRange(targetList);

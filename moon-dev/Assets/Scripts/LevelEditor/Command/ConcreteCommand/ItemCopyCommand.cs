@@ -7,21 +7,21 @@ namespace LevelEditor
 {
     public class ItemCopyCommand : ICommand
     {
-        private List<ItemData> m_copyTarget = new List<ItemData>();
+        private readonly List<ItemDataBase> m_copyTarget = new();
 
-        private List<ItemData> m_saveDatas = new List<ItemData>();
+        private List<ItemDataBase> m_saveDatas = new();
 
-        private ObservableList<ItemData> m_targetAssets;
+        private readonly ObservableList<ItemDataBase> m_targetAssets;
 
-        private ObservableList<ItemData> m_itemAssets;
+        private readonly ObservableList<ItemDataBase> m_itemAssets;
 
         private OutlinePainter m_outlinePainter;
 
-        private List<ItemData> m_lastAssets = new List<ItemData>();
+        private readonly List<ItemDataBase> m_lastAssets = new();
 
         private ItemFactory m_itemFactory = new ItemFactory();
 
-        public ItemCopyCommand(ObservableList<ItemData> targetAssets, ObservableList<ItemData> itemAssets, OutlinePainter outlinePainter, List<ItemData> copyTarget)
+        public ItemCopyCommand(ObservableList<ItemDataBase> targetAssets, ObservableList<ItemDataBase> itemAssets, OutlinePainter outlinePainter, List<ItemDataBase> copyTarget)
         {
             m_targetAssets = targetAssets;
             m_itemAssets = itemAssets;
@@ -57,13 +57,13 @@ namespace LevelEditor
             SetDatasActive(m_saveDatas, false);
         }
 
-        private List<ItemData> CopyItems(List<ItemData> copyDatas, List<ItemData> saveDatas)
+        private List<ItemDataBase> CopyItems(List<ItemDataBase> copyDatas, List<ItemDataBase> saveDatas)
         {
             Vector3 oriPos = Vector3.zero;
 
             foreach (var copyData in copyDatas)
             {
-                ItemData newData = copyData.Copy(m_itemFactory.CreateItem(copyData.GetItemProduct));
+                var newData = copyData.Copy(m_itemFactory.CreateItem(copyData.GetItemProduct));
                 (Vector3 position, Quaternion rotation, Vector3 scale) = copyData.GetItemObjEditor.transform.GetTransformValue();
                 newData.GetItemObjEditor.transform.SetTransformValue(position, rotation, scale);
                 oriPos += newData.GetItemObjEditor.transform.position;
@@ -86,7 +86,7 @@ namespace LevelEditor
             return saveDatas;
         }
 
-        private void SetDatasActive(List<ItemData> itemDatas, bool active)
+        private void SetDatasActive(List<ItemDataBase> itemDatas, bool active)
         {
             foreach (var itemData in itemDatas)
             {

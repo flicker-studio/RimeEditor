@@ -23,7 +23,7 @@ namespace LevelEditor
 
         private ControlHandlePanel GetControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
 
-        private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
+        private ObservableList<ItemDataBase> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 

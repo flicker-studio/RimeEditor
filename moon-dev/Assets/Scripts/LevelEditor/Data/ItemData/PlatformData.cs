@@ -2,13 +2,15 @@ using Item;
 
 namespace LevelEditor
 {
-    public class PlatformData : ItemData
+    public class PlatformData : ItemDataBase
     {
         public bool CanPush;
 
         public bool CanCopy;
 
-        public override ItemData Copy(ItemData saveData)
+        public override ItemDataType ItemDataType => ItemDataType.Platform;
+
+        public override ItemDataBase Copy(ItemDataBase saveData)
         {
             PlatformData tempData = saveData as PlatformData;
             tempData.CanPush = CanPush;
@@ -16,7 +18,6 @@ namespace LevelEditor
             return saveData;
         }
 
-        public override ItemDataType ItemDataType => ItemDataType.Platform;
 
         public override void SetActivePlay(bool active)
         {

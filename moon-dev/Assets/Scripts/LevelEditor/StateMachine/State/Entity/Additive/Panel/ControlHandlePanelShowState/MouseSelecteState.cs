@@ -37,11 +37,11 @@ namespace LevelEditor
             .NewX(Mathf.Clamp(m_information.CameraManager.MousePosition.x * GetScreenScale.x, 0, Screen.width * GetScreenScale.x))
             .NewY(Mathf.Clamp(m_information.CameraManager.MousePosition.y * GetScreenScale.y, 0, Screen.height * GetScreenScale.y));
 
-        private ObservableList<ItemData> TargetList => m_information.DataManager.TargetItems;
+        private ObservableList<ItemDataBase> TargetList => m_information.DataManager.TargetItems;
 
         private List<Collider2D> m_selectList = new List<Collider2D>();
 
-        private ObservableList<ItemData> ItemAssets => m_information.DataManager.ItemAssets;
+        private ObservableList<ItemDataBase> ItemAssets => m_information.DataManager.ItemAssets;
 
 
         private Vector2 m_originMousePositon;
@@ -185,7 +185,7 @@ namespace LevelEditor
 
         private void ReturnTargetList()
         {
-            List<ItemData> tempList = new List<ItemData>();
+            var tempList = new List<ItemDataBase>();
 
             if (GetShiftButton)
             {
@@ -200,7 +200,7 @@ namespace LevelEditor
 
                     foreach (var collider in m_selectList)
                     {
-                        ItemData itemData = ItemAssets.CheckItemObj(collider.gameObject);
+                        var itemData = ItemAssets.CheckItemObj(collider.gameObject);
 
                         if (tempList.Contains(itemData))
                         {
@@ -218,7 +218,7 @@ namespace LevelEditor
 
                     foreach (var collider in m_selectList)
                     {
-                        ItemData itemData = ItemAssets.CheckItemObj(collider.gameObject);
+                        var itemData = ItemAssets.CheckItemObj(collider.gameObject);
                         tempList.Remove(itemData);
                     }
                 }
@@ -233,13 +233,13 @@ namespace LevelEditor
             CommandInvoker.Execute(new ItemSelectCommand(TargetList, tempList, GetOutlinePainter));
         }
 
-        private List<ItemData> ChangeCollidersToDatas(List<Collider2D> colliders)
+        private List<ItemDataBase> ChangeCollidersToDatas(List<Collider2D> colliders)
         {
-            List<ItemData> tempList = new List<ItemData>();
+            var tempList = new List<ItemDataBase>();
 
             foreach (var collider in colliders)
             {
-                ItemData itemData = ItemAssets.CheckItemObj(collider.gameObject);
+                var itemData = ItemAssets.CheckItemObj(collider.gameObject);
 
                 if (itemData != null)
                 {

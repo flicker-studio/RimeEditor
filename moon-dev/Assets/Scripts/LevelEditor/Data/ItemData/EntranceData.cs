@@ -2,14 +2,17 @@ using Item;
 
 namespace LevelEditor
 {
-    public class EntranceData : ItemData
+    /// <summary>
+    ///     Ingress data, which is used to initialize the role location
+    /// </summary>
+    public class EntranceData : ItemDataBase
     {
-        public override ItemData Copy(ItemData saveData)
+        public override ItemDataType ItemDataType => ItemDataType.Entrance;
+
+        public override ItemDataBase Copy(ItemDataBase saveData)
         {
             return saveData;
         }
-
-        public override ItemDataType ItemDataType => ItemDataType.Entrance;
 
         public override void SetActivePlay(bool active)
         {

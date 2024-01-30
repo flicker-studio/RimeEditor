@@ -2,14 +2,14 @@ using Item;
 
 namespace LevelEditor
 {
-    public class ExitData : ItemData
+    public class ExitData : ItemDataBase
     {
-        public override ItemData Copy(ItemData saveData)
+        public override ItemDataType ItemDataType => ItemDataType.Exit;
+
+        public override ItemDataBase Copy(ItemDataBase saveData)
         {
             return saveData;
         }
-
-        public override ItemDataType ItemDataType => ItemDataType.Exit;
 
         public override void SetActivePlay(bool active)
         {

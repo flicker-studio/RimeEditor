@@ -15,9 +15,9 @@ public class HierarchyPanelShowState : AdditiveState
     private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
 
 
-    private ObservableList<ItemData> TargetItems => GetData.TargetItems;
+    private ObservableList<ItemDataBase> TargetItems => GetData.TargetItems;
 
-    private ObservableList<ItemData> ItemAssets => GetData.ItemAssets;
+    private ObservableList<ItemDataBase> ItemAssets => GetData.ItemAssets;
 
     private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
 
@@ -35,7 +35,7 @@ public class HierarchyPanelShowState : AdditiveState
 
     private List<ItemNode> m_itemNodeProperties = new List<ItemNode>();
 
-    private List<ItemData> m_selectTargetItem = new List<ItemData>();
+    private List<ItemDataBase> m_selectTargetItem = new();
 
     public HierarchyPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
@@ -95,7 +95,7 @@ public class HierarchyPanelShowState : AdditiveState
         TargetItems.OnAddRange += SyncNodePanelSelete;
     }
 
-    private void CreateNode(List<ItemData> targetItems)
+    private void CreateNode(List<ItemDataBase> targetItems)
     {
         foreach (var targetItem in targetItems)
         {
@@ -103,7 +103,7 @@ public class HierarchyPanelShowState : AdditiveState
         }
     }
 
-    private void CreateNode(ItemData targetItem)
+    private void CreateNode(ItemDataBase targetItem)
     {
         ItemNodeChild itemNodeChild = CreateChild(targetItem);
         ItemNodeParent itemNodeParent;
@@ -139,7 +139,7 @@ public class HierarchyPanelShowState : AdditiveState
         itemNodeParent.ShowChilds();
     }
 
-    private void DeleteNode(List<ItemData> itemDatas)
+    private void DeleteNode(List<ItemDataBase> itemDatas)
     {
         m_selectTargetItem.Clear();
 
@@ -149,7 +149,7 @@ public class HierarchyPanelShowState : AdditiveState
         }
     }
 
-    private void DeleteNode(ItemData itemData)
+    private void DeleteNode(ItemDataBase itemData)
     {
         foreach (var itemNodeProperty in m_itemNodeProperties)
         {
@@ -199,7 +199,7 @@ public class HierarchyPanelShowState : AdditiveState
         return itemNodeParent;
     }
 
-    private ItemNodeChild CreateChild(ItemData targetItem)
+    private ItemNodeChild CreateChild(ItemDataBase targetItem)
     {
         var itemNodeChild = new ItemNodeChild(targetItem.GetItemProduct, GetScrollViewContent, GetSelectedNode, targetItem, GetScrollView);
         m_itemNodeProperties.Add(itemNodeChild);
@@ -210,7 +210,7 @@ public class HierarchyPanelShowState : AdditiveState
     {
         InitEvent();
         ClearNode();
-        ObservableList<ItemData> itemDatas = subLevelData.ItemAssets;
+        var itemDatas = subLevelData.ItemAssets;
 
         foreach (var itemData in itemDatas)
         {
@@ -228,12 +228,12 @@ public class HierarchyPanelShowState : AdditiveState
         m_itemNodeProperties.Clear();
     }
 
-    private void SyncNodePanelSelete(List<ItemData> itemData)
+    private void SyncNodePanelSelete(List<ItemDataBase> itemData)
     {
         SyncNodePanelSelete();
     }
 
-    private void SyncNodePanelSelete(ItemData itemData)
+    private void SyncNodePanelSelete(ItemDataBase itemData)
     {
         SyncNodePanelSelete();
     }
@@ -307,7 +307,7 @@ public class HierarchyPanelShowState : AdditiveState
 
         int endSelect = startSelect;
 
-        ItemData lastSelectData = m_selectTargetItem.Last();
+        var lastSelectData = m_selectTargetItem.Last();
 
         foreach (var itemNodeProperty in m_itemNodeProperties)
         {

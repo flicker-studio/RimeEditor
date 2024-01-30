@@ -61,9 +61,9 @@ namespace LevelEditor
 
         private string GetItemTypeTextName => GetItemWarehousePanel.GetItemTypeTextName;
 
-        private ObservableList<ItemData> ItemAssets => m_information.DataManager.ItemAssets;
+        private ObservableList<ItemDataBase> ItemAssets => m_information.DataManager.ItemAssets;
 
-        private ObservableList<ItemData> TargetAssets => m_information.DataManager.TargetItems;
+        private ObservableList<ItemDataBase> TargetAssets => m_information.DataManager.TargetItems;
 
         private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
 

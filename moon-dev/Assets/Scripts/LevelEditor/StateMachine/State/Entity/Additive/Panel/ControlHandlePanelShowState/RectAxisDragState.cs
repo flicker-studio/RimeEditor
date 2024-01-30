@@ -14,7 +14,7 @@ namespace LevelEditor
         private UIManager GetUI => m_information.UIManager;
         private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
 
-        private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
+        private ObservableList<ItemDataBase> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 

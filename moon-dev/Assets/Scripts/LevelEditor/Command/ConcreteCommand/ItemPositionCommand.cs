@@ -5,13 +5,13 @@ namespace LevelEditor
 {
     public class ItemPositionCommand : ICommand
     {
-        private List<ItemData> m_gameObjects = new List<ItemData>();
+        private readonly List<ItemDataBase> m_gameObjects = new();
 
         private List<Vector3> m_lastPosition = new List<Vector3>();
 
         private List<Vector3> m_nextPosition = new List<Vector3>();
 
-        public ItemPositionCommand(ObservableList<ItemData> gameObjects, List<Vector3> lastPosition, List<Vector3> nextPosition)
+        public ItemPositionCommand(ObservableList<ItemDataBase> gameObjects, List<Vector3> lastPosition, List<Vector3> nextPosition)
         {
             m_gameObjects.AddRange(gameObjects);
             m_lastPosition.AddRange(lastPosition);

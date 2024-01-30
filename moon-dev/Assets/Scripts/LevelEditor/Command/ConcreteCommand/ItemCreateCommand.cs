@@ -7,19 +7,19 @@ namespace LevelEditor
     {
         private ItemProduct m_itemProduct;
 
-        private ItemData m_itemData;
+        private ItemDataBase m_itemData;
 
-        private ObservableList<ItemData> m_targetAssets;
+        private readonly ObservableList<ItemDataBase> m_targetAssets;
 
-        private ObservableList<ItemData> m_itemAssets;
+        private readonly ObservableList<ItemDataBase> m_itemAssets;
 
         private OutlinePainter m_outlinePainter;
 
-        private List<ItemData> m_lastAssets = new List<ItemData>();
+        private readonly List<ItemDataBase> m_lastAssets = new();
 
         private ItemFactory m_itemFactory = new ItemFactory();
 
-        public ItemCreateCommand(ObservableList<ItemData> targetAssets, ObservableList<ItemData> itemAssets, OutlinePainter outlinePainter, ItemProduct itemProduct)
+        public ItemCreateCommand(ObservableList<ItemDataBase> targetAssets, ObservableList<ItemDataBase> itemAssets, OutlinePainter outlinePainter, ItemProduct itemProduct)
         {
             m_targetAssets = targetAssets;
             m_itemAssets = itemAssets;

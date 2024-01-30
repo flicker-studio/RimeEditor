@@ -5,15 +5,15 @@ namespace LevelEditor
 {
     public class ItemSelectCommand : ICommand
     {
-        private ObservableList<ItemData> m_targetList;
+        private readonly ObservableList<ItemDataBase> m_targetList;
 
         private OutlinePainter m_outlinePainter;
 
-        private List<ItemData> m_lastList = new List<ItemData>();
+        private readonly List<ItemDataBase> m_lastList = new();
 
-        private List<ItemData> m_nextList = new List<ItemData>();
+        private readonly List<ItemDataBase> m_nextList = new();
 
-        public ItemSelectCommand(ObservableList<ItemData> targetList, List<ItemData> nextList, OutlinePainter outlinePainter)
+        public ItemSelectCommand(ObservableList<ItemDataBase> targetList, List<ItemDataBase> nextList, OutlinePainter outlinePainter)
         {
             m_targetList = targetList;
             m_outlinePainter = outlinePainter;

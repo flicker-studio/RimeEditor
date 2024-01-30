@@ -9,7 +9,7 @@ namespace LevelEditor
     public class ItemTransformPanelShowState : AdditiveState
     {
         private InputManager GetInput => m_information.InputManager;
-        private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
+        private ObservableList<ItemDataBase> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 

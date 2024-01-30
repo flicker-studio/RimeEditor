@@ -82,7 +82,7 @@ namespace LevelEditor
         private int GetGrowthFactor => GetControlHandlePanel.GetGridSnappingProperty.GROWTH_FACTOR;
         private Color GetGridColor => GetControlHandlePanel.GetGridSnappingProperty.GRID_COLOR;
 
-        private List<ItemData> m_copyDatas = new List<ItemData>();
+        private readonly List<ItemDataBase> m_copyDatas = new();
 
         private GridPainter m_gridPainter;
 

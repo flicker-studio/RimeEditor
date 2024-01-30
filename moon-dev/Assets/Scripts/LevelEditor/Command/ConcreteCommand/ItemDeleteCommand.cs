@@ -5,15 +5,15 @@ namespace LevelEditor
 {
     public class ItemDeleteCommand : ICommand
     {
-        private ObservableList<ItemData> m_targetAssets;
+        private readonly ObservableList<ItemDataBase> m_targetAssets;
 
-        private ObservableList<ItemData> m_itemAssets;
+        private readonly ObservableList<ItemDataBase> m_itemAssets;
 
         private OutlinePainter m_outlinePainter;
 
-        private List<ItemData> m_lastAssets = new List<ItemData>();
+        private readonly List<ItemDataBase> m_lastAssets = new();
 
-        public ItemDeleteCommand(ObservableList<ItemData> targetAssets, ObservableList<ItemData> itemAssets, OutlinePainter outlinePainter)
+        public ItemDeleteCommand(ObservableList<ItemDataBase> targetAssets, ObservableList<ItemDataBase> itemAssets, OutlinePainter outlinePainter)
         {
             m_targetAssets = targetAssets;
             m_itemAssets = itemAssets;
