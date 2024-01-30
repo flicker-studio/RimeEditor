@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Frame.Static.Global;
 using JetBrains.Annotations;
-using Moon.Kernel;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Utils;
 using UnityEngine;
@@ -19,17 +18,17 @@ namespace LevelEditor
         /// <summary>
         ///     The rate of change in the Z distance of the camera
         /// </summary>
-        public float CameraZChangeSpeed => m_cameraProperty.GetCameraMotionProperty.CAMERA_Z_CHANGE_SPEED;
+        public float CameraZChangeSpeed => m_cameraSetting.GetCameraMotionProperty.CAMERA_Z_CHANGE_SPEED;
 
         /// <summary>
         ///     The minimum distance in the Z direction of the camera
         /// </summary>
-        public float CameraZMin => m_cameraProperty.GetCameraMotionProperty.CAMERA_MIN_Z;
+        public float CameraZMin => m_cameraSetting.GetCameraMotionProperty.CAMERA_MIN_Z;
 
         /// <summary>
         ///     The maximum distance of the camera in the Z direction
         /// </summary>
-        public float CameraZMax => m_cameraProperty.GetCameraMotionProperty.CAMERA_MAX_Z;
+        public float CameraZMax => m_cameraSetting.GetCameraMotionProperty.CAMERA_MAX_Z;
 
         /// <summary>
         ///     Simple encapsulation of the OutlinePainter.SetTargetObj method
@@ -106,19 +105,19 @@ namespace LevelEditor
             return newPos;
         }
 
-        public CameraManager(CameraProperty cameraProperty)
+        public CameraManager(CameraSetting cameraSetting)
         {
-            m_cameraProperty = cameraProperty;
+            m_cameraSetting = cameraSetting;
 
             m_outLinePainter = new OutlinePainter
             {
-                OutlineMode = m_cameraProperty.GetOutlineProperty.OUTLINE_MODE,
-                OutlineColor = m_cameraProperty.GetOutlineProperty.OUTLINE_COLOR,
-                OutlineWidth = m_cameraProperty.GetOutlineProperty.OUTLINE_WIDTH
+                OutlineMode = m_cameraSetting.GetOutlineProperty.OUTLINE_MODE,
+                OutlineColor = m_cameraSetting.GetOutlineProperty.OUTLINE_COLOR,
+                OutlineWidth = m_cameraSetting.GetOutlineProperty.OUTLINE_WIDTH
             };
         }
 
-        private readonly CameraProperty m_cameraProperty;
+        private readonly CameraSetting m_cameraSetting;
 
         [UsedImplicitly] private readonly OutlinePainter m_outLinePainter;
     }

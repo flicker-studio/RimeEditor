@@ -24,18 +24,18 @@ namespace LevelEditor
 
         public LevelSettingPanel GetLevelSettingPanel { get; }
 
-        public UIManager(RectTransform levelEditorCanvasRect, UIProperty uiProperty)
+        public UIManager(RectTransform levelEditorCanvasRect, UISetting uiSetting)
         {
-            GetActionPanel = new ActionPanel(levelEditorCanvasRect, uiProperty);
-            GetControlHandlePanel = new ControlHandlePanel(levelEditorCanvasRect, uiProperty);
-            GetItemTransformPanel = new ItemTransformPanel(levelEditorCanvasRect, uiProperty);
-            GetHierarchyPanel = new HierarchyPanel(levelEditorCanvasRect, uiProperty);
-            GetItemWarehousePanel = new ItemWarehousePanel(levelEditorCanvasRect, uiProperty);
-            GetAreaPanel = new AreaPanel(levelEditorCanvasRect, uiProperty);
-            GetLevelPanel = new LevelPanel(levelEditorCanvasRect, uiProperty);
-            GetInspectorPanel = new InspectorPanel(levelEditorCanvasRect, uiProperty);
-            GetLevelManagerPanel = new LevelManagerPanel(levelEditorCanvasRect, uiProperty);
-            GetLevelSettingPanel = new LevelSettingPanel(levelEditorCanvasRect, uiProperty);
+            GetActionPanel = new ActionPanel(levelEditorCanvasRect, uiSetting);
+            GetControlHandlePanel = new ControlHandlePanel(levelEditorCanvasRect, uiSetting);
+            GetItemTransformPanel = new ItemTransformPanel(levelEditorCanvasRect, uiSetting);
+            GetHierarchyPanel = new HierarchyPanel(levelEditorCanvasRect, uiSetting);
+            GetItemWarehousePanel = new ItemWarehousePanel(levelEditorCanvasRect, uiSetting);
+            GetAreaPanel = new AreaPanel(levelEditorCanvasRect, uiSetting);
+            GetLevelPanel = new LevelPanel(levelEditorCanvasRect, uiSetting);
+            GetInspectorPanel = new InspectorPanel(levelEditorCanvasRect, uiSetting);
+            GetLevelManagerPanel = new LevelManagerPanel(levelEditorCanvasRect, uiSetting);
+            GetLevelSettingPanel = new LevelSettingPanel(levelEditorCanvasRect, uiSetting);
         }
     }
 }
