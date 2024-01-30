@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Moon.Kernel.Extension;
 using Newtonsoft.Json;
@@ -10,59 +11,150 @@ using static Frame.Static.Global.GlobalSetting;
 
 namespace LevelEditor
 {
-    public abstract class LevelLoader
+    /// <summary>
+    /// </summary>
+    public static class LevelLoader
     {
-        public abstract UniTask LoadLevelFiles(List<LevelData> levelDatas);
-
-        public virtual bool OpenLocalLevelDirectory(string path, List<LevelData> levelDatas)
+        /// <summary>
+        ///     Load all levels
+        /// </summary>
+        public static async UniTask<List<LevelData>> LoadLevelDatas()
         {
-            string levelDirectoryName = path.GetSuffix('/');
+            List<LevelData> levelDatas = new();
+
+            if (!Directory.Exists(PersistentFileProperty.LEVEL_DATA_PATH))
+            {
+                Directory.CreateDirectory(PersistentFileProperty.LEVEL_DATA_PATH);
+            }
+
+            var direction = new DirectoryInfo(PersistentFileProperty.LEVEL_DATA_PATH);
+            var files = direction.GetFiles("*.json", SearchOption.AllDirectories).ToList();
+
+            foreach (var fileInfo in files)
+            {
+                var levelPath = $"{PersistentFileProperty.LEVEL_DATA_PATH}" +
+                                $"/{fileInfo.Name.Replace(".json", "")}";
+
+                if (Directory.Exists(levelPath))
+                {
+                    var streamReader = fileInfo.OpenText();
+                    var json = await streamReader.ReadToEndAsync();
+                    var levelData = Deserialize(json);
+                    streamReader.Close();
+                    streamReader.Dispose();
+
+                    if (levelData == null)
+                    {
+                        continue;
+                    }
+
+                    levelData.Path = $"Path:{levelPath}";
+
+                    levelDatas.Add(levelData);
+
+                    var imagePath =
+                        $"{levelPath}" +
+                        $"/{PersistentFileProperty.IMAGES_DATA_NAME}" +
+                        $"/{PersistentFileProperty.COVER_IMAGE_NAME}";
+
+                    if (File.Exists(imagePath))
+                    {
+                        await UpdateImage(levelData, imagePath);
+                    }
+                }
+            }
+
+            return levelDatas;
+        }
+
+        /// <summary>
+        ///     Open the level file (currently existing as a directory)
+        /// </summary>
+        /// <param name="path">Target file </param>
+        /// <param name="levelDatas">List of levels</param>
+        /// <returns>True when a different level is successfully loaded </returns>
+        public static bool OpenLocalLevelDirectory(string path, ref List<LevelData> levelDatas)
+        {
+            var levelDirectoryName = path.GetSuffix('/');
             var levelDataFolderPath = $"{path}/{PersistentFileProperty.GAMES_DATA_NAME}";
             var imageDataFolderPath = $"{path}/{PersistentFileProperty.IMAGES_DATA_NAME}";
             var soundsDataFolderPath = $"{path}/{PersistentFileProperty.SOUNDS_DATA_NAME}";
-            string levelDataFilePath = $"{levelDataFolderPath}/{levelDirectoryName}.json";
-            if (!Directory.Exists(levelDataFolderPath)) return false;
-            if (!Directory.Exists(imageDataFolderPath)) return false;
-            if (!Directory.Exists(soundsDataFolderPath)) return false;
-            if (!File.Exists($"{levelDataFilePath}")) return false;
+            var levelDataFilePath = $"{levelDataFolderPath}/{levelDirectoryName}.json";
 
-            var streamReader = File.OpenText(levelDataFilePath);
-            LevelData levelData = FromJson(streamReader.ReadToEnd());
-            streamReader.Close();
-            streamReader.Dispose();
-            if (levelData == null) return false;
-
-            foreach (var data in levelDatas)
-            {
-                if (data.GetKey == levelData.GetKey) return false;
-            }
-
-            return DirectoryExtension.MoveSpanningDisk(path, $"{PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
-        }
-
-        public bool DeleteLevel(LevelData levelData)
-        {
-            if (!Directory.Exists(levelData.Path.Replace("Path:", "")))
+            if (!Directory.Exists(levelDataFolderPath))
             {
                 return false;
             }
 
-            Directory.Delete(levelData.Path.Replace("Path:", ""), true);
+            if (!Directory.Exists(imageDataFolderPath))
+            {
+                return false;
+            }
+
+            if (!Directory.Exists(soundsDataFolderPath))
+            {
+                return false;
+            }
+
+            if (!File.Exists($"{levelDataFilePath}"))
+            {
+                return false;
+            }
+
+            var streamReader = File.OpenText(levelDataFilePath);
+            var levelData = Deserialize(streamReader.ReadToEnd());
+            streamReader.Close();
+            streamReader.Dispose();
+
+            if (levelData == null)
+            {
+                return false;
+            }
+
+            // Determine whether it is configured for the same level
+            foreach (var data in levelDatas)
+                if (data.GetKey == levelData.GetKey)
+                {
+                    return false;
+                }
+
+            return DirectoryExtension.MoveSpanningDisk(path, $"{PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
+        }
+
+        /// <summary>
+        ///     Delete a level and remove the cache
+        /// </summary>
+        /// <param name="levelData">The target level data to be deleted</param>
+        /// <returns>Whether the deletion was successfu </returns>
+        public static bool DeleteLevel(LevelData levelData)
+        {
+            var targetPath = levelData.Path.Replace("Path:", "");
+
+            if (!Directory.Exists(targetPath))
+            {
+                return false;
+            }
+
+            Directory.Delete(targetPath, true);
             return true;
         }
 
-        public virtual void ToJson(LevelData chooseLevelData)
+        /// <summary>
+        ///     Serialize <paramref name="data" /> and write to a file
+        /// </summary>
+        /// <param name="data"></param>
+        public static void ToJson(LevelData data)
         {
-            string hashKey = chooseLevelData.GetKey;
-            chooseLevelData.UpdateTime();
+            var hashKey = data.GetKey;
+            data.UpdateTime();
 
-            if (hashKey == null || hashKey == "")
+            if (string.IsNullOrEmpty(hashKey))
             {
-                chooseLevelData.SetKey = $"{chooseLevelData.GetName}{chooseLevelData.GetTime}".ToSHA256();
-                hashKey = chooseLevelData.GetKey;
+                data.SetKey = $"{data.GetName}{data.GetTime}".ToSHA256();
+                hashKey = data.GetKey;
             }
 
-            string json = JsonConvert.SerializeObject(chooseLevelData, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
             if (!Directory.Exists(PersistentFileProperty.LEVEL_DATA_PATH))
             {
@@ -82,16 +174,16 @@ namespace LevelEditor
                 Directory.CreateDirectory(soundsPath);
             }
 
-            StreamWriter streamWriter;
-            FileInfo levelText = new FileInfo($"{gamesPath}//{hashKey}.json");
-            streamWriter = levelText.CreateText();
+            var fileName = $"{gamesPath}//{hashKey}.json";
+            var levelText = new FileInfo(fileName);
+            var streamWriter = levelText.CreateText();
             streamWriter.WriteLine(json);
             streamWriter.Close();
             streamWriter.Dispose();
 
-            if (chooseLevelData.GetLevelCoverImage != null)
+            if (data.GetLevelCoverImage != null)
             {
-                byte[] dataBytes = chooseLevelData.GetLevelCoverImage.EncodeToPNG();
+                var dataBytes = data.GetLevelCoverImage.EncodeToPNG();
                 var savePath = $"{imagesPath}/{PersistentFileProperty.COVER_IMAGE_NAME}";
                 var fileStream = File.Open(savePath, FileMode.OpenOrCreate);
                 fileStream.Write(dataBytes, 0, dataBytes.Length);
@@ -99,38 +191,42 @@ namespace LevelEditor
             }
             else
             {
-                Camera cullUICamera = Camera.main.transform.GetChild(0).GetComponent<Camera>();
+                // TODO: correct citation
+                var cullUICamera = Camera.main!.transform.GetChild(0).GetComponent<Camera>();
                 cullUICamera.gameObject.SetActive(true);
-                RenderTexture screenTexture = new RenderTexture(Screen.width, Screen.height, 16);
+                var screenTexture = new RenderTexture(Screen.width, Screen.height, 16);
                 cullUICamera.targetTexture = screenTexture;
                 RenderTexture.active = screenTexture;
                 cullUICamera.Render();
-                Texture2D renderedTexture = new Texture2D(Screen.width, Screen.height);
+                var renderedTexture = new Texture2D(Screen.width, Screen.height);
                 renderedTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
                 RenderTexture.active = null;
-                byte[] byteArray = renderedTexture.EncodeToPNG();
+                var byteArray = renderedTexture.EncodeToPNG();
                 File.WriteAllBytes($"{imagesPath}/{PersistentFileProperty.COVER_IMAGE_NAME}", byteArray);
                 cullUICamera.gameObject.SetActive(false);
             }
         }
 
-        public virtual LevelData FromJson(string json)
+        /// <summary>
+        ///     Deserialize json into level data
+        /// </summary>
+        public static LevelData Deserialize(string json)
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<LevelData>(json);
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
+            return JsonConvert.DeserializeObject<LevelData>(json);
         }
 
-        protected virtual async UniTask UpdateImage(LevelData levelData, string path)
+        /// <summary>
+        ///     Write the json string to the target file
+        /// </summary>
+        public static void WriteToFile(string json, string filePath)
         {
-            UnityWebRequest uwr = UnityWebRequestTexture.GetTexture("file:///" + path);
+            throw new NotImplementedException();
+        }
+
+        private static async UniTask UpdateImage(LevelData levelData, string path)
+        {
+            var uwr = UnityWebRequestTexture.GetTexture("file:///" + path);
             await uwr.SendWebRequest();
-            ;
             levelData.SetLevelCoverImage = DownloadHandlerTexture.GetContent(uwr);
         }
     }

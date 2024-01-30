@@ -7,6 +7,10 @@ using UnityEngine;
 
 namespace LevelEditor
 {
+    /// <inheritdoc />
+    /// <summary>
+    ///     Manage the loading of resources and datas
+    /// </summary>
     public class DataManager : IManager
     {
         public ObservableList<ItemDataBase> ItemAssets => GetCurrentSubLevel?.ItemAssets;
@@ -15,7 +19,7 @@ namespace LevelEditor
 
         public LevelData GetCurrentLevel { get; private set; }
 
-        public List<LevelData> GetAllLevels { get; } = new();
+        public List<LevelData> GetAllLevels => m_levelDatas;
 
         public int GetCurrentSubLevelIndex { get; private set; }
 
@@ -27,11 +31,14 @@ namespace LevelEditor
 
         private List<SubLevelData> SubLevelDatas => GetCurrentLevel.GetSubLevelDatas;
 
-        private readonly LevelLoader m_levelLoader = new LocalLevelLoader();
+        private List<LevelData> m_levelDatas = new();
 
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
         public DataManager()
         {
-            InitEvent();
+            RegisterEvent();
         }
 
         public void SetActiveEditors(bool value)
@@ -106,25 +113,25 @@ namespace LevelEditor
         public async UniTask LoadLevelFiles()
         {
             SetActiveEditors(false);
-            await m_levelLoader.LoadLevelFiles(GetAllLevels);
+            m_levelDatas = await LevelLoader.LoadLevelDatas();
         }
 
         public bool OpenLocalLevelDirectory(string path)
         {
-            return m_levelLoader.OpenLocalLevelDirectory(path, GetAllLevels);
+            return LevelLoader.OpenLocalLevelDirectory(path, ref m_levelDatas);
         }
 
         public void ToJson()
         {
             foreach (var itemAsset in GetCurrentSubLevel.ItemAssets) itemAsset.GetTransformToData();
 
-            m_levelLoader.ToJson(GetCurrentLevel);
+            LevelLoader.ToJson(GetCurrentLevel);
         }
 
         public LevelData FromJson(string json)
         {
             SetActiveEditors(false);
-            return m_levelLoader.FromJson(json);
+            return LevelLoader.Deserialize(json);
         }
 
         public void CreateLevel()
@@ -136,12 +143,12 @@ namespace LevelEditor
         public void OpenLevel(LevelData levelData)
         {
             GetCurrentLevel = levelData;
-            InitLevel(levelData);
+            SetSubLevelIndex(0, true);
         }
 
         public bool DeleteLevel(LevelData levelData)
         {
-            return m_levelLoader.DeleteLevel(levelData);
+            return LevelLoader.DeleteLevel(levelData);
         }
 
         [UsedImplicitly]
@@ -158,12 +165,8 @@ namespace LevelEditor
             SubLevelDatas.Add(new SubLevelData($"Level {SubLevelDatas.Count}"));
         }
 
-        private void InitLevel([UsedImplicitly] LevelData levelData)
-        {
-            SetSubLevelIndex(0, true);
-        }
 
-        private void InitEvent()
+        private void RegisterEvent()
         {
             TargetItems.OnAddRange += SyncTargetObj;
             TargetItems.OnAdd += SyncTargetObj;

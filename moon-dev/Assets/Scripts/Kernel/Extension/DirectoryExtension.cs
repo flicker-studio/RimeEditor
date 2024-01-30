@@ -5,6 +5,12 @@ namespace Moon.Kernel.Extension
 {
     public static class DirectoryExtension
     {
+        /// <summary>
+        ///     Move files across disks
+        /// </summary>
+        /// <param name="source">The file that was moved </param>
+        /// <param name="target">Destination address </param>
+        /// <returns> Whether the operation was successful</returns>
         public static bool MoveSpanningDisk(string source, string target)
         {
             if (!Directory.Exists(source))
