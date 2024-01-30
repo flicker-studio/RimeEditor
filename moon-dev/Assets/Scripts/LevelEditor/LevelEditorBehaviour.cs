@@ -38,7 +38,7 @@ namespace LevelEditor
                 // if(InputManager.Instance.GetDebuggerNum2Up)
             {
                 // EventCenterManager.Instance.EventTrigger(GameEvent.UNDO_AND_REDO);
-                m_commandInvoker.CommandSet.GetRedo?.Invoke();
+                CommandInvoker.Redo();
             }
             else if (Frame.Tool.InputManager.Instance.GetCtrlButton && zButtonDown)
 

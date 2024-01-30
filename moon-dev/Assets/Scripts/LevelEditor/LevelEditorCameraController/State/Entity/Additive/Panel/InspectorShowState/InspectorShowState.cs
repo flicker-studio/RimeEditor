@@ -67,7 +67,7 @@ namespace LevelEditor
                 TargetDatas.OnAddRange -= FindSameField;
                 m_updateInspectorSignal.UpdateInspectorItemExcute -= UpdateAllUpdateInspectorItem;
                 CommandInvoker.UndoAdditiveEvent -= SetDo;
-                GetCommandSet.RedoAdditiveEvent -= SetDo;
+                CommandInvoker.RedoAdditiveEvent -= SetDo;
 
                 RemoveState();
                 return;
@@ -82,7 +82,7 @@ namespace LevelEditor
             TargetDatas.OnAddRange += FindSameField;
 
             CommandInvoker.UndoAdditiveEvent += SetDo;
-            GetCommandSet.RedoAdditiveEvent += SetDo;
+            CommandInvoker.RedoAdditiveEvent += SetDo;
 
             m_updateInspectorSignal.UpdateInspectorItemExcute += UpdateAllUpdateInspectorItem;
 

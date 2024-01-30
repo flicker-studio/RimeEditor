@@ -13,6 +13,7 @@ namespace LevelEditor
         private static readonly Stack<ICommand> RedoCommands = new();
 
         public static event Action UndoAdditiveEvent;
+        public static event Action RedoAdditiveEvent;
 
         /// <summary>
         /// </summary>
@@ -23,7 +24,7 @@ namespace LevelEditor
         /// </summary>
         public CommandInvoker()
         {
-            CommandSet = new CommandSet(Undo, Redo);
+            CommandSet = new CommandSet();
         }
 
         /// <summary>
@@ -67,6 +68,8 @@ namespace LevelEditor
             var command = RedoCommands.Pop();
             UndoCommands.Push(command);
             command.Execute();
+
+            RedoAdditiveEvent?.Invoke();
         }
 
         /// <summary>

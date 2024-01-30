@@ -48,7 +48,7 @@ namespace LevelEditor
         private void InitState()
         {
             GetItemTransformPanel.GetPanelObj.SetActive(true);
-            GetCommandSet.RedoAdditiveEvent += SetDo;
+            CommandInvoker.RedoAdditiveEvent += SetDo;
             CommandInvoker.UndoAdditiveEvent += SetDo;
         }
 
@@ -56,7 +56,7 @@ namespace LevelEditor
         {
             base.RemoveState();
             GetItemTransformPanel.GetPanelObj.SetActive(false);
-            GetCommandSet.RedoAdditiveEvent -= SetDo;
+            CommandInvoker.RedoAdditiveEvent -= SetDo;
             CommandInvoker.UndoAdditiveEvent -= SetDo;
         }
 

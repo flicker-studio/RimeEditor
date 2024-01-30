@@ -1,12 +1,9 @@
-using System;
 using Frame.StateMachine;
 
 namespace LevelEditor
 {
     public class ActionPanelShowState : AdditiveState
     {
-        private Action GetRedo => m_information.CommandSet.GetRedo;
-
         private ControlHandleAction GetControlHandleAction => m_information.UIManager.GetControlHandlePanel.GetControlHandleAction;
 
         private bool GetUndoButtonDown => m_information.UIManager.GetActionPanel.GetUndoInputDown;
@@ -62,7 +59,7 @@ namespace LevelEditor
             }
             else if (GetRedoButtonDown)
             {
-                GetRedo?.Invoke();
+                CommandInvoker.Redo();
             }
         }
     }
