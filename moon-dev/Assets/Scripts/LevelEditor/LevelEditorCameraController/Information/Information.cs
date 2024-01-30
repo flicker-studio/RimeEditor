@@ -64,7 +64,7 @@ namespace LevelEditor
 
         private void ResetCommand(SubLevelData subLevelData)
         {
-            CommandSet.Clear?.Invoke();
+            CommandInvoker.Clear();
         }
 
         private void ResetOutline(SubLevelData subLevelData)

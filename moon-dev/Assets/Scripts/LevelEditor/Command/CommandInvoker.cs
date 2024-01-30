@@ -20,7 +20,7 @@ namespace LevelEditor
         /// </summary>
         public CommandInvoker()
         {
-            CommandSet = new CommandSet(Execute, Undo, Redo, Clear);
+            CommandSet = new CommandSet(Undo, Redo);
         }
 
         /// <summary>
