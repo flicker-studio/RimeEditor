@@ -11,8 +11,6 @@ namespace LevelEditor
     /// </summary>
     public class LevelEditorController : Singleton<LevelEditorController>
     {
-        public readonly CommandInvoker CommandInvoker = new();
-
         public readonly Information Information = new();
 
         public MotionController MotionController;

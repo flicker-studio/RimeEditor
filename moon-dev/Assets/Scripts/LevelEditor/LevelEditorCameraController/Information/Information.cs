@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Data.ScriptableObject;
 using Frame.StateMachine;
+using LevelEditor.Command;
 using Moon.Kernel.Service;
 using UnityEngine;
 
@@ -18,7 +19,6 @@ namespace LevelEditor
 
         public InputManager InputManager => m_inputManager;
 
-        public CommandSet CommandSet => m_commandSet;
 
         public LevelAction LevelAction => m_levelAction;
 
@@ -32,14 +32,13 @@ namespace LevelEditor
 
         private InputManager m_inputManager;
 
-        private CommandSet m_commandSet;
 
         private LevelAction m_levelAction;
 
         public async UniTask Init()
         {
             var levelEditorTransform = LevelEditorController.Instance.RootObject.transform as RectTransform;
-            m_commandSet = LevelEditorController.Instance.CommandInvoker.CommandSet;
+
             var prefab = await ResourcesService.LoadAssetAsync<PrefabFactory>("Assets/Settings/GlobalSettings/PrefabFactory.asset");
             var ui = await ResourcesService.LoadAssetAsync<UIProperty>("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset");
             var cam = await ResourcesService.LoadAssetAsync<CameraProperty>("Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset");
@@ -53,10 +52,9 @@ namespace LevelEditor
             DataManager.SyncLevelData += ResetCommand;
             DataManager.SyncLevelData += ResetOutline;
             DataManager.SyncLevelData += ResetCameraPos;
-            CommandSet.EnableExcute += EnableExcute;
         }
 
-        private void EnableExcute()
+        internal void EnableExcute()
         {
             DataManager.SetActiveEditors(true);
             CameraManager.SetTargetObject = DataManager.TargetObjs;

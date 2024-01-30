@@ -1,4 +1,5 @@
 using Frame.StateMachine;
+using LevelEditor.Command;
 using UnityEngine;
 
 namespace LevelEditor
@@ -6,8 +7,6 @@ namespace LevelEditor
     //TODO: rename
     public class LevelEditorBehaviour : MonoBehaviour
     {
-        private CommandInvoker m_commandInvoker;
-
         private Information m_information;
 
         private LevelEditorController m_controller;
@@ -17,14 +16,9 @@ namespace LevelEditor
         private void OnEnable()
         {
             m_controller = LevelEditorController.Instance;
-            m_commandInvoker = m_controller.CommandInvoker;
             m_information = m_controller.Information;
             m_motionController = m_controller.MotionController;
-
-            if (m_commandInvoker != null)
-            {
-                m_commandInvoker.CommandSet.EnableExcute?.Invoke();
-            }
+            m_information.EnableExcute();
         }
 
 

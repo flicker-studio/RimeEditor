@@ -1,31 +1,26 @@
 using System;
 using System.Collections.Generic;
 
-namespace LevelEditor
+namespace LevelEditor.Command
 {
     /// <summary>
     ///     The command invoker is responsible for the specific invocation of commands
     /// </summary>
-    public class CommandInvoker
+    public static class CommandInvoker
     {
         private static readonly Stack<ICommand> UndoCommands = new();
 
         private static readonly Stack<ICommand> RedoCommands = new();
 
+        /// <summary>
+        ///     Called after the Undo is executed
+        /// </summary>
         public static event Action UndoAdditiveEvent;
+
+        /// <summary>
+        ///     Called after the Redo is executed
+        /// </summary>
         public static event Action RedoAdditiveEvent;
-
-        /// <summary>
-        /// </summary>
-        public CommandSet CommandSet { get; private set; }
-
-        /// <summary>
-        ///     Default constructor
-        /// </summary>
-        public CommandInvoker()
-        {
-            CommandSet = new CommandSet();
-        }
 
         /// <summary>
         ///     Execute the command and press it into the cache stack

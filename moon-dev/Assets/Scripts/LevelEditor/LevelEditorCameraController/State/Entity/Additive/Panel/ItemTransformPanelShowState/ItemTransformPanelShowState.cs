@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Frame.StateMachine;
 using Frame.Tool.Popover;
+using LevelEditor.Command;
 using UnityEngine;
 
 namespace LevelEditor
@@ -11,8 +12,6 @@ namespace LevelEditor
         private ObservableList<ItemData> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
-
-        private CommandSet GetCommandSet => m_information.CommandSet;
 
 
         private ItemTransformPanel GetItemTransformPanel => m_information.UIManager.GetItemTransformPanel;

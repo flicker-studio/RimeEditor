@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Frame.StateMachine;
 using Frame.Tool.Pool;
+using LevelEditor.Command;
 using Moon.Kernel.Extension;
 using TMPro;
 using UnityEngine;
@@ -31,8 +32,6 @@ namespace LevelEditor
         private ObservableList<ItemData> TargetDatas => m_information.DataManager.TargetItems;
 
         private GameObject GetBoolItemPrefab => m_information.PrefabManager.GetBoolItem;
-
-        private CommandSet GetCommandSet => m_information.CommandSet;
 
 
         private Dictionary<Type, List<GameObject>> m_inspectorItemDic = new Dictionary<Type, List<GameObject>>();
