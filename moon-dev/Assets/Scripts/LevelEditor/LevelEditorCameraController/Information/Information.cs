@@ -36,9 +36,10 @@ namespace LevelEditor
 
         private LevelAction m_levelAction;
 
-        public async UniTask Init(RectTransform levelEditorTransform, CommandSet commandSet)
+        public async UniTask Init()
         {
-            m_commandSet = commandSet;
+            var levelEditorTransform = LevelEditorController.Instance.RootObject.transform as RectTransform;
+            m_commandSet = LevelEditorController.Instance.CommandInvoker.CommandSet;
             var prefab = await ResourcesService.LoadAssetAsync<PrefabFactory>("Assets/Settings/GlobalSettings/PrefabFactory.asset");
             var ui = await ResourcesService.LoadAssetAsync<UIProperty>("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset");
             var cam = await ResourcesService.LoadAssetAsync<CameraProperty>("Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset");

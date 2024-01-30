@@ -1,19 +1,18 @@
+using System;
 using Frame.StateMachine;
 
 namespace LevelEditor
 {
     public class ActionPanelShowState : AdditiveState
     {
-        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
+        private Action GetUndo => m_information.CommandSet.GetUndo;
 
-        private UndoExcute GetUndo => m_information.CommandSet.GetUndo;
-        
-        private RedoExcute GetRedo => m_information.CommandSet.GetRedo;
+        private Action GetRedo => m_information.CommandSet.GetRedo;
 
         private ControlHandleAction GetControlHandleAction => m_information.UIManager.GetControlHandlePanel.GetControlHandleAction;
 
         private bool GetUndoButtonDown => m_information.UIManager.GetActionPanel.GetUndoInputDown;
-    
+
         private bool GetRedoButtonDown => m_information.UIManager.GetActionPanel.GetRedoInputDown;
 
         private bool GetViewButtonDown => m_information.UIManager.GetActionPanel.GetViewInputDown;
@@ -28,37 +27,36 @@ namespace LevelEditor
 
         private bool GetShiftButton => m_information.InputManager.GetShiftButton;
         public bool GetPButtonDown => m_information.InputManager.GetPButtonDown;
-        
+
         public bool GetRButtonDown => m_information.InputManager.GetRButtonDown;
-        
+
         public bool GetSButtonDown => m_information.InputManager.GetSButtonDown;
-    
+
         public ActionPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
-        
         }
 
         public override void Motion(BaseInformation information)
         {
             if (GetPositionButtonDown || GetPButtonDown)
             {
-                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.PositionAxisButton));
+                CommandInvoker.Execute(new ActionChangeCommand(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.PositionAxisButton));
             }
-            else if (GetRectButtonDown || GetShiftButton && GetRButtonDown)
+            else if (GetRectButtonDown || (GetShiftButton && GetRButtonDown))
             {
-                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RectButton));
+                CommandInvoker.Execute(new ActionChangeCommand(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.RectButton));
             }
             else if (GetRotationButtonDown || GetRButtonDown)
             {
-                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.RotationAxisButton));
+                CommandInvoker.Execute(new ActionChangeCommand(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.RotationAxisButton));
             }
             else if (GetViewButtonDown)
             {
-                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ViewButton));
+                CommandInvoker.Execute(new ActionChangeCommand(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.ViewButton));
             }
             else if (GetScaleButtonDown || GetSButtonDown)
             {
-                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction,CONTROLHANDLEACTIONTYPE.ScaleAxisButton));
+                CommandInvoker.Execute(new ActionChangeCommand(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.ScaleAxisButton));
             }
             else if (GetUndoButtonDown)
             {
@@ -69,6 +67,5 @@ namespace LevelEditor
                 GetRedo?.Invoke();
             }
         }
-    
     }
 }

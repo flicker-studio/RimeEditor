@@ -13,7 +13,7 @@ namespace LevelEditor
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 
         private CommandSet GetCommandSet => m_information.CommandSet;
-        private CommandExcute GetExcute => GetCommandSet.GetExcute;
+
 
         private ItemTransformPanel GetItemTransformPanel => m_information.UIManager.GetItemTransformPanel;
 
@@ -87,7 +87,7 @@ namespace LevelEditor
                     float.IsNaN(value.z) ? target.transform.position.z : value.z));
             }
 
-            GetExcute?.Invoke(new ItemPositionCommand(TargetItems, m_lastPositon, nextPosition));
+            CommandInvoker.Execute(new ItemPositionCommand(TargetItems, m_lastPositon, nextPosition));
         }
 
         private void CheckRotationChange()
@@ -108,7 +108,7 @@ namespace LevelEditor
                     float.IsNaN(value.z) ? target.transform.position.z : value.z)));
             }
 
-            GetExcute?.Invoke(new ItemRotationCommand(TargetItems, m_lastPositon, nextPosition, m_lastRotation, nextRotation));
+            CommandInvoker.Execute(new ItemRotationCommand(TargetItems, m_lastPositon, nextPosition, m_lastRotation, nextRotation));
         }
 
         private void CheckScaleChange()
@@ -129,7 +129,7 @@ namespace LevelEditor
                     float.IsNaN(value.z) ? target.transform.localScale.z : value.z));
             }
 
-            GetExcute?.Invoke(new ItemScaleCommand(TargetItems, m_lastPositon, nextPosition, m_lastScale, nextScale));
+            CommandInvoker.Execute(new ItemScaleCommand(TargetItems, m_lastPositon, nextPosition, m_lastScale, nextScale));
         }
 
         private (List<Vector3>, List<Quaternion>, List<Vector3>) GetTransformPropertyFromGameObjectList(

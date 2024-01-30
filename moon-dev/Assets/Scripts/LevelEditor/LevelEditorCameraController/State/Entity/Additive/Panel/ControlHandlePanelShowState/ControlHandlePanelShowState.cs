@@ -17,7 +17,6 @@ namespace LevelEditor
 
         private UIManager GetUI => m_information.UIManager;
 
-        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private ControlHandlePanel GetControlHandlePanel => GetUI.GetControlHandlePanel;
 
@@ -164,7 +163,7 @@ namespace LevelEditor
 
             if (GetInput.GetGButtonDown)
             {
-                GetExcute?.Invoke(new ActionChangeCommand(GetControlHandleAction, !GetControlHandleAction.UseGrid));
+                CommandInvoker.Execute(new ActionChangeCommand(GetControlHandleAction, !GetControlHandleAction.UseGrid));
             }
 
             if (GetInput.GetCtrlButton && GetInput.GetCButtonDown)
@@ -177,7 +176,7 @@ namespace LevelEditor
             {
                 if (m_copyDatas.Count > 0)
                 {
-                    GetExcute?.Invoke(new ItemCopyCommand(GetData.TargetItems, GetData.ItemAssets
+                    CommandInvoker.Execute(new ItemCopyCommand(GetData.TargetItems, GetData.ItemAssets
                         , GetCamera.GetOutlinePainter, m_copyDatas));
                 }
             }

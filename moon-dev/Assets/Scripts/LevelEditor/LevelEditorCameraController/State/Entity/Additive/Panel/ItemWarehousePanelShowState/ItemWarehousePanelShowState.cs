@@ -66,7 +66,6 @@ namespace LevelEditor
 
         private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
 
-        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private static ItemProduct m_currentChoose;
 
@@ -517,7 +516,7 @@ namespace LevelEditor
 
         private void CreateNewItem()
         {
-            GetExcute?.Invoke(new ItemCreateCommand(TargetAssets, ItemAssets, GetOutlinePainter, m_currentChoose));
+            CommandInvoker.Execute(new ItemCreateCommand(TargetAssets, ItemAssets, GetOutlinePainter, m_currentChoose));
         }
 
         private void ChooseItemProduct(GridItemButton gridItemButton)

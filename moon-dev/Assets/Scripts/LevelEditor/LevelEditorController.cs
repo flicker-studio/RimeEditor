@@ -26,7 +26,7 @@ namespace LevelEditor
         {
             await Explorer.BootCompletionTask;
             RootObject = GameObject.FindGameObjectWithTag("Temp_Editor").GetComponent<Collect>().target;
-            await Information.Init(RootObject.transform as RectTransform, CommandInvoker.CommandSet);
+            await Information.Init();
             MotionController = new MotionController(Information);
             MotionController.ChangeMotionState(typeof(CameraDefultState));
             MotionController.ChangeMotionState(typeof(LevelManagerPanelShowState));

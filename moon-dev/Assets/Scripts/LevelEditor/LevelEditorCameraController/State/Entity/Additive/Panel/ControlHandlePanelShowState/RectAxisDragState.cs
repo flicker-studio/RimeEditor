@@ -26,7 +26,6 @@ namespace LevelEditor
 
         private bool GetMouseLeftButtonUp => m_information.InputManager.GetMouseLeftButtonUp;
 
-        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
@@ -90,7 +89,7 @@ namespace LevelEditor
                     m_targetCurrentScale.Add(TargetObjs[i].transform.localScale);
                 }
 
-                GetExcute?.Invoke(new ItemRectCommand(TargetItems, m_targetOriginPosition
+                CommandInvoker.Execute(new ItemRectCommand(TargetItems, m_targetOriginPosition
                     , m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
 
                 RemoveState();

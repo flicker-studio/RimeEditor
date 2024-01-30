@@ -33,7 +33,7 @@ namespace LevelEditor
         private GameObject GetBoolItemPrefab => m_information.PrefabManager.GetBoolItem;
 
         private CommandSet GetCommandSet => m_information.CommandSet;
-        private CommandExcute GetExcute => GetCommandSet.GetExcute;
+
 
         private Dictionary<Type, List<GameObject>> m_inspectorItemDic = new Dictionary<Type, List<GameObject>>();
 
@@ -195,7 +195,7 @@ namespace LevelEditor
                         return;
                     }
 
-                    GetExcute?.Invoke(
+                    CommandInvoker.Execute(
                         new FieldInfoChangeCommand(fieldInfoDic.Keys.ToList(), fieldInfoDic.Values.ToList(), value, m_updateInspectorSignal));
                 });
             }

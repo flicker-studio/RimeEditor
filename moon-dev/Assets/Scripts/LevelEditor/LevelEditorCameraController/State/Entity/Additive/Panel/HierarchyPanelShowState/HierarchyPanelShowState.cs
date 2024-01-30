@@ -13,7 +13,6 @@ public class HierarchyPanelShowState : AdditiveState
 
     private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
 
-    private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
     private ObservableList<ItemData> TargetItems => GetData.TargetItems;
 
@@ -49,7 +48,7 @@ public class HierarchyPanelShowState : AdditiveState
     {
         if (GetDeleteInputDown)
         {
-            GetExcute?.Invoke(new ItemDeleteCommand(TargetItems, ItemAssets, GetOutlinePainter));
+            CommandInvoker.Execute(new ItemDeleteCommand(TargetItems, ItemAssets, GetOutlinePainter));
         }
     }
 
@@ -68,7 +67,7 @@ public class HierarchyPanelShowState : AdditiveState
             }
         });
 
-        GetDeleteButton.onClick.AddListener(() => { GetExcute?.Invoke(new ItemDeleteCommand(TargetItems, ItemAssets, GetOutlinePainter)); });
+        GetDeleteButton.onClick.AddListener(() => { CommandInvoker.Execute(new ItemDeleteCommand(TargetItems, ItemAssets, GetOutlinePainter)); });
     }
 
     private void InitSyncEvent()
@@ -343,7 +342,7 @@ public class HierarchyPanelShowState : AdditiveState
             selectNode.IsSelected = true;
             m_selectTargetItem.Add(child.ItemData);
             m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-            GetExcute?.Invoke(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
+            CommandInvoker.Execute(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
             return;
         }
 
@@ -358,7 +357,7 @@ public class HierarchyPanelShowState : AdditiveState
             }
 
             m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-            GetExcute?.Invoke(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
+            CommandInvoker.Execute(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
             selectNode.IsSelected = true;
         }
     }
@@ -379,7 +378,7 @@ public class HierarchyPanelShowState : AdditiveState
             }
 
             m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-            GetExcute?.Invoke(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
+            CommandInvoker.Execute(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
             return;
         }
 
@@ -403,7 +402,7 @@ public class HierarchyPanelShowState : AdditiveState
             }
 
             m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-            GetExcute?.Invoke(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
+            CommandInvoker.Execute(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
             selectNode.IsSelected = isSelectParent;
         }
     }

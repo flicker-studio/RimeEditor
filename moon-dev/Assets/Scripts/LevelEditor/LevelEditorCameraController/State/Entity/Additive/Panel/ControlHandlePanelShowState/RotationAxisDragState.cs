@@ -25,7 +25,6 @@ namespace LevelEditor
 
         private bool GetMouseLeftButtonUp => m_information.InputManager.GetMouseLeftButtonUp;
 
-        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
@@ -77,7 +76,7 @@ namespace LevelEditor
                     m_targetCurrentRotation.Add(TargetObjs[i].transform.rotation);
                 }
 
-                GetExcute?.Invoke(new ItemRotationCommand(TagetItems, m_targetOriginPosition, m_targetCurrentPosition,
+                CommandInvoker.Execute(new ItemRotationCommand(TagetItems, m_targetOriginPosition, m_targetCurrentPosition,
                     m_targetOriginRotation, m_targetCurrentRotation));
 
                 RemoveState();

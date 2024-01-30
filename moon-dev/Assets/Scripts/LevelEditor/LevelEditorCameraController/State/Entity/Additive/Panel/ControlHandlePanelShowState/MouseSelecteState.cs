@@ -42,7 +42,6 @@ namespace LevelEditor
 
         private ObservableList<ItemData> ItemAssets => m_information.DataManager.ItemAssets;
 
-        private CommandExcute GetExcute => m_information.CommandSet.GetExcute;
 
         private Vector2 m_originMousePositon;
 
@@ -230,7 +229,7 @@ namespace LevelEditor
 
             tempList = tempList.Distinct().ToList();
             GetOutlinePainter.SetTargetObj = tempList.GetItemObjs();
-            GetExcute?.Invoke(new ItemSelectCommand(TargetList, tempList, GetOutlinePainter));
+            CommandInvoker.Execute(new ItemSelectCommand(TargetList, tempList, GetOutlinePainter));
         }
 
         private List<ItemData> ChangeCollidersToDatas(List<Collider2D> colliders)
