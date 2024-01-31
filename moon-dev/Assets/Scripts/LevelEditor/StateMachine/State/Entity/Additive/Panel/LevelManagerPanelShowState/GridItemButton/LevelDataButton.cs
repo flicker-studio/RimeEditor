@@ -26,12 +26,12 @@ namespace LevelEditor
             m_levelPath = m_buttonObj.transform.Find(levelPathTextName).GetComponent<TextMeshProUGUI>();
             m_levelCoverImage = m_buttonObj.transform.Find(levelImageName).GetComponent<RawImage>();
             m_levelData = levelData;
-            m_levelName.text = m_levelData.GetName;
+            m_levelName.text = m_levelData.LevelName;
             m_levelPath.text = m_levelData.Path;
 
-            if (m_levelData.GetLevelCoverImage != null)
+            if (m_levelData.Cover != null)
             {
-                m_levelCoverImage.texture = m_levelData.GetLevelCoverImage;
+                m_levelCoverImage.texture = m_levelData.Cover;
             }
         }
     }

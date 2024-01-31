@@ -14,7 +14,7 @@ namespace LevelEditor
     {
         private InputManager GetInput => m_information.InputManager;
         private DataManager GetData => m_information.DataManager;
-        private LevelData GetCurrentLevel => GetData.GetCurrentLevel;
+        private LevelData GetCurrentLevel => GetData.CurrentLevel;
         private LevelSettingPanel GetLevelSettingPanel => m_information.UIManager.GetLevelSettingPanel;
 
         private UISetting.PopoverProperty GetPopoverProperty => GetLevelSettingPanel.GetPopoverProperty;
@@ -70,11 +70,15 @@ namespace LevelEditor
 
         private void SaveLevel()
         {
-            GetCurrentLevel.SetName = GetLevelNameInputField.text;
-            GetCurrentLevel.SetAuthorName = GetAuthorNameInputField.text;
-            GetCurrentLevel.SetIntroduction = GetIntroductionInputField.text;
-            GetCurrentLevel.SetVersion = GetVersionInputField.text;
-            GetCurrentLevel.SetLevelCoverImage = GetCoverImage.texture as Texture2D;
+            GetData.Save
+            (
+                GetLevelNameInputField.text,
+                GetAuthorNameInputField.text,
+                GetIntroductionInputField.text,
+                GetVersionInputField.text,
+                GetCoverImage.texture as Texture2D
+            );
+
             RemoveState();
         }
 
@@ -101,16 +105,16 @@ namespace LevelEditor
 
         private void InitInputField()
         {
-            GetLevelNameInputField.text = GetCurrentLevel.GetName;
-            GetAuthorNameInputField.text = GetCurrentLevel.GetAuthorName;
-            GetIntroductionInputField.text = GetCurrentLevel.GetIntroduction;
-            GetVersionInputField.text = GetCurrentLevel.GetVersion;
-            GetCoverImage.texture = GetCurrentLevel.GetLevelCoverImage;
+            GetLevelNameInputField.text = GetCurrentLevel.LevelName;
+            GetAuthorNameInputField.text = GetCurrentLevel.AuthorName;
+            GetIntroductionInputField.text = GetCurrentLevel.Introduction;
+            GetVersionInputField.text = GetCurrentLevel.Version;
+            GetCoverImage.texture = GetCurrentLevel.Cover;
         }
 
         private void CheckImage()
         {
-            if (m_coverImagePath != null && m_coverImagePath != "")
+            if (!string.IsNullOrEmpty(m_coverImagePath))
             {
                 UniTask.Void(UpdateImage);
             }

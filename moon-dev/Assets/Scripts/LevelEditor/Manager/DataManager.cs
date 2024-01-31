@@ -7,31 +7,89 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    /// <inheritdoc />
     /// <summary>
     ///     Manage the loading of resources and datas
     /// </summary>
+    /// <inheritdoc />
     public class DataManager : IManager
     {
-        public ObservableList<ItemDataBase> ItemAssets => GetCurrentSubLevel?.ItemAssets;
+        /// <summary>
+        /// </summary>
+        public List<LevelData> LevelDatas => m_levelDatas;
 
-        public SubLevelData GetCurrentSubLevel => GetCurrentLevel?.GetSubLevelDatas[GetCurrentSubLevelIndex];
+        /// <summary>
+        /// </summary>
+        public LevelData CurrentLevel => m_levelData;
 
-        public LevelData GetCurrentLevel { get; private set; }
+        /// <summary>
+        /// </summary>
+        public int CurrentSubLevelIndex { get; private set; }
 
-        public List<LevelData> GetAllLevels => m_levelDatas;
+        /// <summary>
+        /// </summary>
+        [CanBeNull]
+        public SubLevelData? CurrentSubLevel
+        {
+            get
+            {
+                var subLevels = m_levelData.SubLevelDatas;
 
-        public int GetCurrentSubLevelIndex { get; private set; }
+                if (subLevels is null)
+                {
+                    return null;
+                }
 
-        public ObservableList<ItemDataBase> TargetItems = new();
+                if (subLevels.Count <= CurrentSubLevelIndex)
+                {
+                    return null;
+                }
 
+                return subLevels[CurrentSubLevelIndex];
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        [CanBeNull]
+        public ObservableList<ItemDataBase> ItemAssets
+        {
+            get
+            {
+                var subLevels = m_levelData.SubLevelDatas;
+
+                if (subLevels is null)
+                {
+                    return null;
+                }
+
+                if (subLevels.Count <= CurrentSubLevelIndex)
+                {
+                    return null;
+                }
+
+                return subLevels[CurrentSubLevelIndex].ItemAssets;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public readonly ObservableList<ItemDataBase> TargetItems = new();
+
+        /// <summary>
+        /// </summary>
         public List<GameObject> TargetObjs = new();
 
+        /// <summary>
+        /// </summary>
         public Action<SubLevelData> SyncLevelData;
 
-        private List<SubLevelData> SubLevelDatas => GetCurrentLevel.GetSubLevelDatas;
+        private LevelData m_levelData;
 
+        [UsedImplicitly]
         private List<LevelData> m_levelDatas = new();
+
+        private List<SubLevelData> SubLevelDatas => CurrentLevel.SubLevelDatas;
+
 
         /// <summary>
         ///     Default constructor
@@ -39,6 +97,11 @@ namespace LevelEditor
         public DataManager()
         {
             RegisterEvent();
+        }
+
+        public void Save(string levelName = null, string author = null, string introduction = null, string version = null, Texture2D cover = null)
+        {
+            m_levelData.Update(levelName, author, introduction, version, cover);
         }
 
         public void SetActiveEditors(bool value)
@@ -56,9 +119,15 @@ namespace LevelEditor
             SetItemAssetActive(ItemAssets, false);
             TargetItems.Clear();
             SubLevelDatas.Add(new SubLevelData($"Level {SubLevelDatas.Count}"));
-            GetCurrentSubLevelIndex = SubLevelDatas.Count - 1;
+            CurrentSubLevelIndex = SubLevelDatas.Count - 1;
             SetItemAssetActive(ItemAssets, true);
-            SyncLevelData?.Invoke(GetCurrentSubLevel);
+
+            if (CurrentSubLevel is null)
+            {
+                return default;
+            }
+
+            SyncLevelData?.Invoke((SubLevelData)CurrentSubLevel);
             return SubLevelDatas.Last();
         }
 
@@ -66,8 +135,13 @@ namespace LevelEditor
         {
             SubLevelDatas.Clear();
             SubLevelDatas.AddRange(levelDatas);
-            GetCurrentSubLevelIndex = Mathf.Clamp(GetCurrentSubLevelIndex, 0, SubLevelDatas.Count - 1);
-            SyncLevelData?.Invoke(GetCurrentSubLevel);
+            CurrentSubLevelIndex = Mathf.Clamp(CurrentSubLevelIndex, 0, SubLevelDatas.Count - 1);
+
+            if (CurrentSubLevel != null)
+            {
+                SyncLevelData?.Invoke((SubLevelData)CurrentSubLevel);
+            }
+
             return SubLevelDatas;
         }
 
@@ -75,15 +149,21 @@ namespace LevelEditor
         {
             SetItemAssetActive(ItemAssets, false);
             TargetItems.Clear();
-            SubLevelDatas.RemoveAt(GetCurrentSubLevelIndex);
-            GetCurrentSubLevelIndex = Mathf.Clamp(GetCurrentSubLevelIndex, 0, SubLevelDatas.Count - 1);
+            SubLevelDatas.RemoveAt(CurrentSubLevelIndex);
+            CurrentSubLevelIndex = Mathf.Clamp(CurrentSubLevelIndex, 0, SubLevelDatas.Count - 1);
             SetItemAssetActive(ItemAssets, true);
-            SyncLevelData?.Invoke(GetCurrentSubLevel);
+
+            if (CurrentSubLevel is null)
+            {
+                return;
+            }
+
+            SyncLevelData?.Invoke((SubLevelData)CurrentSubLevel);
         }
 
         public void SetSubLevelIndex(int index, bool isReload = false)
         {
-            if (GetCurrentSubLevelIndex == index && !isReload)
+            if (CurrentSubLevelIndex == index && !isReload)
             {
                 return;
             }
@@ -98,9 +178,13 @@ namespace LevelEditor
             }
 
             TargetItems.Clear();
-            GetCurrentSubLevelIndex = Mathf.Clamp(index, 0, SubLevelDatas.Count - 1);
+            CurrentSubLevelIndex = Mathf.Clamp(index, 0, SubLevelDatas.Count - 1);
             SetItemAssetActive(ItemAssets, true, isReload);
-            SyncLevelData?.Invoke(GetCurrentSubLevel);
+
+            if (CurrentSubLevel != null)
+            {
+                SyncLevelData?.Invoke((SubLevelData)CurrentSubLevel);
+            }
         }
 
         public List<SubLevelData> ShowSubLevels()
@@ -123,9 +207,13 @@ namespace LevelEditor
 
         public void ToJson()
         {
-            foreach (var itemAsset in GetCurrentSubLevel.ItemAssets) itemAsset.GetTransformToData();
+            if (CurrentSubLevel != null)
+            {
+                foreach (var itemAsset in ((SubLevelData)CurrentSubLevel).ItemAssets)
+                    itemAsset.GetTransformToData();
+            }
 
-            LevelLoader.ToJson(GetCurrentLevel);
+            LevelLoader.ToJson(CurrentLevel);
         }
 
         public LevelData FromJson(string json)
@@ -136,13 +224,13 @@ namespace LevelEditor
 
         public void CreateLevel()
         {
-            GetCurrentLevel = new LevelData();
+            m_levelData = new LevelData();
             InitLevel();
         }
 
         public void OpenLevel(LevelData levelData)
         {
-            GetCurrentLevel = levelData;
+            m_levelData = levelData;
             SetSubLevelIndex(0, true);
         }
 
@@ -161,7 +249,7 @@ namespace LevelEditor
 
         private void InitLevel()
         {
-            GetCurrentSubLevelIndex = 0;
+            CurrentSubLevelIndex = 0;
             SubLevelDatas.Add(new SubLevelData($"Level {SubLevelDatas.Count}"));
         }
 

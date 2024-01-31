@@ -43,11 +43,6 @@ namespace LevelEditor
                     streamReader.Close();
                     streamReader.Dispose();
 
-                    if (levelData == null)
-                    {
-                        continue;
-                    }
-
                     levelData.Path = $"Path:{levelPath}";
 
                     levelDatas.Add(levelData);
@@ -106,14 +101,9 @@ namespace LevelEditor
             streamReader.Close();
             streamReader.Dispose();
 
-            if (levelData == null)
-            {
-                return false;
-            }
-
             // Determine whether it is configured for the same level
             foreach (var data in levelDatas)
-                if (data.GetKey == levelData.GetKey)
+                if (data.HashKey == levelData.HashKey)
                 {
                     return false;
                 }
@@ -145,15 +135,8 @@ namespace LevelEditor
         /// <param name="data"></param>
         public static void ToJson(LevelData data)
         {
-            var hashKey = data.GetKey;
-            data.UpdateTime();
-
-            if (string.IsNullOrEmpty(hashKey))
-            {
-                data.SetKey = $"{data.GetName}{data.GetTime}".ToSHA256();
-                hashKey = data.GetKey;
-            }
-
+            data.Update();
+            var hashKey = data.HashKey;
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
             if (!Directory.Exists(PersistentFileProperty.LEVEL_DATA_PATH))
@@ -181,9 +164,9 @@ namespace LevelEditor
             streamWriter.Close();
             streamWriter.Dispose();
 
-            if (data.GetLevelCoverImage != null)
+            if (data.Cover != null)
             {
-                var dataBytes = data.GetLevelCoverImage.EncodeToPNG();
+                var dataBytes = data.Cover.EncodeToPNG();
                 var savePath = $"{imagesPath}/{PersistentFileProperty.COVER_IMAGE_NAME}";
                 var fileStream = File.Open(savePath, FileMode.OpenOrCreate);
                 fileStream.Write(dataBytes, 0, dataBytes.Length);
@@ -227,7 +210,7 @@ namespace LevelEditor
         {
             var uwr = UnityWebRequestTexture.GetTexture("file:///" + path);
             await uwr.SendWebRequest();
-            levelData.SetLevelCoverImage = DownloadHandlerTexture.GetContent(uwr);
+            levelData.Cover = DownloadHandlerTexture.GetContent(uwr);
         }
     }
 }

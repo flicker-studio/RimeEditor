@@ -44,6 +44,9 @@ namespace LevelEditor
             m_uiManager = new UIManager(levelEditorTransform, ui);
             m_inputManager = new InputManager();
             m_dataManager = new DataManager();
+
+            await m_dataManager.LoadLevelFiles();
+            
             m_cameraManager = new CameraManager(cam);
             m_levelAction = new LevelAction();
 

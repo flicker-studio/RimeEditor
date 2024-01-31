@@ -55,7 +55,12 @@ public class HierarchyPanelShowState : AdditiveState
 
     private void InitState()
     {
-        SyncNodeByLevelData(GetData.GetCurrentSubLevel);
+        if (GetData.CurrentSubLevel is null)
+        {
+            return;
+        }
+
+        SyncNodeByLevelData((SubLevelData)GetData.CurrentSubLevel);
     }
 
     private void InitButton()

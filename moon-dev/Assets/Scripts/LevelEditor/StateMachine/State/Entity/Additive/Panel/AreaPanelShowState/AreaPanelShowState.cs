@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Frame.StateMachine;
 using LevelEditor;
 using TMPro;
@@ -54,8 +53,8 @@ public class AreaPanelShowState : AdditiveState
     private void AddLevel()
     {
         GetDataManager.AddSubLevel();
-        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(GetDataManager.GetCurrentSubLevel.Name));
-        GetAreaDropdown.value = GetDataManager.GetCurrentSubLevelIndex;
+        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(((SubLevelData)GetDataManager.CurrentSubLevel).Name));
+        GetAreaDropdown.value = GetDataManager.CurrentSubLevelIndex;
     }
 
     private void AddLevel(string levelName)
@@ -67,16 +66,16 @@ public class AreaPanelShowState : AdditiveState
     {
         if (GetDataManager.ShowSubLevels().Count <= 1) return;
 
-        GetAreaDropdown.options.RemoveAt(GetDataManager.GetCurrentSubLevelIndex);
+        GetAreaDropdown.options.RemoveAt(GetDataManager.CurrentSubLevelIndex);
         GetDataManager.DeleteSubLevel();
-        GetAreaDropdown.value = GetDataManager.GetCurrentSubLevelIndex;
+        GetAreaDropdown.value = GetDataManager.CurrentSubLevelIndex;
         GetAreaDropdown.RefreshShownValue();
     }
 
     private void ReloadLevel()
     {
         GetAreaDropdown.ClearOptions();
-        List<SubLevelData> subLevelDatas = GetDataManager.GetCurrentLevel.GetSubLevelDatas;
+        var subLevelDatas = GetDataManager.CurrentLevel.SubLevelDatas;
 
         for (var index = 0; index < subLevelDatas.Count; index++)
         {

@@ -42,12 +42,12 @@ namespace LevelEditor
         {
             GetData.SetActiveEditors(false);
             GetCamera.SetTargetObject = null;
-            LevelPlay.Instance.Play(GetData.ShowSubLevels(), GetData.GetCurrentSubLevelIndex);
+            LevelPlay.Instance.Play(GetData.ShowSubLevels(), GetData.CurrentSubLevelIndex);
         }
 
         private void SaveLevel()
         {
-            if (GetData.GetCurrentLevel.GetName == "" || GetData.GetCurrentLevel.GetName == null)
+            if (string.IsNullOrEmpty(GetData.CurrentLevel.LevelName))
             {
                 LaunchPopover(GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_LEVEL_NAME_MISSING,
                     GetLevelPanel.GetPopoverProperty.POPOVER_ERROR_COLOR);
