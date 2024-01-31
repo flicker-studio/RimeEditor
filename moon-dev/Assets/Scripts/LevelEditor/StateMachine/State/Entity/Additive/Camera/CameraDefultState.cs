@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using Frame.Static.Global;
@@ -24,25 +25,27 @@ namespace LevelEditor
 
         private void CheckCameraInput()
         {
-            if (GetMouseMiddleButtonDown)
-            {
-                if (CheckStates.Contains(typeof(CameraMoveState))) return;
-
-                GameObject pointerUIObj = GetTopUIObjectUnderMouse();
-                if (pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROL_HANDLE)) return;
-
-                ChangeMotionState(typeof(CameraMoveState));
-            }
-
-            if (GetMouseSrollDown)
-            {
-                if (CheckStates.Contains(typeof(CameraChangeZState))) return;
-
-                GameObject pointerUIObj = GetTopUIObjectUnderMouse();
-                if (pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROL_HANDLE)) return;
-
-                ChangeMotionState(typeof(CameraChangeZState));
-            }
+            //TODO:需加载SO
+            throw new Exception("需加载SO");
+            // if (GetMouseMiddleButtonDown)
+            // {
+            //     if (CheckStates.Contains(typeof(CameraMoveState))) return;
+            //
+            //     GameObject pointerUIObj = GetTopUIObjectUnderMouse();
+            //     if (pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROL_HANDLE)) return;
+            //
+            //     ChangeMotionState(typeof(CameraMoveState));
+            // }
+            //
+            // if (GetMouseSrollDown)
+            // {
+            //     if (CheckStates.Contains(typeof(CameraChangeZState))) return;
+            //
+            //     GameObject pointerUIObj = GetTopUIObjectUnderMouse();
+            //     if (pointerUIObj && !pointerUIObj.CompareTag(GlobalSetting.Tags.CONTROL_HANDLE)) return;
+            //
+            //     ChangeMotionState(typeof(CameraChangeZState));
+            // }
         }
 
         GameObject GetTopUIObjectUnderMouse()

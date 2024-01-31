@@ -67,14 +67,14 @@ namespace WindowExtension
             // TODO:Fix compilation errors
             // rigidbodyParent.transform.parent = target.GameObject().transform.parent;
             // target.GameObject().transform.parent = rigidbodyParent.transform;
-            rigidbodyParent.name = rigidbodyParentPrefab.name + Random.Range(10000, 1000000);
-
-            if (!target.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG))
-            {
-                target.name += GlobalSetting.ObjNameTag.RIGIDBODY_TAG;
-            }
-
-            Undo.RegisterCreatedObjectUndo(target, "CreateRigidbody " + target.name);
+            // rigidbodyParent.name = rigidbodyParentPrefab.name + Random.Range(10000, 1000000);
+            //
+            // if (!target.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG))
+            // {
+            //     target.name += GlobalSetting.ObjNameTag.RIGIDBODY_TAG;
+            // }
+            //
+            // Undo.RegisterCreatedObjectUndo(target, "CreateRigidbody " + target.name);
         }
     }
 

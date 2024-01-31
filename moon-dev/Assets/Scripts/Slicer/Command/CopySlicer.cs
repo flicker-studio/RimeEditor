@@ -35,40 +35,42 @@ namespace Slicer
 
         public override void Execute()
         {
-            m_colliderListGroup = m_slicerInformation.TargetList.CheckColliderConnectivity(
-                m_slicerInformation.GetDetectionCompensationScale
-                , GlobalSetting.LayerMasks.GROUND);
-
-            foreach (var collider in m_slicerInformation.TargetList)
-            {
-                ObjectPool.Instance.OnRelease(collider.gameObject);
-            }
-
-            ObjectPool.Instance.OnReleaseAll(GetCombinationRigidbodyParentPrefab);
-
-            ObjectPool.Instance.OnReleaseAll(GetCombinationNotRigidbodyParentPrefab);
-
-            List<Collider2D> tempList = new List<Collider2D>();
-
-            foreach (var colliderList in m_colliderListGroup)
-            {
-                tempList.AddRange(colliderList);
-            }
-
-            tempList = tempList.Distinct().ToList();
-
-            foreach (var collider in m_slicerInformation.TargetList)
-            {
-                tempList.Remove(collider);
-            }
-
-            m_colliderListGroup = tempList.CheckColliderConnectivity(
-                m_slicerInformation.GetDetectionCompensationScale
-                , GlobalSetting.LayerMasks.GROUND);
-
-            m_colliderListGroup.GetCombinationConnectivity(m_slicerInformation.GetPrefabFactory);
-
-            m_slicerInformation.TargetList = CutSliceAll(CheckBox(GlobalSetting.ObjNameTag.CAN_COPY_TAG));
+            //TODO:需加载SO
+            throw new Exception("需加载SO");
+            // m_colliderListGroup = m_slicerInformation.TargetList.CheckColliderConnectivity(
+            //     m_slicerInformation.GetDetectionCompensationScale
+            //     , GlobalSetting.LayerMasks.GROUND);
+            //
+            // foreach (var collider in m_slicerInformation.TargetList)
+            // {
+            //     ObjectPool.Instance.OnRelease(collider.gameObject);
+            // }
+            //
+            // ObjectPool.Instance.OnReleaseAll(GetCombinationRigidbodyParentPrefab);
+            //
+            // ObjectPool.Instance.OnReleaseAll(GetCombinationNotRigidbodyParentPrefab);
+            //
+            // List<Collider2D> tempList = new List<Collider2D>();
+            //
+            // foreach (var colliderList in m_colliderListGroup)
+            // {
+            //     tempList.AddRange(colliderList);
+            // }
+            //
+            // tempList = tempList.Distinct().ToList();
+            //
+            // foreach (var collider in m_slicerInformation.TargetList)
+            // {
+            //     tempList.Remove(collider);
+            // }
+            //
+            // m_colliderListGroup = tempList.CheckColliderConnectivity(
+            //     m_slicerInformation.GetDetectionCompensationScale
+            //     , GlobalSetting.LayerMasks.GROUND);
+            //
+            // m_colliderListGroup.GetCombinationConnectivity(m_slicerInformation.GetPrefabFactory);
+            //
+            // m_slicerInformation.TargetList = CutSliceAll(CheckBox(GlobalSetting.ObjNameTag.CAN_COPY_TAG));
         }
 
         public CopySlicer(SlicerInformation slicerInformation)

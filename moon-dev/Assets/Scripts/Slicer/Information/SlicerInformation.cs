@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data.ScriptableObject;
@@ -106,39 +107,41 @@ namespace Slicer
 
         public void ResetCopy()
         {
-            List<List<Collider2D>> colliderListGroup = TargetList.CheckColliderConnectivity(
-                GetDetectionCompensationScale
-                , GlobalSetting.LayerMasks.GROUND);
-
-            foreach (var collider in TargetList)
-            {
-                ObjectPool.Instance.OnRelease(collider.gameObject);
-            }
-
-            ObjectPool.Instance.OnReleaseAll(GetCombinationRigidbodyParentPrefab);
-
-            ObjectPool.Instance.OnReleaseAll(GetCombinationNotRigidbodyParentPrefab);
-
-            List<Collider2D> tempList = new List<Collider2D>();
-
-            foreach (var colliderList in colliderListGroup)
-            {
-                tempList.AddRange(colliderList);
-            }
-
-            tempList = tempList.Distinct().ToList();
-
-            foreach (var collider in TargetList)
-            {
-                tempList.Remove(collider);
-            }
-
-            colliderListGroup = tempList.CheckColliderConnectivity(GetDetectionCompensationScale
-                , GlobalSetting.LayerMasks.GROUND);
-
-            colliderListGroup.GetCombinationConnectivity(GetPrefabFactory);
-
-            TargetList.Clear();
+            //TODO:需加载SO
+            throw new Exception("需加载SO");
+            // List<List<Collider2D>> colliderListGroup = TargetList.CheckColliderConnectivity(
+            //     GetDetectionCompensationScale
+            //     , GlobalSetting.LayerMasks.GROUND);
+            //
+            // foreach (var collider in TargetList)
+            // {
+            //     ObjectPool.Instance.OnRelease(collider.gameObject);
+            // }
+            //
+            // ObjectPool.Instance.OnReleaseAll(GetCombinationRigidbodyParentPrefab);
+            //
+            // ObjectPool.Instance.OnReleaseAll(GetCombinationNotRigidbodyParentPrefab);
+            //
+            // List<Collider2D> tempList = new List<Collider2D>();
+            //
+            // foreach (var colliderList in colliderListGroup)
+            // {
+            //     tempList.AddRange(colliderList);
+            // }
+            //
+            // tempList = tempList.Distinct().ToList();
+            //
+            // foreach (var collider in TargetList)
+            // {
+            //     tempList.Remove(collider);
+            // }
+            //
+            // colliderListGroup = tempList.CheckColliderConnectivity(GetDetectionCompensationScale
+            //     , GlobalSetting.LayerMasks.GROUND);
+            //
+            // colliderListGroup.GetCombinationConnectivity(GetPrefabFactory);
+            //
+            // TargetList.Clear();
         }
     }
 }

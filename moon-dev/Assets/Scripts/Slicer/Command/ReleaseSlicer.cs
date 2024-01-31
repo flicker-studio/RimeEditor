@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Frame.Static.Global;
 using Frame.StaticExtensions.StaticClassMethod;
@@ -18,18 +19,20 @@ namespace Slicer
 
         public override void Execute()
         {
-            List<Collider2D> targetColliderList = m_slicerInformation.TargetList;
-
-            foreach (var collider in targetColliderList)
-            {
-                collider.enabled = true;
-            }
-
-            m_colliderListGroup = targetColliderList.CheckColliderConnectivity(
-                m_slicerInformation.GetDetectionCompensationScale
-                , GlobalSetting.LayerMasks.GROUND);
-
-            m_colliderListGroup.GetCombinationConnectivity(m_slicerInformation.GetPrefabFactory);
+            //TODO:需加载SO
+            throw new Exception("需加载SO");
+            // List<Collider2D> targetColliderList = m_slicerInformation.TargetList;
+            //
+            // foreach (var collider in targetColliderList)
+            // {
+            //     collider.enabled = true;
+            // }
+            //
+            // m_colliderListGroup = targetColliderList.CheckColliderConnectivity(
+            //     m_slicerInformation.GetDetectionCompensationScale
+            //     , GlobalSetting.LayerMasks.GROUND);
+            //
+            // m_colliderListGroup.GetCombinationConnectivity(m_slicerInformation.GetPrefabFactory);
         }
     }
 }

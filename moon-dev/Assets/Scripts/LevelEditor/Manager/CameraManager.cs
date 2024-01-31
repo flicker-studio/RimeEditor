@@ -58,9 +58,11 @@ namespace LevelEditor
         {
             get
             {
-                var x = GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.x / Screen.width;
-                var y = GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.y / Screen.height;
-                return new Vector2(x, y);
+                //TODO:需加载SO
+                throw new Exception("需加载SO");
+                // var x = GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.x / Screen.width;
+                // var y = GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.y / Screen.height;
+                // return new Vector2(x, y);
             }
         }
 

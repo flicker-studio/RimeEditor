@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Frame.Static.Global;
 using Frame.Tool;
@@ -16,12 +17,14 @@ namespace LevelEditor
         
         public async void Play(List<SubLevelData> levelDatas, int index = 0)
         {
-            m_index = index;
-            await SceneLoader.Instance.AddScene(GlobalSetting.Scenes.LEVEL_PLAY);
-            m_levelDatas.Clear();
-            m_levelDatas.AddRange(levelDatas);
-            Frame.Tool.InputManager.Instance.AddEscapeButtonDownAction = Stop;
-            ReadLevel();
+            //TODO:需加载SO
+            throw new Exception("需加载SO");
+            // m_index = index;
+            // await SceneLoader.Instance.AddScene(GlobalSetting.Scenes.LEVEL_PLAY);
+            // m_levelDatas.Clear();
+            // m_levelDatas.AddRange(levelDatas);
+            // Frame.Tool.InputManager.Instance.AddEscapeButtonDownAction = Stop;
+            // ReadLevel();
         }
 
         public void NextLevel()

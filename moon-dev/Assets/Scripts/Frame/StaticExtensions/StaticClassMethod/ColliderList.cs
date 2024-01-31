@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data.ScriptableObject;
@@ -54,16 +55,17 @@ namespace Frame.StaticExtensions.StaticClassMethod
                 if (addParentFlag)
                 {
                     GameObject parentObj;
-
-                    if (colliderList.Count == 1 &&
-                        colliderList[0].gameObject.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG))
-                    {
-                        parentObj = ObjectPool.Instance.OnTake(GetRigidbodyParentPrefab);
-                    }
-                    else
-                    {
-                        parentObj = ObjectPool.Instance.OnTake(GetCombinationRigidbodyParentPrefab);
-                    }
+                    //TODO:需加载SO
+                    throw new Exception("需加载SO");
+                    // if (colliderList.Count == 1 &&
+                    //     colliderList[0].gameObject.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG))
+                    // {
+                    //     parentObj = ObjectPool.Instance.OnTake(GetRigidbodyParentPrefab);
+                    // }
+                    // else
+                    // {
+                    //     parentObj = ObjectPool.Instance.OnTake(GetCombinationRigidbodyParentPrefab);
+                    // }
 
                     foreach (var collider in colliderList)
                     {
@@ -125,8 +127,10 @@ namespace Frame.StaticExtensions.StaticClassMethod
 
         private static bool CheckRigidbody(this Collider2D collider)
         {
-            return ObjectPool.Instance.CompareObj(collider.gameObject, GetSlicerObj) ||
-                   collider.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG);
+            //TODO:需加载SO
+            throw new Exception("需加载SO");
+            // return ObjectPool.Instance.CompareObj(collider.gameObject, GetSlicerObj) ||
+            //        collider.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG);
         }
     }
 }

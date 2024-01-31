@@ -15,8 +15,8 @@ public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
     private ItemDataType m_itemDataType;
 
     private ItemProduct m_itemProduct;
-
-    private static string ItemRootPath => GlobalSetting.CriticalPath.ITEM_FILE_PATH;
+    //TODO:需加载SO
+    // private static string ItemRootPath => GlobalSetting.CriticalPath.ITEM_FILE_PATH;
 
     /// <inheritdoc />
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -48,9 +48,11 @@ public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
 
     private ItemProduct ItemProductAnalysis(string itemProductName, string itemProductType)
     {
-        var itemProduct = Resources.LoadAll<ItemProduct>(ItemRootPath + '\\' + itemProductType).ToList()
-            .First(value => value.Name == itemProductName ? value : false);
+        //TODO:需加载SO
+        throw new Exception("需加载SO");
+        // var itemProduct = Resources.LoadAll<ItemProduct>(ItemRootPath + '\\' + itemProductType).ToList()
+        //     .First(value => value.Name == itemProductName ? value : false);
 
-        return itemProduct;
+        // return itemProduct;
     }
 }

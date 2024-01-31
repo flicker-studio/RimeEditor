@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
 using Frame.Static.Global;
@@ -98,10 +99,12 @@ namespace LevelEditor
 
         private async UniTaskVoid ExitCurrentLevelAsync()
         {
-            GetData.SetActiveEditors(false);
-            await SceneLoader.Instance.RemoveTargetScene(GlobalSetting.Scenes.LEVEL_PLAY);
-            await SceneLoader.Instance.EnterScene(GlobalSetting.Scenes.LEVEL_EDITOR);
-            GetLevelAction.InvokeExitEditor();
+            //TODO:需加载SO
+            throw new Exception("需加载SO");
+            // GetData.SetActiveEditors(false);
+            // await SceneLoader.Instance.RemoveTargetScene(GlobalSetting.Scenes.LEVEL_PLAY);
+            // await SceneLoader.Instance.EnterScene(GlobalSetting.Scenes.LEVEL_EDITOR);
+            // GetLevelAction.InvokeExitEditor();
         }
     }
 }
