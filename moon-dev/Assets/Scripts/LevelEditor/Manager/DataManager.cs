@@ -165,7 +165,6 @@ namespace LevelEditor
             SubLevelDatas.Add(new SubLevelData($"Level {SubLevelDatas.Count}"));
         }
 
-
         private void RegisterEvent()
         {
             TargetItems.OnAddRange += SyncTargetObj;
