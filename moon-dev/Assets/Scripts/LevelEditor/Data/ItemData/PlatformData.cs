@@ -8,7 +8,7 @@ namespace LevelEditor
 
         public bool CanCopy;
 
-        public override ItemDataType ItemDataType => ItemDataType.Platform;
+        public override ItemDataType ItemDataType => ItemDataType.PLATFORM;
 
         public override ItemDataBase Copy(ItemDataBase saveData)
         {

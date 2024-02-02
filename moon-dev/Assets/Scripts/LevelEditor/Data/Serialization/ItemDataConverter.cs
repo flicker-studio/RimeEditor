@@ -35,11 +35,11 @@ public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
     {
         switch (m_itemDataType)
         {
-            case ItemDataType.Entrance:
+            case ItemDataType.ENTRANCE:
                 return new EntranceData(m_itemProduct, true);
-            case ItemDataType.Platform:
+            case ItemDataType.PLATFORM:
                 return new PlatformData(m_itemProduct, true);
-            case ItemDataType.Exit:
+            case ItemDataType.EXIT:
                 return new ExitData(m_itemProduct, true);
             default:
                 return null;

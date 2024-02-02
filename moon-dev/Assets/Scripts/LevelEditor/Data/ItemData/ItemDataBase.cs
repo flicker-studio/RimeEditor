@@ -12,10 +12,14 @@ namespace LevelEditor
         [JsonProperty("ItemDataType", Order = 1)]
         public abstract ItemDataType ItemDataType { get; }
 
-        [JsonIgnore] public GameObject GetItemObjPlay => m_itemObjPlay;
-        [JsonIgnore] public GameObject GetItemObjEditor { get; private set; }
+        [JsonIgnore]
+        public GameObject GetItemObjPlay => m_itemObjPlay;
 
-        [JsonIgnore] public ItemProduct GetItemProduct => m_itemProduct;
+        [JsonIgnore]
+        public GameObject GetItemObjEditor { get; private set; }
+
+        [JsonIgnore]
+        public ItemProduct GetItemProduct => m_itemProduct;
 
         [JsonIgnore]
         private Vector3 GetScreenMiddlePoint
@@ -40,16 +44,21 @@ namespace LevelEditor
             }
         }
 
-        [JsonProperty("Rotation", Order = 2)] protected Quaternion m_rotation;
+        [JsonProperty("Rotation", Order = 2)]
+        protected Quaternion m_rotation;
 
-        [JsonProperty("Position", Order = 3)] private Vector3 m_position;
+        [JsonProperty("Position", Order = 3)]
+        private Vector3 m_position;
 
-        [JsonProperty("Scale", Order = 4)] private Vector3 m_scale;
+        [JsonProperty("Scale", Order = 4)]
+        private Vector3 m_scale;
 
 
-        [JsonIgnore] protected GameObject m_itemObjPlay;
+        [JsonIgnore]
+        protected GameObject m_itemObjPlay;
 
-        [JsonIgnore] protected ItemProduct m_itemProduct;
+        [JsonIgnore]
+        protected ItemProduct m_itemProduct;
 
         [JsonProperty("ProductName", Order = 5)]
         private string m_productName;

@@ -5,10 +5,10 @@
     /// </summary>
     public enum ItemDataType
     {
-        Entrance,
+        ENTRANCE,
 
-        Exit,
+        EXIT,
 
-        Platform
+        PLATFORM
     }
 }

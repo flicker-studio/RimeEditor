@@ -7,7 +7,7 @@ namespace LevelEditor
     /// </summary>
     public class EntranceData : ItemDataBase
     {
-        public override ItemDataType ItemDataType => ItemDataType.Entrance;
+        public override ItemDataType ItemDataType => ItemDataType.ENTRANCE;
 
         public override ItemDataBase Copy(ItemDataBase saveData)
         {

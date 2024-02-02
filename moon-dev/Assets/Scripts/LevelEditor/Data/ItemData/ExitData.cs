@@ -4,7 +4,7 @@ namespace LevelEditor
 {
     public class ExitData : ItemDataBase
     {
-        public override ItemDataType ItemDataType => ItemDataType.Exit;
+        public override ItemDataType ItemDataType => ItemDataType.EXIT;
 
         public override ItemDataBase Copy(ItemDataBase saveData)
         {
