@@ -1,6 +1,4 @@
 using System;
-using Frame.Static.Global;
-using Frame.Tool.Pool;
 using Item;
 using UnityEngine;
 

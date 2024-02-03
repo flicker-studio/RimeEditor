@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Data.ScriptableObject;
-using Frame.Static.Global;
 using Frame.Tool.Pool;
 using UnityEngine;
 

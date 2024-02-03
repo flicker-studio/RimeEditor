@@ -1,11 +1,8 @@
 using System;
-using System.Linq;
-using Frame.Static.Global;
 using LevelEditor;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using UnityEngine;
 
 /// <summary>
 ///     Custom deserialization transformations

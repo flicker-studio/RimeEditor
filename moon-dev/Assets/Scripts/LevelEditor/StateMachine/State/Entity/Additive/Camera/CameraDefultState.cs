@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
-using Frame.Static.Global;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;

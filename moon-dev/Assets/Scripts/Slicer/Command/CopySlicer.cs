@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EzySlice;
-using Frame.Static.Global;
-using Frame.StaticExtensions.StaticClassMethod;
 using Frame.Tool.Pool;
 using Moon.Kernel.Extension;
 using UnityEngine;

@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Frame.Static.Global;
-using Frame.StaticExtensions.StaticClassMethod;
 using UnityEngine;
 
 namespace Slicer

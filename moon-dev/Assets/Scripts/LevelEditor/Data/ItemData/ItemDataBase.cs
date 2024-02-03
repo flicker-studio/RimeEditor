@@ -9,9 +9,6 @@ namespace LevelEditor
     [JsonConverter(typeof(ItemDataConverter))]
     public abstract class ItemDataBase
     {
-        [JsonProperty("ItemDataType", Order = 1)]
-        public abstract ItemDataType ItemDataType { get; }
-
         [JsonIgnore]
         public GameObject GetItemObjPlay => m_itemObjPlay;
 
@@ -44,6 +41,15 @@ namespace LevelEditor
             }
         }
 
+        [JsonIgnore]
+        protected GameObject m_itemObjPlay;
+
+        [JsonIgnore]
+        protected ItemProduct m_itemProduct;
+
+        [JsonProperty("ItemDataType", Order = 1)]
+        public abstract ItemDataType ItemDataType { get; }
+
         [JsonProperty("Rotation", Order = 2)]
         protected Quaternion m_rotation;
 
@@ -52,13 +58,6 @@ namespace LevelEditor
 
         [JsonProperty("Scale", Order = 4)]
         private Vector3 m_scale;
-
-
-        [JsonIgnore]
-        protected GameObject m_itemObjPlay;
-
-        [JsonIgnore]
-        protected ItemProduct m_itemProduct;
 
         [JsonProperty("ProductName", Order = 5)]
         private string m_productName;
@@ -101,19 +100,6 @@ namespace LevelEditor
             }
         }
 
-        public virtual void SetActivePlay(bool active)
-        {
-            if (active)
-            {
-                m_itemObjPlay = ObjectPool.Instance.OnTake(m_itemObjPlay, m_itemProduct.ItemObject);
-                m_itemObjPlay.transform.SetTransformValue(m_position, m_rotation, m_scale);
-            }
-            else
-            {
-                ObjectPool.Instance.OnRelease(m_itemObjPlay);
-            }
-        }
-
         public void GetTransformToData()
         {
             if (GetItemObjEditor == null)
@@ -142,6 +128,20 @@ namespace LevelEditor
         {
             return (m_position, m_rotation, m_scale);
         }
+
+        public virtual void SetActivePlay(bool active)
+        {
+            if (active)
+            {
+                m_itemObjPlay = ObjectPool.Instance.OnTake(m_itemObjPlay, m_itemProduct.ItemObject);
+                m_itemObjPlay.transform.SetTransformValue(m_position, m_rotation, m_scale);
+            }
+            else
+            {
+                ObjectPool.Instance.OnRelease(m_itemObjPlay);
+            }
+        }
+
 
         private void TransformInit()
         {

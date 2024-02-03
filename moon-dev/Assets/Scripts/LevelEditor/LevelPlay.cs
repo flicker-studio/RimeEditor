@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Frame.Static.Global;
 using Frame.Tool;
 
 namespace LevelEditor

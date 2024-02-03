@@ -1,8 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
-using Frame.Static.Global;
-using Frame.Tool;
 using Frame.Tool.Popover;
 using UnityEngine;
 

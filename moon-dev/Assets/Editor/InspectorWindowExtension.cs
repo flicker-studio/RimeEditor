@@ -1,11 +1,9 @@
 using System;
 using System.IO;
 using Data.ScriptableObject;
-using Frame.Static.Global;
 using Moon.Kernel;
 using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace WindowExtension
 {

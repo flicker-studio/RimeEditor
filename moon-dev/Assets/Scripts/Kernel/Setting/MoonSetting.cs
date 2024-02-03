@@ -4,16 +4,19 @@ using UnityEngine;
 namespace Moon.Kernel.Setting
 {
     /// <summary>
-    /// 
     /// </summary>
-    [CreateAssetMenu(fileName = "MoonSetting", menuName = "Moon/Setting/Moon Setting"),
-     SystemSetting("Assets/Settings/Dev/MoonSetting.asset")]
+    [CreateAssetMenu(fileName = "MoonSetting", menuName = "Moon/Setting/Moon Setting")]
+    [SystemSetting("Assets/Settings/Dev/MoonSetting.asset")]
     public class MoonSetting : SettingBase
     {
-        [SerializeField] public bool isCheck = true;
+        [SerializeField]
+        public bool isCheck = true;
 
-        [SerializeField] public bool AutoStartScene = false;
+        [SerializeField]
+        public bool AutoStartScene;
 
-        [SerializeField, SceneSelect] public string startScene;
+        [SerializeField]
+        [SceneSelect]
+        public string startScene;
     }
 }

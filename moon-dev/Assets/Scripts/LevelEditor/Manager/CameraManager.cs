@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Frame.Static.Global;
 using JetBrains.Annotations;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Utils;
