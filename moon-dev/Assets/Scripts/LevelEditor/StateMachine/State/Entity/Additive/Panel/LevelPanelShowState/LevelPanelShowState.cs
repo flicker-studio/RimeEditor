@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
 using Frame.Tool.Popover;
+using Moon.Kernel.Utils;
 using UnityEngine;
 
 namespace LevelEditor
@@ -11,9 +12,9 @@ namespace LevelEditor
         private LevelAction GetLevelAction => m_information.LevelAction;
         private LevelPanel GetLevelPanel => m_information.UIManager.GetLevelPanel;
 
-        private DataManager GetData => m_information.DataManager;
+        private LevelDataManager GetData => m_information.DataManager;
 
-        private CameraManager GetCamera => m_information.CameraManager;
+        private OutlineManager OutlineManager => m_information.OutlineManager;
 
         public LevelPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
@@ -40,7 +41,7 @@ namespace LevelEditor
         private void PlayLevel()
         {
             GetData.SetActiveEditors(false);
-            GetCamera.SetTargetObject = null;
+            OutlineManager.SetRenderObjects(null);
             LevelPlay.Instance.Play(GetData.ShowSubLevels(), GetData.CurrentSubLevelIndex);
         }
 
@@ -99,6 +100,7 @@ namespace LevelEditor
         {
             //TODO:需加载SO
             throw new Exception("需加载SO");
+
             // GetData.SetActiveEditors(false);
             // await SceneLoader.Instance.RemoveTargetScene(GlobalSetting.Scenes.LEVEL_PLAY);
             // await SceneLoader.Instance.EnterScene(GlobalSetting.Scenes.LEVEL_EDITOR);

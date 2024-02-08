@@ -23,7 +23,7 @@ namespace Moon.Kernel.Setting
                 return (T)targetsValue;
             }
 
-            foreach (var setting in Settings.Where(service => service.GetType() == serviceType))
+            foreach (var setting in Settings.Where(setting => setting.GetType() == serviceType))
             {
                 var ans = (T)setting;
                 SettingCache.Add(setting.GetType(), ans);

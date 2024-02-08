@@ -16,7 +16,7 @@ namespace LevelEditor
 
         private CameraManager GetCamera => m_information.CameraManager;
 
-        private DataManager GetData => m_information.DataManager;
+        private LevelDataManager GetData => m_information.DataManager;
 
         private UIManager GetUI => m_information.UIManager;
 

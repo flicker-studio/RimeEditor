@@ -17,8 +17,7 @@ namespace LevelEditor
         private Image GetSelectionImage => m_information.UIManager.GetControlHandlePanel.GetSelectionImage;
         private Transform GetCameraTransform => Camera.main.transform;
 
-        private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
-
+        private OutlineManager GetOutlinePainter => m_information.OutlineManager;
         private Vector2 GetSelectionMinSize => m_information.UIManager.GetControlHandlePanel.GetSelectionProperty.SELECTION_MIN_SIZE;
 
         private Color GetSelectionColor => m_information.UIManager.GetControlHandlePanel.GetSelectionProperty.SELECTION_COLOR;
@@ -189,14 +188,14 @@ namespace LevelEditor
 
             if (GetShiftButton)
             {
-                tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
+                tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.RenderObject));
                 tempList.AddRange(ChangeCollidersToDatas(m_selectList));
             }
             else if (GetCtrlButton)
             {
                 if (m_selectCollider.size == GetSelectionMinSize)
                 {
-                    tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
+                    tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.RenderObject));
 
                     foreach (var collider in m_selectList)
                     {
@@ -214,7 +213,7 @@ namespace LevelEditor
                 }
                 else
                 {
-                    tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.GetTargetObj));
+                    tempList.AddRange(ItemAssets.CheckItemObjs(GetOutlinePainter.RenderObject));
 
                     foreach (var collider in m_selectList)
                     {
@@ -229,7 +228,7 @@ namespace LevelEditor
             }
 
             tempList = tempList.Distinct().ToList();
-            GetOutlinePainter.SetTargetObj = tempList.GetItemObjs();
+            GetOutlinePainter.SetRenderObjects(tempList.GetItemObjs());
             CommandInvoker.Execute(new ItemSelectCommand(TargetList, tempList, GetOutlinePainter));
         }
 

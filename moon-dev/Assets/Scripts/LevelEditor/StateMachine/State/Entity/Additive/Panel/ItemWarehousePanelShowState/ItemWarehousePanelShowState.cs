@@ -65,7 +65,7 @@ namespace LevelEditor
 
         private ObservableList<ItemDataBase> TargetAssets => m_information.DataManager.TargetItems;
 
-        private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
+        private OutlineManager GetOutlinePainter => m_information.OutlineManager;
 
 
         private static ItemProduct m_currentChoose;

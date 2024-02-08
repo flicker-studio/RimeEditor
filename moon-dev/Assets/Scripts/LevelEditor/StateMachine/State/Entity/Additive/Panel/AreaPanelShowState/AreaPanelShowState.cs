@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AreaPanelShowState : AdditiveState
 {
-    private DataManager GetDataManager => m_information.DataManager;
+    private LevelDataManager GetDataManager => m_information.DataManager;
     private TMP_Dropdown GetAreaDropdown => m_information.UIManager.GetAreaPanel.GetAreaDropdown;
 
     private Button GetAddButton => m_information.UIManager.GetAreaPanel.GetAddButton;

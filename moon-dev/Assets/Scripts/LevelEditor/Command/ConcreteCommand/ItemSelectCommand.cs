@@ -7,13 +7,13 @@ namespace LevelEditor
     {
         private readonly ObservableList<ItemDataBase> m_targetList;
 
-        private OutlinePainter m_outlinePainter;
+        private OutlineManager m_outlinePainter;
 
         private readonly List<ItemDataBase> m_lastList = new();
 
         private readonly List<ItemDataBase> m_nextList = new();
 
-        public ItemSelectCommand(ObservableList<ItemDataBase> targetList, List<ItemDataBase> nextList, OutlinePainter outlinePainter)
+        public ItemSelectCommand(ObservableList<ItemDataBase> targetList, List<ItemDataBase> nextList, OutlineManager outlinePainter)
         {
             m_targetList = targetList;
             m_outlinePainter = outlinePainter;
@@ -25,14 +25,14 @@ namespace LevelEditor
         {
             m_targetList.Clear();
             m_targetList.AddRange(m_nextList);
-            m_outlinePainter.SetTargetObj = m_targetList.GetItemObjs();
+            m_outlinePainter.SetRenderObjects(m_targetList.GetItemObjs());
         }
 
         public void Undo()
         {
             m_targetList.Clear();
             m_targetList.AddRange(m_lastList);
-            m_outlinePainter.SetTargetObj = m_targetList.GetItemObjs();
+            m_outlinePainter.SetRenderObjects(m_targetList.GetItemObjs());
         }
     }
 }

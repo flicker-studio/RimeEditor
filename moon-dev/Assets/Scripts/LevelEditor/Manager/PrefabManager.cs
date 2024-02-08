@@ -1,5 +1,5 @@
+using Cysharp.Threading.Tasks;
 using Data.ScriptableObject;
-using Moon.Kernel;
 using UnityEngine;
 
 namespace LevelEditor
@@ -25,6 +25,11 @@ namespace LevelEditor
         public PrefabManager(PrefabFactory prefabFactory)
         {
             m_prefabFactory = prefabFactory;
+        }
+
+        public UniTask Initialization()
+        {
+            return UniTask.CompletedTask;
         }
     }
 }

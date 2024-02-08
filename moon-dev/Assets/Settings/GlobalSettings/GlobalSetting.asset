@@ -12,21 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94ba097800b74d498918bc2730ae9dd, type: 3}
   m_Name: GlobalSetting
   m_EditorClassIdentifier: 
-  LEVEL_EDITOR: LevelEditor
-  LEVEL_PLAY: LevelPlay
-  GROUND:
+  levelEditor: LevelEditor
+  levelPlay: LevelPlay
+  ground:
     serializedVersion: 2
-    m_Bits: 3
-  CONTROL_HANDLE: ControlHandle
-  RIGIDBODY_TAG: <rigidbody>
-  CAN_COPY_TAG: <canCopy>
-  m_screenInfo:
-    SCREEN_SIZE_STANDARD: {x: 1920, y: 1080}
-  m_criticalPath:
-    ITEM_FILE_PATH: Items\ScriptableObject
-  m_persistentFileProperty:
-    LEVEL_DATA_NAME: LevelDatas
-    GAMES_DATA_NAME: GameDatas
-    IMAGES_DATA_NAME: Images
-    SOUNDS_DATA_NAME: Sounds
-    COVER_IMAGE_NAME: CoverImage.png
+    m_Bits: 8
+  controlHandle: ControlHandle
+  rigidbodyTag: <rigidbody>
+  canCopyTag: <canCopy>
+  screenSizeStandard: {x: 1920, y: 1080}
+  itemFilePath: Items\ScriptableObject
+  levelDataName: LevelDatas
+  gamesDataName: GameDatas
+  imagesDataName: Images
+  soundsDataName: Sounds
+  coverImageName: CoverImage.png

@@ -1,4 +1,4 @@
-using Frame.Tool;
+using Cysharp.Threading.Tasks;
 
 namespace LevelEditor
 {
@@ -52,5 +52,10 @@ namespace LevelEditor
         public bool GetRButtonDown => Frame.Tool.InputManager.Instance.GetRButtonDown;
 
         public bool GetSButtonDown => Frame.Tool.InputManager.Instance.GetSButtonDown;
+
+        public UniTask Initialization()
+        {
+            return UniTask.CompletedTask;
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace LevelEditor
 {
     public class ControlHandlePanelShowState : AdditiveState
     {
-        private DataManager GetData => m_information.DataManager;
+        private LevelDataManager GetData => m_information.DataManager;
 
         private InputManager GetInput => m_information.InputManager;
 
@@ -178,7 +178,7 @@ namespace LevelEditor
                 if (m_copyDatas.Count > 0)
                 {
                     CommandInvoker.Execute(new ItemCopyCommand(GetData.TargetItems, GetData.ItemAssets
-                        , GetCamera.GetOutlinePainter, m_copyDatas));
+                        , m_information.OutlineManager, m_copyDatas));
                 }
             }
         }

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace LevelEditor
@@ -36,6 +37,11 @@ namespace LevelEditor
             GetInspectorPanel = new InspectorPanel(levelEditorCanvasRect, uiSetting);
             GetLevelManagerPanel = new LevelManagerPanel(levelEditorCanvasRect, uiSetting);
             GetLevelSettingPanel = new LevelSettingPanel(levelEditorCanvasRect, uiSetting);
+        }
+
+        public UniTask Initialization()
+        {
+            return UniTask.CompletedTask;
         }
     }
 }

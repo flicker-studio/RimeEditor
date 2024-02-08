@@ -3,6 +3,7 @@ using Data.ScriptableObject;
 using Frame.StateMachine;
 using LevelEditor.Command;
 using Moon.Kernel.Service;
+using Moon.Kernel.Utils;
 using UnityEngine;
 
 namespace LevelEditor
@@ -11,25 +12,28 @@ namespace LevelEditor
     {
         public UIManager UIManager => m_uiManager;
 
-        public DataManager DataManager => m_dataManager;
+        public LevelDataManager DataManager => m_dataManager;
 
         public PrefabManager PrefabManager => m_prefabManager;
 
         public CameraManager CameraManager => m_cameraManager;
 
+        public OutlineManager OutlineManager => m_outlineManager;
         public InputManager InputManager => m_inputManager;
 
         public LevelAction LevelAction => m_levelAction;
 
         private UIManager m_uiManager;
 
-        private DataManager m_dataManager;
+        private LevelDataManager m_dataManager;
 
         private PrefabManager m_prefabManager;
 
         private CameraManager m_cameraManager;
 
         private InputManager m_inputManager;
+
+        private OutlineManager m_outlineManager;
 
         private LevelAction m_levelAction;
 
@@ -43,13 +47,15 @@ namespace LevelEditor
             m_prefabManager = new PrefabManager(prefab);
             m_uiManager = new UIManager(levelEditorTransform, ui);
             m_inputManager = new InputManager();
-            m_dataManager = new DataManager();
+            m_dataManager = new LevelDataManager();
 
             await m_dataManager.LoadLevelFiles();
-            
+
             m_cameraManager = new CameraManager(cam);
             m_levelAction = new LevelAction();
-
+            var mask = await ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineMask.mat");
+            var fill = await ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineFill.mat");
+            m_outlineManager = new OutlineManager(mask, fill, cam);
             DataManager.SyncLevelData += ResetCommand;
             DataManager.SyncLevelData += ResetOutline;
             DataManager.SyncLevelData += ResetCameraPos;
@@ -58,7 +64,7 @@ namespace LevelEditor
         internal void EnableExcute()
         {
             DataManager.SetActiveEditors(true);
-            CameraManager.SetTargetObject = DataManager.TargetObjs;
+            OutlineManager.SetRenderObjects(DataManager.TargetObjs);
         }
 
         private void ResetCommand(SubLevelData subLevelData)
@@ -68,7 +74,7 @@ namespace LevelEditor
 
         private void ResetOutline(SubLevelData subLevelData)
         {
-            CameraManager.SetTargetObject = DataManager.TargetObjs;
+            OutlineManager.SetRenderObjects(DataManager.TargetObjs);
         }
 
         private void ResetCameraPos(SubLevelData subLevelData)

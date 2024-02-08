@@ -9,7 +9,7 @@ namespace LevelEditor
 {
     /// <summary>
     /// </summary>
-    public static class LevelLoader
+    public static class LevelDataLoader
     {
         /// <summary>
         ///     Load all levels

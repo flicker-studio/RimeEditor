@@ -11,7 +11,7 @@ namespace LevelEditor
     ///     Manage the loading of resources and datas
     /// </summary>
     /// <inheritdoc />
-    public class DataManager : IManager
+    public class LevelDataManager : IManager
     {
         /// <summary>
         /// </summary>
@@ -19,7 +19,7 @@ namespace LevelEditor
 
         /// <summary>
         /// </summary>
-        public LevelData CurrentLevel => m_levelData;
+        public LevelData CurrentLevel => m_levelDatas[m_levelIndex];
 
         /// <summary>
         /// </summary>
@@ -32,7 +32,12 @@ namespace LevelEditor
         {
             get
             {
-                var subLevels = m_levelData.SubLevelDatas;
+                if (m_levelDatas.Count <= m_levelIndex)
+                {
+                    return null;
+                }
+
+                var subLevels = m_levelDatas[m_levelIndex].SubLevelDatas;
 
                 if (subLevels is null)
                 {
@@ -55,7 +60,12 @@ namespace LevelEditor
         {
             get
             {
-                var subLevels = m_levelData.SubLevelDatas;
+                if (m_levelDatas.Count <= m_levelIndex)
+                {
+                    return null;
+                }
+
+                var subLevels = m_levelDatas[m_levelIndex].SubLevelDatas;
 
                 if (subLevels is null)
                 {
@@ -83,7 +93,8 @@ namespace LevelEditor
         /// </summary>
         public Action<SubLevelData> SyncLevelData;
 
-        private LevelData m_levelData;
+
+        private int m_levelIndex = 0;
 
         [UsedImplicitly]
         private List<LevelData> m_levelDatas = new();
@@ -94,14 +105,16 @@ namespace LevelEditor
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public DataManager()
+        public LevelDataManager()
         {
-            RegisterEvent();
+            TargetItems.OnAddRange += SyncTargetObj;
+            TargetItems.OnAdd += SyncTargetObj;
+            TargetItems.OnClear += SyncTargetObj;
         }
 
         public void Save(string levelName = null, string author = null, string introduction = null, string version = null, Texture2D cover = null)
         {
-            m_levelData.Update(levelName, author, introduction, version, cover);
+            m_levelDatas[m_levelIndex].Update(levelName, author, introduction, version, cover);
         }
 
         public void SetActiveEditors(bool value)
@@ -197,12 +210,12 @@ namespace LevelEditor
         public async UniTask LoadLevelFiles()
         {
             SetActiveEditors(false);
-            m_levelDatas = await LevelLoader.LoadLevelDatas();
+            m_levelDatas = await LevelDataLoader.LoadLevelDatas();
         }
 
         public bool OpenLocalLevelDirectory(string path)
         {
-            return LevelLoader.OpenLocalLevelDirectory(path, ref m_levelDatas);
+            return LevelDataLoader.OpenLocalLevelDirectory(path, ref m_levelDatas);
         }
 
         public void ToJson()
@@ -213,30 +226,34 @@ namespace LevelEditor
                     itemAsset.GetTransformToData();
             }
 
-            LevelLoader.ToJson(CurrentLevel);
+            LevelDataLoader.ToJson(CurrentLevel);
         }
 
         public LevelData FromJson(string json)
         {
             SetActiveEditors(false);
-            return LevelLoader.Deserialize(json);
+            return LevelDataLoader.Deserialize(json);
         }
 
         public void CreateLevel()
         {
-            m_levelData = new LevelData();
-            InitLevel();
+            var tempLevelData = new LevelData();
+
+            // m_levelDatas.Add(tempLevelData);
+            //TODO: ?
+            CurrentSubLevelIndex = 0;
+            SubLevelDatas.Add(new SubLevelData($"Level {SubLevelDatas.Count}"));
         }
 
         public void OpenLevel(LevelData levelData)
         {
-            m_levelData = levelData;
+            m_levelIndex = m_levelDatas.IndexOf(levelData);
             SetSubLevelIndex(0, true);
         }
 
         public bool DeleteLevel(LevelData levelData)
         {
-            return LevelLoader.DeleteLevel(levelData);
+            return LevelDataLoader.DeleteLevel(levelData);
         }
 
         [UsedImplicitly]
@@ -247,18 +264,6 @@ namespace LevelEditor
                 itemAsset.SetActiveEditor(false);
         }
 
-        private void InitLevel()
-        {
-            CurrentSubLevelIndex = 0;
-            SubLevelDatas.Add(new SubLevelData($"Level {SubLevelDatas.Count}"));
-        }
-
-        private void RegisterEvent()
-        {
-            TargetItems.OnAddRange += SyncTargetObj;
-            TargetItems.OnAdd += SyncTargetObj;
-            TargetItems.OnClear += SyncTargetObj;
-        }
 
         private void SetItemAssetActive(ObservableList<ItemDataBase> itemDatas, bool active, bool isReload = false)
         {
@@ -278,6 +283,11 @@ namespace LevelEditor
         private void SyncTargetObj()
         {
             TargetObjs = TargetItems.GetItemObjs();
+        }
+
+        public UniTask Initialization()
+        {
+            return UniTask.CompletedTask;
         }
     }
 }

@@ -12,7 +12,8 @@ namespace Moon.Kernel.Service
     /// <summary>
     /// This service is used for resource management, which automatically or manually unloads resources to save memory
     /// </summary>
-    [UsedImplicitly, SystemService(typeof(ResourcesService))]
+    [UsedImplicitly]
+    [SystemService(typeof(ResourcesService))]
     public sealed class ResourcesService : Service
     {
         private static class Const
@@ -60,7 +61,5 @@ namespace Moon.Kernel.Service
 
             return a;
         }
-        
-      
     }
 }

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+using Cysharp.Threading.Tasks;
 using Moon.Kernel.Extension;
-using Moon.Kernel.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,23 +26,7 @@ namespace LevelEditor
         ///     The maximum distance of the camera in the Z direction
         /// </summary>
         public float CameraZMax => m_cameraSetting.GetCameraMotionProperty.CAMERA_MAX_Z;
-
-        /// <summary>
-        ///     Simple encapsulation of the OutlinePainter.SetTargetObj method
-        /// </summary>
-        public List<GameObject> SetTargetObject
-        {
-            set => m_outLinePainter.SetTargetObj = value;
-        }
-
-        /// <summary>
-        ///     Get the Outline Painter
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Remove this
-        /// </remarks>
-        public OutlinePainter GetOutlinePainter => m_outLinePainter;
-
+        
         /// <summary>
         ///     The pointer that was added or used last by the user or null if there is no pointer device connected to the system
         /// </summary>
@@ -59,6 +41,7 @@ namespace LevelEditor
             {
                 //TODO:需加载SO
                 throw new Exception("需加载SO");
+
                 // var x = GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.x / Screen.width;
                 // var y = GlobalSetting.ScreenInfo.REFERENCE_RESOLUTION.y / Screen.height;
                 // return new Vector2(x, y);
@@ -106,20 +89,16 @@ namespace LevelEditor
             return newPos;
         }
 
+        private readonly CameraSetting m_cameraSetting;
+
         public CameraManager(CameraSetting cameraSetting)
         {
             m_cameraSetting = cameraSetting;
-
-            m_outLinePainter = new OutlinePainter
-            {
-                OutlineMode = m_cameraSetting.GetOutlineProperty.OUTLINE_MODE,
-                OutlineColor = m_cameraSetting.GetOutlineProperty.OUTLINE_COLOR,
-                OutlineWidth = m_cameraSetting.GetOutlineProperty.OUTLINE_WIDTH
-            };
         }
 
-        private readonly CameraSetting m_cameraSetting;
-
-        [UsedImplicitly] private readonly OutlinePainter m_outLinePainter;
+        public UniTask Initialization()
+        {
+            return UniTask.CompletedTask;
+        }
     }
 }

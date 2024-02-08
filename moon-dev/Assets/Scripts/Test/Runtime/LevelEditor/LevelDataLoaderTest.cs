@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace Test.Runtime.LevelEditor
 {
-    internal class LevelLoaderTest
+    internal class LevelDataLoaderTest
     {
         [Test]
         public async Task TestA()

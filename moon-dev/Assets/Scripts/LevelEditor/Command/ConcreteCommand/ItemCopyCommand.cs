@@ -15,13 +15,13 @@ namespace LevelEditor
 
         private readonly ObservableList<ItemDataBase> m_itemAssets;
 
-        private OutlinePainter m_outlinePainter;
+        private OutlineManager m_outlinePainter;
 
         private readonly List<ItemDataBase> m_lastAssets = new();
 
         private ItemFactory m_itemFactory = new ItemFactory();
 
-        public ItemCopyCommand(ObservableList<ItemDataBase> targetAssets, ObservableList<ItemDataBase> itemAssets, OutlinePainter outlinePainter, List<ItemDataBase> copyTarget)
+        public ItemCopyCommand(ObservableList<ItemDataBase> targetAssets, ObservableList<ItemDataBase> itemAssets, OutlineManager outlinePainter, List<ItemDataBase> copyTarget)
         {
             m_targetAssets = targetAssets;
             m_itemAssets = itemAssets;
@@ -45,7 +45,7 @@ namespace LevelEditor
             m_itemAssets.AddRange(m_saveDatas);
             m_targetAssets.Clear();
             m_targetAssets.AddRange(m_saveDatas);
-            m_outlinePainter.SetTargetObj = m_targetAssets.GetItemObjs();
+            m_outlinePainter.SetRenderObjects(m_targetAssets.GetItemObjs());
         }
 
         public void Undo()
@@ -53,7 +53,7 @@ namespace LevelEditor
             m_targetAssets.Clear();
             m_targetAssets.AddRange(m_lastAssets);
             m_itemAssets.RemoveAll(m_saveDatas);
-            m_outlinePainter.SetTargetObj = m_targetAssets.GetItemObjs();
+            m_outlinePainter.SetRenderObjects(m_targetAssets.GetItemObjs());
             SetDatasActive(m_saveDatas, false);
         }
 

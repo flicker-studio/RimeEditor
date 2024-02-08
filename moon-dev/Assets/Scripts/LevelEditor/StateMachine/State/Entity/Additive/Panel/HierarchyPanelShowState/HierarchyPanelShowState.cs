@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class HierarchyPanelShowState : AdditiveState
 {
-    private DataManager GetData => m_information.DataManager;
+    private LevelDataManager GetData => m_information.DataManager;
     private HierarchyPanel GetHierarchyPanel => m_information.UIManager.GetHierarchyPanel;
 
     private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
@@ -19,7 +19,7 @@ public class HierarchyPanelShowState : AdditiveState
 
     private ObservableList<ItemDataBase> ItemAssets => GetData.ItemAssets;
 
-    private OutlinePainter GetOutlinePainter => m_information.CameraManager.GetOutlinePainter;
+    private OutlineManager GetOutlinePainter => m_information.OutlineManager;
 
     private Button GetAddButton => GetHierarchyPanel.GetAddButton;
 
