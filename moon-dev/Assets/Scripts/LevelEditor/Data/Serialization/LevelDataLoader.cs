@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using Cysharp.Threading.Tasks;
+using Moon.Kernel.Setting;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 
@@ -12,111 +15,101 @@ namespace LevelEditor
     public static class LevelDataLoader
     {
         /// <summary>
-        ///     Load all levels
+        ///     Load all levels in this computer
         /// </summary>
-        public static async UniTask<List<LevelData>> LoadLevelDatas()
+        public static async UniTask<List<LevelData>> LoadLevelDatas(GlobalSetting setting)
         {
-            //TODO:需加载SO
-            throw new Exception("需加载SO");
-            // List<LevelData> levelDatas = new();
-            //
-            // if (!Directory.Exists(PersistentFileProperty.LEVEL_DATA_PATH))
-            // {
-            //     Directory.CreateDirectory(PersistentFileProperty.LEVEL_DATA_PATH);
-            // }
-            //
-            // var direction = new DirectoryInfo(PersistentFileProperty.LEVEL_DATA_PATH);
-            // var files = direction.GetFiles("*.json", SearchOption.AllDirectories).ToList();
-            //
-            // foreach (var fileInfo in files)
-            // {
-            //     var levelPath = $"{PersistentFileProperty.LEVEL_DATA_PATH}" +
-            //                     $"/{fileInfo.Name.Replace(".json", "")}";
-            //
-            //     if (Directory.Exists(levelPath))
-            //     {
-            //         var streamReader = fileInfo.OpenText();
-            //         var json = await streamReader.ReadToEndAsync();
-            //         var levelData = Deserialize(json);
-            //         streamReader.Close();
-            //         streamReader.Dispose();
-            //
-            //         levelData.Path = $"Path:{levelPath}";
-            //
-            //         levelDatas.Add(levelData);
-            //
-            //         var imagePath =
-            //             $"{levelPath}" +
-            //             $"/{PersistentFileProperty.IMAGES_DATA_NAME}" +
-            //             $"/{PersistentFileProperty.COVER_IMAGE_NAME}";
-            //
-            //         if (File.Exists(imagePath))
-            //         {
-            //             await UpdateImage(levelData, imagePath);
-            //         }
-            //     }
-            // }
-            //
-            // return levelDatas;
+            var levelDataPath = setting.LevelPath;
+            var dataList      = new List<LevelData>();
+
+            if (!Directory.Exists(levelDataPath))
+            {
+                Directory.CreateDirectory(setting.LevelPath);
+                return dataList;
+            }
+
+            var directoryInfo = new DirectoryInfo(setting.LevelPath);
+            var files         = directoryInfo.GetFiles("*.json", SearchOption.AllDirectories).ToList();
+
+            foreach (var fileInfo in files)
+            {
+                var dataPath = Path.ChangeExtension(fileInfo.FullName, null);
+
+                if (!Directory.Exists(dataPath))
+                {
+                    continue;
+                }
+
+                var streamReader = fileInfo.OpenText();
+                var json         = await streamReader.ReadToEndAsync();
+                var levelData    = Deserialize(json);
+                streamReader.Close();
+                streamReader.Dispose();
+
+                levelData.Path = $"Path:{dataPath}";
+
+                dataList.Add(levelData);
+
+                var imagePath =
+                    $"{dataPath}" +
+                    $"/{setting.ImagesDataName}" +
+                    $"/{setting.CoverImageName}";
+
+                if (File.Exists(imagePath))
+                {
+                    await UpdateImage(levelData, imagePath);
+                }
+            }
+
+            return dataList;
         }
 
         /// <summary>
-        ///     Open the level file (currently existing as a directory)
+        ///     Open the level data file
         /// </summary>
-        /// <param name="path">Target file </param>
-        /// <param name="levelDatas">List of levels</param>
-        /// <returns>True when a different level is successfully loaded </returns>
-        public static bool OpenLocalLevelDirectory(string path, ref List<LevelData> levelDatas)
+        /// <param name="setting"></param>
+        /// <param name="zipPath">Target zip file</param>
+        public static async UniTask<LevelData> LoadArchive(GlobalSetting setting, string zipPath)
         {
-            //TODO:需加载SO
-            throw new Exception("需加载SO");
-            // var levelDirectoryName = path.GetSuffix('/');
-            // var levelDataFolderPath = $"{path}/{PersistentFileProperty.GAMES_DATA_NAME}";
-            // var imageDataFolderPath = $"{path}/{PersistentFileProperty.IMAGES_DATA_NAME}";
-            // var soundsDataFolderPath = $"{path}/{PersistentFileProperty.SOUNDS_DATA_NAME}";
-            // var levelDataFilePath = $"{levelDataFolderPath}/{levelDirectoryName}.json";
-            //
-            // if (!Directory.Exists(levelDataFolderPath))
-            // {
-            //     return false;
-            // }
-            //
-            // if (!Directory.Exists(imageDataFolderPath))
-            // {
-            //     return false;
-            // }
-            //
-            // if (!Directory.Exists(soundsDataFolderPath))
-            // {
-            //     return false;
-            // }
-            //
-            // if (!File.Exists($"{levelDataFilePath}"))
-            // {
-            //     return false;
-            // }
-            //
-            // var streamReader = File.OpenText(levelDataFilePath);
-            // var levelData = Deserialize(streamReader.ReadToEnd());
-            // streamReader.Close();
-            // streamReader.Dispose();
-            //
-            // // Determine whether it is configured for the same level
-            // foreach (var data in levelDatas)
-            //     if (data.HashKey == levelData.HashKey)
-            //     {
-            //         return false;
-            //     }
-            //
-            // return DirectoryExtension.MoveSpanningDisk(path, $"{PersistentFileProperty.LEVEL_DATA_PATH}/{levelDirectoryName}");
+            using var archive = ZipFile.Open(zipPath, ZipArchiveMode.Read);
+
+            var entry = archive.GetEntry(setting.InformationFile);
+
+            if (entry == null)
+            {
+                throw new Exception("Not the proper file.");
+            }
+
+            using var reader = new StreamReader(entry.Open());
+
+            var infoJson = await reader.ReadToEndAsync();
+
+            LevelInfo info;
+
+            try
+            {
+                info = JsonConvert.DeserializeObject<LevelInfo>(infoJson);
+            }
+            catch (Exception)
+            {
+                throw new Exception("File information is corrupted.");
+            }
+
+            var storeFolder = Path.Combine(setting.RootPath, new Guid().ToString());
+
+            //Unzip it to a persistent folder
+            ZipFile.ExtractToDirectory(zipPath, storeFolder);
+
+            //   await info.UpdateCover();
+            return new LevelData();
         }
 
         /// <summary>
         ///     Delete a level and remove the cache
         /// </summary>
         /// <param name="levelData">The target level data to be deleted</param>
-        /// <returns>Whether the deletion was successfu </returns>
-        public static bool DeleteLevel(LevelData levelData)
+        /// <returns>Whether the deletion was successful </returns>
+        public static bool Delete(LevelData levelData)
         {
             var targetPath = levelData.Path.Replace("Path:", "");
 
@@ -137,6 +130,7 @@ namespace LevelEditor
         {
             //TODO:需加载SO
             throw new Exception("需加载SO");
+
             // data.Update();
             // var hashKey = data.HashKey;
             // var json = JsonConvert.SerializeObject(data, Formatting.Indented);
@@ -206,6 +200,14 @@ namespace LevelEditor
         public static void WriteToFile(string json, string filePath)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     Write the json string to the target file
+        /// </summary>
+        public static void WriteToFile(byte[] bytes, string filePath)
+        {
+            File.WriteAllBytes(filePath, bytes);
         }
 
         private static async UniTask UpdateImage(LevelData levelData, string path)

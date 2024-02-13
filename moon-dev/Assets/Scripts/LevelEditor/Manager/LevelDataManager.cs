@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using Moon.Kernel;
+using Moon.Kernel.Setting;
 using UnityEngine;
 
 namespace LevelEditor
@@ -210,12 +212,15 @@ namespace LevelEditor
         public async UniTask LoadLevelFiles()
         {
             SetActiveEditors(false);
-            m_levelDatas = await LevelDataLoader.LoadLevelDatas();
+            var setting = Explorer.TryGetSetting<GlobalSetting>();
+            m_levelDatas = await LevelDataLoader.LoadLevelDatas(setting);
         }
 
         public bool OpenLocalLevelDirectory(string path)
         {
-            return LevelDataLoader.OpenLocalLevelDirectory(path, ref m_levelDatas);
+            var setting = Explorer.TryGetSetting<GlobalSetting>();
+            LevelDataLoader.LoadArchive(setting, path).Forget();
+            return true;
         }
 
         public void ToJson()
@@ -253,7 +258,7 @@ namespace LevelEditor
 
         public bool DeleteLevel(LevelData levelData)
         {
-            return LevelDataLoader.DeleteLevel(levelData);
+            return LevelDataLoader.Delete(levelData);
         }
 
         [UsedImplicitly]
@@ -263,8 +268,7 @@ namespace LevelEditor
             foreach (var itemAsset in subLevelData.ItemAssets)
                 itemAsset.SetActiveEditor(false);
         }
-
-
+        
         private void SetItemAssetActive(ObservableList<ItemDataBase> itemDatas, bool active, bool isReload = false)
         {
             foreach (var itemData in itemDatas) itemData.SetActiveEditor(active, isReload);

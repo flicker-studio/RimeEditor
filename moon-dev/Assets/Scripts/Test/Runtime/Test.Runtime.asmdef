@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
       "UnityEditor.TestRunner",
       "UniTask",
-      "LevelEditor"
+      "LevelEditor",
+      "Moon.Kernel"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

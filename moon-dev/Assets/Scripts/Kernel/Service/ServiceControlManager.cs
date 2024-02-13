@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using Moon.Kernel.Attribute;
 using UnityEngine;
@@ -84,45 +84,42 @@ namespace Moon.Kernel.Service
         ///     Register for services by attribute
         /// </summary>
         /// <exception cref="WarningException">Thrown when an error occurs during the creation of an instance</exception>
-        internal static async Task RegisterServices()
+        internal static async UniTask RegisterServices()
         {
             Debug.Log("<color=green>[SERVICE]</color> Initializing service");
 
             Debug.Log("<color=green>[SERVICE]</color> Instantiating the service");
 
-            await Task.Run(() =>
+            var serviceAssembly = typeof(Service).Assembly;
+            var assemblyTypes   = serviceAssembly.GetTypes();
+
+            foreach (var type in assemblyTypes)
+            {
+                var attr = type.GetCustomAttribute<SystemServiceAttribute>();
+
+                if (attr == null)
                 {
-                    var serviceAssembly = typeof(Service).Assembly;
-                    var assemblyTypes = serviceAssembly.GetTypes();
-
-                    foreach (var type in assemblyTypes)
-                    {
-                        var attr = type.GetCustomAttribute<SystemServiceAttribute>();
-
-                        if (attr == null)
-                        {
-                            continue;
-                        }
-
-                        var instance = attr.Create();
-
-                        if (instance is null)
-                        {
-                            throw new WarningException($"There has some error in {type} class");
-                        }
-
-                        RunningServices.Add(instance);
-
-                        _onStart += instance.OnStart;
-                    }
+                    continue;
                 }
-            );
+
+                var instance = attr.Create();
+
+                if (instance is null)
+                {
+                    throw new WarningException($"There has some error in {type} class");
+                }
+
+                RunningServices.Add(instance);
+
+                _onStart += instance.OnStart;
+            }
+
 
             _onStart.Invoke();
 
             Debug.Log("<color=green>[SERVICE]</color>  Instantiation of service is complete");
             var runTask = RunningServices.Select(service => service.Run());
-            await Task.WhenAll(runTask);
+            await UniTask.WhenAll(runTask);
             Debug.Log("<color=green>[SERVICE]</color> Initialization is complete");
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace Moon.Kernel.Service
 {
@@ -44,7 +45,7 @@ namespace Moon.Kernel.Service
         ///     Start the service, allocate system resources.
         /// </summary>
         /// <returns>The task at the end</returns>
-        internal abstract Task Run();
+        internal abstract UniTask Run();
 
         /// <summary>
         ///     Abort the service, release all the held resources.

@@ -45,7 +45,7 @@ namespace LevelEditor
 
         private void LateUpdate()
         {
-            m_motionController.Motion(m_information);
+            // m_motionController.Motion(m_information);
         }
     }
 }

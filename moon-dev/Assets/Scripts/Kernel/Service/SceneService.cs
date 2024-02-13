@@ -111,7 +111,7 @@ namespace Moon.Kernel.Service
 
         #endregion
 
-        internal async override Task Run()
+        internal async override UniTask Run()
         {
             PersistenceScene = await TryLoadScene(PersistenceSceneName);
 /*
@@ -121,8 +121,8 @@ namespace Moon.Kernel.Service
             }
 */
             SceneManager.activeSceneChanged += OnActiveSceneChange;
-            SceneManager.sceneUnloaded += OnSceneUnload;
-            SceneManager.sceneLoaded += OnSceneLoad;
+            SceneManager.sceneUnloaded      += OnSceneUnload;
+            SceneManager.sceneLoaded        += OnSceneLoad;
         }
 
         internal async override Task Abort()

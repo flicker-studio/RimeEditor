@@ -20,9 +20,9 @@ namespace Moon.Kernel.Service
         {
         }
 
-        internal async override void OnStart()
+        internal override void OnStart()
         {
-            await SettingHelper.LoadSettingsAsync();
+           
         }
 
         internal override void OnStop()
@@ -33,9 +33,9 @@ namespace Moon.Kernel.Service
         {
         }
 
-        internal override Task Run()
+        internal async override UniTask Run()
         {
-            return Task.CompletedTask;
+            await SettingHelper.LoadSettingsAsync();
         }
 
         internal override Task Abort()

@@ -1,3 +1,4 @@
+using System.IO;
 using Moon.Kernel.Attribute;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace Moon.Kernel.Setting
     /// <summary>
     ///     Global profiles
     /// </summary>
+    [SystemSetting("Assets/Settings/GlobalSettings/GlobalSetting.asset")]
     public class GlobalSetting : SettingBase
     {
         /// <summary>
@@ -75,13 +77,17 @@ namespace Moon.Kernel.Setting
 
         public string CoverImageName => coverImageName;
 
+        public string InformationFile => informationFile;
+
         /// <summary>
         /// </summary>
         public Vector2 ReferenceResolution => new(ScreenSizeStandard.x, ScreenSizeStandard.y / Screen.width * Screen.height);
 
         /// <summary>
         /// </summary>
-        public string LevelDataPath => $"{Application.persistentDataPath}/{LevelDataName}";
+        public string LevelPath => Path.Combine(Application.persistentDataPath, LevelDataName);
+
+        public string RootPath => Path.Combine(Application.persistentDataPath, LevelDataName);
 
         [CustomLabel("关卡编辑器场景")]
         [SceneSelect]
@@ -136,5 +142,9 @@ namespace Moon.Kernel.Setting
         [CustomLabel("背景图片文件名")]
         [SerializeField]
         private string coverImageName = "CoverImage.png";
+
+        [CustomLabel("创建信息文件名")]
+        [SerializeField]
+        private string informationFile = "package.json";
     }
 }
