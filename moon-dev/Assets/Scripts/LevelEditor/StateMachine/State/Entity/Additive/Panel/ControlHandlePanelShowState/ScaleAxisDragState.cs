@@ -41,7 +41,7 @@ namespace LevelEditor
         private Vector2 GetMousePosition => GetCamera.MousePosition;
 
         private Vector2 GetMouseCursorCompensation => GetUI.GetControlHandlePanel
-            .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
+                                                           .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
 
         private bool GetMouseLeftButtonUp => GetInput.GetMouseLeftButtonUp;
 
@@ -79,15 +79,15 @@ namespace LevelEditor
 
         private Vector2 m_currentMousePosition;
 
-        private List<Vector3> m_targetOriginScale = new List<Vector3>();
+        private readonly List<Vector3> m_targetOriginScale = new();
 
-        private List<Vector3> m_targetCurrentScale = new List<Vector3>();
+        private readonly List<Vector3> m_targetCurrentScale = new();
 
-        private List<Vector3> m_targetOriginPosition = new List<Vector3>();
+        private readonly List<Vector3> m_targetOriginPosition = new();
 
-        private List<Vector3> m_targetCurrentPosition = new List<Vector3>();
+        private readonly List<Vector3> m_targetCurrentPosition = new();
 
-        private List<Vector2> m_mousePosVectorList = new List<Vector2>();
+        private readonly List<Vector2> m_mousePosVectorList = new();
 
         private Vector3 m_centerPosition;
 
@@ -116,15 +116,9 @@ namespace LevelEditor
             {
                 StateReset();
 
-                for (var i = 0; i < TargetObjs.Count; i++)
-                {
-                    m_targetCurrentScale.Add(TargetObjs[i].transform.localScale);
-                }
+                for (var i = 0; i < TargetObjs.Count; i++) m_targetCurrentScale.Add(TargetObjs[i].transform.localScale);
 
-                for (var i = 0; i < TargetObjs.Count; i++)
-                {
-                    m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
-                }
+                for (var i = 0; i < TargetObjs.Count; i++) m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
 
                 CommandInvoker.Execute(new ItemScaleCommand(TargetItems, m_targetOriginPosition
                     , m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
@@ -148,31 +142,34 @@ namespace LevelEditor
         {
             GetScaleXAxisRect.anchoredPosition = m_scaleAxisXOriginPos;
             GetScaleYAxisRect.anchoredPosition = m_scaleAxisYOriginPos;
-            GetScaleXAxisRect.sizeDelta = m_scaleAxisXOriginSize;
-            GetScaleYAxisRect.sizeDelta = m_scaleAxisYOriginSize;
-            GetScaleXAxisRect.localRotation = Quaternion.identity;
-            GetScaleYAxisRect.localRotation = Quaternion.identity;
+            GetScaleXAxisRect.sizeDelta        = m_scaleAxisXOriginSize;
+            GetScaleYAxisRect.sizeDelta        = m_scaleAxisYOriginSize;
+            GetScaleXAxisRect.localRotation    = Quaternion.identity;
+            GetScaleYAxisRect.localRotation    = Quaternion.identity;
         }
 
         private void UpdateScale()
         {
-            if (m_waitToNextFrame.GetFlag) return;
-
-            Vector2 mouseSumVector = Vector2.zero;
-
-            foreach (var posVector in m_mousePosVectorList)
+            if (m_waitToNextFrame.GetFlag)
             {
-                mouseSumVector += posVector;
+                return;
             }
 
-            m_currentMousePosition = GetMousePosition;
-            mouseSumVector += m_currentMousePosition - m_originMousePosition;
+            var mouseSumVector = Vector2.zero;
 
-            Vector3 scaleDir = Vector3.zero;
+            foreach (var posVector in m_mousePosVectorList) mouseSumVector += posVector;
+
+            m_currentMousePosition =  GetMousePosition;
+            mouseSumVector         += m_currentMousePosition - m_originMousePosition;
+
+            var     scaleDir = Vector3.zero;
             Vector3 currentMouseProject;
             Vector3 originMouseProject;
 
-            if (mouseSumVector.magnitude == 0) return;
+            if (mouseSumVector.magnitude == 0)
+            {
+                return;
+            }
 
             switch (m_scaleDragType)
             {
@@ -188,35 +185,30 @@ namespace LevelEditor
             }
 
             currentMouseProject = Vector3.Project(mouseSumVector, scaleDir);
-            originMouseProject = Vector3.Project(m_originMouseSumVector, scaleDir);
+            originMouseProject  = Vector3.Project(m_originMouseSumVector, scaleDir);
 
-            for (var i = 0; i < TargetObjs.Count; i++)
-            {
-                ApplyScaleToTarget(currentMouseProject, originMouseProject, i);
-            }
+            for (var i = 0; i < TargetObjs.Count; i++) ApplyScaleToTarget(currentMouseProject, originMouseProject, i);
         }
 
         private Vector3 GetXYAxisScaleDir(Vector2 mouseSumVector)
         {
-            float upperRightProjectLength = Vector3.Dot(mouseSumVector, (GetScaleRect.up + GetScaleRect.right).normalized);
-            float lowerLeftProjectLength = Vector3.Dot(mouseSumVector, -(GetScaleRect.up + GetScaleRect.right).normalized);
+            var upperRightProjectLength = Vector3.Dot(mouseSumVector, (GetScaleRect.up + GetScaleRect.right).normalized);
+            var lowerLeftProjectLength  = Vector3.Dot(mouseSumVector, -(GetScaleRect.up + GetScaleRect.right).normalized);
 
             if (upperRightProjectLength >= lowerLeftProjectLength)
             {
                 return mouseSumVector.NewX(1).NewY(1);
             }
-            else
-            {
-                return mouseSumVector.NewX(-1).NewY(-1);
-            }
+
+            return mouseSumVector.NewX(-1).NewY(-1);
         }
 
         private void ApplyScaleToTarget(Vector3 currentMouseProject, Vector3 originMouseProject, int index)
         {
-            Vector3 positionOffset = m_targetOriginPosition[index] - m_centerPosition;
-            Vector3 rate = currentMouseProject.DivideVector(originMouseProject);
-            Vector3 newScale = Vector3.zero;
-            Vector3 newPosition = Vector3.zero;
+            var positionOffset = m_targetOriginPosition[index] - m_centerPosition;
+            var rate           = currentMouseProject.DivideVector(originMouseProject);
+            var newScale       = Vector3.zero;
+            var newPosition    = Vector3.zero;
 
             switch (m_scaleDragType)
             {
@@ -239,7 +231,7 @@ namespace LevelEditor
                         ? Vector3.one + GetScaleSpeed * (currentMouseProject - originMouseProject)
                         : Vector3.one + GetScaleSpeed * (originMouseProject - currentMouseProject);
 
-                    newScale = m_targetOriginScale[index].HadamardProduct(rate.NewZ(1));
+                    newScale    = m_targetOriginScale[index].HadamardProduct(rate.NewZ(1));
                     newPosition = m_centerPosition + positionOffset.HadamardProduct(rate.NewZ(1));
                     break;
             }
@@ -248,10 +240,10 @@ namespace LevelEditor
 
             if (GetUseGrid)
             {
-                Vector3 oldSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size
-                    .HadamardProduct(TargetObjs[index].transform.localScale);
+                var oldSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size
+                                               .HadamardProduct(TargetObjs[index].transform.localScale);
 
-                Vector3 newSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size.HadamardProduct(newScale);
+                var newSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size.HadamardProduct(newScale);
 
                 oldSize = new Vector3(GetCellSize * Mathf.RoundToInt(oldSize.x / GetCellSize),
                     GetCellSize * Mathf.RoundToInt(oldSize.y / GetCellSize),
@@ -261,26 +253,29 @@ namespace LevelEditor
                     GetCellSize * Mathf.RoundToInt(newSize.y / GetCellSize),
                     GetCellSize * Mathf.RoundToInt(newSize.z / GetCellSize));
 
-                if (oldSize == newSize) return;
+                if (oldSize == newSize)
+                {
+                    return;
+                }
 
-                Vector3 tempScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
+                var tempScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
 
-                Vector3 tempPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x / GetCellHalfSize),
+                var tempPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x / GetCellHalfSize),
                     GetCellHalfSize * Mathf.RoundToInt(newPosition.y / GetCellHalfSize),
                     GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
 
                 switch (m_scaleDragType)
                 {
                     case SCALEDRAGTYPE.XAxis:
-                        newScale = newScale.NewX(tempScale.x);
+                        newScale    = newScale.NewX(tempScale.x);
                         newPosition = newPosition.NewX(tempPosition.x);
                         break;
                     case SCALEDRAGTYPE.YAxis:
-                        newScale = newScale.NewY(tempScale.y);
+                        newScale    = newScale.NewY(tempScale.y);
                         newPosition = newPosition.NewY(tempPosition.y);
                         break;
                     case SCALEDRAGTYPE.XYAxis:
-                        newScale = newScale.NewX(tempScale.x).NewY(tempScale.y);
+                        newScale    = newScale.NewX(tempScale.x).NewY(tempScale.y);
                         newPosition = newPosition.NewX(tempPosition.x).NewY(tempPosition.y);
                         break;
                 }
@@ -289,12 +284,12 @@ namespace LevelEditor
             if (GetUseGrid)
             {
                 TargetObjs[index].transform.localScale = newScale.NewX(Mathf.RoundToInt(newScale.x))
-                    .NewY(Mathf.RoundToInt(newScale.y));
+                                                                 .NewY(Mathf.RoundToInt(newScale.y));
             }
             else
             {
                 TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x, 2))
-                    .NewY((float)Math.Round(newScale.y, 2));
+                                                                 .NewY((float)Math.Round(newScale.y, 2));
             }
 
             TargetObjs[index].transform.position = newPosition;
@@ -318,7 +313,7 @@ namespace LevelEditor
 
         private void InitData()
         {
-            m_originMousePosition = GetScaleRect.anchoredPosition;
+            m_originMousePosition  = GetScaleRect.anchoredPosition;
             m_originMouseSumVector = GetMousePosition - GetScaleRect.anchoredPosition;
 
             for (var i = 0; i < TargetObjs.Count; i++)
@@ -329,12 +324,11 @@ namespace LevelEditor
 
             m_centerPosition = m_targetOriginPosition.GetCenterPoint();
         }
-
-
+        
         private void ChangeAxisScale(Vector3 oriMouseProject, Vector3 currentMouseProject)
         {
             int axisDir;
-            Vector3 mouseProjectDir = currentMouseProject - oriMouseProject;
+            var mouseProjectDir = currentMouseProject - oriMouseProject;
 
             switch (m_scaleDragType)
             {
@@ -342,7 +336,7 @@ namespace LevelEditor
                     axisDir = Vector3.Dot(mouseProjectDir, GetScaleRect.right) >= 0 ? 1 : -1;
 
                     GetScaleXAxisRect.anchoredPosition = GetScaleXAxisRect.anchoredPosition
-                        .NewX(UseCenterAxisCompensation(m_scaleAxisXOriginPos.x + axisDir * mouseProjectDir.magnitude / 2));
+                                                                          .NewX(UseCenterAxisCompensation(m_scaleAxisXOriginPos.x + axisDir * mouseProjectDir.magnitude / 2));
 
                     if (GetScaleXAxisRect.anchoredPosition.x > 0)
                     {
@@ -354,14 +348,14 @@ namespace LevelEditor
                     }
 
                     GetScaleXAxisRect.sizeDelta = GetScaleXAxisRect.sizeDelta
-                        .NewX(Mathf.Abs(GetScaleXAxisRect.anchoredPosition.x * 2));
+                                                                   .NewX(Mathf.Abs(GetScaleXAxisRect.anchoredPosition.x * 2));
 
                     break;
                 case SCALEDRAGTYPE.YAxis:
                     axisDir = Vector3.Dot(mouseProjectDir, GetScaleRect.up) >= 0 ? 1 : -1;
 
                     GetScaleYAxisRect.anchoredPosition = GetScaleYAxisRect.anchoredPosition
-                        .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y + axisDir * mouseProjectDir.magnitude / 2));
+                                                                          .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y + axisDir * mouseProjectDir.magnitude / 2));
 
                     if (GetScaleYAxisRect.anchoredPosition.y >= 0)
                     {
@@ -373,14 +367,14 @@ namespace LevelEditor
                     }
 
                     GetScaleYAxisRect.sizeDelta = GetScaleYAxisRect.sizeDelta
-                        .NewY(Mathf.Abs(GetScaleYAxisRect.anchoredPosition.y * 2));
+                                                                   .NewY(Mathf.Abs(GetScaleYAxisRect.anchoredPosition.y * 2));
 
                     break;
                 case SCALEDRAGTYPE.XYAxis:
                     axisDir = Vector3.Dot(mouseProjectDir, (GetScaleRect.right + GetScaleRect.up).normalized) >= 0 ? 1 : -1;
 
                     GetScaleYAxisRect.anchoredPosition = GetScaleYAxisRect.anchoredPosition
-                        .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y + axisDir * mouseProjectDir.magnitude / 2));
+                                                                          .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y + axisDir * mouseProjectDir.magnitude / 2));
 
                     if (GetScaleYAxisRect.anchoredPosition.y >= 0)
                     {
@@ -392,10 +386,10 @@ namespace LevelEditor
                     }
 
                     GetScaleYAxisRect.sizeDelta = GetScaleYAxisRect.sizeDelta
-                        .NewY(Mathf.Abs(GetScaleYAxisRect.anchoredPosition.y * 2));
+                                                                   .NewY(Mathf.Abs(GetScaleYAxisRect.anchoredPosition.y * 2));
 
                     GetScaleXAxisRect.anchoredPosition = GetScaleXAxisRect.anchoredPosition
-                        .NewX(UseCenterAxisCompensation(m_scaleAxisXOriginPos.x + axisDir * mouseProjectDir.magnitude / 2));
+                                                                          .NewX(UseCenterAxisCompensation(m_scaleAxisXOriginPos.x + axisDir * mouseProjectDir.magnitude / 2));
 
                     if (GetScaleXAxisRect.anchoredPosition.x >= 0)
                     {
@@ -407,7 +401,7 @@ namespace LevelEditor
                     }
 
                     GetScaleXAxisRect.sizeDelta = GetScaleXAxisRect.sizeDelta
-                        .NewX(Mathf.Abs(GetScaleXAxisRect.anchoredPosition.x * 2));
+                                                                   .NewX(Mathf.Abs(GetScaleXAxisRect.anchoredPosition.x * 2));
 
                     break;
                 default:
@@ -417,17 +411,17 @@ namespace LevelEditor
 
         private float UseCenterAxisCompensation(float axisValue)
         {
-            float compensation = GetCenterAxisCompensation;
+            var compensation = GetCenterAxisCompensation;
 
-            return (axisValue > -compensation && axisValue < compensation)
-                ? (axisValue >= 0 ? compensation : -compensation)
+            return axisValue > -compensation && axisValue < compensation
+                ? axisValue >= 0 ? compensation : -compensation
                 : axisValue;
         }
 
         private void InitAxisPosAndSize()
         {
-            m_scaleAxisXOriginPos = GetScaleXAxisRect.anchoredPosition;
-            m_scaleAxisYOriginPos = GetScaleYAxisRect.anchoredPosition;
+            m_scaleAxisXOriginPos  = GetScaleXAxisRect.anchoredPosition;
+            m_scaleAxisYOriginPos  = GetScaleYAxisRect.anchoredPosition;
             m_scaleAxisXOriginSize = GetScaleXAxisRect.sizeDelta;
             m_scaleAxisYOriginSize = GetScaleYAxisRect.sizeDelta;
         }
@@ -440,7 +434,7 @@ namespace LevelEditor
             {
                 m_mousePosVectorList.Add(m_currentMousePosition - m_originMousePosition);
                 Mouse.current.WarpCursorPosition(new Vector2(GetMouseCursorCompensation.x, GetMousePosition.y));
-                m_originMousePosition = GetMousePosition.NewX(0);
+                m_originMousePosition     = GetMousePosition.NewX(0);
                 m_waitToNextFrame.SetFlag = true;
                 return;
             }
@@ -449,7 +443,7 @@ namespace LevelEditor
             {
                 m_mousePosVectorList.Add(m_currentMousePosition - m_originMousePosition);
                 Mouse.current.WarpCursorPosition(new Vector2(Screen.width - GetMouseCursorCompensation.x, GetMousePosition.y));
-                m_originMousePosition = GetMousePosition.NewX(Screen.width);
+                m_originMousePosition     = GetMousePosition.NewX(Screen.width);
                 m_waitToNextFrame.SetFlag = true;
                 return;
             }
@@ -458,7 +452,7 @@ namespace LevelEditor
             {
                 m_mousePosVectorList.Add(m_currentMousePosition - m_originMousePosition);
                 Mouse.current.WarpCursorPosition(new Vector2(GetMousePosition.x, GetMouseCursorCompensation.y));
-                m_originMousePosition = GetMousePosition.NewY(0);
+                m_originMousePosition     = GetMousePosition.NewY(0);
                 m_waitToNextFrame.SetFlag = true;
                 return;
             }
@@ -467,9 +461,8 @@ namespace LevelEditor
             {
                 m_mousePosVectorList.Add(m_currentMousePosition - m_originMousePosition);
                 Mouse.current.WarpCursorPosition(new Vector2(GetMousePosition.x, Screen.height - GetMouseCursorCompensation.y));
-                m_originMousePosition = GetMousePosition.NewY(Screen.height);
+                m_originMousePosition     = GetMousePosition.NewY(Screen.height);
                 m_waitToNextFrame.SetFlag = true;
-                return;
             }
         }
     }

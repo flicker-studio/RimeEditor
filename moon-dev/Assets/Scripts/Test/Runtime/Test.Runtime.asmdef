@@ -6,7 +6,8 @@
       "UnityEditor.TestRunner",
       "UniTask",
       "LevelEditor",
-      "Moon.Kernel"
+        "Moon.Kernel",
+        "GameFrame"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
