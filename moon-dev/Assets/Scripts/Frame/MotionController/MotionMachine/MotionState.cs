@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Frame.StateMachine
 {
+    /// <summary>
+    ///     State machine base class
+    /// </summary>
     public abstract class MotionState
     {
         protected BaseInformation m_baseInformation;
