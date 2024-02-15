@@ -177,7 +177,7 @@ namespace LevelEditor
             {
                 if (m_copyDatas.Count > 0)
                 {
-                    CommandInvoker.Execute(new ItemCopyCommand(GetData.TargetItems, GetData.ItemAssets
+                    CommandInvoker.Execute(new CopyCommand(GetData.TargetItems, GetData.ItemAssets
                         , m_information.OutlineManager, m_copyDatas));
                 }
             }

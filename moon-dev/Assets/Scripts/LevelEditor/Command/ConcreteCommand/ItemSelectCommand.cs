@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using Moon.Kernel.Utils;
 
 namespace LevelEditor
 {
     public class ItemSelectCommand : ICommand
     {
-        private readonly ObservableList<ItemDataBase> m_targetList;
+        private readonly List<ItemDataBase> m_targetList;
 
         private OutlineManager m_outlinePainter;
 
@@ -15,7 +16,7 @@ namespace LevelEditor
 
         public ItemSelectCommand(ObservableList<ItemDataBase> targetList, List<ItemDataBase> nextList, OutlineManager outlinePainter)
         {
-            m_targetList = targetList;
+            m_targetList     = targetList.ToList();
             m_outlinePainter = outlinePainter;
             m_lastList.AddRange(targetList);
             m_nextList.AddRange(nextList);
