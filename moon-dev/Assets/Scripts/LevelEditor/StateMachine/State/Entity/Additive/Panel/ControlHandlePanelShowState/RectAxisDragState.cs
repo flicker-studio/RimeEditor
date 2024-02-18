@@ -14,7 +14,7 @@ namespace LevelEditor
         private UIManager GetUI => m_information.UIManager;
         private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
 
-        private ObservableList<ItemDataBase> TargetItems => m_information.DataManager.TargetItems;
+        private List<AbstractItem> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 
@@ -90,8 +90,8 @@ namespace LevelEditor
                     m_targetCurrentScale.Add(TargetObjs[i].transform.localScale);
                 }
 
-                CommandInvoker.Execute(new ItemRectCommand(TargetItems, m_targetOriginPosition
-                    , m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
+                CommandInvoker.Execute(new Rect(TargetItems, m_targetOriginPosition
+                                              , m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
 
                 RemoveState();
                 return;

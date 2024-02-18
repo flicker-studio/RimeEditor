@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace LevelEditor
@@ -16,7 +17,7 @@ namespace LevelEditor
         ///     A list of the resources referenced by the current level
         /// </summary>
         [JsonProperty("ItemAssets", Order = 2)]
-        public ObservableList<ItemDataBase> ItemAssets;
+        public List<AbstractItem> ItemAssets;
 
         /// <summary>
         ///     The default construction of sublevel data
@@ -24,8 +25,8 @@ namespace LevelEditor
         /// <param name="name">The name of the current sublevel</param>
         public SubLevelData(string name)
         {
-            Name = name;
-            ItemAssets = new ObservableList<ItemDataBase>();
+            Name       = name;
+            ItemAssets = new List<AbstractItem>();
         }
     }
 }

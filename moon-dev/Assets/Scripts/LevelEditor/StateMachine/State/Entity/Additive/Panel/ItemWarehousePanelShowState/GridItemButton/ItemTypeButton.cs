@@ -6,16 +6,19 @@ using UnityEngine.UI;
 
 public class ItemTypeButton : GridItemButton
 {
-    private TextMeshProUGUI m_text;
+    public TextMeshProUGUI Text => _text;
 
-    public TextMeshProUGUI GetText
-    {
-        get { return m_text; }
-    }
+    private readonly TextMeshProUGUI _text;
 
-    public ItemTypeButton(GameObject buttonPrefab, Action<GridItemButton> onSelect, Transform parent, ScrollRect scrollRect, string textName)
-        : base(buttonPrefab, onSelect, parent, scrollRect)
+    public ItemTypeButton
+    (
+        GameObject             buttonPrefab,
+        Action<GridItemButton> onSelect,
+        Transform              parent,
+        ScrollRect             scrollRect,
+        string                 textName
+    ) : base(buttonPrefab, onSelect, parent, scrollRect)
     {
-        m_text = m_buttonObj.transform.Find(textName).GetComponent<TextMeshProUGUI>();
+        _text = ButtonObj.transform.Find(textName).GetComponent<TextMeshProUGUI>();
     }
 }

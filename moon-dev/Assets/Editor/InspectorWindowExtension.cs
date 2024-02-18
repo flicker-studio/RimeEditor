@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Data.ScriptableObject;
+using LevelEditor.Data;
 using Moon.Kernel;
 using UnityEditor;
 using UnityEngine;
@@ -177,7 +178,7 @@ namespace WindowExtension
 
                 var bytes = preview.EncodeToPNG();
 
-                var typeDirectory = Enum.GetName(typeof(ITEMTYPEENUM), itemProduct.ItemType);
+                var typeDirectory = Enum.GetName(typeof(ItemType), itemProduct.ItemType);
 
                 var path = Application.dataPath +
                            $"/Resources/Items/Images/{typeDirectory}/{itemProduct.Name}" + ".png";

@@ -22,12 +22,12 @@ namespace LevelEditor
             LevelData levelData, string levelTextName, string levelPathTextName, string levelImageName)
             : base(buttonPrefab, onSelect, parent, scrollRect)
         {
-            m_levelName = m_buttonObj.transform.Find(levelTextName).GetComponent<TextMeshProUGUI>();
-            m_levelPath = m_buttonObj.transform.Find(levelPathTextName).GetComponent<TextMeshProUGUI>();
-            m_levelCoverImage = m_buttonObj.transform.Find(levelImageName).GetComponent<RawImage>();
-            m_levelData = levelData;
-            m_levelName.text = m_levelData.LevelName;
-            m_levelPath.text = m_levelData.Path;
+            m_levelName       = ButtonObj.transform.Find(levelTextName).GetComponent<TextMeshProUGUI>();
+            m_levelPath       = ButtonObj.transform.Find(levelPathTextName).GetComponent<TextMeshProUGUI>();
+            m_levelCoverImage = ButtonObj.transform.Find(levelImageName).GetComponent<RawImage>();
+            m_levelData       = levelData;
+            m_levelName.text  = m_levelData.LevelName;
+            m_levelPath.text  = m_levelData.Path;
 
             if (m_levelData.Cover != null)
             {

@@ -41,7 +41,7 @@ namespace Test.Runtime.LevelEditor.Command
             (
                 async () =>
                 {
-                    var command = new ItemScaleCommand(m_gameObject, Vector3.down, Vector3.one * 3);
+                    var command = new Scale(m_gameObject, Vector3.down, Vector3.one * 3);
                     CommandInvoker.Execute(command);
                     await UniTask.Yield();
                     CommandInvoker.Undo();

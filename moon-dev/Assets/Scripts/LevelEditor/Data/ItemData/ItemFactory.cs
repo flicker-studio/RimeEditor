@@ -1,31 +1,44 @@
+using JetBrains.Annotations;
+using LevelEditor.Data;
+
 namespace LevelEditor
 {
-    public class ItemFactory
+    public static class ItemFactory
     {
-        public ItemDataBase CreateItem(ItemProduct itemProduct)
+        /// <summary>
+        ///     Create the corresponding Item
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>A new instance</returns>
+        [UsedImplicitly]
+        public static AbstractItem Create(ItemType type)
         {
-            switch (itemProduct.ItemType)
-            {
-                case ITEMTYPEENUM.Platform:
-                    return new PlatformData(itemProduct);
-                case ITEMTYPEENUM.Mechanism:
-                    return MechanismFactory(itemProduct);
-                default:
-                    return null;
-            }
+            return type switch
+                   {
+                       ItemType.PLATFORM  => new Platform(),
+                       ItemType.MECHANISM => new Platform(),
+                       ItemType.ENTRANCE  => new Entrance(null),
+                       ItemType.EXIT      => new Exit(null),
+                       _                  => null
+                   };
         }
 
-        private ItemDataBase MechanismFactory(ItemProduct itemProduct)
+        /// <summary>
+        ///     Create the corresponding Item
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>A new instance</returns>
+        [UsedImplicitly]
+        public static AbstractItem Copy(AbstractItem item)
         {
-            switch (itemProduct.Name)
-            {
-                case "Entrance":
-                    return new EntranceData(itemProduct);
-                case "Exit":
-                    return new ExitData(itemProduct);
-                default:
-                    return null;
-            }
+            return item.Type switch
+                   {
+                       ItemType.PLATFORM  => new Platform(),
+                       ItemType.MECHANISM => new Platform(),
+                       ItemType.ENTRANCE  => new Entrance(null),
+                       ItemType.EXIT      => new Exit(null),
+                       _                  => null
+                   };
         }
     }
 }

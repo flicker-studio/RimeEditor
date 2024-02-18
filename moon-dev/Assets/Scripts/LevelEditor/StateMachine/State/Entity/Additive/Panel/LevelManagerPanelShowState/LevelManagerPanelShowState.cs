@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Frame.CompnentExtensions;
 using Frame.StateMachine;
@@ -12,75 +13,42 @@ namespace LevelEditor
 {
     public class LevelManagerPanelShowState : AdditiveState
     {
-        private InputManager GetInput => m_information.InputManager;
-        private LevelDataManager DataManager => m_information.DataManager;
-
-        private GameObject GetLevelDataButtonPrefab => m_information.PrefabManager.GetLevelItem;
-        private LevelManagerPanel GetLevelManagerPanel => m_information.UIManager.GetLevelManagerPanel;
-
-        public string GetLevelTextName => GetLevelManagerPanel.GetLevelTextName;
-
-        public string GetLevelPathTextName => GetLevelManagerPanel.GetLevelPathTextName;
-
-        public string GetLevelImageName => GetLevelManagerPanel.GetLevelImageName;
-
-        private UISetting.PopoverProperty GetPopoverProperty => GetLevelManagerPanel.GetPopoverProperty;
-
-        public RawImage GetLevelCoverImage => GetLevelManagerPanel.GetLevelCoverImage;
-
-        private ScrollRect GetScrollRect => GetLevelManagerPanel.GetLevelScrollRect;
-
-        private Button GetOpenLocalFileButton => GetLevelManagerPanel.GetOpenLocalDirectoryButton;
-
-        private RectTransform GetLevelManagerRoot => GetLevelManagerPanel.GetLevelManagerRootRect;
-
-        private RectTransform GetLevelListContent => GetLevelManagerPanel.GetLevelListContentRect;
-
-        private RectTransform GetFullPanel => GetLevelManagerPanel.GetFullPanelRect;
-
-        private Button GetOpenButton => GetLevelManagerPanel.GetOpenButton;
-
-        private Button GetCreateButton => GetLevelManagerPanel.GetCreateButton;
-
-        private Button GetDeclarationButton => GetLevelManagerPanel.GetDeclarationButton;
-
-        private Button GetExitButton => GetLevelManagerPanel.GetExitButton;
-
-        private Button GetRefreshButton => GetLevelManagerPanel.GetRefreshButton;
-
-        private Button GetDeleteButton => GetLevelManagerPanel.GetDeleteButton;
-
-        public TextMeshProUGUI GetSubLevelNumber => GetLevelManagerPanel.GetSubLevelNumber;
-
-        private TextMeshProUGUI GetLevelName => GetLevelManagerPanel.GetLevelName;
-
-        private TextMeshProUGUI GetAnthorName => GetLevelManagerPanel.GetAnthorName;
-
-        private TextMeshProUGUI GetDateTime => GetLevelManagerPanel.GetDateTime;
-
-        private TextMeshProUGUI GetInstroduction => GetLevelManagerPanel.GetInstroduction;
-        private TextMeshProUGUI GetVersion => GetLevelManagerPanel.GetVersion;
-
-        private LevelDataButton m_currentChooseLevelButton;
-
-        private List<LevelDataButton> m_levelDataButtons = new List<LevelDataButton>();
+        private          InputManager              GetInput                 => m_information.InputManager;
+        private          LevelDataManager          DataManager              => m_information.DataManager;
+        private          GameObject                GetLevelDataButtonPrefab => m_information.PrefabManager.GetLevelItem;
+        private          LevelManagerPanel         GetLevelManagerPanel     => m_information.UIManager.GetLevelManagerPanel;
+        private          string                    GetLevelTextName         => GetLevelManagerPanel.GetLevelTextName;
+        private          string                    GetLevelPathTextName     => GetLevelManagerPanel.GetLevelPathTextName;
+        private          string                    GetLevelImageName        => GetLevelManagerPanel.GetLevelImageName;
+        private          UISetting.PopoverProperty GetPopoverProperty       => GetLevelManagerPanel.GetPopoverProperty;
+        private          RawImage                  GetLevelCoverImage       => GetLevelManagerPanel.GetLevelCoverImage;
+        private          ScrollRect                GetScrollRect            => GetLevelManagerPanel.GetLevelScrollRect;
+        private          Button                    GetOpenLocalFileButton   => GetLevelManagerPanel.GetOpenLocalDirectoryButton;
+        private          RectTransform             GetLevelManagerRoot      => GetLevelManagerPanel.GetLevelManagerRootRect;
+        private          RectTransform             GetLevelListContent      => GetLevelManagerPanel.GetLevelListContentRect;
+        private          RectTransform             GetFullPanel             => GetLevelManagerPanel.GetFullPanelRect;
+        private          Button                    GetOpenButton            => GetLevelManagerPanel.GetOpenButton;
+        private          Button                    GetCreateButton          => GetLevelManagerPanel.GetCreateButton;
+        private          Button                    GetDeclarationButton     => GetLevelManagerPanel.GetDeclarationButton;
+        private          Button                    GetExitButton            => GetLevelManagerPanel.GetExitButton;
+        private          Button                    GetRefreshButton         => GetLevelManagerPanel.GetRefreshButton;
+        private          Button                    GetDeleteButton          => GetLevelManagerPanel.GetDeleteButton;
+        private          TextMeshProUGUI           GetSubLevelNumber        => GetLevelManagerPanel.GetSubLevelNumber;
+        private          TextMeshProUGUI           GetLevelName             => GetLevelManagerPanel.GetLevelName;
+        private          TextMeshProUGUI           GetAnthorName            => GetLevelManagerPanel.GetAnthorName;
+        private          TextMeshProUGUI           GetDateTime              => GetLevelManagerPanel.GetDateTime;
+        private          TextMeshProUGUI           GetInstroduction         => GetLevelManagerPanel.GetInstroduction;
+        private          TextMeshProUGUI           GetVersion               => GetLevelManagerPanel.GetVersion;
+        private          LevelDataButton           _currentChooseLevelButton;
+        private readonly List<LevelDataButton>     _levelDataButtons = new();
 
         public LevelManagerPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
-        {
-            InitState();
-            InitEvent();
-        }
-
-        private void InitState()
         {
             GetInput.SetCanInput(false);
             GetFullPanel.gameObject.SetActive(true);
             GetLevelManagerRoot.gameObject.SetActive(true);
             ReloadLevels();
-        }
 
-        private void InitEvent()
-        {
             GetCreateButton.onClick.AddListener(CreateLevel);
             GetOpenButton.onClick.AddListener(OpenLevel);
             GetRefreshButton.onClick.AddListener(ReloadLevels);
@@ -116,16 +84,18 @@ namespace LevelEditor
 
         private void OpenLevel()
         {
-            if (m_currentChooseLevelButton == null)
+            if (_currentChooseLevelButton == null)
             {
-                PopoverLauncher.Instance.LaunchTip(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
-                    GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
-                    GetPopoverProperty.POPOVER_TEXT_CHOOSE_LEVEL_ERROR, GetPopoverProperty.DURATION);
-
+                PopoverLauncher.Instance.LaunchTip
+                    (
+                     GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
+                     GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
+                     GetPopoverProperty.POPOVER_TEXT_CHOOSE_LEVEL_ERROR, GetPopoverProperty.DURATION
+                    );
                 return;
             }
 
-            DataManager.OpenLevel(m_currentChooseLevelButton.GetLevelData);
+            DataManager.OpenLevel(_currentChooseLevelButton.GetLevelData);
             JumpToEditorViewState();
         }
 
@@ -136,11 +106,17 @@ namespace LevelEditor
 
         private void DeleteLevel()
         {
-            if (DataManager.DeleteLevel(m_currentChooseLevelButton.GetLevelData))
+            if (DataManager.DeleteLevel(_currentChooseLevelButton.GetLevelData))
             {
-                PopoverLauncher.Instance.LaunchTip(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
-                    GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_SUCCESS_COLOR,
-                    GetPopoverProperty.POPOVER_DELETE_SUCCESS, GetPopoverProperty.DURATION);
+                PopoverLauncher.Instance.LaunchTip
+                    (
+                     GetLevelManagerRoot,
+                     GetPopoverProperty.POPOVER_LOCATION,
+                     GetPopoverProperty.SIZE,
+                     GetPopoverProperty.POPOVER_SUCCESS_COLOR,
+                     GetPopoverProperty.POPOVER_DELETE_SUCCESS,
+                     GetPopoverProperty.DURATION
+                    );
             }
 
             ReloadLevels();
@@ -170,42 +146,45 @@ namespace LevelEditor
             foreach (var levelData in DataManager.LevelDatas)
             {
                 var buttons = new LevelDataButton
-                (
-                    GetLevelDataButtonPrefab,
-                    ChooseLevelDataButton,
-                    GetLevelListContent,
-                    GetScrollRect,
-                    levelData,
-                    GetLevelTextName,
-                    GetLevelPathTextName,
-                    GetLevelImageName
-                );
+                    (
+                     GetLevelDataButtonPrefab,
+                     ChooseLevelDataButton,
+                     GetLevelListContent,
+                     GetScrollRect,
+                     levelData,
+                     GetLevelTextName,
+                     GetLevelPathTextName,
+                     GetLevelImageName
+                    );
 
-                m_levelDataButtons.Add(buttons);
+                _levelDataButtons.Add(buttons);
             }
         }
 
+        #region View
+
+        /// <summary>
+        ///     在UI中选择对应的项目
+        /// </summary>
+        /// <param name="gridItemButton"></param>
         private void ChooseLevelDataButton(GridItemButton gridItemButton)
         {
-            LevelDataButton itemProductButton = gridItemButton as LevelDataButton;
-            m_currentChooseLevelButton = itemProductButton;
+            var itemProductButton = gridItemButton as LevelDataButton;
+            _currentChooseLevelButton = itemProductButton;
             UpdateChooseLevelUI();
             GetCreateButton.interactable = true;
 
-            foreach (var m_levelDataButton in m_levelDataButtons)
-            {
-                if (m_levelDataButton != gridItemButton)
-                {
-                    m_levelDataButton.SetSelected = false;
-                }
-            }
+            foreach (var button in _levelDataButtons.Where(button => button != gridItemButton)) button.SetSelected(false);
 
-            gridItemButton.SetSelected = true;
+            gridItemButton.SetSelected(true);
         }
+
+        #endregion
+
 
         private void UpdateChooseLevelUI()
         {
-            if (m_currentChooseLevelButton == null)
+            if (_currentChooseLevelButton == null)
             {
                 GetLevelName.gameObject.SetActive(false);
                 GetDateTime.gameObject.SetActive(false);
@@ -226,13 +205,14 @@ namespace LevelEditor
             GetLevelCoverImage.gameObject.SetActive(true);
             GetSubLevelNumber.gameObject.SetActive(true);
             GetDeleteButton.gameObject.SetActive(true);
-            GetLevelName.text = $"{m_currentChooseLevelButton.GetLevelData.LevelName}";
-            GetDateTime.text = $"At {m_currentChooseLevelButton.GetLevelData.CreateTime}";
-            GetAnthorName.text = $"By {m_currentChooseLevelButton.GetLevelData.AuthorName}";
-            GetInstroduction.text = $"{m_currentChooseLevelButton.GetLevelData.Introduction}";
-            GetVersion.text = $"{m_currentChooseLevelButton.GetLevelData.Version}";
-            GetSubLevelNumber.text = $"{m_currentChooseLevelButton.GetLevelData.SubLevelDatas.Count}";
-            GetLevelCoverImage.texture = m_currentChooseLevelButton.GetLevelData.Cover;
+
+            GetLevelName.text          = $"{_currentChooseLevelButton.GetLevelData.LevelName}";
+            GetDateTime.text           = $"At {_currentChooseLevelButton.GetLevelData.CreateTime}";
+            GetAnthorName.text         = $"By {_currentChooseLevelButton.GetLevelData.AuthorName}";
+            GetInstroduction.text      = $"{_currentChooseLevelButton.GetLevelData.Introduction}";
+            GetVersion.text            = $"{_currentChooseLevelButton.GetLevelData.Version}";
+            GetSubLevelNumber.text     = $"{_currentChooseLevelButton.GetLevelData.SubLevelDatas.Count}";
+            GetLevelCoverImage.texture = _currentChooseLevelButton.GetLevelData.Cover;
         }
 
         private void ExitGamePopover()
@@ -247,18 +227,15 @@ namespace LevelEditor
 
         private void ClearLevelDataButtons()
         {
-            foreach (var levelDataButton in m_levelDataButtons)
-            {
-                levelDataButton.Remove();
-            }
+            foreach (var levelDataButton in _levelDataButtons) levelDataButton.Remove();
 
-            m_levelDataButtons.Clear();
-            m_currentChooseLevelButton = null;
+            _levelDataButtons.Clear();
+            _currentChooseLevelButton = null;
         }
 
         private void OpenLevelFile()
         {
-            UniTask.Void(OpenLevelFileAsync);
+            OpenLevelFileAsync().Forget();
         }
 
         private async UniTaskVoid OpenLevelFileAsync()
@@ -267,13 +244,19 @@ namespace LevelEditor
 
             if (FileBrowser.Success)
             {
-                string path = FileBrowser.Result[0].Replace("\\", "/");
+                var path = FileBrowser.Result[0].Replace("\\", "/");
 
                 if (!DataManager.OpenLocalLevelDirectory(path))
                 {
-                    PopoverLauncher.Instance.LaunchTip(GetLevelManagerRoot, GetPopoverProperty.POPOVER_LOCATION,
-                        GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
-                        GetPopoverProperty.CHECK_ERROR_LEVEL_DIRECTORY, GetPopoverProperty.DURATION);
+                    PopoverLauncher.Instance.LaunchTip
+                        (
+                         GetLevelManagerRoot,
+                         GetPopoverProperty.POPOVER_LOCATION,
+                         GetPopoverProperty.SIZE,
+                         GetPopoverProperty.POPOVER_ERROR_COLOR,
+                         GetPopoverProperty.CHECK_ERROR_LEVEL_DIRECTORY,
+                         GetPopoverProperty.DURATION
+                        );
 
                     return;
                 }

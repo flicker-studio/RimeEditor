@@ -22,14 +22,14 @@ namespace LevelEditor
 
         public delegate void UpdateInspectorItemExcute();
 
-        private InspectorPanel GetInspectorPanel => m_information.UIManager.GetInspectorPanel;
-        private GameObject GetInspectorRootObj => GetInspectorPanel.GetInspectorRootRect.gameObject;
+        private InspectorPanel GetInspectorPanel   => m_information.UIManager.GetInspectorPanel;
+        private GameObject     GetInspectorRootObj => GetInspectorPanel.GetInspectorRootRect.gameObject;
 
         private RectTransform GetInspectorContent => GetInspectorPanel.GetInspectorContentRect;
 
         private UISetting.InspectorItemProperty GetInspectorItemProperty => GetInspectorPanel.GetInspectorItemProperty;
 
-        private ObservableList<ItemDataBase> TargetDatas => m_information.DataManager.TargetItems;
+        private List<AbstractItem> TargetDatas => m_information.DataManager.TargetItems;
 
         private GameObject GetBoolItemPrefab => m_information.PrefabManager.GetBoolItem;
 
@@ -40,7 +40,7 @@ namespace LevelEditor
 
         private Dictionary<string, Type> m_commonFields = new Dictionary<string, Type>();
 
-        private readonly Dictionary<string, Dictionary<ItemDataBase, FieldInfo>> m_fieldInfoDic = new();
+        private readonly Dictionary<string, Dictionary<AbstractItem, FieldInfo>> m_fieldInfoDic = new();
 
         private static UpdateInspectorSignal m_updateInspectorSignal = new UpdateInspectorSignal();
 
@@ -62,11 +62,11 @@ namespace LevelEditor
         {
             if (TargetDatas.Count == 0)
             {
-                TargetDatas.OnAdd -= FindSameField;
-                TargetDatas.OnAddRange -= FindSameField;
+                //  TargetDatas.OnAdd -= FindSameField;
+                //  TargetDatas.OnAddRange -= FindSameField;
                 m_updateInspectorSignal.UpdateInspectorItemExcute -= UpdateAllUpdateInspectorItem;
-                CommandInvoker.UndoAdditiveEvent -= SetDo;
-                CommandInvoker.RedoAdditiveEvent -= SetDo;
+                CommandInvoker.UndoAdditiveEvent                  -= SetDo;
+                CommandInvoker.RedoAdditiveEvent                  -= SetDo;
 
                 RemoveState();
                 return;
@@ -77,8 +77,8 @@ namespace LevelEditor
         {
             GetInspectorRootObj.SetActive(true);
 
-            TargetDatas.OnAdd += FindSameField;
-            TargetDatas.OnAddRange += FindSameField;
+            //  TargetDatas.OnAdd += FindSameField;
+            //   TargetDatas.OnAddRange += FindSameField;
 
             CommandInvoker.UndoAdditiveEvent += SetDo;
             CommandInvoker.RedoAdditiveEvent += SetDo;
@@ -95,12 +95,12 @@ namespace LevelEditor
             GetInspectorRootObj.SetActive(false);
         }
 
-        public void FindSameField(ItemDataBase itemData)
+        public void FindSameField(AbstractItem abstractItem)
         {
             FindSameField();
         }
 
-        public void FindSameField(List<ItemDataBase> itemData)
+        public void FindSameField(List<AbstractItem> itemData)
         {
             FindSameField();
         }
@@ -128,7 +128,7 @@ namespace LevelEditor
                     if (!m_fieldInfoDic.ContainsKey(field.Name))
                     {
                         m_commonFields.Add(field.Name, field.FieldType);
-                        m_fieldInfoDic.Add(field.Name, new Dictionary<ItemDataBase, FieldInfo>());
+                        m_fieldInfoDic.Add(field.Name, new Dictionary<AbstractItem, FieldInfo>());
                     }
 
                     m_fieldInfoDic[field.Name].Add(item, field);
@@ -182,7 +182,7 @@ namespace LevelEditor
             return null;
         }
 
-        private void AddEventToInspectorItem(GameObject inspectorItem, Type type, Dictionary<ItemDataBase, FieldInfo> fieldInfoDic)
+        private void AddEventToInspectorItem(GameObject inspectorItem, Type type, Dictionary<AbstractItem, FieldInfo> fieldInfoDic)
         {
             if (type == typeof(bool))
             {
@@ -195,7 +195,8 @@ namespace LevelEditor
                     }
 
                     CommandInvoker.Execute(
-                        new FieldInfoChangeCommand(fieldInfoDic.Keys.ToList(), fieldInfoDic.Values.ToList(), value, m_updateInspectorSignal));
+                                           new FieldInfoChangeCommand(fieldInfoDic.Keys.ToList(), fieldInfoDic.Values.ToList(), value,
+                                                                      m_updateInspectorSignal));
                 });
             }
         }
@@ -208,17 +209,17 @@ namespace LevelEditor
             }
         }
 
-        private void UpdateInspectorItem(GameObject inspectorItem, Type type, string name, Dictionary<ItemDataBase, FieldInfo> fieldInfoDic)
+        private void UpdateInspectorItem(GameObject inspectorItem, Type type, string name, Dictionary<AbstractItem, FieldInfo> fieldInfoDic)
         {
             if (type == typeof(bool))
             {
                 inspectorItem.transform.FindPath(GetInspectorItemProperty.BOOLEAN_ITEM_TEXT)
-                    .GetComponent<TextMeshProUGUI>()
-                    .text = name;
+                             .GetComponent<TextMeshProUGUI>()
+                             .text = name;
 
-                bool sameValue = true;
+                var  sameValue      = true;
                 bool inspectorValue = false;
-                int count = 0;
+                var  count          = 0;
 
                 foreach (var keyValuePair in fieldInfoDic)
                 {

@@ -8,6 +8,7 @@ namespace Frame.StateMachine
 
         public bool IsEnd { get; private set; }
 
+        
         protected virtual void RemoveState()
         {
             IsEnd = true;

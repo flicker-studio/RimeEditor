@@ -1,12 +1,6 @@
+using LevelEditor.Data;
 using Newtonsoft.Json;
 using UnityEngine;
-
-public enum ITEMTYPEENUM
-{
-    Platform,
-
-    Mechanism
-}
 
 [CreateAssetMenu(menuName = "Create/ItemProduct", fileName = "NewItem", order = 1), JsonObject(MemberSerialization.OptIn)]
 public class ItemProduct : ScriptableObject
@@ -17,7 +11,7 @@ public class ItemProduct : ScriptableObject
     [field: SerializeField, JsonIgnore] public Sprite ItemIcon { get; set; }
 
     [field: SerializeField, JsonProperty("Type", Order = 2)]
-    public ITEMTYPEENUM ItemType { get; private set; }
+    public ItemType ItemType { get; private set; }
 
     [field: SerializeField, JsonIgnore] public GameObject ItemObject { get; private set; }
 
@@ -28,7 +22,7 @@ public class ItemProduct : ScriptableObject
         ItemNode = Resources.Load<GameObject>("Prefabs/ItemNode");
     }
 
-    public ItemProduct(string name, Sprite itemIcon, ITEMTYPEENUM itemType, GameObject itemObject)
+    public ItemProduct(string name, Sprite itemIcon, ItemType itemType, GameObject itemObject)
     {
         ItemIcon = itemIcon;
         ItemObject = itemObject;

@@ -3,39 +3,27 @@ using System.Linq;
 using Frame.StateMachine;
 using LevelEditor;
 using LevelEditor.Command;
+using LevelEditor.Data;
 using Moon.Kernel.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HierarchyPanelShowState : AdditiveState
 {
-    private LevelDataManager GetData => m_information.DataManager;
-    private HierarchyPanel GetHierarchyPanel => m_information.UIManager.GetHierarchyPanel;
-
-    private Transform GetScrollViewContent => GetHierarchyPanel.GetHierarchyContent;
-
-
-    private ObservableList<ItemDataBase> TargetItems => GetData.TargetItems;
-
-    private ObservableList<ItemDataBase> ItemAssets => GetData.ItemAssets;
-
-    private OutlineManager GetOutlinePainter => m_information.OutlineManager;
-
-    private Button GetAddButton => GetHierarchyPanel.GetAddButton;
-
-    private Button GetDeleteButton => GetHierarchyPanel.GetDeleteButton;
-
-    private ScrollRect GetScrollView => GetHierarchyPanel.GetScrollView;
-
-    private bool GetShiftInput => m_information.InputManager.GetShiftButton;
-
-    private bool GetCtrlInput => m_information.InputManager.GetCtrlButton;
-
-    private bool GetDeleteInputDown => m_information.InputManager.GetDeleteButtonDown;
-
-    private List<ItemNode> m_itemNodeProperties = new List<ItemNode>();
-
-    private List<ItemDataBase> m_selectTargetItem = new();
+    private          LevelDataManager   DataManager       => m_information.DataManager;
+    private          HierarchyPanel     HierarchyPanel    => m_information.UIManager.GetHierarchyPanel;
+    private          Transform          ScrollViewContent => HierarchyPanel.GetHierarchyContent;
+    private          List<AbstractItem> TargetItems       => DataManager.TargetItems;
+    private          List<AbstractItem> ItemAssets        => DataManager.ItemAssets;
+    private          OutlineManager     Outline           => m_information.OutlineManager;
+    private          Button             AddButton         => HierarchyPanel.GetAddButton;
+    private          Button             DeleteButton      => HierarchyPanel.GetDeleteButton;
+    private          ScrollRect         ScrollView        => HierarchyPanel.GetScrollView;
+    private          bool               ShiftInput        => m_information.InputManager.GetShiftButton;
+    private          bool               CtrlInput         => m_information.InputManager.GetCtrlButton;
+    private          bool               DeleteInputDown   => m_information.InputManager.GetDeleteButtonDown;
+    private readonly List<ItemView>     _itemViewList     = new();
+    private          List<AbstractItem> _selectedItemList = new();
 
     public HierarchyPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
@@ -45,169 +33,119 @@ public class HierarchyPanelShowState : AdditiveState
         InitState();
     }
 
+    /// <inheritdoc />
     public override void Motion(BaseInformation information)
     {
-        if (GetDeleteInputDown)
-        {
-            CommandInvoker.Execute(new ItemDeleteCommand(TargetItems, ItemAssets, GetOutlinePainter));
-        }
+        if (DeleteInputDown) CommandInvoker.Execute(new Delete(TargetItems.ToList()));
     }
 
     private void InitState()
     {
-        if (GetData.CurrentSubLevel is null)
-        {
-            return;
-        }
+        if (DataManager.CurrentSubLevel is null) return;
 
-        SyncNodeByLevelData((SubLevelData)GetData.CurrentSubLevel);
+        SyncNodeByLevelData((SubLevelData)DataManager.CurrentSubLevel);
     }
 
     private void InitButton()
     {
-        GetAddButton.onClick.AddListener(() =>
+        AddButton.onClick.AddListener(() =>
         {
-            if (!CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
-            {
-                ChangeMotionState(typeof(ItemWarehousePanelShowState));
-            }
+            if (!CheckStates.Contains(typeof(ItemWarehousePanelShowState))) ChangeMotionState(typeof(ItemWarehousePanelShowState));
         });
 
-        GetDeleteButton.onClick.AddListener(() => { CommandInvoker.Execute(new ItemDeleteCommand(TargetItems, ItemAssets, GetOutlinePainter)); });
+        DeleteButton.onClick.AddListener(() => { CommandInvoker.Execute(new Delete(TargetItems.ToList())); });
     }
 
     private void InitSyncEvent()
     {
-        GetData.SyncLevelData += SyncNodeByLevelData;
+        DataManager.SyncLevelData += SyncNodeByLevelData;
     }
 
     private void InitEvent()
     {
-        ItemAssets.OnAdd -= CreateNode;
-        ItemAssets.OnAdd -= SyncNodePanelSelete;
-        ItemAssets.OnAddRange -= CreateNode;
-        ItemAssets.OnRemove -= DeleteNode;
-        ItemAssets.OnRemove -= SyncNodePanelSelete;
-        ItemAssets.OnRemoveAll -= DeleteNode;
-        TargetItems.OnAddRange -= SyncNodePanelSelete;
+        /*
+            ItemAssets.OnAdd       -= CreateNode;
+            ItemAssets.OnAdd       -= SyncNodePanelSelect;
+            ItemAssets.OnAddRange  -= CreateNode;
+            ItemAssets.OnRemove    -= Delete;
+            ItemAssets.OnRemove    -= SyncNodePanelSelect;
+            ItemAssets.OnRemoveAll -= Delete;
+            TargetItems.OnAddRange -= SyncNodePanelSelect;
 
-        ItemAssets.OnAdd += CreateNode;
-        ItemAssets.OnAdd += SyncNodePanelSelete;
-        ItemAssets.OnAddRange += CreateNode;
-        ItemAssets.OnRemove += DeleteNode;
-        ItemAssets.OnRemove += SyncNodePanelSelete;
-        ItemAssets.OnRemoveAll += DeleteNode;
-        TargetItems.OnAddRange += SyncNodePanelSelete;
+            ItemAssets.OnAdd       += CreateNode;
+            ItemAssets.OnAdd       += SyncNodePanelSelect;
+            ItemAssets.OnAddRange  += CreateNode;
+            ItemAssets.OnRemove    += Delete;
+            ItemAssets.OnRemove    += SyncNodePanelSelect;
+            ItemAssets.OnRemoveAll += Delete;
+            TargetItems.OnAddRange += SyncNodePanelSelect;
+            */
     }
 
-    private void CreateNode(List<ItemDataBase> targetItems)
+    private void CreateNode(List<AbstractItem> targetItems)
     {
-        foreach (var targetItem in targetItems)
-        {
-            CreateNode(targetItem);
-        }
+        foreach (var targetItem in targetItems) CreateNode(targetItem);
     }
 
-    private void CreateNode(ItemDataBase targetItem)
+    private void CreateNode(AbstractItem targetAbstractItem)
     {
-        ItemNodeChild itemNodeChild = CreateChild(targetItem);
-        ItemNodeParent itemNodeParent;
-        Transform itemNodeChildTransform = itemNodeChild.ItemNodeTransform;
+        var ItemView               = CreateChild(targetAbstractItem);
+        var itemNodeChildTransform = ItemView.Transform;
 
-        foreach (var itemNodeProperty in m_itemNodeProperties)
-        {
-            if (itemNodeProperty as ItemNodeParent != null && itemNodeProperty.Itemtypeenum == targetItem.GetItemProduct.ItemType)
+        foreach (var itemNodeProperty in _itemViewList)
+            if (itemNodeProperty is ItemView && itemNodeProperty.Type == targetAbstractItem.Type)
             {
-                itemNodeParent = itemNodeProperty as ItemNodeParent;
-                List<ItemNodeChild> parentChilds = itemNodeParent.GetChilds();
+                ItemView = itemNodeProperty;
+                var parentChilds = ItemView.GetAllChild();
                 int lastIndex;
 
                 if (parentChilds.Count > 0)
-                {
-                    lastIndex = parentChilds.Last().ItemNodeTransform.GetSiblingIndex();
-                }
+                    lastIndex = parentChilds.Last().Transform.GetSiblingIndex();
                 else
-                {
-                    lastIndex = itemNodeParent.ItemNodeTransform.GetSiblingIndex();
-                }
+                    lastIndex = ItemView.Transform.GetSiblingIndex();
 
                 itemNodeChildTransform.SetSiblingIndex(lastIndex + 1);
-                itemNodeParent.AddChild(itemNodeChild);
-                itemNodeParent.ShowChilds();
+                ItemView.AddChild(ItemView);
+                ItemView.ShowChild();
                 return;
             }
-        }
 
-        itemNodeParent = CreateParent(targetItem.GetItemProduct);
-        itemNodeChildTransform.SetSiblingIndex(itemNodeParent.ItemNodeTransform.GetSiblingIndex() + 1);
-        itemNodeParent.AddChild(itemNodeChild);
-        itemNodeParent.ShowChilds();
+        ItemView = CreateParent(targetAbstractItem);
+        itemNodeChildTransform.SetSiblingIndex(ItemView.Transform.GetSiblingIndex() + 1);
+        ItemView.AddChild(ItemView);
+        ItemView.ShowChild();
     }
 
-    private void DeleteNode(List<ItemDataBase> itemDatas)
+    private void Delete(List<AbstractItem> item)
     {
-        m_selectTargetItem.Clear();
+        _selectedItemList.Clear();
 
-        foreach (var itemData in itemDatas)
-        {
-            DeleteNode(itemData);
-        }
+        foreach (var itemData in item) Delete(itemData);
     }
 
-    private void DeleteNode(ItemDataBase itemData)
+    private void Delete(AbstractItem abstractItem)
     {
-        foreach (var itemNodeProperty in m_itemNodeProperties)
-        {
-            if (itemNodeProperty is ItemNodeChild child && child.ItemData == itemData)
-            {
-                DeleteNode(child);
-                return;
-            }
-        }
+        Delete(abstractItem.View);
     }
 
-    private void DeleteNode(ItemNode itemNode)
+    private void Delete(ItemView itemView)
     {
-        if (itemNode is ItemNodeChild itemNodeChild)
-        {
-            foreach (var itemNodeProperty in m_itemNodeProperties)
-            {
-                if (itemNodeProperty is ItemNodeParent parent && parent.GetChilds().Contains(itemNodeChild))
-                {
-                    parent.RemoveChild(itemNodeChild);
-                }
-            }
-        }
-
-        if (itemNode is ItemNodeParent itemNodeParent)
-        {
-            List<ItemNodeChild> childs = itemNodeParent.GetChilds();
-
-            foreach (var nodeChild in childs)
-            {
-                m_itemNodeProperties.Remove(nodeChild);
-                nodeChild.RemoveNode();
-            }
-
-            childs.Clear();
-        }
-
-        m_itemNodeProperties.Remove(itemNode);
-        itemNode.RemoveNode();
+        itemView.Remove();
     }
 
-    private ItemNodeParent CreateParent(ItemProduct itemProduct)
+
+    private ItemView CreateParent(AbstractItem item)
     {
-        var itemNodeParent = new ItemNodeParent(itemProduct, GetScrollViewContent, GetSelectedNode, GetScrollView);
-        m_itemNodeProperties.Add(itemNodeParent);
-        itemNodeParent.ItemNodeTransform.SetSiblingIndex(GetScrollViewContent.childCount);
+        var itemNodeParent = new ItemView(item, GetSelectedNode, ScrollView);
+        _itemViewList.Add(itemNodeParent);
+        itemNodeParent.Transform.SetSiblingIndex(ScrollViewContent.childCount);
         return itemNodeParent;
     }
 
-    private ItemNodeChild CreateChild(ItemDataBase targetItem)
+    private ItemView CreateChild(AbstractItem targetAbstractItem)
     {
-        var itemNodeChild = new ItemNodeChild(targetItem.GetItemProduct, GetScrollViewContent, GetSelectedNode, targetItem, GetScrollView);
-        m_itemNodeProperties.Add(itemNodeChild);
+        var itemNodeChild = new ItemView(targetAbstractItem, GetSelectedNode, ScrollView);
+        _itemViewList.Add(itemNodeChild);
         return itemNodeChild;
     }
 
@@ -217,199 +155,170 @@ public class HierarchyPanelShowState : AdditiveState
         ClearNode();
         var itemDatas = subLevelData.ItemAssets;
 
-        foreach (var itemData in itemDatas)
-        {
-            CreateNode(itemData);
-        }
+        foreach (var itemData in itemDatas) CreateNode(itemData);
     }
 
     private void ClearNode()
     {
-        foreach (var itemNodeProperty in m_itemNodeProperties)
-        {
-            itemNodeProperty.RemoveNode();
-        }
+        foreach (var itemNodeProperty in _itemViewList) itemNodeProperty.Remove();
 
-        m_itemNodeProperties.Clear();
+        _itemViewList.Clear();
     }
 
-    private void SyncNodePanelSelete(List<ItemDataBase> itemData)
+    private void SyncNodePanelSelect(List<AbstractItem> itemData)
     {
-        SyncNodePanelSelete();
+        SyncNodePanelSelect();
     }
 
-    private void SyncNodePanelSelete(ItemDataBase itemData)
+    private void SyncNodePanelSelect(AbstractItem abstractItem)
     {
-        SyncNodePanelSelete();
+        SyncNodePanelSelect();
     }
 
-    private void SyncNodePanelSelete()
+    private void SyncNodePanelSelect()
     {
-        m_selectTargetItem.Clear();
-        m_selectTargetItem.AddRange(TargetItems);
+        _selectedItemList.Clear();
+        _selectedItemList.AddRange(TargetItems);
 
-        foreach (var itemNodeProperty in m_itemNodeProperties)
-        {
-            itemNodeProperty.IsSelected = false;
-        }
+        foreach (var itemNodeProperty in _itemViewList) itemNodeProperty.IsSelected = false;
 
         foreach (var targetItem in TargetItems)
-        {
-            foreach (var itemNodeProperty in m_itemNodeProperties)
-            {
-                if (itemNodeProperty is ItemNodeChild itemNodeChild && itemNodeChild.ItemData == targetItem)
-                {
-                    itemNodeChild.IsSelected = true;
-                    break;
-                }
-            }
-        }
-    }
-
-    private void GetSelectedNode(ItemNode selectNode)
-    {
-        if (GetShiftInput)
-        {
-            SelectMultiItem(selectNode);
-            return;
-        }
-
-        if (GetCtrlInput)
-        {
-            SelectOppositeItem(selectNode);
-            return;
-        }
-
-        SelectSingleItem(selectNode);
-    }
-
-    private void SelectSingleItem(ItemNode selectNode)
-    {
-        if (selectNode.IsSelected && m_selectTargetItem.Count == 1)
-        {
-            return;
-        }
-
-        m_selectTargetItem.Clear();
-
-        foreach (var itemNodeProperty in m_itemNodeProperties)
-        {
-            itemNodeProperty.IsSelected = false;
-        }
-
-        SelectAddItem(selectNode);
-    }
-
-    private void SelectMultiItem(ItemNode selecteNode)
-    {
-        if (m_selectTargetItem.Count == 0)
-        {
-            SelectAddItem(selecteNode);
-            return;
-        }
-
-        int startSelect = selecteNode.ItemNodeTransform.GetSiblingIndex();
-
-        int endSelect = startSelect;
-
-        var lastSelectData = m_selectTargetItem.Last();
-
-        foreach (var itemNodeProperty in m_itemNodeProperties)
-        {
-            if (itemNodeProperty is ItemNodeChild lastSelectNode && lastSelectNode.ItemData == lastSelectData)
-            {
-                endSelect = lastSelectNode.ItemNodeTransform.GetSiblingIndex();
-                break;
-            }
-        }
-
-        int lower = Mathf.Min(startSelect, endSelect);
-        int upper = Mathf.Max(startSelect, endSelect);
-
-        foreach (var itemNodeProperty in m_itemNodeProperties)
-        {
-            if (itemNodeProperty is ItemNodeChild child && child.ItemNodeTransform.GetSiblingIndex() >= lower
-                                                        && child.ItemNodeTransform.GetSiblingIndex() <= upper)
-            {
-                SelectAddItem(child);
-            }
-        }
-    }
-
-    private void SelectAddItem(ItemNode selectNode)
-    {
-        if (selectNode.IsSelected)
-        {
-            return;
-        }
-
-        if (selectNode is ItemNodeChild child)
-        {
-            selectNode.IsSelected = true;
-            m_selectTargetItem.Add(child.ItemData);
-            m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-            CommandInvoker.Execute(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
-            return;
-        }
-
-        if (selectNode is ItemNodeParent selectNodeParent)
-        {
-            List<ItemNodeChild> targetChilds = selectNodeParent.GetChilds();
-
-            foreach (var itemNodeChild in targetChilds)
+        foreach (var itemNodeProperty in _itemViewList)
+            if (itemNodeProperty is ItemView itemNodeChild && itemNodeChild.Item == targetItem)
             {
                 itemNodeChild.IsSelected = true;
-                m_selectTargetItem.Add(itemNodeChild.ItemData);
+                break;
             }
-
-            m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-            CommandInvoker.Execute(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
-            selectNode.IsSelected = true;
-        }
     }
 
-    private void SelectOppositeItem(ItemNode selectNode)
+    private void GetSelectedNode(ItemView selectView)
     {
-        if (selectNode is ItemNodeChild child)
+        if (ShiftInput)
         {
-            selectNode.IsSelected = !selectNode.IsSelected;
-
-            if (selectNode.IsSelected)
-            {
-                m_selectTargetItem.Add(child.ItemData);
-            }
-            else
-            {
-                m_selectTargetItem.Remove(child.ItemData);
-            }
-
-            m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-            CommandInvoker.Execute(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
+            SelectMultiItem(selectView);
             return;
         }
 
-        if (selectNode is ItemNodeParent selectNodeParent)
+        if (CtrlInput)
         {
-            List<ItemNodeChild> targetChilds = selectNodeParent.GetChilds();
-            bool isSelectParent = !selectNode.IsSelected;
+            SelectOppositeItem(selectView);
+            return;
+        }
 
-            foreach (var itemNodeChild in targetChilds)
+        SelectSingleItem(selectView);
+    }
+
+    private void SelectSingleItem(ItemView selectView)
+    {
+        if (selectView.IsSelected && _selectedItemList.Count == 1) return;
+
+        _selectedItemList.Clear();
+
+        foreach (var itemNodeProperty in _itemViewList) itemNodeProperty.IsSelected = false;
+
+        SelectAddItem(selectView);
+    }
+
+    private void SelectMultiItem(ItemView selectedView)
+    {
+        if (_selectedItemList.Count == 0)
+        {
+            SelectAddItem(selectedView);
+            return;
+        }
+
+        var startSelect = selectedView.Transform.GetSiblingIndex();
+
+        var endSelect = startSelect;
+
+        var lastSelectData = _selectedItemList.Last();
+
+        foreach (var itemNodeProperty in _itemViewList)
+        {
+            if (itemNodeProperty.Item != lastSelectData) continue;
+            endSelect = itemNodeProperty.Transform.GetSiblingIndex();
+            break;
+        }
+
+        var lower = Mathf.Min(startSelect, endSelect);
+        var upper = Mathf.Max(startSelect, endSelect);
+
+        foreach (var view in _itemViewList)
+        {
+            if
+            (
+                view.Transform.GetSiblingIndex() >= lower
+             && view.Transform.GetSiblingIndex() <= upper
+            )
+            {
+                SelectAddItem(view);
+            }
+        }
+    }
+
+    private void SelectAddItem(ItemView selectView)
+    {
+        if (selectView.IsSelected) return;
+
+        if (selectView is ItemView child)
+        {
+            selectView.IsSelected = true;
+            _selectedItemList.Add(child.Item);
+            _selectedItemList = _selectedItemList.Distinct().ToList();
+            CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
+            return;
+        }
+
+        if (selectView is ItemView selectNodeParent)
+        {
+            var tarGetAllChild = selectNodeParent.GetAllChild();
+
+            foreach (var itemNodeChild in tarGetAllChild)
+            {
+                itemNodeChild.IsSelected = true;
+                _selectedItemList.Add(itemNodeChild.Item);
+            }
+
+            _selectedItemList = _selectedItemList.Distinct().ToList();
+            CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
+            selectView.IsSelected = true;
+        }
+    }
+
+    private void SelectOppositeItem(ItemView selectView)
+    {
+        if (selectView is ItemView child)
+        {
+            selectView.IsSelected = !selectView.IsSelected;
+
+            if (selectView.IsSelected)
+                _selectedItemList.Add(child.Item);
+            else
+                _selectedItemList.Remove(child.Item);
+
+            _selectedItemList = _selectedItemList.Distinct().ToList();
+            CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
+            return;
+        }
+
+        if (selectView is ItemView selectNodeParent)
+        {
+            var tarGetAllChild = selectNodeParent.GetAllChild();
+            var isSelectParent = !selectView.IsSelected;
+
+            foreach (var itemNodeChild in tarGetAllChild)
             {
                 itemNodeChild.IsSelected = isSelectParent;
 
                 if (itemNodeChild.IsSelected)
-                {
-                    m_selectTargetItem.Add(itemNodeChild.ItemData);
-                }
+                    _selectedItemList.Add(itemNodeChild.Item);
                 else
-                {
-                    m_selectTargetItem.Remove(itemNodeChild.ItemData);
-                }
+                    _selectedItemList.Remove(itemNodeChild.Item);
             }
 
-            m_selectTargetItem = m_selectTargetItem.Distinct().ToList();
-            CommandInvoker.Execute(new ItemSelectCommand(TargetItems, m_selectTargetItem, GetOutlinePainter));
-            selectNode.IsSelected = isSelectParent;
+            _selectedItemList = _selectedItemList.Distinct().ToList();
+            CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
+            selectView.IsSelected = isSelectParent;
         }
     }
 }

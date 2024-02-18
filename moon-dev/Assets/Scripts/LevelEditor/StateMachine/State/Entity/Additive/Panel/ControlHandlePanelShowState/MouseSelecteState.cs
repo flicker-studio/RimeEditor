@@ -36,11 +36,11 @@ namespace LevelEditor
             .NewX(Mathf.Clamp(m_information.CameraManager.MousePosition.x * GetScreenScale.x, 0, Screen.width * GetScreenScale.x))
             .NewY(Mathf.Clamp(m_information.CameraManager.MousePosition.y * GetScreenScale.y, 0, Screen.height * GetScreenScale.y));
 
-        private ObservableList<ItemDataBase> TargetList => m_information.DataManager.TargetItems;
+        private List<AbstractItem> TargetList => m_information.DataManager.TargetItems;
 
         private List<Collider2D> m_selectList = new List<Collider2D>();
 
-        private ObservableList<ItemDataBase> ItemAssets => m_information.DataManager.ItemAssets;
+        private List<AbstractItem> ItemAssets => m_information.DataManager.ItemAssets;
 
 
         private Vector2 m_originMousePositon;
@@ -184,7 +184,7 @@ namespace LevelEditor
 
         private void ReturnTargetList()
         {
-            var tempList = new List<ItemDataBase>();
+            var tempList = new List<AbstractItem>();
 
             if (GetShiftButton)
             {
@@ -229,12 +229,12 @@ namespace LevelEditor
 
             tempList = tempList.Distinct().ToList();
             GetOutlinePainter.SetRenderObjects(tempList.GetItemObjs());
-            CommandInvoker.Execute(new ItemSelectCommand(TargetList, tempList, GetOutlinePainter));
+            CommandInvoker.Execute(new Select(TargetList, tempList, GetOutlinePainter));
         }
 
-        private List<ItemDataBase> ChangeCollidersToDatas(List<Collider2D> colliders)
+        private List<AbstractItem> ChangeCollidersToDatas(List<Collider2D> colliders)
         {
-            var tempList = new List<ItemDataBase>();
+            var tempList = new List<AbstractItem>();
 
             foreach (var collider in colliders)
             {

@@ -23,7 +23,7 @@ namespace LevelEditor
 
         private ControlHandlePanel GetControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
 
-        private ObservableList<ItemDataBase> TargetItems => m_information.DataManager.TargetItems;
+        private List<AbstractItem> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 
@@ -69,7 +69,7 @@ namespace LevelEditor
                     m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
                 }
 
-                CommandInvoker.Execute(new ItemPositionCommand(TargetItems, m_targetOriginPosition, m_targetCurrentPosition));
+                CommandInvoker.Execute(new Position(TargetItems, m_targetCurrentPosition));
                 RemoveState();
                 return;
             }

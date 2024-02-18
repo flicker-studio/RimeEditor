@@ -1,119 +1,120 @@
 using System;
 using Moon.Kernel.Extension;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Frame.CompnentExtensions
 {
-    public class EventButton<T> where T : class
+    /// <summary>
+    ///     Added EventTrigger Button
+    /// </summary>
+    public class EventButton
     {
+        /// <summary>
+        /// </summary>
         public bool IsSelected
         {
-            get { return m_isSelected; }
+            get => _isSelected;
             set
             {
-                m_isSelected = value;
+                _isSelected = value;
 
-                if (m_isSelected)
-                {
-                    m_image.color = m_button.colors.selectedColor;
-                }
-                else
-                {
-                    m_image.color = m_button.colors.normalColor;
-                }
+                _image.color = value
+                    ? _button.colors.selectedColor
+                    : _button.colors.normalColor;
             }
         }
 
-        private Button m_button;
+        private readonly Button _button;
+        private readonly Image  _image;
 
-        private Image m_image;
+        private readonly EventTrigger _trigger;
+        private          bool         _isSelected;
 
-        private T m_item;
-
-        private bool m_isSelected;
-
-        public EventButton(T item, Transform itemRect, Action<T> onSelect, ScrollRect scrollRect = null)
+        public EventButton
+        (
+            GameObject     gameObject,
+            Action<Button> onSelect,
+            ScrollRect     scrollRect = null
+        )
         {
-            m_item = item;
-            m_button = itemRect.GetComponent<Button>();
-            m_image = itemRect.GetComponent<Image>();
+            _button  = gameObject.GetComponent<Button>();
+            _image   = gameObject.GetComponent<Image>();
+            _trigger = gameObject.AddComponent<EventTrigger>();
+
             InitEvents(onSelect);
-
-            if (scrollRect != null)
-            {
-                InitScroll(scrollRect);
-            }
+            InitScroll(scrollRect);
         }
 
-        private void InitEvents(Action<T> onSelect)
+        private void InitEvents(Action<Button> onSelect)
         {
-            m_button.enabled = false;
-            m_image.color = m_button.colors.normalColor;
-            m_button.RemoveAllTriggerEvents();
-            m_button.AddTriggerEvent(EventTriggerType.PointerClick, context => { onSelect?.Invoke(m_item); });
+            _button.enabled = false;
+            _image.color    = _button.colors.normalColor;
 
-            m_button.AddTriggerEvent(EventTriggerType.PointerEnter, context =>
+            var pointerEvent = new EventTrigger.Entry
+                               {
+                                   eventID = EventTriggerType.PointerClick
+                               };
+            pointerEvent.callback.AddListener(_ => { onSelect?.Invoke(_button); });
+            _trigger.triggers.Add(pointerEvent);
+
+            _button.AddTriggerEvent(EventTriggerType.PointerEnter, _ =>
             {
-                if (m_isSelected) return;
+                if (_isSelected) return;
 
-                m_image.color = m_button.colors.highlightedColor;
+                _image.color = _button.colors.highlightedColor;
             });
 
-            m_button.AddTriggerEvent(EventTriggerType.PointerExit, context =>
+            _button.AddTriggerEvent(EventTriggerType.PointerExit, context =>
             {
-                if (m_isSelected) return;
+                if (_isSelected) return;
 
-                m_image.color = m_button.colors.normalColor;
+                _image.color = _button.colors.normalColor;
             });
         }
 
         private void InitScroll(ScrollRect scrollView)
         {
-            EventTrigger trigger = m_button.GetComponent<EventTrigger>();
+            if (scrollView is null) return;
 
-            EventTrigger.Entry entryBegin = new EventTrigger.Entry(),
-                entryDrag = new EventTrigger.Entry(),
-                entryEnd = new EventTrigger.Entry(),
-                entrypotential = new EventTrigger.Entry(),
-                entryScroll = new EventTrigger.Entry();
-
-            entryBegin.eventID = EventTriggerType.BeginDrag;
-            entryBegin.callback.AddListener((data) => { scrollView.OnBeginDrag((PointerEventData)data); });
-            trigger.triggers.Add(entryBegin);
-
-            entryDrag.eventID = EventTriggerType.Drag;
-            entryDrag.callback.AddListener((data) => { scrollView.OnDrag((PointerEventData)data); });
-            trigger.triggers.Add(entryDrag);
-
-            entryEnd.eventID = EventTriggerType.EndDrag;
-            entryEnd.callback.AddListener((data) => { scrollView.OnEndDrag((PointerEventData)data); });
-            trigger.triggers.Add(entryEnd);
-
-            entrypotential.eventID = EventTriggerType.InitializePotentialDrag;
-            entrypotential.callback.AddListener((data) => { scrollView.OnInitializePotentialDrag((PointerEventData)data); });
-            trigger.triggers.Add(entrypotential);
-
-            entryScroll.eventID = EventTriggerType.Scroll;
-            entryScroll.callback.AddListener((data) => { scrollView.OnScroll((PointerEventData)data); });
-            trigger.triggers.Add(entryScroll);
+            AddTrigger(EventTriggerType.BeginDrag,               data => { scrollView.OnBeginDrag((PointerEventData)data); });
+            AddTrigger(EventTriggerType.Drag,                    data => { scrollView.OnEndDrag((PointerEventData)data); });
+            AddTrigger(EventTriggerType.EndDrag,                 data => { scrollView.OnScroll((PointerEventData)data); });
+            AddTrigger(EventTriggerType.InitializePotentialDrag, data => { scrollView.OnInitializePotentialDrag((PointerEventData)data); });
+            AddTrigger(EventTriggerType.Scroll,                  data => { scrollView.OnScroll((PointerEventData)data); });
         }
 
         public void AddEvents(EventTriggerType triggerType, Action<BaseEventData> eventData)
         {
-            m_button.AddTriggerEvent(triggerType, eventData);
+            _button.AddTriggerEvent(triggerType, eventData);
         }
 
         public void RemoveEvents()
         {
-            m_button.enabled = true;
-            m_button.RemoveAllTriggerEvents();
+            _button.enabled = true;
+            _trigger.triggers.Clear();
         }
 
         public void Invoke()
         {
-            m_button?.Invoke(EventTriggerType.PointerClick);
+            _trigger.OnPointerClick(null);
+        }
+
+        /// <summary>
+        ///     Add a corresponding event to the button
+        /// </summary>
+        /// <param name="triggerType"></param>
+        /// <param name="action"></param>
+        private void AddTrigger(EventTriggerType triggerType, UnityAction<BaseEventData> action)
+        {
+            var entry = new EventTrigger.Entry
+                        {
+                            eventID = triggerType
+                        };
+            entry.callback.AddListener(action);
+            _trigger.triggers.Add(entry);
         }
     }
 }

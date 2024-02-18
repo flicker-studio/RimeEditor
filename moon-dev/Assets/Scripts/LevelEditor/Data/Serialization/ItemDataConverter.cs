@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 ///     Custom deserialization transformations
 /// </summary>
-public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
+public class ItemDataConverter : CustomCreationConverter<AbstractItem>
 {
     private ItemDataType m_itemDataType;
 
@@ -22,22 +22,22 @@ public class ItemDataConverter : CustomCreationConverter<ItemDataBase>
         m_itemDataType = token["ItemDataType"].ToObject<ItemDataType>();
 
         m_itemProduct = ItemProductAnalysis(token["ProductName"].ToString(),
-            token["ProductType"].ToString());
+                                            token["ProductType"].ToString());
 
         return base.ReadJson(token.CreateReader(), objectType, existingValue, serializer);
     }
 
     /// <inheritdoc />
-    public override ItemDataBase Create(Type objectType)
+    public override AbstractItem Create(Type objectType)
     {
         switch (m_itemDataType)
         {
             case ItemDataType.ENTRANCE:
-                return new EntranceData(m_itemProduct, true);
+            // return new Entrance(m_itemProduct, true);
             case ItemDataType.PLATFORM:
-                return new PlatformData(m_itemProduct, true);
+            // return new Platform(m_itemProduct, true);
             case ItemDataType.EXIT:
-                return new ExitData(m_itemProduct, true);
+            //return new Exit(m_itemProduct, true);
             default:
                 return null;
         }

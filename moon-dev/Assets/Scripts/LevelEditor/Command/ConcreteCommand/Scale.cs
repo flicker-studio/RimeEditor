@@ -7,29 +7,24 @@ namespace LevelEditor
     /// <summary>
     ///     Commands to manipulate the scaling of items
     /// </summary>
-    public class ItemScaleCommand : ICommand
+    public class Scale : ICommand
     {
-        private readonly List<ItemDataBase> m_items = new();
+        private readonly List<AbstractItem> m_items        = new();
+        private readonly List<Vector3>      m_lastScale    = new();
+        private readonly List<Vector3>      m_nextScale    = new();
+        private readonly List<Vector3>      m_lastPosition = new();
+        private readonly List<Vector3>      m_nextPosition = new();
+        private readonly GameObject         m_item;
+        private readonly Vector3            m_newPos;
+        private readonly Vector3            m_newScale;
+        private readonly Vector3            m_oldPos;
+        private readonly Vector3            m_oldScale;
 
-        private readonly List<Vector3> m_lastScale = new();
-
-        private readonly List<Vector3> m_nextScale = new();
-
-        private readonly List<Vector3> m_lastPosition = new();
-
-        private readonly List<Vector3> m_nextPosition = new();
-
-        private readonly GameObject m_item;
-
-        private readonly Vector3 m_newPos;
-
-        private readonly Vector3 m_newScale;
-
-        private readonly Vector3 m_oldPos;
-
-        private readonly Vector3 m_oldScale;
-
-        public ItemScaleCommand(ObservableList<ItemDataBase> items, List<Vector3> lastPosition, List<Vector3> nextPosition, List<Vector3> lastScale, List<Vector3> nextScale)
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
+        public Scale(List<AbstractItem> items, List<Vector3> lastPosition, List<Vector3> nextPosition, List<Vector3> lastScale,
+                     List<Vector3>      nextScale)
         {
             m_items.AddRange(items);
             m_lastScale.AddRange(lastScale);
@@ -38,12 +33,7 @@ namespace LevelEditor
             m_nextPosition.AddRange(nextPosition);
         }
 
-        public ItemScaleCommand
-        (
-            GameObject item,
-            Vector3    newPos,
-            Vector3    newScale
-        )
+        public Scale(GameObject item, Vector3 newPos, Vector3 newScale)
         {
             m_item     = item;
             m_oldPos   = item.transform.position;

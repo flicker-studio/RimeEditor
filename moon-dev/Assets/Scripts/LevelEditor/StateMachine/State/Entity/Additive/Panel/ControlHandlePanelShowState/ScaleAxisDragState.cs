@@ -23,7 +23,7 @@ namespace LevelEditor
         private InputManager GetInput => m_information.InputManager;
 
 
-        private ObservableList<ItemDataBase> TargetItems => GetData.TargetItems;
+        private List<AbstractItem> TargetItems => GetData.TargetItems;
 
         private List<GameObject> TargetObjs => GetData.TargetObjs;
 
@@ -120,8 +120,8 @@ namespace LevelEditor
 
                 for (var i = 0; i < TargetObjs.Count; i++) m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
 
-                CommandInvoker.Execute(new ItemScaleCommand(TargetItems, m_targetOriginPosition
-                    , m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
+                CommandInvoker.Execute(new Scale(TargetItems, m_targetOriginPosition
+                                               , m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
 
                 RemoveState();
                 return;

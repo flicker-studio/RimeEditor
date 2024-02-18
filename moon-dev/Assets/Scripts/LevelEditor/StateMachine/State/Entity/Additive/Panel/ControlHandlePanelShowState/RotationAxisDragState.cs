@@ -10,188 +10,160 @@ using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
 {
-    public class RotationAxisDragState : AdditiveState
+    /// <summary>
+    ///     This state is entered when the mouse is dragged
+    /// </summary>
+    public sealed class RotationAxisDragState : AdditiveState
     {
-        private ObservableList<ItemDataBase> TagetItems => m_information.DataManager.TargetItems;
+        private List<AbstractItem> Items                     => m_information.DataManager.TargetItems;
+        private ControlHandlePanel ControlHandlePanel        => m_information.UIManager.GetControlHandlePanel;
+        private RectTransform      RotationAxisRectTransform => ControlHandlePanel.GetRotationRect;
+        private Vector2            MouseCursorCompensation   => ControlHandlePanel.GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
+        private Vector3            MousePosition             => m_information.CameraManager.MousePosition;
+        private bool               MouseLeftButtonUp         => m_information.InputManager.GetMouseLeftButtonUp;
+        private bool               UseGrid                   => ControlHandlePanel.GetControlHandleAction.UseGrid;
+        private float              RotationUnit              => ControlHandlePanel.GetGridSnappingProperty.ROTATION_UNIT;
 
-        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
+        private          Vector3 _originMousePosition;
+        private          Vector3 _currentMousePosition;
+        private readonly Vector3 _originMouseToAxisDir;
+        private readonly Vector3 _oriRotationAxisPos;
+        private          Flag    _waitToNextFrame;
 
-        private ControlHandlePanel GetControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
-        private RectTransform GetRotationAxisRectTransform => GetControlHandlePanel.GetRotationRect;
+        private float     RotationSpeed              => m_information.UIManager.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
+        private Transform CameraTransform            => Camera.main.transform;
+        private Vector3   RotationAxisScreenPosition => RotationAxisRectTransform.anchoredPosition;
 
-        private Vector2 GetMouseCursorCompensation => GetControlHandlePanel
-            .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
+        private Vector3 RotationAxisWorldPosition => Camera.main.ScreenToWorldPoint
+            (RotationAxisScreenPosition.NewZ(Mathf.Abs(CameraTransform.position.z)));
 
-        private Vector3 GetMousePosition => m_information.CameraManager.MousePosition;
+        private readonly List<Quaternion> _targetRotation     = new();
+        private readonly List<Vector3>    _targetPosition     = new();
+        private readonly List<Vector3>    _mousePosVectorList = new();
 
-        private bool GetMouseLeftButtonUp => m_information.InputManager.GetMouseLeftButtonUp;
+        private readonly Action _onLeftUp;
+        private readonly Action _onUpdate;
 
 
-        private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
-
-        private float GetRotationUnit => GetControlHandlePanel.GetGridSnappingProperty.ROTATION_UNIT;
-
-        private Vector3 m_originMousePosition;
-
-        private Vector3 m_currentMousePosition;
-
-        private Vector3 m_originMouseToAxisDir;
-
-        private Vector3 m_oriRotationAxisPos;
-
-        private Flag m_waitToNextFrame;
-
-        private float GetRotationSpeed => m_information.UIManager.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
-
-        private Transform GetCameraTransform => Camera.main.transform;
-
-        private Vector3 GetRotationAxisScreenPosition => GetRotationAxisRectTransform.anchoredPosition;
-
-        private Vector3 GetRotationAxisWorldPosition => Camera.main.ScreenToWorldPoint
-            (GetRotationAxisScreenPosition.NewZ(Mathf.Abs(GetCameraTransform.position.z)));
-
-        private List<Quaternion> m_targetOriginRotation = new List<Quaternion>();
-
-        private List<Vector3> m_targetOriginPosition = new List<Vector3>();
-
-        private List<Quaternion> m_targetCurrentRotation = new List<Quaternion>();
-
-        private List<Vector3> m_targetCurrentPosition = new List<Vector3>();
-
-        private List<Vector3> m_mousePosVectorList = new List<Vector3>();
-
-        public RotationAxisDragState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
+        /// <param name="information"></param>
+        /// <param name="motionCallBack"></param>
+        public RotationAxisDragState(BaseInformation information, MotionCallBack motionCallBack)
+            : base(information, motionCallBack)
         {
-            StateInit();
+            _originMousePosition  = MousePosition;
+            _originMouseToAxisDir = (_originMousePosition - RotationAxisScreenPosition).normalized;
+            _oriRotationAxisPos   = RotationAxisRectTransform.position;
+
+            _onLeftUp += OnLeftUp;
+            _onUpdate += CheckMouseScreenPosition;
+            _onUpdate += UpdateRotation;
         }
 
+        /// <inheritdoc />
         public override void Motion(BaseInformation information)
         {
-            if (GetMouseLeftButtonUp)
-            {
-                GetRotationAxisRectTransform.transform.rotation = Quaternion.identity;
+            // Triggers when the key is raised
+            if (MouseLeftButtonUp)
+                _onLeftUp.Invoke();
+            else
+                _onUpdate.Invoke();
+        }
 
-                for (var i = 0; i < TargetObjs.Count; i++)
-                {
-                    m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
-                    m_targetCurrentRotation.Add(TargetObjs[i].transform.rotation);
-                }
-
-                CommandInvoker.Execute(new ItemRotationCommand(TagetItems, m_targetOriginPosition, m_targetCurrentPosition,
-                    m_targetOriginRotation, m_targetCurrentRotation));
-
-                RemoveState();
-                return;
-            }
-
-            CheckMouseScreenPosition();
-            UpdateRotation();
+        private void OnLeftUp()
+        {
+            RotationAxisRectTransform.transform.rotation = Quaternion.identity;
+            var command = new Rotation(Items, _targetRotation);
+            CommandInvoker.Execute(command);
+            RemoveState();
         }
 
         private void UpdateRotation()
         {
-            if (m_waitToNextFrame.GetFlag) return;
+            if (_waitToNextFrame.GetFlag) return;
 
-            Vector3 mouseSumVector = Vector3.zero;
+            var mouseSumVector = Vector3.zero;
 
-            foreach (var posVector in m_mousePosVectorList)
-            {
-                mouseSumVector += posVector;
-            }
+            foreach (var posVector in _mousePosVectorList) mouseSumVector += posVector;
 
-            m_currentMousePosition = GetMousePosition;
-            mouseSumVector += m_currentMousePosition - m_originMousePosition;
+            _currentMousePosition =  MousePosition;
+            mouseSumVector        += _currentMousePosition - _originMousePosition;
 
             if (mouseSumVector.magnitude == 0) return;
 
-            Vector3 mouseDir = mouseSumVector.normalized;
-            float mouseDis = mouseSumVector.magnitude;
-            Vector3 dirCross = Vector3.Cross(m_originMouseToAxisDir, mouseDir);
-            float rotationDirAndMultiplying = dirCross.z;
+            var mouseDir                  = mouseSumVector.normalized;
+            var mouseDis                  = mouseSumVector.magnitude;
+            var dirCross                  = Vector3.Cross(_originMouseToAxisDir, mouseDir);
+            var rotationDirAndMultiplying = dirCross.z;
 
-            Quaternion rotationQuaternion = Quaternion
-                .Euler(0, 0, (float)Math.Round(mouseDis * rotationDirAndMultiplying * GetRotationSpeed, 2));
+            var rotationQuaternion = Quaternion
+               .Euler(0, 0, (float)Math.Round(mouseDis * rotationDirAndMultiplying * RotationSpeed, 2));
 
-            if (GetUseGrid && TargetObjs.Count > 1)
+            if (UseGrid && Items.Count > 1)
             {
-                rotationQuaternion =
-                    Quaternion.Euler(rotationQuaternion.eulerAngles
-                        .NewZ(GetRotationUnit * Mathf.RoundToInt(rotationQuaternion.eulerAngles.z / GetRotationUnit)));
+                var clip = RotationUnit * Mathf.RoundToInt(rotationQuaternion.eulerAngles.z / RotationUnit);
+                rotationQuaternion = Quaternion.Euler(rotationQuaternion.eulerAngles.NewZ(clip));
             }
 
-            GetRotationAxisRectTransform.rotation = rotationQuaternion;
-            GetRotationAxisRectTransform.position = m_oriRotationAxisPos;
+            RotationAxisRectTransform.rotation = rotationQuaternion;
+            RotationAxisRectTransform.position = _oriRotationAxisPos;
 
-            for (var i = 0; i < TargetObjs.Count; i++)
+            for (var i = 0; i < Items.Count; i++)
             {
-                if (TargetObjs[i].transform.rotation == m_targetOriginRotation[i] * rotationQuaternion)
-                {
-                    continue;
-                }
+                if (Items[i].Transform.rotation == _targetRotation[i] * rotationQuaternion) continue;
 
-                TargetObjs[i].transform.rotation = m_targetOriginRotation[i] * rotationQuaternion;
+                Items[i].Transform.rotation = _targetRotation[i]
+                                            * rotationQuaternion;
+                Items[i].Transform.position = RotationAxisWorldPosition
+                                            + Quaternion.Euler(Vector3.forward * rotationQuaternion.eulerAngles.z).normalized
+                                            * (_targetPosition[i] - RotationAxisWorldPosition);
 
-                TargetObjs[i].transform.position = GetRotationAxisWorldPosition
-                                                   + Quaternion.Euler(Vector3.forward * rotationQuaternion.eulerAngles.z).normalized *
-                                                   (m_targetOriginPosition[i] - GetRotationAxisWorldPosition);
+                if (!UseGrid || Items.Count != 1) continue;
 
-                if (GetUseGrid && TargetObjs.Count == 1)
-                {
-                    TargetObjs[i].transform.rotation = Quaternion.Euler(TargetObjs[i].transform.rotation.eulerAngles
-                        .NewZ(GetRotationUnit * Mathf.RoundToInt(TargetObjs[i].transform.rotation.eulerAngles.z / GetRotationUnit)));
-
-                    GetRotationAxisRectTransform.rotation = TargetObjs[i].transform.rotation;
-                }
-            }
-        }
-
-        private void StateInit()
-        {
-            m_originMousePosition = GetMousePosition;
-            m_originMouseToAxisDir = (m_originMousePosition - GetRotationAxisScreenPosition).normalized;
-            m_oriRotationAxisPos = GetRotationAxisRectTransform.position;
-
-            for (var i = 0; i < TargetObjs.Count; i++)
-            {
-                m_targetOriginRotation.Add(TargetObjs[i].transform.rotation);
-                m_targetOriginPosition.Add(TargetObjs[i].transform.position);
+                Items[i].Transform.rotation =
+                    Quaternion.Euler(
+                                     Items[i].Transform.rotation.eulerAngles
+                                             .NewZ(RotationUnit * Mathf.RoundToInt(Items[i].Transform.rotation.eulerAngles.z / RotationUnit)));
+                RotationAxisRectTransform.rotation = Items[i].Transform.rotation;
             }
         }
 
         private void CheckMouseScreenPosition()
         {
-            m_currentMousePosition = GetMousePosition;
+            _currentMousePosition = MousePosition;
 
-            if (m_currentMousePosition.x >= Screen.width)
+            if (_currentMousePosition.x >= Screen.width)
             {
-                m_mousePosVectorList.Add(m_currentMousePosition - m_originMousePosition);
-                Mouse.current.WarpCursorPosition(new Vector2(GetMouseCursorCompensation.x, m_currentMousePosition.y));
-                m_originMousePosition = GetMousePosition.NewX(0);
-                m_waitToNextFrame.SetFlag = true;
+                _mousePosVectorList.Add(_currentMousePosition - _originMousePosition);
+                Mouse.current.WarpCursorPosition(new Vector2(MouseCursorCompensation.x, _currentMousePosition.y));
+                _originMousePosition     = MousePosition.NewX(0);
+                _waitToNextFrame.SetFlag = true;
             }
 
-            if (m_currentMousePosition.x <= 0)
+            if (_currentMousePosition.x <= 0)
             {
-                m_mousePosVectorList.Add(m_currentMousePosition - m_originMousePosition);
-                Mouse.current.WarpCursorPosition(new Vector2(Screen.width - GetMouseCursorCompensation.x, m_currentMousePosition.y));
-                m_originMousePosition = GetMousePosition.NewX(Screen.width);
-                m_waitToNextFrame.SetFlag = true;
+                _mousePosVectorList.Add(_currentMousePosition - _originMousePosition);
+                Mouse.current.WarpCursorPosition(new Vector2(Screen.width - MouseCursorCompensation.x, _currentMousePosition.y));
+                _originMousePosition     = MousePosition.NewX(Screen.width);
+                _waitToNextFrame.SetFlag = true;
             }
 
-            if (m_currentMousePosition.y >= Screen.height)
+            if (_currentMousePosition.y >= Screen.height)
             {
-                m_mousePosVectorList.Add(m_currentMousePosition - m_originMousePosition);
-                Mouse.current.WarpCursorPosition(new Vector2(m_currentMousePosition.x, GetMouseCursorCompensation.y));
-                m_originMousePosition = GetMousePosition.NewY(0);
-                m_waitToNextFrame.SetFlag = true;
+                _mousePosVectorList.Add(_currentMousePosition - _originMousePosition);
+                Mouse.current.WarpCursorPosition(new Vector2(_currentMousePosition.x, MouseCursorCompensation.y));
+                _originMousePosition     = MousePosition.NewY(0);
+                _waitToNextFrame.SetFlag = true;
             }
 
-            if (m_currentMousePosition.y <= 0)
+            if (_currentMousePosition.y <= 0)
             {
-                m_mousePosVectorList.Add(m_currentMousePosition - m_originMousePosition);
-                Mouse.current.WarpCursorPosition(new Vector2(m_currentMousePosition.x, Screen.height - GetMouseCursorCompensation.y));
-                m_originMousePosition = GetMousePosition.NewY(Screen.height);
-                m_waitToNextFrame.SetFlag = true;
+                _mousePosVectorList.Add(_currentMousePosition - _originMousePosition);
+                Mouse.current.WarpCursorPosition(new Vector2(_currentMousePosition.x, Screen.height - MouseCursorCompensation.y));
+                _originMousePosition     = MousePosition.NewY(Screen.height);
+                _waitToNextFrame.SetFlag = true;
             }
         }
     }

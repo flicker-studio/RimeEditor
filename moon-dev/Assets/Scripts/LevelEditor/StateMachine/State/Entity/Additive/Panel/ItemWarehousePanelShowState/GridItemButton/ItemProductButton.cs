@@ -32,10 +32,10 @@ public class ItemProductButton : GridItemButton
         , Transform parent, ScrollRect scrollRect, string textName, string imageName)
         : base(buttonPrefab, onSelect, parent, scrollRect)
     {
-        m_text = m_buttonObj.transform.Find(textName).GetComponent<TextMeshProUGUI>();
-        m_image = m_buttonObj.transform.Find(imageName).GetComponent<Image>();
-        m_itemProduct = itemProduct;
+        m_text         = ButtonObj.transform.Find(textName).GetComponent<TextMeshProUGUI>();
+        m_image        = ButtonObj.transform.Find(imageName).GetComponent<Image>();
+        m_itemProduct  = itemProduct;
         m_image.sprite = m_itemProduct.ItemIcon;
-        m_text.text = m_itemProduct.Name;
+        m_text.text    = m_itemProduct.Name;
     }
 }

@@ -1,17 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Pool;
+using UnityToolkit;
 using Component = UnityEngine.Component;
 
 namespace Frame.Tool.Pool
 {
     //TODO: 考虑在未来使用UnityEngine.Pool代替
-    public class ObjectPool : UnityToolkit.MonoSingleton<ObjectPool>, UnityToolkit.IAutoCreateSingleton
+    public class ObjectPool : MonoSingleton<ObjectPool>, IAutoCreateSingleton
     {
-        public static ObjectPool Instance => Singleton;
-
-        private GameObject m_cachePanel;
+        public static ObjectPool             Instance => Singleton;
+        public        ObjectPool<GameObject> GameObjectPool;
+        private       GameObject             m_cachePanel;
 
         private Dictionary<string, GameObject> m_typeCachePanel = new Dictionary<string, GameObject>();
 
@@ -46,7 +47,7 @@ namespace Frame.Tool.Pool
             if (!m_pool.ContainsKey(tag))
             {
                 m_objTag.Add(prefab, tag);
-                m_pool[tag] = new List<GameObject>();
+                m_pool[tag]    = new List<GameObject>();
                 m_outPool[tag] = new List<GameObject>();
             }
 
@@ -61,9 +62,9 @@ namespace Frame.Tool.Pool
             }
             else
             {
-                obj = GameObject.Instantiate(prefab);
+                obj      = Instantiate(prefab);
                 obj.name = prefab.name + m_uniqueId++;
-                GameObject.DontDestroyOnLoad(obj);
+                DontDestroyOnLoad(obj);
             }
 
             m_outPool[tag].Add(obj);
@@ -83,7 +84,7 @@ namespace Frame.Tool.Pool
             if (!m_pool.ContainsKey(tag))
             {
                 m_objTag.Add(prefab, tag);
-                m_pool[tag] = new List<GameObject>();
+                m_pool[tag]    = new List<GameObject>();
                 m_outPool[tag] = new List<GameObject>();
             }
 
@@ -144,7 +145,7 @@ namespace Frame.Tool.Pool
             if (!m_pool.ContainsKey(tag))
             {
                 m_objTag.Add(prefab, tag);
-                m_pool[tag] = new List<GameObject>();
+                m_pool[tag]    = new List<GameObject>();
                 m_outPool[tag] = new List<GameObject>();
             }
 
@@ -211,7 +212,7 @@ namespace Frame.Tool.Pool
         {
             return RemoveTrailingNumbers(obj.name);
         }
-        
+
         private string RemoveTrailingNumbers(string input)
         {
             return Regex.Replace(input, @"\d+$", "");
@@ -221,8 +222,8 @@ namespace Frame.Tool.Pool
         {
             if (!m_typeCachePanel.ContainsKey(tag))
             {
-                m_typeCachePanel[tag] = new GameObject();
-                m_typeCachePanel[tag].name = tag + "CachePanel";
+                m_typeCachePanel[tag]                  = new GameObject();
+                m_typeCachePanel[tag].name             = tag + "CachePanel";
                 m_typeCachePanel[tag].transform.parent = m_cachePanel.transform;
             }
         }
@@ -231,9 +232,9 @@ namespace Frame.Tool.Pool
         {
             if (m_cachePanel == null)
             {
-                m_cachePanel = new GameObject();
+                m_cachePanel      = new GameObject();
                 m_cachePanel.name = "CachePanel";
-                GameObject.DontDestroyOnLoad(m_cachePanel);
+                DontDestroyOnLoad(m_cachePanel);
             }
         }
 

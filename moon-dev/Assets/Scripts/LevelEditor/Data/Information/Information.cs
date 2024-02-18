@@ -10,52 +10,42 @@ namespace LevelEditor
 {
     public class Information : BaseInformation
     {
-        public UIManager UIManager => m_uiManager;
+        public UIManager        UIManager      => m_uiManager;
+        public LevelDataManager DataManager    => m_dataManager;
+        public PrefabManager    PrefabManager  => m_prefabManager;
+        public CameraManager    CameraManager  => m_cameraManager;
+        public OutlineManager   OutlineManager => m_outlineManager;
+        public InputManager     InputManager   => m_inputManager;
+        public LevelAction      LevelAction    => m_levelAction;
 
-        public LevelDataManager DataManager => m_dataManager;
-
-        public PrefabManager PrefabManager => m_prefabManager;
-
-        public CameraManager CameraManager => m_cameraManager;
-
-        public OutlineManager OutlineManager => m_outlineManager;
-        public InputManager InputManager => m_inputManager;
-
-        public LevelAction LevelAction => m_levelAction;
-
-        private UIManager m_uiManager;
-
+        private UIManager        m_uiManager;
         private LevelDataManager m_dataManager;
-
-        private PrefabManager m_prefabManager;
-
-        private CameraManager m_cameraManager;
-
-        private InputManager m_inputManager;
-
-        private OutlineManager m_outlineManager;
-
-        private LevelAction m_levelAction;
+        private PrefabManager    m_prefabManager;
+        private CameraManager    m_cameraManager;
+        private InputManager     m_inputManager;
+        private OutlineManager   m_outlineManager;
+        private LevelAction      m_levelAction;
 
         public async UniTask Init()
         {
             var levelEditorTransform = LevelEditorController.Instance.RootObject.transform as RectTransform;
 
             var prefab = await ResourcesService.LoadAssetAsync<PrefabFactory>("Assets/Settings/GlobalSettings/PrefabFactory.asset");
-            var ui = await ResourcesService.LoadAssetAsync<UISetting>("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset");
-            var cam = await ResourcesService.LoadAssetAsync<CameraSetting>("Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset");
+            var ui     = await ResourcesService.LoadAssetAsync<UISetting>("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset");
+            var cam    = await ResourcesService.LoadAssetAsync<CameraSetting>("Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset");
+            
             m_prefabManager = new PrefabManager(prefab);
-            m_uiManager = new UIManager(levelEditorTransform, ui);
-            m_inputManager = new InputManager();
-            m_dataManager = new LevelDataManager();
+            m_uiManager     = new UIManager(levelEditorTransform, ui);
+            m_inputManager  = new InputManager();
+            m_dataManager   = new LevelDataManager();
 
             await m_dataManager.LoadLevelFiles();
 
             m_cameraManager = new CameraManager(cam);
-            m_levelAction = new LevelAction();
+            m_levelAction   = new LevelAction();
             var mask = await ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineMask.mat");
             var fill = await ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineFill.mat");
-            m_outlineManager = new OutlineManager(mask, fill, cam);
+            m_outlineManager          =  new OutlineManager(mask, fill, cam);
             DataManager.SyncLevelData += ResetCommand;
             DataManager.SyncLevelData += ResetOutline;
             DataManager.SyncLevelData += ResetCameraPos;
@@ -93,7 +83,7 @@ namespace LevelEditor
             targetPos /= itemObjs.Count;
 
             var oriPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2.0f, Screen.height / 2.0f,
-                Mathf.Abs(Camera.main.transform.position.z)));
+                                                                    Mathf.Abs(Camera.main.transform.position.z)));
 
             var direction = targetPos - oriPos;
 
@@ -101,8 +91,8 @@ namespace LevelEditor
                            CameraManager.CameraZMin) / 2;
 
             Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + direction.x
-                , Camera.main.transform.position.y + direction.y
-                , zLength);
+                                                       , Camera.main.transform.position.y + direction.y
+                                                       , zLength);
         }
     }
 }
