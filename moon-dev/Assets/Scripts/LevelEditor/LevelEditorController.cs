@@ -11,11 +11,9 @@ namespace LevelEditor
     /// </summary>
     public class LevelEditorController : Singleton<LevelEditorController>
     {
-        public readonly Information Information = new();
-
-        public MotionController MotionController;
-
-        public GameObject RootObject;
+        public readonly Information      Information = new();
+        public          MotionController MotionController;
+        public          GameObject       RootObject;
 
         /// <summary>
         /// Preload setting files

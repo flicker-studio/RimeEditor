@@ -1,0 +1,68 @@
+{
+    "name": "Editor",
+    "maps": [
+        {
+            "name": "Default",
+            "id": "122b2722-984e-40b1-b874-535976dc3de0",
+            "actions": [
+                {
+                    "name": "Redo",
+                    "type": "Button",
+                    "id": "1cb9b4bf-4bf9-4247-8bb9-edb3eee3411a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Default",
+                    "id": "356a09fb-5038-4c60-b70e-0571ced376e2",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Redo",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "192a1245-6ef0-48eb-97e5-a79e73e80a20",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default control scheme",
+                    "action": "Redo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "f1f1cfe0-1f1c-449c-b3fe-a5af4a591155",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default control scheme",
+                    "action": "Redo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Default control scheme",
+            "bindingGroup": "Default control scheme",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

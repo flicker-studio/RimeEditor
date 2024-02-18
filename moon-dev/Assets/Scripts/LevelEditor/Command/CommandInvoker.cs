@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace LevelEditor.Command
@@ -15,12 +14,12 @@ namespace LevelEditor.Command
         /// <summary>
         ///     Called after the Undo is executed
         /// </summary>
-        public static event Action UndoAdditiveEvent;
+        public static event System.Action UndoAdditiveEvent;
 
         /// <summary>
         ///     Called after the Redo is executed
         /// </summary>
-        public static event Action RedoAdditiveEvent;
+        public static event System.Action RedoAdditiveEvent;
 
         /// <summary>
         ///     Execute the command and press it into the cache stack

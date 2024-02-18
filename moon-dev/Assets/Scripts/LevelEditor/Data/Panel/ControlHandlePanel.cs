@@ -34,200 +34,202 @@ namespace LevelEditor
     {
         #region Some public get methods.
 
-        public Image                          GetSelectionImage                 => m_selectionImage;
-        public RectTransform                  GetGridRect                       => m_gridRect;
-        public RectTransform                  GetSelectionRect                  => m_selectionRect;
-        public RectTransform                  GetPositionRect                   => m_positionRect;
-        public RectTransform                  GetRotationRect                   => m_rotationRect;
-        public RectTransform                  GetScaleRect                      => m_scaleRect;
-        public RectTransform                  GetScaleXAxisRect                 => m_scaleXRect;
-        public RectTransform                  GetScaleYAxisRect                 => m_scaleYRect;
-        public RectTransform                  GetRectRect                       => m_rectRect;
-        public UISetting.SelectionProperty    GetSelectionProperty              => m_property.GetSelectionProperty;
-        public UISetting.RotationDragProperty GetRotationDragProperty           => m_property.GetRotationDragProperty;
-        public UISetting.ScaleDragProperty    GetScaleDragProperty              => m_property.GetScaleDragProperty;
-        public UISetting.MouseCursorProperty  GetMouseCursorProperty            => m_property.GetMouseCursorProperty;
-        public UISetting.GridSnappingProperty GetGridSnappingProperty           => m_property.GetGridSnappingProperty;
-        public bool                           GetPositionInputX                 => m_positionInputX.GetInput;
-        public bool                           GetPositionInputY                 => m_positionInputY.GetInput;
-        public bool                           GetPositionInputXY                => m_positionInputXY.GetInput;
-        public bool                           GetScaleInputX                    => m_scaleInputX.GetInput;
-        public bool                           GetScaleInputY                    => m_scaleInputY.GetInput;
-        public bool                           GetScaleInputXY                   => m_scaleInputXY.GetInput;
-        public bool                           GetRectTopRightCornerInput        => m_rectTopRightCornerInput.GetInput;
-        public bool                           GetRectTopLeftCornerInput         => m_rectTopLeftCornerInput.GetInput;
-        public bool                           GetRectBottomRightCornerInput     => m_rectBottomRightCornerInput.GetInput;
-        public bool                           GetRectBottomLeftCornerInput      => m_rectBottomLeftCornerInput.GetInput;
-        public bool                           GetRectTopEdgeInput               => m_rectTopEdgeInput.GetInput;
-        public bool                           GetRectRightEdgeInput             => m_rectRightEdgeInput.GetInput;
-        public bool                           GetRectBottomEdgeInput            => m_rectBottomEdgeInput.GetInput;
-        public bool                           GetRectLeftEdgeInput              => m_rectLeftEdgeInput.GetInput;
-        public bool                           GetRectCenterInput                => m_rectCenterInput.GetInput;
-        public bool                           GetPositionInputXDown             => m_positionInputX.GetInputDown;
-        public bool                           GetPositionInputYDown             => m_positionInputY.GetInputDown;
-        public bool                           GetPositionInputXYDown            => m_positionInputXY.GetInputDown;
-        public bool                           GetRotationInputZDown             => m_rotationInputZ.GetInputDown;
-        public bool                           GetScaleInputXDown                => m_scaleInputX.GetInputDown;
-        public bool                           GetScaleInputYDown                => m_scaleInputY.GetInputDown;
-        public bool                           GetScaleInputXYDown               => m_scaleInputXY.GetInputDown;
-        public bool                           GetRectTopRightCornerInputDown    => m_rectTopRightCornerInput.GetInputDown;
-        public bool                           GetRectTopLeftCornerInputDown     => m_rectTopLeftCornerInput.GetInputDown;
-        public bool                           GetRectBottomRightCornerInputDown => m_rectBottomRightCornerInput.GetInputDown;
-        public bool                           GetRectBottomLeftCornerInputDown  => m_rectBottomLeftCornerInput.GetInputDown;
-        public bool                           GetRectTopEdgeInputDown           => m_rectTopEdgeInput.GetInputDown;
-        public bool                           GetRectRightEdgeInputDown         => m_rectRightEdgeInput.GetInputDown;
-        public bool                           GetRectBottomEdgeInputDown        => m_rectBottomEdgeInput.GetInputDown;
-        public bool                           GetRectLeftEdgeInputDown          => m_rectLeftEdgeInput.GetInputDown;
-        public bool                           GetRectCenterInputDown            => m_rectCenterInput.GetInputDown;
-        public ControlHandleAction            GetControlHandleAction            => m_controlHandleAction;
+        public Image                          GetSelectionImage       => _selectionImage;
+        public RectTransform                  GetGridRect             => _gridRect;
+        public RectTransform                  GetSelectionRect        => _selectionRect;
+        public RectTransform                  GetPositionRect         => _positionRect;
+        public RectTransform                  GetRotationRect         => _rotationRect;
+        public RectTransform                  GetScaleRect            => _scaleRect;
+        public RectTransform                  GetScaleXAxisRect       => _scaleXRect;
+        public RectTransform                  GetScaleYAxisRect       => _scaleYRect;
+        public RectTransform                  GetRectRect             => _rectRect;
+        public UISetting.SelectionProperty    GetSelectionProperty    => _property.GetSelectionProperty;
+        public UISetting.RotationDragProperty GetRotationDragProperty => _property.GetRotationDragProperty;
+        public UISetting.ScaleDragProperty    GetScaleDragProperty    => _property.GetScaleDragProperty;
+        public UISetting.MouseCursorProperty  GetMouseCursorProperty  => _property.GetMouseCursorProperty;
+        public UISetting.GridSnappingProperty GetGridSnappingProperty => _property.GetGridSnappingProperty;
+
+        public bool GetPositionInputX                 => _positionInputX.GetInput;
+        public bool GetPositionInputY                 => _positionInputY.GetInput;
+        public bool GetPositionInputXY                => _positionInputXY.GetInput;
+        public bool GetScaleInputX                    => _scaleInputX.GetInput;
+        public bool GetScaleInputY                    => _scaleInputY.GetInput;
+        public bool GetScaleInputXY                   => _scaleInputXY.GetInput;
+        public bool GetRectTopRightCornerInput        => _rectTopRightCornerInput.GetInput;
+        public bool GetRectTopLeftCornerInput         => _rectTopLeftCornerInput.GetInput;
+        public bool GetRectBottomRightCornerInput     => _rectBottomRightCornerInput.GetInput;
+        public bool GetRectBottomLeftCornerInput      => _rectBottomLeftCornerInput.GetInput;
+        public bool GetRectTopEdgeInput               => _rectTopEdgeInput.GetInput;
+        public bool GetRectRightEdgeInput             => _rectRightEdgeInput.GetInput;
+        public bool GetRectBottomEdgeInput            => _rectBottomEdgeInput.GetInput;
+        public bool GetRectLeftEdgeInput              => _rectLeftEdgeInput.GetInput;
+        public bool GetRectCenterInput                => _rectCenterInput.GetInput;
+        public bool GetPositionInputXDown             => _positionInputX.GetInputDown;
+        public bool GetPositionInputYDown             => _positionInputY.GetInputDown;
+        public bool GetPositionInputXYDown            => _positionInputXY.GetInputDown;
+        public bool GetRotationInputZDown             => _rotationInputZ.GetInputDown;
+        public bool GetScaleInputXDown                => _scaleInputX.GetInputDown;
+        public bool GetScaleInputYDown                => _scaleInputY.GetInputDown;
+        public bool GetScaleInputXYDown               => _scaleInputXY.GetInputDown;
+        public bool GetRectTopRightCornerInputDown    => _rectTopRightCornerInput.GetInputDown;
+        public bool GetRectTopLeftCornerInputDown     => _rectTopLeftCornerInput.GetInputDown;
+        public bool GetRectBottomRightCornerInputDown => _rectBottomRightCornerInput.GetInputDown;
+        public bool GetRectBottomLeftCornerInputDown  => _rectBottomLeftCornerInput.GetInputDown;
+        public bool GetRectTopEdgeInputDown           => _rectTopEdgeInput.GetInputDown;
+        public bool GetRectRightEdgeInputDown         => _rectRightEdgeInput.GetInputDown;
+        public bool GetRectBottomEdgeInputDown        => _rectBottomEdgeInput.GetInputDown;
+        public bool GetRectLeftEdgeInputDown          => _rectLeftEdgeInput.GetInputDown;
+        public bool GetRectCenterInputDown            => _rectCenterInput.GetInputDown;
+
+        public ControlHandleAction GetControlHandleAction => _controlHandleAction;
 
         #endregion
 
         #region Selection's rect transform components.
 
-        private RectTransform m_selectionRect;
+        private RectTransform _selectionRect;
 
         #endregion
 
         #region Position's rect transform components.
 
-        private RectTransform m_positionRect;
+        private RectTransform _positionRect;
 
         #endregion
 
         #region Rotation's rect transform components.
 
-        private RectTransform m_rotationRect;
+        private RectTransform _rotationRect;
 
         #endregion
 
         #region Scale's rect transform components;
 
-        private RectTransform m_scaleRect;
+        private RectTransform _scaleRect;
 
-        private RectTransform m_scaleXRect;
+        private RectTransform _scaleXRect;
 
-        private RectTransform m_scaleYRect;
+        private RectTransform _scaleYRect;
 
         #endregion
 
         #region Rect's rect transform components.
 
-        private RectTransform m_rectRect;
+        private RectTransform _rectRect;
 
-        private RectTransform m_rectTopRightCornerRect;
+        private RectTransform _rectTopRightCornerRect;
 
-        private RectTransform m_rectTopLeftCornerRect;
+        private RectTransform _rectTopLeftCornerRect;
 
-        private RectTransform m_rectBottomRightCornerRect;
+        private RectTransform _rectBottomRightCornerRect;
 
-        private RectTransform m_rectBottomLeftCornerRect;
+        private RectTransform _rectBottomLeftCornerRect;
 
-        private RectTransform m_rectTopEdgeRect;
+        private RectTransform _rectTopEdgeRect;
 
-        private RectTransform m_rectRightEdgeRect;
+        private RectTransform _rectRightEdgeRect;
 
-        private RectTransform m_rectBottomEdgeRect;
+        private RectTransform _rectBottomEdgeRect;
 
-        private RectTransform m_rectLeftEdgeRect;
+        private RectTransform _rectLeftEdgeRect;
 
-        private RectTransform m_rectCenterRect;
+        private RectTransform _rectCenterRect;
 
         #endregion
 
         #region Position's button components.
 
-        private Button m_positionButtonX;
+        private Button _positionButtonX;
 
-        private Button m_positionButtonY;
+        private Button _positionButtonY;
 
-        private Button m_positionButtonXY;
+        private Button _positionButtonXY;
 
         #endregion
 
         #region Rotation's button components.
 
-        private Button m_rotationButtonZ;
+        private Button _rotationButtonZ;
 
         #endregion
 
         #region Scale's button components.
 
-        private Button m_scaleButtonXHead;
+        private Button _scaleButtonXHead;
 
-        private Button m_scaleButtonXBody;
+        private Button _scaleButtonXBody;
 
-        private Button m_scaleButtonYHead;
+        private Button _scaleButtonYHead;
 
-        private Button m_scaleButtonYBody;
+        private Button _scaleButtonYBody;
 
-        private Button m_scaleButtonXY;
+        private Button _scaleButtonXY;
 
         #endregion
 
         #region Rect's button components.
 
-        private Button m_rectTopRightCornerButton;
+        private Button _rectTopRightCornerButton;
 
-        private Button m_rectTopLeftCornerButton;
+        private Button _rectTopLeftCornerButton;
 
-        private Button m_rectBottomRightCornerButton;
+        private Button _rectBottomRightCornerButton;
 
-        private Button m_rectBottomLeftCornerButton;
+        private Button _rectBottomLeftCornerButton;
 
-        private Button m_rectTopEdgeButton;
+        private Button _rectTopEdgeButton;
 
-        private Button m_rectRightEdgeButton;
+        private Button _rectRightEdgeButton;
 
-        private Button m_rectLeftEdgeButton;
+        private Button _rectLeftEdgeButton;
 
-        private Button m_rectBottomEdgeButton;
+        private Button _rectBottomEdgeButton;
 
-        private Button m_rectCenterButton;
+        private Button _rectCenterButton;
 
         #endregion
 
-        private RectTransform m_gridRect;
+        private RectTransform _gridRect;
 
-        private Image m_selectionImage;
+        private Image _selectionImage;
 
-        private Input<bool> m_positionInputX;
+        private Input<bool> _positionInputX;
 
-        private Input<bool> m_positionInputY;
+        private Input<bool> _positionInputY;
 
-        private Input<bool> m_positionInputXY;
+        private Input<bool> _positionInputXY;
 
-        private Input<bool> m_rotationInputZ;
+        private Input<bool> _rotationInputZ;
 
-        private Input<bool> m_scaleInputX;
+        private Input<bool> _scaleInputX;
 
-        private Input<bool> m_scaleInputY;
+        private Input<bool> _scaleInputY;
 
-        private Input<bool> m_scaleInputXY;
+        private Input<bool> _scaleInputXY;
 
-        private Input<bool> m_rectTopRightCornerInput;
+        private Input<bool> _rectTopRightCornerInput;
 
-        private Input<bool> m_rectTopLeftCornerInput;
+        private Input<bool> _rectTopLeftCornerInput;
 
-        private Input<bool> m_rectBottomRightCornerInput;
+        private Input<bool> _rectBottomRightCornerInput;
 
-        private Input<bool> m_rectBottomLeftCornerInput;
+        private Input<bool> _rectBottomLeftCornerInput;
 
-        private Input<bool> m_rectTopEdgeInput;
+        private Input<bool> _rectTopEdgeInput;
 
-        private Input<bool> m_rectRightEdgeInput;
+        private Input<bool> _rectRightEdgeInput;
 
-        private Input<bool> m_rectBottomEdgeInput;
+        private Input<bool> _rectBottomEdgeInput;
 
-        private Input<bool> m_rectLeftEdgeInput;
+        private Input<bool> _rectLeftEdgeInput;
 
-        private Input<bool> m_rectCenterInput;
+        private Input<bool> _rectCenterInput;
 
-        private readonly ControlHandleAction m_controlHandleAction = new();
+        private readonly ControlHandleAction _controlHandleAction = new();
 
-        private GridPainter m_gridPainter;
+        private GridPainter _gridPainter;
 
-        private UISetting.ControlHandleUI m_property;
+        private UISetting.ControlHandleUI _property;
 
         private bool GetMouseLeftButton => Frame.Tool.InputManager.Instance.GetMouseLeftButton;
 
@@ -239,209 +241,209 @@ namespace LevelEditor
 
         private void InitComponent(RectTransform rect, UISetting levelEditorUISetting)
         {
-            m_property = levelEditorUISetting.GetControlHandleUI;
-            var uiName = m_property.GetControlHandleUIName;
-            m_selectionImage              = rect.FindPath(uiName.SELECTION_UI_NAME).GetComponent<Image>();
-            m_gridRect                    = rect.FindPath(uiName.GRID_UI_NAME) as RectTransform;
-            m_selectionRect               = rect.FindPath(uiName.SELECTION_UI_NAME) as RectTransform;
-            m_positionRect                = rect.FindPath(uiName.POSITION_AXIS) as RectTransform;
-            m_rotationRect                = rect.FindPath(uiName.ROTATION_AXIS) as RectTransform;
-            m_scaleRect                   = rect.FindPath(uiName.SCALE_AXIS) as RectTransform;
-            m_scaleXRect                  = rect.FindPath(uiName.SCALE_AXIS_X) as RectTransform;
-            m_scaleYRect                  = rect.FindPath(uiName.SCALE_AXIS_Y) as RectTransform;
-            m_rectRect                    = rect.FindPath(uiName.RECT_AXIS) as RectTransform;
-            m_rectTopLeftCornerRect       = rect.FindPath(uiName.RECT_TOP_LEFT_CORNER) as RectTransform;
-            m_rectTopRightCornerRect      = rect.FindPath(uiName.RECT_TOP_RIGHT_CORNER) as RectTransform;
-            m_rectBottomLeftCornerRect    = rect.FindPath(uiName.RECT_BOTTOM_LEFT_CORNER) as RectTransform;
-            m_rectBottomRightCornerRect   = rect.FindPath(uiName.RECT_BOTTOM_RIGHT_CORNER) as RectTransform;
-            m_rectTopEdgeRect             = rect.FindPath(uiName.RECT_TOP_EDGE) as RectTransform;
-            m_rectRightEdgeRect           = rect.FindPath(uiName.RECT_RIGHT_EDGE) as RectTransform;
-            m_rectLeftEdgeRect            = rect.FindPath(uiName.RECT_LEFT_EDGE) as RectTransform;
-            m_rectCenterRect              = rect.FindPath(uiName.RECT_CENTER) as RectTransform;
-            m_rectBottomEdgeRect          = rect.FindPath(uiName.RECT_BOTTOM_EDGE) as RectTransform;
-            m_positionButtonX             = rect.FindPath(uiName.POSITION_AXIS_X).GetComponent<Button>();
-            m_positionButtonY             = rect.FindPath(uiName.POSITION_AXIS_Y).GetComponent<Button>();
-            m_positionButtonXY            = rect.FindPath(uiName.POSITION_AXIS_XY).GetComponent<Button>();
-            m_rotationButtonZ             = rect.FindPath(uiName.ROTATION_AXIS).GetComponent<Button>();
-            m_scaleButtonXBody            = rect.FindPath(uiName.SCALE_AXIS_X_BODY).GetComponent<Button>();
-            m_scaleButtonXHead            = rect.FindPath(uiName.SCALE_AXIS_X_HEAD).GetComponent<Button>();
-            m_scaleButtonYBody            = rect.FindPath(uiName.SCALE_AXIS_Y_BODY).GetComponent<Button>();
-            m_scaleButtonYHead            = rect.FindPath(uiName.SCALE_AXIS_Y_HEAD).GetComponent<Button>();
-            m_scaleButtonXY               = rect.FindPath(uiName.SCALE_AXIS_XY).GetComponent<Button>();
-            m_rectTopLeftCornerButton     = m_rectTopLeftCornerRect.GetComponent<Button>();
-            m_rectTopRightCornerButton    = m_rectTopRightCornerRect.GetComponent<Button>();
-            m_rectBottomLeftCornerButton  = m_rectBottomLeftCornerRect.GetComponent<Button>();
-            m_rectBottomRightCornerButton = m_rectBottomRightCornerRect.GetComponent<Button>();
-            m_rectTopEdgeButton           = m_rectTopEdgeRect.GetComponent<Button>();
-            m_rectRightEdgeButton         = m_rectRightEdgeRect.GetComponent<Button>();
-            m_rectLeftEdgeButton          = m_rectLeftEdgeRect.GetComponent<Button>();
-            m_rectBottomEdgeButton        = m_rectBottomEdgeRect.GetComponent<Button>();
-            m_rectCenterButton            = m_rectCenterRect.GetComponent<Button>();
+            _property = levelEditorUISetting.GetControlHandleUI;
+            var uiName = _property.GetControlHandleUIName;
+            _selectionImage              = rect.FindPath(uiName.SELECTION_UI_NAME).GetComponent<Image>();
+            _gridRect                    = rect.FindPath(uiName.GRID_UI_NAME) as RectTransform;
+            _selectionRect               = rect.FindPath(uiName.SELECTION_UI_NAME) as RectTransform;
+            _positionRect                = rect.FindPath(uiName.POSITION_AXIS) as RectTransform;
+            _rotationRect                = rect.FindPath(uiName.ROTATION_AXIS) as RectTransform;
+            _scaleRect                   = rect.FindPath(uiName.SCALE_AXIS) as RectTransform;
+            _scaleXRect                  = rect.FindPath(uiName.SCALE_AXIS_X) as RectTransform;
+            _scaleYRect                  = rect.FindPath(uiName.SCALE_AXIS_Y) as RectTransform;
+            _rectRect                    = rect.FindPath(uiName.RECT_AXIS) as RectTransform;
+            _rectTopLeftCornerRect       = rect.FindPath(uiName.RECT_TOP_LEFT_CORNER) as RectTransform;
+            _rectTopRightCornerRect      = rect.FindPath(uiName.RECT_TOP_RIGHT_CORNER) as RectTransform;
+            _rectBottomLeftCornerRect    = rect.FindPath(uiName.RECT_BOTTOM_LEFT_CORNER) as RectTransform;
+            _rectBottomRightCornerRect   = rect.FindPath(uiName.RECT_BOTTOM_RIGHT_CORNER) as RectTransform;
+            _rectTopEdgeRect             = rect.FindPath(uiName.RECT_TOP_EDGE) as RectTransform;
+            _rectRightEdgeRect           = rect.FindPath(uiName.RECT_RIGHT_EDGE) as RectTransform;
+            _rectLeftEdgeRect            = rect.FindPath(uiName.RECT_LEFT_EDGE) as RectTransform;
+            _rectCenterRect              = rect.FindPath(uiName.RECT_CENTER) as RectTransform;
+            _rectBottomEdgeRect          = rect.FindPath(uiName.RECT_BOTTOM_EDGE) as RectTransform;
+            _positionButtonX             = rect.FindPath(uiName.POSITION_AXIS_X).GetComponent<Button>();
+            _positionButtonY             = rect.FindPath(uiName.POSITION_AXIS_Y).GetComponent<Button>();
+            _positionButtonXY            = rect.FindPath(uiName.POSITION_AXIS_XY).GetComponent<Button>();
+            _rotationButtonZ             = rect.FindPath(uiName.ROTATION_AXIS).GetComponent<Button>();
+            _scaleButtonXBody            = rect.FindPath(uiName.SCALE_AXIS_X_BODY).GetComponent<Button>();
+            _scaleButtonXHead            = rect.FindPath(uiName.SCALE_AXIS_X_HEAD).GetComponent<Button>();
+            _scaleButtonYBody            = rect.FindPath(uiName.SCALE_AXIS_Y_BODY).GetComponent<Button>();
+            _scaleButtonYHead            = rect.FindPath(uiName.SCALE_AXIS_Y_HEAD).GetComponent<Button>();
+            _scaleButtonXY               = rect.FindPath(uiName.SCALE_AXIS_XY).GetComponent<Button>();
+            _rectTopLeftCornerButton     = _rectTopLeftCornerRect.GetComponent<Button>();
+            _rectTopRightCornerButton    = _rectTopRightCornerRect.GetComponent<Button>();
+            _rectBottomLeftCornerButton  = _rectBottomLeftCornerRect.GetComponent<Button>();
+            _rectBottomRightCornerButton = _rectBottomRightCornerRect.GetComponent<Button>();
+            _rectTopEdgeButton           = _rectTopEdgeRect.GetComponent<Button>();
+            _rectRightEdgeButton         = _rectRightEdgeRect.GetComponent<Button>();
+            _rectLeftEdgeButton          = _rectLeftEdgeRect.GetComponent<Button>();
+            _rectBottomEdgeButton        = _rectBottomEdgeRect.GetComponent<Button>();
+            _rectCenterButton            = _rectCenterRect.GetComponent<Button>();
         }
 
         private void InitEvent()
         {
-            m_positionButtonX.AddTriggerEvent(EventTriggerType.PointerDown,
+            _positionButtonX.AddTriggerEvent(EventTriggerType.PointerDown,
+                                             data =>
+                                             {
+                                                 if (GetMouseLeftButton) _positionInputX.SetInput = true;
+                                             });
+
+            _positionButtonY.AddTriggerEvent(EventTriggerType.PointerDown,
+                                             data =>
+                                             {
+                                                 if (GetMouseLeftButton) _positionInputY.SetInput = true;
+                                             });
+
+            _positionButtonXY.AddTriggerEvent(EventTriggerType.PointerDown,
                                               data =>
                                               {
-                                                  if (GetMouseLeftButton) m_positionInputX.SetInput = true;
+                                                  if (GetMouseLeftButton) _positionInputXY.SetInput = true;
                                               });
 
-            m_positionButtonY.AddTriggerEvent(EventTriggerType.PointerDown,
+            _rotationButtonZ.AddTriggerEvent(EventTriggerType.PointerDown,
+                                             data =>
+                                             {
+                                                 if (GetMouseLeftButton) _rotationInputZ.SetInput = true;
+                                             });
+
+            _scaleButtonXHead.AddTriggerEvent(EventTriggerType.PointerDown,
                                               data =>
                                               {
-                                                  if (GetMouseLeftButton) m_positionInputY.SetInput = true;
+                                                  if (GetMouseLeftButton) _scaleInputX.SetInput = true;
                                               });
 
-            m_positionButtonXY.AddTriggerEvent(EventTriggerType.PointerDown,
-                                               data =>
-                                               {
-                                                   if (GetMouseLeftButton) m_positionInputXY.SetInput = true;
-                                               });
-
-            m_rotationButtonZ.AddTriggerEvent(EventTriggerType.PointerDown,
+            _scaleButtonYHead.AddTriggerEvent(EventTriggerType.PointerDown,
                                               data =>
                                               {
-                                                  if (GetMouseLeftButton) m_rotationInputZ.SetInput = true;
+                                                  if (GetMouseLeftButton) _scaleInputY.SetInput = true;
                                               });
 
-            m_scaleButtonXHead.AddTriggerEvent(EventTriggerType.PointerDown,
-                                               data =>
-                                               {
-                                                   if (GetMouseLeftButton) m_scaleInputX.SetInput = true;
-                                               });
+            _scaleButtonXBody.AddTriggerEvent(EventTriggerType.PointerDown,
+                                              data =>
+                                              {
+                                                  if (GetMouseLeftButton) _scaleInputX.SetInput = true;
+                                              });
 
-            m_scaleButtonYHead.AddTriggerEvent(EventTriggerType.PointerDown,
-                                               data =>
-                                               {
-                                                   if (GetMouseLeftButton) m_scaleInputY.SetInput = true;
-                                               });
+            _scaleButtonYBody.AddTriggerEvent(EventTriggerType.PointerDown,
+                                              data =>
+                                              {
+                                                  if (GetMouseLeftButton) _scaleInputY.SetInput = true;
+                                              });
 
-            m_scaleButtonXBody.AddTriggerEvent(EventTriggerType.PointerDown,
-                                               data =>
-                                               {
-                                                   if (GetMouseLeftButton) m_scaleInputX.SetInput = true;
-                                               });
+            _scaleButtonXY.AddTriggerEvent(EventTriggerType.PointerDown,
+                                           data =>
+                                           {
+                                               if (GetMouseLeftButton) _scaleInputXY.SetInput = true;
+                                           });
 
-            m_scaleButtonYBody.AddTriggerEvent(EventTriggerType.PointerDown,
-                                               data =>
-                                               {
-                                                   if (GetMouseLeftButton) m_scaleInputY.SetInput = true;
-                                               });
-
-            m_scaleButtonXY.AddTriggerEvent(EventTriggerType.PointerDown,
-                                            data =>
-                                            {
-                                                if (GetMouseLeftButton) m_scaleInputXY.SetInput = true;
-                                            });
-
-            m_rectTopRightCornerButton.AddTriggerEvent(EventTriggerType.PointerDown,
-                                                       data =>
-                                                       {
-                                                           if (GetMouseLeftButton) m_rectTopRightCornerInput.SetInput = true;
-                                                       });
-
-            m_rectTopLeftCornerButton.AddTriggerEvent(EventTriggerType.PointerDown,
+            _rectTopRightCornerButton.AddTriggerEvent(EventTriggerType.PointerDown,
                                                       data =>
                                                       {
-                                                          if (GetMouseLeftButton) m_rectTopLeftCornerInput.SetInput = true;
+                                                          if (GetMouseLeftButton) _rectTopRightCornerInput.SetInput = true;
                                                       });
 
-            m_rectBottomLeftCornerButton.AddTriggerEvent(EventTriggerType.PointerDown,
+            _rectTopLeftCornerButton.AddTriggerEvent(EventTriggerType.PointerDown,
+                                                     data =>
+                                                     {
+                                                         if (GetMouseLeftButton) _rectTopLeftCornerInput.SetInput = true;
+                                                     });
+
+            _rectBottomLeftCornerButton.AddTriggerEvent(EventTriggerType.PointerDown,
+                                                        data =>
+                                                        {
+                                                            if (GetMouseLeftButton) _rectBottomLeftCornerInput.SetInput = true;
+                                                        });
+
+            _rectBottomRightCornerButton.AddTriggerEvent(EventTriggerType.PointerDown,
                                                          data =>
                                                          {
-                                                             if (GetMouseLeftButton) m_rectBottomLeftCornerInput.SetInput = true;
+                                                             if (GetMouseLeftButton) _rectBottomRightCornerInput.SetInput = true;
                                                          });
 
-            m_rectBottomRightCornerButton.AddTriggerEvent(EventTriggerType.PointerDown,
-                                                          data =>
-                                                          {
-                                                              if (GetMouseLeftButton) m_rectBottomRightCornerInput.SetInput = true;
-                                                          });
-
-            m_rectTopEdgeButton.AddTriggerEvent(EventTriggerType.PointerDown,
-                                                data =>
-                                                {
-                                                    if (GetMouseLeftButton) m_rectTopEdgeInput.SetInput = true;
-                                                });
-
-            m_rectRightEdgeButton.AddTriggerEvent(EventTriggerType.PointerDown,
-                                                  data =>
-                                                  {
-                                                      if (GetMouseLeftButton) m_rectRightEdgeInput.SetInput = true;
-                                                  });
-
-            m_rectBottomEdgeButton.AddTriggerEvent(EventTriggerType.PointerDown,
-                                                   data =>
-                                                   {
-                                                       if (GetMouseLeftButton) m_rectBottomEdgeInput.SetInput = true;
-                                                   });
-
-            m_rectLeftEdgeButton.AddTriggerEvent(EventTriggerType.PointerDown,
-                                                 data =>
-                                                 {
-                                                     if (GetMouseLeftButton) m_rectLeftEdgeInput.SetInput = true;
-                                                 });
-
-            m_rectCenterButton.AddTriggerEvent(EventTriggerType.PointerDown,
+            _rectTopEdgeButton.AddTriggerEvent(EventTriggerType.PointerDown,
                                                data =>
                                                {
-                                                   if (GetMouseLeftButton) m_rectCenterInput.SetInput = true;
+                                                   if (GetMouseLeftButton) _rectTopEdgeInput.SetInput = true;
                                                });
 
-            m_positionButtonX.AddTriggerEvent(EventTriggerType.PointerUp,
-                                              data => m_positionInputX.SetInput = false);
+            _rectRightEdgeButton.AddTriggerEvent(EventTriggerType.PointerDown,
+                                                 data =>
+                                                 {
+                                                     if (GetMouseLeftButton) _rectRightEdgeInput.SetInput = true;
+                                                 });
 
-            m_positionButtonY.AddTriggerEvent(EventTriggerType.PointerUp,
-                                              data => m_positionInputY.SetInput = false);
+            _rectBottomEdgeButton.AddTriggerEvent(EventTriggerType.PointerDown,
+                                                  data =>
+                                                  {
+                                                      if (GetMouseLeftButton) _rectBottomEdgeInput.SetInput = true;
+                                                  });
 
-            m_positionButtonXY.AddTriggerEvent(EventTriggerType.PointerUp,
-                                               data => m_positionInputXY.SetInput = false);
+            _rectLeftEdgeButton.AddTriggerEvent(EventTriggerType.PointerDown,
+                                                data =>
+                                                {
+                                                    if (GetMouseLeftButton) _rectLeftEdgeInput.SetInput = true;
+                                                });
 
-            m_rotationButtonZ.AddTriggerEvent(EventTriggerType.PointerUp,
-                                              data => m_rotationInputZ.SetInput = false);
+            _rectCenterButton.AddTriggerEvent(EventTriggerType.PointerDown,
+                                              data =>
+                                              {
+                                                  if (GetMouseLeftButton) _rectCenterInput.SetInput = true;
+                                              });
 
-            m_scaleButtonXHead.AddTriggerEvent(EventTriggerType.PointerUp,
-                                               data => m_scaleInputX.SetInput = false);
+            _positionButtonX.AddTriggerEvent(EventTriggerType.PointerUp,
+                                             data => _positionInputX.SetInput = false);
 
-            m_scaleButtonYHead.AddTriggerEvent(EventTriggerType.PointerUp,
-                                               data => m_scaleInputY.SetInput = false);
+            _positionButtonY.AddTriggerEvent(EventTriggerType.PointerUp,
+                                             data => _positionInputY.SetInput = false);
 
-            m_scaleButtonXBody.AddTriggerEvent(EventTriggerType.PointerUp,
-                                               data => m_scaleInputX.SetInput = false);
+            _positionButtonXY.AddTriggerEvent(EventTriggerType.PointerUp,
+                                              data => _positionInputXY.SetInput = false);
 
-            m_scaleButtonYBody.AddTriggerEvent(EventTriggerType.PointerUp,
-                                               data => m_scaleInputY.SetInput = false);
+            _rotationButtonZ.AddTriggerEvent(EventTriggerType.PointerUp,
+                                             data => _rotationInputZ.SetInput = false);
 
-            m_scaleButtonXY.AddTriggerEvent(EventTriggerType.PointerUp,
-                                            data => m_scaleInputXY.SetInput = false);
+            _scaleButtonXHead.AddTriggerEvent(EventTriggerType.PointerUp,
+                                              data => _scaleInputX.SetInput = false);
 
-            m_rectTopRightCornerButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                                       data => m_rectTopRightCornerInput.SetInput = false);
+            _scaleButtonYHead.AddTriggerEvent(EventTriggerType.PointerUp,
+                                              data => _scaleInputY.SetInput = false);
 
-            m_rectTopLeftCornerButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                                      data => m_rectTopLeftCornerInput.SetInput = false);
+            _scaleButtonXBody.AddTriggerEvent(EventTriggerType.PointerUp,
+                                              data => _scaleInputX.SetInput = false);
 
-            m_rectBottomLeftCornerButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                                         data => m_rectBottomLeftCornerInput.SetInput = false);
+            _scaleButtonYBody.AddTriggerEvent(EventTriggerType.PointerUp,
+                                              data => _scaleInputY.SetInput = false);
 
-            m_rectBottomRightCornerButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                                          data => m_rectBottomRightCornerInput.SetInput = false);
+            _scaleButtonXY.AddTriggerEvent(EventTriggerType.PointerUp,
+                                           data => _scaleInputXY.SetInput = false);
 
-            m_rectTopEdgeButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                                data => m_rectTopEdgeInput.SetInput = false);
+            _rectTopRightCornerButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                                      data => _rectTopRightCornerInput.SetInput = false);
 
-            m_rectRightEdgeButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                                  data => m_rectRightEdgeInput.SetInput = false);
+            _rectTopLeftCornerButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                                     data => _rectTopLeftCornerInput.SetInput = false);
 
-            m_rectBottomEdgeButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                                   data => m_rectBottomEdgeInput.SetInput = false);
+            _rectBottomLeftCornerButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                                        data => _rectBottomLeftCornerInput.SetInput = false);
 
-            m_rectLeftEdgeButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                                 data => m_rectLeftEdgeInput.SetInput = false);
+            _rectBottomRightCornerButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                                         data => _rectBottomRightCornerInput.SetInput = false);
 
-            m_rectCenterButton.AddTriggerEvent(EventTriggerType.PointerUp,
-                                               data => m_rectCenterInput.SetInput = false);
+            _rectTopEdgeButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                               data => _rectTopEdgeInput.SetInput = false);
+
+            _rectRightEdgeButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                                 data => _rectRightEdgeInput.SetInput = false);
+
+            _rectBottomEdgeButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                                  data => _rectBottomEdgeInput.SetInput = false);
+
+            _rectLeftEdgeButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                                data => _rectLeftEdgeInput.SetInput = false);
+
+            _rectCenterButton.AddTriggerEvent(EventTriggerType.PointerUp,
+                                              data => _rectCenterInput.SetInput = false);
         }
     }
 }

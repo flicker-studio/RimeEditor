@@ -6,6 +6,7 @@ using Moon.Kernel.Extension;
 using Moon.Kernel.Struct;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Action = System.Action;
 using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor

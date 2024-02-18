@@ -10,22 +10,23 @@ namespace LevelEditor
 {
     public class Information : BaseInformation
     {
-        public UIManager        UIManager      => m_uiManager;
-        public LevelDataManager DataManager    => m_dataManager;
-        public PrefabManager    PrefabManager  => m_prefabManager;
-        public CameraManager    CameraManager  => m_cameraManager;
-        public OutlineManager   OutlineManager => m_outlineManager;
-        public InputManager     InputManager   => m_inputManager;
-        public LevelAction      LevelAction    => m_levelAction;
+        public UIManager        UIManager      => _uiManager;
+        public LevelDataManager DataManager    => _dataManager;
+        public PrefabManager    PrefabManager  => _prefabManager;
+        public CameraManager    CameraManager  => _cameraManager;
+        public OutlineManager   OutlineManager => _outlineManager;
+        public InputManager     InputManager   => _inputManager;
+        public LevelAction      LevelAction    => _levelAction;
 
-        private UIManager        m_uiManager;
-        private LevelDataManager m_dataManager;
-        private PrefabManager    m_prefabManager;
-        private CameraManager    m_cameraManager;
-        private InputManager     m_inputManager;
-        private OutlineManager   m_outlineManager;
-        private LevelAction      m_levelAction;
+        private UIManager        _uiManager;
+        private LevelDataManager _dataManager;
+        private PrefabManager    _prefabManager;
+        private CameraManager    _cameraManager;
+        private InputManager     _inputManager;
+        private OutlineManager   _outlineManager;
+        private LevelAction      _levelAction;
 
+        
         public async UniTask Init()
         {
             var levelEditorTransform = LevelEditorController.Instance.RootObject.transform as RectTransform;
@@ -33,19 +34,19 @@ namespace LevelEditor
             var prefab = await ResourcesService.LoadAssetAsync<PrefabFactory>("Assets/Settings/GlobalSettings/PrefabFactory.asset");
             var ui     = await ResourcesService.LoadAssetAsync<UISetting>("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset");
             var cam    = await ResourcesService.LoadAssetAsync<CameraSetting>("Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset");
-            
-            m_prefabManager = new PrefabManager(prefab);
-            m_uiManager     = new UIManager(levelEditorTransform, ui);
-            m_inputManager  = new InputManager();
-            m_dataManager   = new LevelDataManager();
 
-            await m_dataManager.LoadLevelFiles();
+            _prefabManager = new PrefabManager(prefab);
+            _uiManager     = new UIManager(levelEditorTransform, ui);
+            _inputManager  = new InputManager();
+            _dataManager   = new LevelDataManager();
 
-            m_cameraManager = new CameraManager(cam);
-            m_levelAction   = new LevelAction();
+            await _dataManager.LoadLevelFiles();
+
+            _cameraManager = new CameraManager(cam);
+            _levelAction   = new LevelAction();
             var mask = await ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineMask.mat");
             var fill = await ResourcesService.LoadAssetAsync<Material>("Assets/Materials/OutlineFill.mat");
-            m_outlineManager          =  new OutlineManager(mask, fill, cam);
+            _outlineManager           =  new OutlineManager(mask, fill, cam);
             DataManager.SyncLevelData += ResetCommand;
             DataManager.SyncLevelData += ResetOutline;
             DataManager.SyncLevelData += ResetCameraPos;

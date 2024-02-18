@@ -1,6 +1,9 @@
-namespace LevelEditor
+namespace LevelEditor.Command
 {
-    public class ActionChangeCommand : ICommand
+    /// <summary>
+    ///     显示不同的
+    /// </summary>
+    internal class Action : ICommand
     {
         private readonly ControlHandleAction m_controlHandleAction;
 
@@ -12,7 +15,7 @@ namespace LevelEditor
 
         private readonly bool m_nextGrid;
 
-        public ActionChangeCommand(ControlHandleAction controlHandleAction, CONTROLHANDLEACTIONTYPE nextActionType)
+        public Action(ControlHandleAction controlHandleAction, CONTROLHANDLEACTIONTYPE nextActionType)
         {
             m_controlHandleAction = controlHandleAction;
             m_lastActionType      = m_controlHandleAction.ControlHandleActionType;
@@ -21,7 +24,10 @@ namespace LevelEditor
             m_nextGrid            = m_controlHandleAction.UseGrid;
         }
 
-        public ActionChangeCommand(ControlHandleAction controlHandleAction, bool nextUseGrid)
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
+        public Action(ControlHandleAction controlHandleAction, bool nextUseGrid)
         {
             m_controlHandleAction = controlHandleAction;
             m_lastGrid            = m_controlHandleAction.UseGrid;
@@ -30,12 +36,14 @@ namespace LevelEditor
             m_nextActionType      = m_controlHandleAction.ControlHandleActionType;
         }
 
+        /// <inheritdoc />
         public void Execute()
         {
             m_controlHandleAction.ControlHandleActionType = m_nextActionType;
             m_controlHandleAction.UseGrid                 = m_nextGrid;
         }
 
+        /// <inheritdoc />
         public void Undo()
         {
             m_controlHandleAction.ControlHandleActionType = m_lastActionType;

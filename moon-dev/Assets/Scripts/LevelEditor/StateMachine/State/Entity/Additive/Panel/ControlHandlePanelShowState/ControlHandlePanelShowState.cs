@@ -114,7 +114,7 @@ namespace LevelEditor
                 if (!CheckStates.Contains(typeof(RectAxisDragState)))
                     ChangeMotionState(typeof(RectAxisDragState));
 
-            if (GetInput.GetGButtonDown) CommandInvoker.Execute(new ActionChangeCommand(GetControlHandleAction, !GetControlHandleAction.UseGrid));
+            if (GetInput.GetGButtonDown) CommandInvoker.Execute(new Action(GetControlHandleAction, !GetControlHandleAction.UseGrid));
 
             if (GetInput.GetCtrlButton && GetInput.GetCButtonDown)
             {
