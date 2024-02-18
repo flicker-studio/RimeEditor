@@ -26,7 +26,6 @@ namespace LevelEditor
         private OutlineManager   _outlineManager;
         private LevelAction      _levelAction;
 
-        
         public async UniTask Init()
         {
             var levelEditorTransform = LevelEditorController.Instance.RootObject.transform as RectTransform;

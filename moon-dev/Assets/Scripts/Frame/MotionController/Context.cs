@@ -8,19 +8,17 @@
         /// <summary>
         ///     Current status
         /// </summary>
-        public IState State => m_state;
+        public IState State => _state;
 
-        private IState m_state;
-
+        private IState _state;
 
         /// <summary>
         ///     Constructs the context and sets the current state to <inheritdoc cref="ReadyState" />
         /// </summary>
         public Context()
         {
-            m_state = new ReadyState();
+            _state = new ReadyState();
         }
-
 
         /// <summary>
         ///     Set status
@@ -28,11 +26,11 @@
         /// <param name="state">
         ///     Target state
         /// </param>
-        public void Transition(IState state)
+        internal void Transition(IState state)
         {
-            m_state.OnExit();
-            m_state = state;
-            m_state.OnEnter();
+            _state.OnExit();
+            _state = state;
+            _state.OnEnter();
         }
     }
 }

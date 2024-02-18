@@ -1,7 +1,9 @@
 ﻿using Frame.StateMachine;
 using Frame.Tool;
+using LevelEditor.State;
 using Moon.Kernel;
 using UnityEngine;
+using Context = LevelEditor.State.Context;
 
 namespace LevelEditor
 {
@@ -11,9 +13,10 @@ namespace LevelEditor
     /// </summary>
     public class LevelEditorController : Singleton<LevelEditorController>
     {
-        public readonly Information      Information = new();
-        public          MotionController MotionController;
-        public          GameObject       RootObject;
+        public static readonly Information Information = new();
+
+        public MotionController MotionController;
+        public GameObject       RootObject;
 
         /// <summary>
         /// Preload setting files
@@ -25,7 +28,7 @@ namespace LevelEditor
             await Information.Init();
             MotionController = new MotionController(Information);
             MotionController.ChangeMotionState(typeof(CameraDefultState));
-            MotionController.ChangeMotionState(typeof(LevelManagerPanelShowState));
+            MotionController.ChangeMotionState(typeof(BrowseState));
             RootObject.SetActive(true);
         }
     }

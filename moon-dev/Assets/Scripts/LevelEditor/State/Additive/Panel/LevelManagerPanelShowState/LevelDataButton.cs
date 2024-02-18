@@ -18,8 +18,20 @@ namespace LevelEditor
 
         private RawImage m_levelCoverImage;
 
-        public LevelDataButton(GameObject buttonPrefab, Action<GridItemButton> onSelect, Transform parent, ScrollRect scrollRect,
-            LevelData levelData, string levelTextName, string levelPathTextName, string levelImageName)
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public LevelDataButton
+        (
+            GameObject             buttonPrefab,
+            Action<GridItemButton> onSelect,
+            Transform              parent,
+            ScrollRect             scrollRect,
+            LevelData              levelData,
+            string                 levelTextName,
+            string                 levelPathTextName,
+            string                 levelImageName
+        )
             : base(buttonPrefab, onSelect, parent, scrollRect)
         {
             m_levelName       = ButtonObj.transform.Find(levelTextName).GetComponent<TextMeshProUGUI>();

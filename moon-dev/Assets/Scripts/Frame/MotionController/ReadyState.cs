@@ -11,6 +11,7 @@ namespace Frame.StateMachine
     /// </remarks>
     public class ReadyState : IState
     {
+        /// <inheritdoc />
         public void Handle(Context context)
         {
             if (context.State is ReadyState)
@@ -18,19 +19,17 @@ namespace Frame.StateMachine
                 throw new Exception($"Unable to transfer to {context.State}.");
             }
 
-            context.Transition(this);
+            IState.Transition(this, context);
         }
 
         /// <inheritdoc />
         public void OnEnter()
         {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void OnExit()
         {
-            throw new NotImplementedException();
         }
     }
 }

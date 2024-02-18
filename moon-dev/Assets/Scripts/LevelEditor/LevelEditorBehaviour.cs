@@ -1,5 +1,8 @@
+using Frame.StateMachine;
+using LevelEditor.State;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Context = LevelEditor.State.Context;
 
 namespace LevelEditor
 {
@@ -12,6 +15,10 @@ namespace LevelEditor
 
         public PlayerInput input;
 
+        private Context _context = new();
+
+        private IState _browseState;
+
         private void OnEnable()
         {
             m_controller  = LevelEditorController.Instance;
@@ -19,6 +26,8 @@ namespace LevelEditor
             m_information.EnableExcute();
 
             input.actions["Redo"].started += Test;
+            _browseState                  =  new BrowseState(m_information, null);
+            _browseState.Handle(_context);
         }
 
         private void Test(InputAction.CallbackContext callbackContext)
