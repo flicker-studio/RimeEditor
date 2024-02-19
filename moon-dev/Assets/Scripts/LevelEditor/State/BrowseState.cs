@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -16,46 +15,63 @@ namespace LevelEditor.State
     /// <summary>
     ///     The level browsing state of the state machine
     /// </summary>
-    public sealed class BrowseState : AdditiveState, IState
+    internal sealed class BrowseState : AdditiveState, IState
     {
         private InputManager     GetInput                 => m_information.InputManager;
         private LevelDataManager DataManager              => m_information.DataManager;
         private GameObject       GetLevelDataButtonPrefab => m_information.PrefabManager.GetLevelItem;
 
-        private string                    GetLevelTextName       => GetBrowseCanvas.GetLevelTextName;
-        private string                    GetLevelPathTextName   => GetBrowseCanvas.GetLevelPathTextName;
-        private string                    GetLevelImageName      => GetBrowseCanvas.GetLevelImageName;
-        private UISetting.PopoverProperty GetPopoverProperty     => GetBrowseCanvas.GetPopoverProperty;
-        private RawImage                  GetLevelCoverImage     => GetBrowseCanvas.GetLevelCoverImage;
-        private ScrollRect                GetScrollRect          => GetBrowseCanvas.GetLevelScrollRect;
-        private Button                    GetOpenLocalFileButton => GetBrowseCanvas.GetImportButton;
-        private RectTransform             GetLevelManagerRoot    => GetBrowseCanvas.GetLevelManagerRootRect;
-        private RectTransform             GetLevelListContent    => GetBrowseCanvas.GetLevelListContentRect;
-        private RectTransform             GetFullPanel           => GetBrowseCanvas.GetFullPanelRect;
+        private string                    GetLevelTextName       => BrowseCanvas.GetLevelTextName;
+        private string                    GetLevelPathTextName   => BrowseCanvas.GetLevelPathTextName;
+        private string                    GetLevelImageName      => BrowseCanvas.GetLevelImageName;
+        private UISetting.PopoverProperty GetPopoverProperty     => BrowseCanvas.GetPopoverProperty;
+        private RawImage                  GetLevelCoverImage     => BrowseCanvas.GetLevelCoverImage;
+        private ScrollRect                GetScrollRect          => BrowseCanvas.GetLevelScrollRect;
+        private Button                    GetOpenLocalFileButton => BrowseCanvas.GetImportButton;
+        private RectTransform             GetLevelManagerRoot    => BrowseCanvas.GetLevelManagerRootRect;
+        private RectTransform             GetLevelListContent    => BrowseCanvas.GetLevelListContentRect;
+        private RectTransform             GetFullPanel           => BrowseCanvas.GetFullPanelRect;
 
-        private Button GetOpenButton        => GetBrowseCanvas.GetOpenButton;
-        private Button GetCreateButton      => GetBrowseCanvas.GetCreateButton;
-        private Button GetDeclarationButton => GetBrowseCanvas.GetDeclarationButton;
-        private Button GetExitButton        => GetBrowseCanvas.GetExitButton;
-        private Button GetRefreshButton     => GetBrowseCanvas.GetRefreshButton;
-        private Button GetDeleteButton      => GetBrowseCanvas.GetDeleteButton;
+        private Button GetOpenButton        => BrowseCanvas.GetOpenButton;
+        private Button GetCreateButton      => BrowseCanvas.GetCreateButton;
+        private Button GetDeclarationButton => BrowseCanvas.GetDeclarationButton;
+        private Button GetExitButton        => BrowseCanvas.GetExitButton;
+        private Button GetRefreshButton     => BrowseCanvas.GetRefreshButton;
+        private Button GetDeleteButton      => BrowseCanvas.GetDeleteButton;
 
-        private          TextMeshProUGUI       GetSubLevelNumber => GetBrowseCanvas.GetSubLevelNumber;
-        private          TextMeshProUGUI       GetLevelName      => GetBrowseCanvas.GetLevelName;
-        private          TextMeshProUGUI       GetAnthorName     => GetBrowseCanvas.GetAnthorName;
-        private          TextMeshProUGUI       GetDateTime       => GetBrowseCanvas.GetDateTime;
-        private          TextMeshProUGUI       GetInstroduction  => GetBrowseCanvas.GetInstroduction;
-        private          TextMeshProUGUI       GetVersion        => GetBrowseCanvas.GetVersion;
+        private          TextMeshProUGUI       GetSubLevelNumber => BrowseCanvas.GetSubLevelNumber;
+        private          TextMeshProUGUI       GetLevelName      => BrowseCanvas.GetLevelName;
+        private          TextMeshProUGUI       GetAnthorName     => BrowseCanvas.GetAnthorName;
+        private          TextMeshProUGUI       GetDateTime       => BrowseCanvas.GetDateTime;
+        private          TextMeshProUGUI       GetInstroduction  => BrowseCanvas.GetInstroduction;
+        private          TextMeshProUGUI       GetVersion        => BrowseCanvas.GetVersion;
         private          LevelDataButton       _currentChooseLevelButton;
         private readonly List<LevelDataButton> _levelDataButtons = new();
 
-        private BrowseCanvas GetBrowseCanvas => m_information.UIManager.GetBrowseCanvas;
-        private BrowseCanvas _panel;
+        #region Canvas
 
-        public BrowseState(BaseInformation baseInformation, MotionCallBack motionCallBack)
+        private BrowseCanvas BrowseCanvas { get; }
+
+        #endregion
+
+        public BrowseState
+        (
+            BaseInformation baseInformation,
+            MotionCallBack  motionCallBack
+        ) : base(baseInformation, motionCallBack)
+        {
+        }
+
+        public BrowseState
+        (
+            BaseInformation baseInformation,
+            MotionCallBack  motionCallBack,
+            RectTransform   rect,
+            UISetting       setting
+        )
             : base(baseInformation, motionCallBack)
         {
-            _panel = new BrowseCanvas();
+            BrowseCanvas = new BrowseCanvas(rect, setting);
             // GetInput.SetCanInput(false);
             // GetFullPanel.gameObject.SetActive(true);
             // GetLevelManagerRoot.gameObject.SetActive(true);
@@ -72,17 +88,22 @@ namespace LevelEditor.State
         /// <inheritdoc />
         public void OnEnter()
         {
-            _panel.Active();
+            BrowseCanvas.Active();
             GetInput.SetCanInput(false);
-            GetFullPanel.gameObject.SetActive(true);
+            BrowseCanvas.GetFullPanelRect.gameObject.SetActive(true);
             GetLevelManagerRoot.gameObject.SetActive(true);
             ReloadLevels();
         }
 
         /// <inheritdoc />
+        public void OnUpdate()
+        {
+        }
+
+        /// <inheritdoc />
         public void OnExit()
         {
-            _panel.Inactive();
+            BrowseCanvas.Inactive();
         }
 
         private void RemoveEvent()

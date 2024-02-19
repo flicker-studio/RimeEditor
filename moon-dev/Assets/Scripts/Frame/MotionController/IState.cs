@@ -38,6 +38,11 @@
         public void OnEnter();
 
         /// <summary>
+        ///     Called every frame in the game loop
+        /// </summary>
+        public void OnUpdate();
+
+        /// <summary>
         ///     Method to execute before exiting
         /// </summary>
         public void OnExit();

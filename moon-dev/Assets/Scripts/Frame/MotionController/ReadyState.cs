@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Frame.StateMachine
 {
@@ -25,11 +26,18 @@ namespace Frame.StateMachine
         /// <inheritdoc />
         public void OnEnter()
         {
+            Debug.Log($"{this} enter.");
+        }
+
+        /// <inheritdoc />
+        public void OnUpdate()
+        {
         }
 
         /// <inheritdoc />
         public void OnExit()
         {
+            Debug.Log($"{this} exit.");
         }
     }
 }

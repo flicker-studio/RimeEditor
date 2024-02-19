@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Moon.Kernel.Extension;
 using SimpleFileBrowser;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using RectTransform = UnityEngine.RectTransform;
 
@@ -104,10 +105,6 @@ namespace LevelEditor.View
             _exitButton.onClick.AddListener(ExitGamePopover);
         }
 
-        public BrowseCanvas()
-        {
-        }
-
         ~BrowseCanvas()
         {
             _createButton.onClick.RemoveAllListeners();
@@ -125,6 +122,7 @@ namespace LevelEditor.View
 
         public void Active()
         {
+            _createButton.gameObject.SetActive(false);
         }
 
         public void Inactive()
@@ -151,8 +149,9 @@ namespace LevelEditor.View
         {
         }
 
-        private void ExitGamePopover()
+        public static void ExitGamePopover()
         {
+            Debug.Log("???");
         }
 
         private void OpenLevelFile()

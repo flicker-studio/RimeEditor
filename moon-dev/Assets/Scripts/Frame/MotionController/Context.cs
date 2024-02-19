@@ -1,4 +1,7 @@
-﻿namespace Frame.StateMachine
+﻿using System;
+using JetBrains.Annotations;
+
+namespace Frame.StateMachine
 {
     /// <summary>
     ///     Environmental context of mealy machine
@@ -10,6 +13,11 @@
         /// </summary>
         public IState State => _state;
 
+        [CanBeNull] public Action Update { get; private set; }
+
+        /// <summary>
+        ///     Current status
+        /// </summary>
         private IState _state;
 
         /// <summary>
@@ -28,9 +36,11 @@
         /// </param>
         internal void Transition(IState state)
         {
+            Update -= _state.OnUpdate;
             _state.OnExit();
             _state = state;
             _state.OnEnter();
+            Update += _state.OnUpdate;
         }
     }
 }

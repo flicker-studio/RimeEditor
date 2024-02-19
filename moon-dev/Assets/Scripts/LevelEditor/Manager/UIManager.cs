@@ -27,7 +27,7 @@ namespace LevelEditor
             GetAreaPanel          = new AreaPanel(levelEditorCanvasRect, uiSetting);
             GetLevelPanel         = new LevelPanel(levelEditorCanvasRect, uiSetting);
             GetInspectorPanel     = new InspectorPanel(levelEditorCanvasRect, uiSetting);
-            GetBrowseCanvas  = new BrowseCanvas(levelEditorCanvasRect, uiSetting);
+            //GetBrowseCanvas  = new BrowseCanvas(levelEditorCanvasRect, uiSetting);
             GetLevelSettingPanel  = new LevelSettingPanel(levelEditorCanvasRect, uiSetting);
         }
 

@@ -26,16 +26,18 @@ namespace LevelEditor
         private OutlineManager   _outlineManager;
         private LevelAction      _levelAction;
 
+        public UISetting UI;
+
         public async UniTask Init()
         {
-            var levelEditorTransform = LevelEditorController.Instance.RootObject.transform as RectTransform;
+            var levelEditorTransform = Controller.Instance.RootObject.transform as RectTransform;
 
             var prefab = await ResourcesService.LoadAssetAsync<PrefabFactory>("Assets/Settings/GlobalSettings/PrefabFactory.asset");
-            var ui     = await ResourcesService.LoadAssetAsync<UISetting>("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset");
-            var cam    = await ResourcesService.LoadAssetAsync<CameraSetting>("Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset");
+            UI = await ResourcesService.LoadAssetAsync<UISetting>("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset");
+            var cam = await ResourcesService.LoadAssetAsync<CameraSetting>("Assets/Settings/GlobalSettings/LevelEditorCameraProperty.asset");
 
             _prefabManager = new PrefabManager(prefab);
-            _uiManager     = new UIManager(levelEditorTransform, ui);
+            _uiManager     = new UIManager(levelEditorTransform, UI);
             _inputManager  = new InputManager();
             _dataManager   = new LevelDataManager();
 
@@ -53,8 +55,8 @@ namespace LevelEditor
 
         internal void EnableExcute()
         {
-            DataManager.SetActiveEditors(true);
-            OutlineManager.SetRenderObjects(DataManager.TargetObjs);
+            // DataManager.SetActiveEditors(true);
+            //  OutlineManager.SetRenderObjects(DataManager.TargetObjs);
         }
 
         private void ResetCommand(SubLevelData subLevelData)

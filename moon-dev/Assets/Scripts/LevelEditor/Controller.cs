@@ -3,7 +3,6 @@ using Frame.Tool;
 using LevelEditor.State;
 using Moon.Kernel;
 using UnityEngine;
-using Context = LevelEditor.State.Context;
 
 namespace LevelEditor
 {
@@ -11,12 +10,16 @@ namespace LevelEditor
     /// <summary>
     /// Scene entrance
     /// </summary>
-    public class LevelEditorController : Singleton<LevelEditorController>
+    public class Controller : Singleton<Controller>
     {
+        /// <summary>
+        ///     Information Center
+        /// </summary>
         public static readonly Information Information = new();
 
-        public MotionController MotionController;
-        public GameObject       RootObject;
+        public   MotionController MotionController;
+        public   GameObject       RootObject;
+        internal Behaviour        Behaviour;
 
         /// <summary>
         /// Preload setting files
@@ -24,12 +27,16 @@ namespace LevelEditor
         public async void AssetsLoaderAsync()
         {
             await Explorer.BootCompletionTask;
-            RootObject = GameObject.FindGameObjectWithTag("Temp_Editor").GetComponent<Collect>().target;
+
+            RootObject        = GameObject.FindGameObjectWithTag("Temp_Editor");
+            Behaviour         = RootObject.AddComponent<Behaviour>();
+            Behaviour.enabled = true;
+            RootObject.SetActive(true);
             await Information.Init();
+
             MotionController = new MotionController(Information);
             MotionController.ChangeMotionState(typeof(CameraDefultState));
             MotionController.ChangeMotionState(typeof(BrowseState));
-            RootObject.SetActive(true);
         }
     }
 }
