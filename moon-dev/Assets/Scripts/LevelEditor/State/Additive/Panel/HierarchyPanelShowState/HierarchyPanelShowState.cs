@@ -133,7 +133,6 @@ public class HierarchyPanelShowState : AdditiveState
         itemView.Remove();
     }
 
-
     private ItemView CreateParent(AbstractItem item)
     {
         var itemNodeParent = new ItemView(item, GetSelectedNode, ScrollView);
@@ -191,8 +190,9 @@ public class HierarchyPanelShowState : AdditiveState
             }
     }
 
-    private void GetSelectedNode(ItemView selectView)
+    private void GetSelectedNode()
     {
+        /*ItemView selectView
         if (ShiftInput)
         {
             SelectMultiItem(selectView);
@@ -205,7 +205,7 @@ public class HierarchyPanelShowState : AdditiveState
             return;
         }
 
-        SelectSingleItem(selectView);
+        SelectSingleItem(selectView);*/
     }
 
     private void SelectSingleItem(ItemView selectView)

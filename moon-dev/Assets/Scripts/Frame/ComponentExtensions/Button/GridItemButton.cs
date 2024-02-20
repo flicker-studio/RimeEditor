@@ -12,17 +12,18 @@ namespace Frame.CompnentExtensions
 
         protected EventButton _eventButton;
 
-        protected GameObject ButtonObj;
+        protected readonly GameObject ButtonObj;
 
         protected GridItemButton
         (
-            GameObject             buttonPrefab,
-            Action<GridItemButton> onSelect,
-            Transform              parent,
-            ScrollRect             scrollRect)
+            GameObject buttonPrefab,
+            Action     click,
+            Transform  parent,
+            ScrollRect scrollRect
+        )
         {
             ButtonObj    = Object.Instantiate(buttonPrefab, parent, true);
-            _eventButton = new EventButton(ButtonObj, onSelect as Action<Button>, scrollRect);
+            _eventButton = new EventButton(ButtonObj, click, scrollRect);
         }
 
         public void SetSelected(bool value)

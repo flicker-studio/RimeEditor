@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Moon.Kernel;
+using UnityEngine;
 
 namespace LevelEditor
 {
@@ -7,9 +8,9 @@ namespace LevelEditor
     /// </summary>
     public class Helper : MonoBehaviour
     {
-        private void Awake()
+        private void Start()
         {
-            Controller.Instance.AssetsLoaderAsync();
+            Boot.PostBoot += Controller.Instance.AssetsLoaderAsync;
         }
     }
 }

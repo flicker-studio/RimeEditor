@@ -21,18 +21,13 @@ namespace LevelEditor
         {
             input                         =  FindObjectOfType<PlayerInput>();
             input.actions["Redo"].started += Test;
-        }
-
-        private void Awake()
-        {
+       
             _information = Controller.Information;
             _information.EnableExcute();
             var levelEditorTransform = transform as RectTransform;
 
             _browseState = new BrowseState
                 (
-                 _information,
-                 null,
                  levelEditorTransform,
                  _information.UI
                 );

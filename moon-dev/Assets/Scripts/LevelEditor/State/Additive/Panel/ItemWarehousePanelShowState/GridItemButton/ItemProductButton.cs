@@ -30,7 +30,7 @@ public class ItemProductButton : GridItemButton
 
     public ItemProductButton(GameObject buttonPrefab, ItemProduct itemProduct, Action<GridItemButton> onSelect
         , Transform parent, ScrollRect scrollRect, string textName, string imageName)
-        : base(buttonPrefab, onSelect, parent, scrollRect)
+        : base(buttonPrefab, null, parent, scrollRect)
     {
         m_text         = ButtonObj.transform.Find(textName).GetComponent<TextMeshProUGUI>();
         m_image        = ButtonObj.transform.Find(imageName).GetComponent<Image>();

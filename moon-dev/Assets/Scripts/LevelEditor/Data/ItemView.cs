@@ -40,8 +40,8 @@ namespace LevelEditor.Data
         /// <param name="item"></param>
         /// <param name="onSelect"></param>
         /// <param name="scrollView"></param>
-        public ItemView(AbstractItem item, Action<ItemView> onSelect, ScrollRect scrollView) :
-            base(item.GameObject, onSelect as Action<Button>, scrollView)
+        public ItemView(AbstractItem item, Action onSelect, ScrollRect scrollView) :
+            base(item.GameObject, onSelect , scrollView)
         {
             _item        = item;
             _textMesh    = GameObject.Find("DescribeText").GetComponent<TextMeshProUGUI>();

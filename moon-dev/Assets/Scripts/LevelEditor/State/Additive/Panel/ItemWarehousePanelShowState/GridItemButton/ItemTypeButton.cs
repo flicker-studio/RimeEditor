@@ -17,7 +17,7 @@ public class ItemTypeButton : GridItemButton
         Transform              parent,
         ScrollRect             scrollRect,
         string                 textName
-    ) : base(buttonPrefab, onSelect, parent, scrollRect)
+    ) : base(buttonPrefab, null, parent, scrollRect)
     {
         _text = ButtonObj.transform.Find(textName).GetComponent<TextMeshProUGUI>();
     }

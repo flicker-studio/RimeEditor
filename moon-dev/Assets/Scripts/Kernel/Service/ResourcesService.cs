@@ -10,30 +10,28 @@ namespace Moon.Kernel.Service
 {
     /// <inheritdoc />
     /// <summary>
-    /// This service is used for resource management, which automatically or manually unloads resources to save memory
+    ///     This service is used for resource management, which automatically or manually unloads resources to save memory
     /// </summary>
-    [UsedImplicitly]
-    [SystemService(typeof(ResourcesService))]
+    [UsedImplicitly, SystemService]
     public sealed class ResourcesService : Service
     {
-        private static class Const
+        ~ResourcesService()
         {
+            // Do not re-create Dispose clean-up code here.
+            // Calling Dispose(disposing: false) is optimal in terms of
+            // readability and maintainability.
+            Dispose(false);
         }
 
         internal override void OnStart()
         {
-           
         }
 
         internal override void OnStop()
         {
         }
 
-        internal override void Dispose(bool all)
-        {
-        }
-
-        internal async override UniTask Run()
+        internal override async UniTask Run()
         {
             await SettingHelper.LoadSettingsAsync();
         }
@@ -44,20 +42,17 @@ namespace Moon.Kernel.Service
         }
 
         /// <summary>
-        /// Load an addressable resource based on the address
+        ///     Load an addressable resource based on the address
         /// </summary>
         /// <param name="key">The address of the addressable resource</param>
         /// <typeparam name="T">The type of addressable resource</typeparam>
         /// <returns>Resource</returns>
-        /// <exception cref="Exception">当资源不存在时会抛出错误</exception>
+        /// <exception cref="Exception">An error is thrown when the resource does not exist</exception>
         public static async UniTask<T> LoadAssetAsync<T>(string key)
         {
             var a = await Addressables.LoadAssetAsync<T>(key);
 
-            if (a == null)
-            {
-                throw new Exception($"Value of {key} doesn't seem to be right.");
-            }
+            if (a == null) throw new Exception($"Value of {key} doesn't seem to be right.");
 
             return a;
         }

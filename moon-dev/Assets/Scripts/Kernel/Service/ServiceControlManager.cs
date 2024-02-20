@@ -37,7 +37,6 @@ namespace Moon.Kernel.Service
             RunningServices.Add(service);
         }
 
-
         /// <summary>
         ///     Terminate a running service to free up memory
         /// </summary>
@@ -50,10 +49,15 @@ namespace Moon.Kernel.Service
                 throw new NullReferenceException();
             }
 
-            service.Abort();
             RunningServices.Remove(service);
-        }
+            if (ServicesCache.TryGetValue(service.GetType(), out var target))
+            {
+                ServicesCache.Remove(service.GetType());
+            }
 
+            service.Abort();
+            service.Dispose();
+        }
 
         /// <summary>
         ///     Get the running Service class
@@ -79,7 +83,6 @@ namespace Moon.Kernel.Service
             throw new NullReferenceException();
         }
 
-
         /// <summary>
         ///     Register for services by attribute
         /// </summary>
@@ -102,18 +105,16 @@ namespace Moon.Kernel.Service
                     continue;
                 }
 
-                var instance = attr.Create();
-
-                if (instance is null)
+                if (serviceAssembly.CreateInstance(type.FullName!) is not Service instance)
                 {
                     throw new WarningException($"There has some error in {type} class");
                 }
 
+                instance?.Instanced();
                 RunningServices.Add(instance);
 
                 _onStart += instance.OnStart;
             }
-
 
             _onStart.Invoke();
 
@@ -121,6 +122,17 @@ namespace Moon.Kernel.Service
             var runTask = RunningServices.Select(service => service.Run());
             await UniTask.WhenAll(runTask);
             Debug.Log("<color=green>[SERVICE]</color> Initialization is complete");
+        }
+
+        internal static void Destroy()
+        {
+            foreach (var service in RunningServices)
+            {
+                service.Dispose();
+            }
+
+            RunningServices.Clear();
+            ServicesCache.Clear();
         }
     }
 }

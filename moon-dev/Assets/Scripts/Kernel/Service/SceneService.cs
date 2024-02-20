@@ -12,7 +12,7 @@ namespace Moon.Kernel.Service
     /// <summary>
     ///     This service is used for scene management, including loading and unloading
     /// </summary>
-    [UsedImplicitly, SystemService(typeof(SceneService))]
+    [UsedImplicitly, SystemService]
     public sealed class SceneService : Service
     {
         /// <summary>
@@ -36,9 +36,6 @@ namespace Moon.Kernel.Service
         /// <summary>
         /// </summary>
         public const string PersistenceSceneName = "Persistent";
-
-
-        #region public API
 
         /// <summary>
         ///     Unload tag scene and load next scene asynchronously
@@ -109,9 +106,15 @@ namespace Moon.Kernel.Service
             return target;
         }
 
-        #endregion
+        ~SceneService()
+        {
+            // Do not re-create Dispose clean-up code here.
+            // Calling Dispose(disposing: false) is optimal in terms of
+            // readability and maintainability.
+            Dispose(disposing: false);
+        }
 
-        internal async override UniTask Run()
+        internal override async UniTask Run()
         {
             PersistenceScene = await TryLoadScene(PersistenceSceneName);
 /*
@@ -125,7 +128,7 @@ namespace Moon.Kernel.Service
             SceneManager.sceneLoaded        += OnSceneLoad;
         }
 
-        internal async override Task Abort()
+        internal override async Task Abort()
         {
             await Task.Run(OnStop);
         }
@@ -136,11 +139,6 @@ namespace Moon.Kernel.Service
 
         internal override void OnStop()
         {
-        }
-
-        internal override void Dispose(bool all)
-        {
-            throw new NotImplementedException();
         }
 
         private void OnSceneLoad(Scene scene, LoadSceneMode loadSceneMode)

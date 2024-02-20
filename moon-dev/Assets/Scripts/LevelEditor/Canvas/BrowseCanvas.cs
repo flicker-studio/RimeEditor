@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Frame.Tool.Popover;
+using JetBrains.Annotations;
+using LevelEditor.View;
 using Moon.Kernel.Extension;
 using SimpleFileBrowser;
 using TMPro;
@@ -7,36 +11,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using RectTransform = UnityEngine.RectTransform;
 
-namespace LevelEditor.View
+namespace LevelEditor.Canvas
 {
     internal sealed class BrowseCanvas : IDisposable
     {
-        public string GetLevelTextName     => _levelTextName;
-        public string GetLevelPathTextName => _levelPathTextName;
-        public string GetLevelImageName    => _levelImageName;
-
-        public RawImage      GetLevelCoverImage      => _levelCoverImage;
-        public ScrollRect    GetLevelScrollRect      => _levelScrollRect;
-        public RectTransform GetLevelManagerRootRect => _levelManagerRootRect;
-        public RectTransform GetLevelListContentRect => _levelListContentRect;
-        public RectTransform GetFullPanelRect        => _fullPanelRect;
-
-        public Button GetOpenButton        => _openButton;
-        public Button GetCreateButton      => _createButton;
-        public Button GetDeclarationButton => _declarationButton;
-        public Button GetExitButton        => _exitButton;
-        public Button GetRefreshButton     => _refreshButton;
-        public Button GetDeleteButton      => _deleteButton;
-        public Button GetImportButton      => _importButton;
-        public Button GetWorksShopButton   => _worksShopButton;
-
-        public TextMeshProUGUI           GetSubLevelNumber  => _subLevelNumber;
-        public TextMeshProUGUI           GetLevelName       => _levelName;
-        public TextMeshProUGUI           GetAnthorName      => _anthorName;
-        public TextMeshProUGUI           GetDateTime        => _dateTime;
-        public TextMeshProUGUI           GetInstroduction   => _instroduction;
-        public TextMeshProUGUI           GetVersion         => _version;
-        public UISetting.PopoverProperty GetPopoverProperty { get; private set; }
+        private UISetting.PopoverProperty PopoverProperty { get; }
 
         private readonly RawImage      _levelCoverImage;
         private readonly ScrollRect    _levelScrollRect;
@@ -64,12 +43,15 @@ namespace LevelEditor.View
         private readonly TextMeshProUGUI _version;
         private readonly TextMeshProUGUI _subLevelNumber;
 
-        public BrowseCanvas(RectTransform rect, UISetting levelEditorUISetting)
+        private          LevelEntry       _activeEntry;
+        private readonly List<LevelEntry> _levelEntries = new();
+
+        public BrowseCanvas([NotNull] RectTransform rect, [NotNull] UISetting levelEditorUISetting)
         {
             #region GET
 
             var uiProperty = levelEditorUISetting.GetLevelManagerPanelUI.GetLevelManagerPanelUIName;
-            GetPopoverProperty    = levelEditorUISetting.GetPopoverProperty;
+            PopoverProperty       = levelEditorUISetting.GetPopoverProperty;
             _levelTextName        = uiProperty.ITEM_LEVEL_NAME;
             _levelPathTextName    = uiProperty.ITEM_LEVEL_PATH;
             _levelImageName       = uiProperty.ITEM_LEVEL_ICON;
@@ -96,9 +78,8 @@ namespace LevelEditor.View
 
             #endregion
 
-            _createButton.onClick.AddListener(CreateLevel);
+            _createButton.onClick.AddListener(Create);
             _openButton.onClick.AddListener(OpenLevel);
-
             _refreshButton.onClick.AddListener(ReloadLevels);
             _deleteButton.onClick.AddListener(DeleteLevelPopover);
             _importButton.onClick.AddListener(OpenLevelFile);
@@ -107,34 +88,70 @@ namespace LevelEditor.View
 
         ~BrowseCanvas()
         {
-            _createButton.onClick.RemoveAllListeners();
-            _openButton.onClick.RemoveAllListeners();
-            _refreshButton.onClick.RemoveAllListeners();
-            _deleteButton.onClick.RemoveAllListeners();
-            _importButton.onClick.RemoveAllListeners();
-            _exitButton.onClick.RemoveAllListeners();
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this); // System resource trash can resource recycling
+            Dispose(false);
         }
 
         public void Active()
         {
-            _createButton.gameObject.SetActive(false);
+            _createButton.interactable = false;
+            _fullPanelRect.gameObject.SetActive(true);
+            _levelManagerRootRect.gameObject.SetActive(true);
+            var pre = Resources.Load("Prefabs/LevelItem") as GameObject;
+
+            for (int i = 0; i < 12; i++)
+            {
+                var levelEntry = new LevelEntry
+                    (pre,
+                     () => { Debug.Log("ha"); },
+                     _levelScrollRect.content,
+                     _levelScrollRect,
+                     new LevelData(),
+                     null,
+                     null,
+                     null
+                    );
+            }
+            _activeEntry = new LevelEntry
+                (pre,
+                 () => { Debug.Log("ha"); },
+                 _levelScrollRect.content,
+                 _levelScrollRect,
+                 new LevelData(),
+                 null,
+                 null,
+                 null
+                );
         }
 
         public void Inactive()
         {
+            _levelManagerRootRect.gameObject.SetActive(false);
+            _fullPanelRect.gameObject.SetActive(false);
         }
 
-        private void CreateLevel()
+        public void Dispose()
         {
+            Dispose(false);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+            }
+        }
+
+        private void Create()
+        {
+            // register event
+
+            // show create canvas
         }
 
         private void OpenLevel()
         {
+            _activeEntry.Invoke();
         }
 
         private void DeleteLevelPopover()
@@ -145,13 +162,13 @@ namespace LevelEditor.View
         {
         }
 
-        private async void ReloadLevels()
+        private void ReloadLevels()
         {
         }
 
-        public static void ExitGamePopover()
+        private void ExitGamePopover()
         {
-            Debug.Log("???");
+            PopoverLauncher.Instance.LaunchSelector(_levelManagerRootRect, PopoverProperty.POPOVER_TEXT_EXIT, Application.Quit);
         }
 
         private void OpenLevelFile()

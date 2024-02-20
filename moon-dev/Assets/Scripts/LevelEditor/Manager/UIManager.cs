@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using LevelEditor.View;
 using UnityEngine;
 
 namespace LevelEditor
@@ -14,7 +13,7 @@ namespace LevelEditor
         internal InspectorPanel     GetInspectorPanel     { get; }
         internal LevelPanel         GetLevelPanel         { get; }
         internal AreaPanel          GetAreaPanel          { get; }
-        internal BrowseCanvas  GetBrowseCanvas  { get; }
+       
         internal LevelSettingPanel  GetLevelSettingPanel  { get; }
 
         public UIManager(RectTransform levelEditorCanvasRect, UISetting uiSetting)
