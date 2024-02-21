@@ -27,7 +27,7 @@ namespace Frame.CompnentExtensions
             }
         }
 
-        private readonly Button _button;
+        public readonly Button _button;
         // private readonly Image  _image;
 
         private readonly EventTrigger _trigger;
@@ -43,8 +43,13 @@ namespace Frame.CompnentExtensions
             _button = gameObject.GetComponent<Button>();
             // _image   = gameObject.GetComponent<Image>();
             _trigger = gameObject.AddComponent<EventTrigger>();
-            _button.onClick.AddListener(onClick.Invoke);
+//            _button.onClick.AddListener(onClick.Invoke);
             InitScroll(scrollRect);
+        }
+
+        public void AddEvents(Action onSelect)
+        {
+            _button.onClick.AddListener(() => { onSelect?.Invoke(); });
         }
 
         private void InitEvents(Action<Button> onSelect)

@@ -297,9 +297,9 @@ namespace LevelEditor
             return itemTypeButton;
         }
 
-        private void ItemTypeSelectEvent(GridItemButton gridItemButton)
+        private void ItemTypeSelectEvent(ListEntry listEntry)
         {
-            var itemTypeButton = gridItemButton as ItemTypeButton;
+            var itemTypeButton = listEntry as ItemTypeButton;
             ItemTypeChoose(itemTypeButton);
             if (m_searchItemTypeButton == null || (m_searchItemTypeButton != null && !m_searchItemTypeButton.GetActive()))
                 SetContentPosByItemType(itemTypeButton);
@@ -378,21 +378,21 @@ namespace LevelEditor
             CommandInvoker.Execute(new Create(ItemAssets[0].Type));
         }
 
-        private void ChooseItemProduct(GridItemButton gridItemButton)
+        private void ChooseItemProduct(ListEntry listEntry)
         {
-            var itemProductButton = gridItemButton as ItemProductButton;
+            var itemProductButton = listEntry as ItemProductButton;
             var itemProduct       = itemProductButton.GetItemProduct;
             GetSelectPromptText.text     = $"{GetSelectPromptText.gameObject.name}: {itemProduct.Name}";
             m_currentChoose              = itemProduct;
             GetCreateButton.interactable = true;
             foreach (var itemProductObj in m_itemProductButtonList)
-                if (itemProductObj != gridItemButton)
+                if (itemProductObj != listEntry)
                     itemProductObj.SetSelected(false);
             foreach (var keyValuePair in m_searchItemProductDic)
             foreach (var itemProductObj in keyValuePair.Value)
-                if (itemProductObj != gridItemButton)
+                if (itemProductObj != listEntry)
                     itemProductObj.SetSelected(false);
-            gridItemButton.SetSelected(true);
+            listEntry.SetSelected(true);
         }
 
         private void ResetInitBool()

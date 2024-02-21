@@ -3,17 +3,19 @@ using Frame.CompnentExtensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace LevelEditor.View
 {
     /// <summary>
     ///     Level entries displayed in the Browse screen
     /// </summary>
-    internal class LevelEntry : GridItemButton
+    internal class LevelEntry : ListEntry
     {
-        public LevelData Level => _level;
+        public LevelInfo Info => _info;
 
-        private readonly LevelData       _level;
+        private readonly LevelInfo _info;
+
         private readonly TextMeshProUGUI _name;
         private readonly TextMeshProUGUI _path;
         private readonly RawImage        _cover;
@@ -23,26 +25,57 @@ namespace LevelEditor.View
         /// </summary>
         public LevelEntry
         (
-            GameObject buttonPrefab,
-            Action     onSelect,
-            Transform  parent,
-            ScrollRect scrollRect,
-            LevelData  level,
-            string     levelTextName,
-            string     levelPathTextName,
-            string     levelImageName
+            GameObject         buttonPrefab,
+            Action<LevelEntry> onSelect,
+            Transform          parent,
+            ScrollRect         scrollRect,
+            LevelInfo          level,
+            string             levelTextName,
+            string             levelPathTextName,
+            string             levelImageName
         )
-            : base(buttonPrefab, onSelect, parent, scrollRect)
+            : base(buttonPrefab, null, parent, scrollRect)
         {
-            //     _name      = ButtonObj.transform.Find(levelTextName).GetComponent<TextMeshProUGUI>();
-            //     _path      = ButtonObj.transform.Find(levelPathTextName).GetComponent<TextMeshProUGUI>();
-            //     _cover     = ButtonObj.transform.Find(levelImageName).GetComponent<RawImage>();
-            //     _level     = level;
-            //     _name.text = _level.LevelName;
-            //     _path.text = _level.Path;
-            //
-            //     if (_level.Cover != null) _cover.texture = _level.Cover;
-            //
+            _name      = ButtonObj.transform.Find(levelTextName).GetComponent<TextMeshProUGUI>();
+            _path      = ButtonObj.transform.Find(levelPathTextName).GetComponent<TextMeshProUGUI>();
+            _cover     = ButtonObj.transform.Find(levelImageName).GetComponent<RawImage>();
+            _info      = level;
+            _name.text = _info.Name;
+            _path.text = "_info.Path";
+
+            _cover.texture = _info.Cover;
+
+            _eventButton.AddEvents(() => { onSelect?.Invoke(this); });
+        }
+
+        public void Selected()
+        {
+            _eventButton._button.interactable = false;
+        }
+
+        public void Uncheck()
+        {
+            _eventButton._button.interactable = true;
+        }
+
+        public void Open()
+        {
+            Debug.Log("Level Opened.");
+        }
+
+        public void Dispose()
+        {
+            Dispose(false);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+            }
+
+            Object.Destroy(ButtonObj);
         }
     }
 }

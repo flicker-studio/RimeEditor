@@ -3,6 +3,7 @@
 using JetBrains.Annotations;
 using LevelEditor.Data.Serialization;
 using Newtonsoft.Json;
+using UnityEngine;
 
 #endregion
 
@@ -20,7 +21,7 @@ namespace LevelEditor
 
         public string Introduction => m_introduction;
 
-        public string Cover => m_cover;
+        public Texture2D Cover => m_cover;
 
         /// <summary>
         ///     The name of level
@@ -40,14 +41,29 @@ namespace LevelEditor
         /// <summary>
         ///     The cover of the level
         /// </summary>
-        private readonly string m_cover;
+        private readonly Texture2D m_cover;
 
-        public LevelInfo([NotNull] string name, [NotNull] string author, [NotNull] string introduction, [NotNull] string cover)
+        /// <summary>
+        ///     The cover path of the level
+        /// </summary>
+        private readonly string m_coverPath;
+
+        public LevelInfo([NotNull] string name, [NotNull] string author, [NotNull] string introduction, [NotNull] Texture2D cover)
         {
             m_name         = name;
             m_author       = author;
             m_introduction = introduction;
+            m_coverPath    = null;
             m_cover        = cover;
+        }
+
+        public LevelInfo([NotNull] string name, [NotNull] string author, [NotNull] string introduction)
+        {
+            m_name         = name;
+            m_author       = author;
+            m_introduction = introduction;
+            m_coverPath    = null;
+            m_cover        = Texture2D.grayTexture;
         }
 
         public void UpdateInfo

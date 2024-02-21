@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemProductButton : GridItemButton
+public class ItemProductButton : ListEntry
 {
     private TextMeshProUGUI m_text;
 
@@ -27,9 +27,8 @@ public class ItemProductButton : GridItemButton
         get { return m_itemProduct; }
     }
 
-
-    public ItemProductButton(GameObject buttonPrefab, ItemProduct itemProduct, Action<GridItemButton> onSelect
-        , Transform parent, ScrollRect scrollRect, string textName, string imageName)
+    public ItemProductButton(GameObject buttonPrefab, ItemProduct itemProduct, Action<ListEntry> onSelect
+                           , Transform  parent,       ScrollRect  scrollRect,  string            textName, string imageName)
         : base(buttonPrefab, null, parent, scrollRect)
     {
         m_text         = ButtonObj.transform.Find(textName).GetComponent<TextMeshProUGUI>();
