@@ -32,9 +32,8 @@ namespace LevelEditor
             _items.AddRange(items);
             _newRot.AddRange(newRot);
 
-            for (var i = 0; i < _items.Count; i++) _oldRot[i] = _items[i].Transform.rotation;
+            for (var i = 0; i < _items.Count; i++) _oldRot.Add(_items[i].Transform.rotation);
         }
-
 
         /// <inheritdoc />
         public void Execute()

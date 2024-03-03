@@ -9,63 +9,36 @@ namespace LevelEditor
     /// </summary>
     public class Scale : ICommand
     {
-        private readonly List<AbstractItem> m_items        = new();
-        private readonly List<Vector3>      m_lastScale    = new();
-        private readonly List<Vector3>      m_nextScale    = new();
-        private readonly List<Vector3>      m_lastPosition = new();
-        private readonly List<Vector3>      m_nextPosition = new();
-        private readonly GameObject         m_item;
-        private readonly Vector3            m_newPos;
-        private readonly Vector3            m_newScale;
-        private readonly Vector3            m_oldPos;
-        private readonly Vector3            m_oldScale;
+        private readonly List<AbstractItem> _items;
+        private readonly List<Vector3>      _newScale;
+        private readonly List<Vector3>      _oldScale;
 
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public Scale(List<AbstractItem> items, List<Vector3> lastPosition, List<Vector3> nextPosition, List<Vector3> lastScale,
-                     List<Vector3>      nextScale)
+        public Scale(List<AbstractItem> items, IEnumerable<Vector3> newScale)
         {
-            m_items.AddRange(items);
-            m_lastScale.AddRange(lastScale);
-            m_nextScale.AddRange(nextScale);
-            m_lastPosition.AddRange(lastPosition);
-            m_nextPosition.AddRange(nextPosition);
-        }
+            var count = items.Count;
 
-        public Scale(GameObject item, Vector3 newPos, Vector3 newScale)
-        {
-            m_item     = item;
-            m_oldPos   = item.transform.position;
-            m_newPos   = newPos;
-            m_oldScale = item.transform.localScale;
-            m_newScale = newScale;
+            _items    = new List<AbstractItem>(count);
+            _newScale = new List<Vector3>(count);
+            _oldScale = new List<Vector3>(count);
+
+            _items.AddRange(items);
+            _newScale.AddRange(newScale);
+            for (var i = 0; i < count; i++) _oldScale.Add(_items[i].Transform.position);
         }
 
         /// <inheritdoc />
         public void Execute()
         {
-            m_item.transform.position   = m_newPos;
-            m_item.transform.localScale = m_newScale;
-
-            // for (var i = 0; i < m_items.Count; i++)
-            // {
-            //     m_items[i].GetItemObjEditor.transform.position   = m_nextPosition[i];
-            //     m_items[i].GetItemObjEditor.transform.localScale = m_nextScale[i];
-            // }
+            for (var i = 0; i < _items.Count; i++) _items[i].Transform.localScale = _newScale[i];
         }
 
         /// <inheritdoc />
         public void Undo()
         {
-            m_item.transform.position   = m_oldPos;
-            m_item.transform.localScale = m_oldScale;
-
-            // for (var i = 0; i < m_items.Count; i++)
-            // {
-            //     m_items[i].GetItemObjEditor.transform.position   = m_lastPosition[i];
-            //     m_items[i].GetItemObjEditor.transform.localScale = m_lastScale[i];
-            // }
+            for (var i = 0; i < _items.Count; i++) _items[i].Transform.localScale = _oldScale[i];
         }
     }
 }

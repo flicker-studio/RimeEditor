@@ -23,7 +23,7 @@ namespace LevelEditor.Canvas
         public void Active()
         {
             _inspectorPanel.Add();
-            Update += _inspectorPanel.AsyncRefresh;
+            Update += _inspectorPanel.TransformBind;
         }
 
         public void Inactive()

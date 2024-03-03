@@ -68,12 +68,12 @@ namespace LevelEditor
             var inspectorItem = Object.Instantiate(prefab, ContentRect, true);
         }
 
-        public void AsyncRefresh(List<AbstractItem> items)
+        public void TransformBind(List<AbstractItem> items)
         {
             var count = items.Count;
             if (count <= 0) return;
 
-            var newPos = new List<Vector3>();
+            var newPos = new List<Vector3>(count);
             if (_positionInputFieldVector3.GetVector3Change)
             {
                 for (var i = 0; i < count; i++) newPos.Add(_positionInputFieldVector3.GetVector3);
@@ -82,8 +82,23 @@ namespace LevelEditor
                 CommandInvoker.Execute(cmd);
             }
 
-            _rotationInputFieldVector3.SetVector3 = items[0].Transform.rotation.eulerAngles;
-            _scaleInputFieldVector3.SetVector3    = items[0].Transform.localScale;
+            var newRot = new List<Quaternion>(count);
+            if (_rotationInputFieldVector3.GetVector3Change)
+            {
+                for (var i = 0; i < count; i++) newRot.Add(Quaternion.Euler(_rotationInputFieldVector3.GetVector3));
+
+                var cmd = new Rotation(items, newRot);
+                CommandInvoker.Execute(cmd);
+            }
+
+            var newScale = new List<Vector3>(count);
+            if (_scaleInputFieldVector3.GetVector3Change)
+            {
+                for (var i = 0; i < count; i++) newScale.Add(_scaleInputFieldVector3.GetVector3);
+
+                var cmd = new Scale(items, newScale);
+                CommandInvoker.Execute(cmd);
+            }
         }
     }
 }

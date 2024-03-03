@@ -113,7 +113,7 @@ namespace LevelEditor
                                           float.IsNaN(value.z) ? target.Transform.localScale.z : value.z));
             }
 
-            CommandInvoker.Execute(new Scale(Items, m_lastPositon, nextPosition, m_lastScale, nextScale));
+            // CommandInvoker.Execute(new Scale(Items, m_lastPositon, nextPosition, m_lastScale, nextScale));
         }
 
         private void ShowTransformPanel()

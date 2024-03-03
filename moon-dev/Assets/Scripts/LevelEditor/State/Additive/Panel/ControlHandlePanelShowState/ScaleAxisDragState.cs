@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
-using LevelEditor.Command;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Struct;
 using UnityEngine;
@@ -120,8 +119,7 @@ namespace LevelEditor
 
                 for (var i = 0; i < TargetObjs.Count; i++) m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
 
-                CommandInvoker.Execute(new Scale(TargetItems, m_targetOriginPosition
-                                               , m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
+                //  CommandInvoker.Execute(new Scale(TargetItems, m_targetOriginPosition, m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
 
                 RemoveState();
                 return;
