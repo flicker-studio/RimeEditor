@@ -11,7 +11,7 @@ namespace Frame.Tool.Pool
     public class ObjectPool : MonoSingleton<ObjectPool>, IAutoCreateSingleton
     {
         public static ObjectPool             Instance => Singleton;
-        public        ObjectPool<GameObject> GameObjectPool;
+        public        ObjectPool<GameObject> GameObjectPool = new(null);
         private       GameObject             m_cachePanel;
 
         private Dictionary<string, GameObject> m_typeCachePanel = new Dictionary<string, GameObject>();

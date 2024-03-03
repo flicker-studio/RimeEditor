@@ -1,4 +1,5 @@
 using Frame.StateMachine;
+using LevelEditor.Command;
 using LevelEditor.State;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,31 +14,32 @@ namespace LevelEditor
     {
         public PlayerInput input;
 
-        private          Information _information;
-        private readonly Context     _context = new();
-        private          IState      _browseState;
+        private readonly Context _context = new();
+        private          IState  _browseState;
+        private          IState  _editorState;
 
         private void OnEnable()
         {
             input                         =  FindObjectOfType<PlayerInput>();
             input.actions["Redo"].started += Test;
-       
-            _information = Controller.Information;
-            _information.EnableExcute();
-            var levelEditorTransform = transform as RectTransform;
+            input.actions["Undo"].started += Test2;
 
-            _browseState = new BrowseState
-                (
-                 levelEditorTransform,
-                 _information.UI
-                );
+            var information = Controller.Information;
 
-            _browseState.Handle(_context);
+            _browseState = new BrowseState(transform as RectTransform, information.UI);
+            _editorState = new EditorState(information.UI);
+
+            StateSwitch<BrowseState>();
         }
 
         private void Test(InputAction.CallbackContext callbackContext)
         {
-            Debug.Log(callbackContext.startTime);
+            CommandInvoker.Redo();
+        }
+
+        private void Test2(InputAction.CallbackContext callbackContext)
+        {
+            CommandInvoker.Undo();
         }
 
         private void Update()
@@ -47,6 +49,14 @@ namespace LevelEditor
 
         private void OnDestroy()
         {
+        }
+
+        internal void StateSwitch<T>() where T : IState
+        {
+            var type = typeof(T);
+            if (type == typeof(BrowseState))
+                _browseState.Handle(_context);
+            else if (type == typeof(EditorState)) _editorState.Handle(_context);
         }
     }
 }

@@ -14,10 +14,11 @@ namespace LevelEditor
         private bool               GetPositionChange     => m_information.UIManager.GetItemTransformPanel.GetPositionChange;
         private bool               GetRotationChange     => m_information.UIManager.GetItemTransformPanel.GetRotationChange;
         private bool               GetScaleChange        => m_information.UIManager.GetItemTransformPanel.GetScaleChange;
-        private List<Vector3>      m_lastPositon  = new();
-        private List<Quaternion>   m_lastRotation = new();
-        private List<Vector3>      m_lastScale    = new();
-        private bool               m_isUndoOrRedo;
+
+        private List<Vector3>    m_lastPositon  = new();
+        private List<Quaternion> m_lastRotation = new();
+        private List<Vector3>    m_lastScale    = new();
+        private bool             m_isUndoOrRedo;
 
         /// <summary>
         ///     Default constructor
@@ -65,62 +66,48 @@ namespace LevelEditor
         private void CheckPositionChange()
         {
             if (!GetPositionChange) return;
-
             var nextPosition = new List<Vector3>();
             var value        = GetItemTransformPanel.GetPosition;
-
             for (var i = 0; i < Items.Count; i++)
             {
                 var target = Items[i];
-
                 nextPosition.Add(new Vector3(float.IsNaN(value.x) ? target.Transform.position.x : value.x,
                                              float.IsNaN(value.y) ? target.Transform.position.y : value.y,
                                              float.IsNaN(value.z) ? target.Transform.position.z : value.z));
             }
 
-            CommandInvoker.Execute(new Position(Items, nextPosition));
+            CommandInvoker.Execute(new PositionCommand(Items, nextPosition));
         }
 
         private void CheckRotationChange()
         {
             if (!GetRotationChange) return;
-
             var nextPosition = new List<Vector3>();
             var nextRotation = new List<Quaternion>();
             var value        = GetItemTransformPanel.GetRotation;
-
             nextPosition.AddRange(m_lastPositon);
             for (var i = 0; i < Items.Count; i++)
             {
                 var target = Items[i];
-
-                nextRotation.Add(Quaternion.Euler(new Vector3(
-                                                              float.IsNaN(value.x) ? target.Transform.position.x : value.x,
+                nextRotation.Add(Quaternion.Euler(new Vector3(float.IsNaN(value.x) ? target.Transform.position.x : value.x,
                                                               float.IsNaN(value.y) ? target.Transform.position.y : value.y,
-                                                              float.IsNaN(value.z) ? target.Transform.position.z : value.z
-                                                             )
-                                                 )
-                                );
+                                                              float.IsNaN(value.z) ? target.Transform.position.z : value.z)));
             }
 
             var command = new Rotation(Items, nextRotation);
-
             CommandInvoker.Execute(command);
         }
 
         private void CheckScaleChange()
         {
             if (!GetScaleChange) return;
-
             var nextScale    = new List<Vector3>();
             var nextPosition = new List<Vector3>();
             nextPosition.AddRange(m_lastPositon);
             var value = GetItemTransformPanel.GetScale;
-
             for (var i = 0; i < Items.Count; i++)
             {
                 var target = Items[i];
-
                 nextScale.Add(new Vector3(float.IsNaN(value.x) ? target.Transform.localScale.x : value.x,
                                           float.IsNaN(value.y) ? target.Transform.localScale.y : value.y,
                                           float.IsNaN(value.z) ? target.Transform.localScale.z : value.z));
@@ -128,15 +115,13 @@ namespace LevelEditor
 
             CommandInvoker.Execute(new Scale(Items, m_lastPositon, nextPosition, m_lastScale, nextScale));
         }
-        
+
         private void ShowTransformPanel()
         {
             if (Items.Count == 0)
             {
-                if (!CheckStates.Contains(typeof(LevelSettingPanelShowState)) &&
-                    !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
+                if (!CheckStates.Contains(typeof(LevelSettingPanelShowState)) && !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
                     InputManager.SetCanInput(true);
-
                 RemoveState();
                 return;
             }
@@ -148,12 +133,9 @@ namespace LevelEditor
                 return;
             }
 
-            if (!InputManager.GetCanInput
-             && PopoverLauncher.Instance.CanInput
-             && !CheckStates.Contains(typeof(LevelSettingPanelShowState))
-             && !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
+            if (!InputManager.GetCanInput && PopoverLauncher.Instance.CanInput && !CheckStates.Contains(typeof(LevelSettingPanelShowState)) &&
+                !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
                 InputManager.SetCanInput(true);
-
             (m_lastPositon, m_lastRotation, m_lastScale) = Items.GetTransforms();
             SetFieldUIValue();
         }
@@ -161,11 +143,9 @@ namespace LevelEditor
         private void SetFieldUIValue()
         {
             if (Items.Count == 0) return;
-
             var position = Items[0].Transform.position;
             var rotation = Items[0].Transform.rotation.eulerAngles;
             var scale    = Items[0].Transform.localScale;
-
             for (var i = 1; i < Items.Count; i++)
             {
                 if (position.x != Items[i].Transform.position.x) position.x             = float.NaN;
@@ -197,13 +177,10 @@ namespace LevelEditor
             var canParseX = float.TryParse(inputFieldX, out var valueX);
             var chnParseY = float.TryParse(inputFieldY, out var valueY);
             var chnParseZ = float.TryParse(inputFieldZ, out var valueZ);
-
             for (var i = 0; i < Items.Count; i++)
             {
                 var target = Items[i];
-
-                target.Transform.position = new Vector3(
-                                                        canParseX ? valueX : target.Transform.position.x,
+                target.Transform.position = new Vector3(canParseX ? valueX : target.Transform.position.x,
                                                         chnParseY ? valueY : target.Transform.position.y,
                                                         chnParseZ ? valueZ : target.Transform.position.z);
             }
@@ -215,13 +192,10 @@ namespace LevelEditor
             var canParseX = float.TryParse(inputFieldX, out var valueX);
             var chnParseY = float.TryParse(inputFieldY, out var valueY);
             var chnParseZ = float.TryParse(inputFieldZ, out var valueZ);
-
             for (var i = 0; i < Items.Count; i++)
             {
                 var target = Items[i];
-
-                target.Transform.rotation = Quaternion.Euler(new Vector3(
-                                                                         canParseX ? valueX : target.Transform.rotation.x,
+                target.Transform.rotation = Quaternion.Euler(new Vector3(canParseX ? valueX : target.Transform.rotation.x,
                                                                          chnParseY ? valueY : target.Transform.rotation.y,
                                                                          chnParseZ ? valueZ : target.Transform.rotation.z));
             }
@@ -233,13 +207,10 @@ namespace LevelEditor
             var canParseX = float.TryParse(inputFieldX, out var valueX);
             var chnParseY = float.TryParse(inputFieldY, out var valueY);
             var chnParseZ = float.TryParse(inputFieldZ, out var valueZ);
-
             for (var i = 0; i < Items.Count; i++)
             {
                 var target = Items[i];
-
-                target.Transform.localScale = new Vector3(
-                                                          canParseX ? valueX : target.Transform.localScale.x,
+                target.Transform.localScale = new Vector3(canParseX ? valueX : target.Transform.localScale.x,
                                                           chnParseY ? valueY : target.Transform.localScale.y,
                                                           chnParseZ ? valueZ : target.Transform.localScale.z);
             }

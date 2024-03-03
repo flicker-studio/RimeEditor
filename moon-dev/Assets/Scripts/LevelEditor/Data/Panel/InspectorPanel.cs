@@ -1,37 +1,89 @@
+using System.Collections.Generic;
+using LevelEditor.Command;
 using Moon.Kernel.Extension;
 using TMPro;
-using RectTransform = UnityEngine.RectTransform;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace LevelEditor
 {
-    public class InspectorPanel
+    internal sealed class InspectorPanel
     {
-        public RectTransform GetInspectorRootRect => m_inspectorRootRect;
+        public RectTransform                   RootRect              { get; }
+        public RectTransform                   ContentRect           { get; }
+        public TextMeshProUGUI                 Describe              { get; }
+        public UISetting.InspectorItemProperty InspectorItemProperty { get; private set; }
 
-        public RectTransform GetInspectorContentRect => m_inspectorContentRect;
+        public bool GetPositionChange => _positionInputFieldVector3.GetVector3Change;
+        public bool GetRotationChange => _rotationInputFieldVector3.GetVector3Change;
+        public bool GetScaleChange    => _scaleInputFieldVector3.GetVector3Change;
 
-        public TextMeshProUGUI GetInspectorDescribeText => m_inspectorDescribeText;
+        public bool GetOnSelect => _positionInputFieldVector3.OnSelect
+                                || _rotationInputFieldVector3.OnSelect
+                                || _scaleInputFieldVector3.OnSelect;
 
-        public UISetting.InspectorItemProperty GetInspectorItemProperty { get; private set; }
+        private          Button            _editButton;
+        private readonly GameObject        _transformPanelObj;
+        private readonly InputFieldVector3 _positionInputFieldVector3;
+        private readonly InputFieldVector3 _rotationInputFieldVector3;
+        private readonly InputFieldVector3 _scaleInputFieldVector3;
 
-        private RectTransform m_inspectorRootRect;
-
-        private RectTransform m_inspectorContentRect;
-
-        private TextMeshProUGUI m_inspectorDescribeText;
-
-        public InspectorPanel(RectTransform rect, UISetting levelEditorUISetting)
+        public InspectorPanel(Transform rect, UISetting setting)
         {
-            InitComponent(rect, levelEditorUISetting);
+            var property1 = setting.GetInspectorPanelUI.GetInspectorPanelUIName;
+            InspectorItemProperty = setting.GetInspectorPanelUI.GetInspectorItemProperty;
+            RootRect              = rect.FindPath(property1.INSPECTOR_ROOT) as RectTransform;
+            ContentRect           = rect.FindPath(property1.INSPECTOR_CONTENT) as RectTransform;
+            Describe              = rect.FindPath(property1.DESCRIBE_TEXT).GetComponent<TextMeshProUGUI>();
+
+            var property = setting.GetItemTransformPanelUI.GetItemTransformPanelUIName;
+            _editButton        = rect.FindPath(property.EDIT_BUTTON).GetComponent<Button>();
+            _transformPanelObj = rect.FindPath(property.ROOT_PANEL).gameObject;
+
+            _positionInputFieldVector3 =
+                new InputFieldVector3(
+                                      rect.FindPath(property.POSITION_INPUT_X).GetComponent<TMP_InputField>(),
+                                      rect.FindPath(property.POSITION_INPUT_Y).GetComponent<TMP_InputField>(),
+                                      rect.FindPath(property.POSITION_INPUT_Z).GetComponent<TMP_InputField>()
+                                     );
+
+            _rotationInputFieldVector3 =
+                new InputFieldVector3(
+                                      rect.FindPath(property.ROTATION_INPUT_X).GetComponent<TMP_InputField>(),
+                                      rect.FindPath(property.ROTATION_INPUT_Y).GetComponent<TMP_InputField>(),
+                                      rect.FindPath(property.ROTATION_INPUT_Z).GetComponent<TMP_InputField>()
+                                     );
+
+            _scaleInputFieldVector3 =
+                new InputFieldVector3(
+                                      rect.FindPath(property.SCALE_INPUT_X).GetComponent<TMP_InputField>(),
+                                      rect.FindPath(property.SCALE_INPUT_Y).GetComponent<TMP_InputField>(),
+                                      rect.FindPath(property.SCALE_INPUT_Z).GetComponent<TMP_InputField>()
+                                     );
         }
 
-        private void InitComponent(RectTransform rect, UISetting levelEditorUISetting)
+        public void Add()
         {
-            var property = levelEditorUISetting.GetInspectorPanelUI.GetInspectorPanelUIName;
-            GetInspectorItemProperty = levelEditorUISetting.GetInspectorPanelUI.GetInspectorItemProperty;
-            m_inspectorRootRect = rect.FindPath(property.INSPECTOR_ROOT) as RectTransform;
-            m_inspectorContentRect = rect.FindPath(property.INSPECTOR_CONTENT) as RectTransform;
-            m_inspectorDescribeText = rect.FindPath(property.DESCRIBE_TEXT).GetComponent<TextMeshProUGUI>();
+            var prefab        = Controller.Information.PrefabManager.GetBoolItem;
+            var inspectorItem = Object.Instantiate(prefab, ContentRect, true);
+        }
+
+        public void AsyncRefresh(List<AbstractItem> items)
+        {
+            var count = items.Count;
+            if (count <= 0) return;
+
+            var newPos = new List<Vector3>();
+            if (_positionInputFieldVector3.GetVector3Change)
+            {
+                for (var i = 0; i < count; i++) newPos.Add(_positionInputFieldVector3.GetVector3);
+
+                var cmd = new PositionCommand(items, newPos);
+                CommandInvoker.Execute(cmd);
+            }
+
+            _rotationInputFieldVector3.SetVector3 = items[0].Transform.rotation.eulerAngles;
+            _scaleInputFieldVector3.SetVector3    = items[0].Transform.localScale;
         }
     }
 }

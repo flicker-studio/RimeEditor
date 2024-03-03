@@ -27,7 +27,6 @@ namespace LevelEditor
         private readonly ItemType _type;
         private readonly ItemView _view;
 
-
         /// <summary>
         ///     Generate new Item based on type
         /// </summary>
@@ -37,7 +36,7 @@ namespace LevelEditor
         {
             _type      = type;
             _view      = view;
-            GameObject = ObjectPool.Instance.GameObjectPool.Get();
+            GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
         }
 
         /// <summary>

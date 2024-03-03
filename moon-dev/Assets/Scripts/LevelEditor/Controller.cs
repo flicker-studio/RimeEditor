@@ -1,6 +1,4 @@
-﻿using Frame.StateMachine;
-using Frame.Tool;
-using LevelEditor.State;
+﻿using Frame.Tool;
 using Moon.Kernel;
 using UnityEngine;
 
@@ -8,30 +6,29 @@ namespace LevelEditor
 {
     /// <inheritdoc />
     /// <summary>
-    /// Scene entrance
+    ///     Scene entrance
     /// </summary>
-    public class Controller : Singleton<Controller>
+    internal class Controller : Singleton<Controller>
     {
         /// <summary>
         ///     Information Center
         /// </summary>
-        public static readonly Information Information = new();
+        internal static readonly Information Information = new();
 
-        public   GameObject RootObject;
-        internal Behaviour  Behaviour;
+        internal static GameObject RootObject;
+        internal static Behaviour  Behaviour;
 
         /// <summary>
-        /// Preload setting files
+        ///     Preload setting files
         /// </summary>
         public async void AssetsLoaderAsync()
         {
-            await Explorer.BootCompletionTask; 
+            await Explorer.BootCompletionTask;
             RootObject = GameObject.FindGameObjectWithTag("Temp_Editor");
-                                                        
+
             await Information.Init();
-            Behaviour  = RootObject.AddComponent<Behaviour>();
+            Behaviour         = RootObject.AddComponent<Behaviour>();
             Behaviour.enabled = true;
-            
         }
     }
 }

@@ -13,13 +13,22 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Undo",
+                    "type": "Button",
+                    "id": "75fd29bc-fd58-4234-a5d0-0c0a9fef2a3a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "Default",
                     "id": "356a09fb-5038-4c60-b70e-0571ced376e2",
-                    "path": "OneModifier",
+                    "path": "OneModifier(overrideModifiersNeedToBePressedFirst=true)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -46,6 +55,39 @@
                     "processors": "",
                     "groups": "Default control scheme",
                     "action": "Redo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Default",
+                    "id": "cecf63b8-ba2e-4400-9238-0316d61ffdb8",
+                    "path": "OneModifier(overrideModifiersNeedToBePressedFirst=true)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Undo",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "b9c53f4f-17d5-4111-9b61-06f79d54a5e5",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default control scheme",
+                    "action": "Undo",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "2cf2e9f3-9704-42df-b756-b46e8d721bcd",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default control scheme",
+                    "action": "Undo",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

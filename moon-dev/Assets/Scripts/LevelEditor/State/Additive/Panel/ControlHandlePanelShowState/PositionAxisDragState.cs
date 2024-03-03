@@ -69,7 +69,7 @@ namespace LevelEditor
                     m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
                 }
 
-                CommandInvoker.Execute(new Position(TargetItems, m_targetCurrentPosition));
+                CommandInvoker.Execute(new PositionCommand(TargetItems, m_targetCurrentPosition));
                 RemoveState();
                 return;
             }

@@ -4,6 +4,7 @@ using System.IO;
 using Cysharp.Threading.Tasks;
 using Frame.Tool.Popover;
 using JetBrains.Annotations;
+using LevelEditor.State;
 using LevelEditor.View;
 using Moon.Kernel.Extension;
 using SimpleFileBrowser;
@@ -15,7 +16,7 @@ using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor.Canvas
 {
-    internal sealed class BrowseCanvas : IDisposable
+    internal sealed class BrowseCanvas : ICanvas
     {
         #region VARIABLE
 
@@ -201,16 +202,15 @@ namespace LevelEditor.Canvas
         private void Open()
         {
             _activeEntry.Open();
+            Controller.Behaviour.StateSwitch<EditorState>();
         }
 
         private void Delete()
         {
-            if (_activeEntry != null)
-            {
-                _levelEntries.Remove(_activeEntry);
-                _activeEntry.Dispose();
-                _activeEntry = null;
-            }
+            if (_activeEntry == null) return;
+            _levelEntries.Remove(_activeEntry);
+            _activeEntry.Dispose();
+            _activeEntry = null;
         }
 
         private void DeleteLevel()

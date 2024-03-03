@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace LevelEditor
+namespace LevelEditor.Command
 {
     /// <summary>
     ///     Position change command
     /// </summary>
-    public class Position : ICommand
+    public class PositionCommand : ICommand
     {
         private readonly List<AbstractItem> _items;
         private readonly List<Vector3>      _newPosition;
@@ -16,7 +16,7 @@ namespace LevelEditor
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public Position(List<AbstractItem> items, IEnumerable<Vector3> newPosition)
+        public PositionCommand(List<AbstractItem> items, IEnumerable<Vector3> newPosition)
         {
             var count = items.Count();
 
@@ -26,7 +26,7 @@ namespace LevelEditor
 
             _items.AddRange(items);
             _newPosition.AddRange(newPosition);
-            for (var i = 0; i < _items.Count; i++) _oldPosition[i] = _items[i].Transform.position;
+            for (var i = 0; i < count; i++) _oldPosition.Add(_items[i].Transform.position);
         }
 
         /// <inheritdoc />

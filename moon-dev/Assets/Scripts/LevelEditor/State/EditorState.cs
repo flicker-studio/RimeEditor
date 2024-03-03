@@ -1,36 +1,43 @@
 using System.Collections.Generic;
 using Frame.StateMachine;
+using LevelEditor.Canvas;
 
 namespace LevelEditor.State
 {
     /// <summary>
     ///     The state-machine is switched to edit-mode
     /// </summary>
-    public sealed class EditorState : AdditiveState
+    public sealed class EditorState : IState
     {
-        private List<AbstractItem> TargetItems => m_information.DataManager.TargetItems;
+        private readonly EditorCanvas       _canvas;
+        private readonly List<AbstractItem> _items = new();
 
-        public EditorState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
+        public EditorState(UISetting setting)
         {
-            ChangeMotionState(typeof(ActionPanelShowState));
-            ChangeMotionState(typeof(ControlHandlePanelShowState));
-            ChangeMotionState(typeof(HierarchyPanelShowState));
-            ChangeMotionState(typeof(AreaPanelShowState));
-            ChangeMotionState(typeof(LevelPanelShowState));
+            _canvas = new EditorCanvas(setting);
         }
 
         /// <inheritdoc />
-        public override void Motion(BaseInformation information)
+        public void OnEnter()
         {
+            _canvas.Active();
+
+            _items.Add(new Platform());
         }
 
-        private void ShowTransformPanel()
+        /// <inheritdoc />
+        public void OnUpdate()
         {
-            if (TargetItems.Count > 0 && !CheckStates.Contains(typeof(ItemTransformPanelShowState)))
-                ChangeMotionState(typeof(ItemTransformPanelShowState));
+            _canvas.Update(_items);
+        }
 
-            if (TargetItems.Count > 0 && !CheckStates.Contains(typeof(InspectorShowState)))
-                ChangeMotionState(typeof(InspectorShowState));
+        /// <inheritdoc />
+        public void OnExit()
+        {
+            _canvas.Inactive();
         }
     }
 }
