@@ -1,48 +1,49 @@
+using System.Globalization;
 using Moon.Kernel.Struct;
 using TMPro;
 using UnityEngine;
 
 public class InputFieldVector3
 {
-    public Vector3 GetVector3 => new(m_inputX.GetInput, m_inputY.GetInput, m_inputZ.GetInput);
-
-    public (string, string, string) GetVector3Field => (m_inputFieldX.text, m_inputFieldY.text, m_inputFieldZ.text);
+    public Vector3 Data => new(_inputX.GetInput, _inputY.GetInput, _inputZ.GetInput);
+    
+    public (string, string, string) GetVector3Field => (_inputFieldX.text, _inputFieldY.text, _inputFieldZ.text);
 
     public Vector3 SetVector3
     {
         set
         {
             SetInputField(
-                float.IsNaN(value.x) ? "-" : value.x.ToString(),
-                float.IsNaN(value.y) ? "-" : value.y.ToString(),
-                float.IsNaN(value.z) ? "-" : value.z.ToString());
-
-            ReSetPosition = new(value.x, value.y, value.z);
+                          float.IsNaN(value.x) ? "-" : value.x.ToString(CultureInfo.InvariantCulture),
+                          float.IsNaN(value.y) ? "-" : value.y.ToString(CultureInfo.InvariantCulture),
+                          float.IsNaN(value.z) ? "-" : value.z.ToString(CultureInfo.InvariantCulture));
+            
+            ReSetPosition = new Vector3(value.x, value.y, value.z);
         }
     }
 
     public bool GetVector3Change =>
-        m_inputX.GetInputDown || m_inputY.GetInputDown || m_inputZ.GetInputDown;
-
-    public bool OnSelect => m_selectX || m_selectY || m_selectZ;
-
-    private TMP_InputField m_inputFieldX;
-
-    private TMP_InputField m_inputFieldY;
-
-    private TMP_InputField m_inputFieldZ;
-
-    private Input<float> m_inputX;
-
-    private Input<float> m_inputY;
-
-    private Input<float> m_inputZ;
-
-    private bool m_selectX;
-
-    private bool m_selectY;
-
-    private bool m_selectZ;
+        _inputX.GetInputDown || _inputY.GetInputDown || _inputZ.GetInputDown;
+    
+    public bool OnSelect => _selectX || _selectY || _selectZ;
+    
+    private TMP_InputField _inputFieldX;
+    
+    private TMP_InputField _inputFieldY;
+    
+    private TMP_InputField _inputFieldZ;
+    
+    private Input<float> _inputX;
+    
+    private Input<float> _inputY;
+    
+    private Input<float> _inputZ;
+    
+    private bool _selectX;
+    
+    private bool _selectY;
+    
+    private bool _selectZ;
 
     public InputFieldVector3(TMP_InputField inputFieldX, TMP_InputField inputFieldY, TMP_InputField inputFieldZ)
     {
@@ -55,69 +56,69 @@ public class InputFieldVector3
     {
         SetInputField(Vector3.zero);
     }
-
-    void InitComponent(TMP_InputField inputFieldX, TMP_InputField inputFieldY, TMP_InputField inputFieldZ)
+    
+    private void InitComponent(TMP_InputField inputFieldX, TMP_InputField inputFieldY, TMP_InputField inputFieldZ)
     {
-        m_inputFieldX = inputFieldX;
-        m_inputFieldY = inputFieldY;
-        m_inputFieldZ = inputFieldZ;
+        _inputFieldX = inputFieldX;
+        _inputFieldY = inputFieldY;
+        _inputFieldZ = inputFieldZ;
     }
-
-    void InitEvent()
+    
+    private void InitEvent()
     {
-        m_inputFieldX.onEndEdit.AddListener((data) =>
+        _inputFieldX.onEndEdit.AddListener(data =>
         {
-            (bool canChange, Vector3 newInput) = StringToVector3(data, m_inputFieldY.text, m_inputFieldZ.text);
-
+            var (canChange, newInput) = StringToVector3(data, _inputFieldY.text, _inputFieldZ.text);
+            
             if (canChange) SetPosition = newInput;
-            else SetInputField(GetVector3);
+            else SetInputField(Data);
         });
-
-        m_inputFieldY.onEndEdit.AddListener((data) =>
+        
+        _inputFieldY.onEndEdit.AddListener(data =>
         {
-            (bool canChange, Vector3 newInput) = StringToVector3(m_inputFieldX.text, data, m_inputFieldZ.text);
-
+            var (canChange, newInput) = StringToVector3(_inputFieldX.text, data, _inputFieldZ.text);
+            
             if (canChange) SetPosition = newInput;
-            else SetInputField(GetVector3);
+            else SetInputField(Data);
         });
-
-        m_inputFieldZ.onEndEdit.AddListener((data) =>
+        
+        _inputFieldZ.onEndEdit.AddListener(data =>
         {
-            (bool canChange, Vector3 newInput) = StringToVector3(m_inputFieldX.text, m_inputFieldY.text, data);
-
+            var (canChange, newInput) = StringToVector3(_inputFieldX.text, _inputFieldY.text, data);
+            
             if (canChange) SetPosition = newInput;
-            else SetInputField(GetVector3);
+            else SetInputField(Data);
         });
-
-        m_inputFieldX.onSelect.AddListener((data) => { m_selectX = true; });
-        m_inputFieldX.onEndEdit.AddListener((data) => { m_selectX = false; });
-        m_inputFieldY.onSelect.AddListener((data) => { m_selectY = true; });
-        m_inputFieldY.onEndEdit.AddListener((data) => { m_selectY = false; });
-        m_inputFieldZ.onSelect.AddListener((data) => { m_selectZ = true; });
-        m_inputFieldZ.onEndEdit.AddListener((data) => { m_selectZ = false; });
+        
+        _inputFieldX.onSelect.AddListener(_ => { _selectX  = true; });
+        _inputFieldX.onEndEdit.AddListener(_ => { _selectX = false; });
+        _inputFieldY.onSelect.AddListener(_ => { _selectY  = true; });
+        _inputFieldY.onEndEdit.AddListener(_ => { _selectY = false; });
+        _inputFieldZ.onSelect.AddListener(_ => { _selectZ  = true; });
+        _inputFieldZ.onEndEdit.AddListener(_ => { _selectZ = false; });
     }
 
     private void SetInputField(Vector3 input)
     {
-        m_inputFieldX.text = float.IsNaN(input.x) ? "-" : input.x.ToString().Replace(" ", "");
-        m_inputFieldY.text = float.IsNaN(input.y) ? "-" : input.y.ToString().Replace(" ", "");
-        m_inputFieldZ.text = float.IsNaN(input.z) ? "-" : input.z.ToString().Replace(" ", "");
+        _inputFieldX.text = float.IsNaN(input.x) ? "-" : input.x.ToString(CultureInfo.InvariantCulture).Replace(" ", "");
+        _inputFieldY.text = float.IsNaN(input.y) ? "-" : input.y.ToString(CultureInfo.InvariantCulture).Replace(" ", "");
+        _inputFieldZ.text = float.IsNaN(input.z) ? "-" : input.z.ToString(CultureInfo.InvariantCulture).Replace(" ", "");
     }
 
     private void SetInputField(string x, string y, string z)
     {
-        m_inputFieldX.text = x.Replace(" ", "");
-        m_inputFieldY.text = y.Replace(" ", "");
-        m_inputFieldZ.text = z.Replace(" ", "");
+        _inputFieldX.text = x.Replace(" ", "");
+        _inputFieldY.text = y.Replace(" ", "");
+        _inputFieldZ.text = z.Replace(" ", "");
     }
 
     private Vector3 SetPosition
     {
         set
         {
-            m_inputX.SetInput = value.x;
-            m_inputY.SetInput = value.y;
-            m_inputZ.SetInput = value.z;
+            _inputX.SetInput = value.x;
+            _inputY.SetInput = value.y;
+            _inputZ.SetInput = value.z;
         }
     }
 
@@ -125,9 +126,9 @@ public class InputFieldVector3
     {
         set
         {
-            m_inputX.ResetInput = value.x;
-            m_inputY.ResetInput = value.y;
-            m_inputZ.ResetInput = value.z;
+            _inputX.ResetInput = value.x;
+            _inputY.ResetInput = value.y;
+            _inputZ.ResetInput = value.z;
         }
     }
 

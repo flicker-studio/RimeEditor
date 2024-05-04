@@ -8,11 +8,11 @@ namespace LevelEditor
 {
     public class ItemTransformPanel
     {
-        public Vector3 GetPosition => m_positionInputFieldVector3.GetVector3;
-
-        public Vector3 GetRotation => m_rotationInputFieldVector3.GetVector3;
-
-        public Vector3 GetScale => m_scaleInputFieldVector3.GetVector3;
+        public Vector3 GetPosition => m_positionInputFieldVector3.Data;
+        
+        public Vector3 GetRotation => m_rotationInputFieldVector3.Data;
+        
+        public Vector3 GetScale => m_scaleInputFieldVector3.Data;
 
         public GameObject GetPanelObj => m_transformPanelObj;
 

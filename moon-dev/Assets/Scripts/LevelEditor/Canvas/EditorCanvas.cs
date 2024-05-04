@@ -8,11 +8,13 @@ namespace LevelEditor.Canvas
     {
         internal Action<List<AbstractItem>> Update;
         private  InspectorPanel             _inspectorPanel;
+        private  ActionPanel                _actionPanel;
 
         public EditorCanvas(UISetting setting)
         {
             var trans = Controller.RootObject.transform as RectTransform;
             _inspectorPanel = new InspectorPanel(trans, setting);
+            _actionPanel    = new ActionPanel(trans, setting);
         }
 
         ~EditorCanvas()

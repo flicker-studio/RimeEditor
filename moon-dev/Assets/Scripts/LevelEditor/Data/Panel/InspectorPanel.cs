@@ -76,7 +76,7 @@ namespace LevelEditor
             var newPos = new List<Vector3>(count);
             if (_positionInputFieldVector3.GetVector3Change)
             {
-                for (var i = 0; i < count; i++) newPos.Add(_positionInputFieldVector3.GetVector3);
+                for (var i = 0; i < count; i++) newPos.Add(_positionInputFieldVector3.Data);
 
                 var cmd = new PositionCommand(items, newPos);
                 CommandInvoker.Execute(cmd);
@@ -85,7 +85,7 @@ namespace LevelEditor
             var newRot = new List<Quaternion>(count);
             if (_rotationInputFieldVector3.GetVector3Change)
             {
-                for (var i = 0; i < count; i++) newRot.Add(Quaternion.Euler(_rotationInputFieldVector3.GetVector3));
+                for (var i = 0; i < count; i++) newRot.Add(Quaternion.Euler(_rotationInputFieldVector3.Data));
 
                 var cmd = new Rotation(items, newRot);
                 CommandInvoker.Execute(cmd);
@@ -94,7 +94,7 @@ namespace LevelEditor
             var newScale = new List<Vector3>(count);
             if (_scaleInputFieldVector3.GetVector3Change)
             {
-                for (var i = 0; i < count; i++) newScale.Add(_scaleInputFieldVector3.GetVector3);
+                for (var i = 0; i < count; i++) newScale.Add(_scaleInputFieldVector3.Data);
 
                 var cmd = new Scale(items, newScale);
                 CommandInvoker.Execute(cmd);
