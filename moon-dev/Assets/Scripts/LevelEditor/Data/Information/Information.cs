@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace LevelEditor
 {
+    // TODO:Split into multiple profiles
     public class Information : BaseInformation
     {
         public UIManager        UIManager      => _uiManager;

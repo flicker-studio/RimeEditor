@@ -95,6 +95,7 @@ namespace LevelEditor
             return tempList;
         }
 
+        
         public static List<GameObject> GetItemObjs(this ObservableList<AbstractItem> itemDatas)
         {
             List<GameObject> itemObjs = new List<GameObject>();

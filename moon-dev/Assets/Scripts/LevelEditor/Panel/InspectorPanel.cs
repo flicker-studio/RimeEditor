@@ -64,7 +64,7 @@ namespace LevelEditor
 
         public void Add()
         {
-            var prefab        = Controller.Information.PrefabManager.GetBoolItem;
+            var prefab        = Controller.Configure.PrefabManager.GetBoolItem;
             var inspectorItem = Object.Instantiate(prefab, ContentRect, true);
         }
 

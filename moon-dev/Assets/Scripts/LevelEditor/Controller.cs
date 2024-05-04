@@ -4,20 +4,26 @@ using UnityEngine;
 
 namespace LevelEditor
 {
-    /// <inheritdoc />
     /// <summary>
     ///     Scene entrance
     /// </summary>
     internal class Controller : Singleton<Controller>
     {
         /// <summary>
-        ///     Information Center
+        ///     Information Center, a large number of configuration files are included.
         /// </summary>
-        internal static readonly Information Information = new();
-
+        internal static readonly Information Configure = new();
+        
+        /// <summary>
+        /// The current root object, which is the parent of all objects in the scene.
+        /// </summary>
         internal static GameObject RootObject;
-        internal static Behaviour  Behaviour;
-
+        
+        /// <summary>
+        ///     A Mono behavior that is unique to this scene.
+        /// </summary>
+        internal static Behaviour Behaviour;
+        
         /// <summary>
         ///     Preload setting files
         /// </summary>
@@ -25,8 +31,8 @@ namespace LevelEditor
         {
             await Explorer.BootCompletionTask;
             RootObject = GameObject.FindGameObjectWithTag("Temp_Editor");
-
-            await Information.Init();
+            
+            await Configure.Init();
             Behaviour         = RootObject.AddComponent<Behaviour>();
             Behaviour.enabled = true;
         }

@@ -14,10 +14,10 @@ namespace LevelEditor.State
     internal sealed class BrowseState : IState
     {
         private readonly BrowseCanvas _browseCanvas;
-
-        public BrowseState(RectTransform rect, UISetting setting)
+        
+        public BrowseState(RectTransform rect)
         {
-            _browseCanvas = new BrowseCanvas(rect, setting);
+            _browseCanvas = new BrowseCanvas(rect);
         }
 
         /// <inheritdoc />

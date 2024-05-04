@@ -12,7 +12,10 @@ namespace Frame.StateMachine
         ///     Current status
         /// </summary>
         public IState State => _state;
-
+        
+        /// <summary>
+        ///     The update hosting for the state machine may be empty.
+        /// </summary>
         [CanBeNull] public Action Update { get; private set; }
 
         /// <summary>
