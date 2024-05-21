@@ -7,7 +7,7 @@ namespace LevelEditor.Command
     /// </summary>
     public sealed class Create : ICommand
     {
-        private readonly AbstractItem _item;
+        private readonly Item _item;
 
         /// <summary>
         ///     Default constructor

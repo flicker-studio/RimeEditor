@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Frame.StateMachine;
-using LevelEditor.Canvas;
+using LevelEditor.View.Canvas;
+using Moon.Runtime.DesignPattern;
 
 namespace LevelEditor.State
 {
@@ -9,8 +9,8 @@ namespace LevelEditor.State
     /// </summary>
     public sealed class EditorState : IState
     {
-        private readonly EditorCanvas       _canvas;
-        private readonly List<AbstractItem> _items = new();
+        private readonly EditorCanvas _canvas;
+        private readonly List<Item>   _items = new();
 
         /// <summary>
         ///     Default constructor

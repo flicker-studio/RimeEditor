@@ -9,18 +9,18 @@ namespace LevelEditor.Command
     /// </summary>
     public class PositionCommand : ICommand
     {
-        private readonly List<AbstractItem> _items;
-        private readonly List<Vector3>      _newPosition;
-        private readonly List<Vector3>      _oldPosition;
+        private readonly List<Item>    _items;
+        private readonly List<Vector3> _newPosition;
+        private readonly List<Vector3> _oldPosition;
 
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public PositionCommand(List<AbstractItem> items, IEnumerable<Vector3> newPosition)
+        public PositionCommand(List<Item> items, IEnumerable<Vector3> newPosition)
         {
             var count = items.Count();
-
-            _items       = new List<AbstractItem>(count);
+            
+            _items       = new List<Item>(count);
             _newPosition = new List<Vector3>(count);
             _oldPosition = new List<Vector3>(count);
 

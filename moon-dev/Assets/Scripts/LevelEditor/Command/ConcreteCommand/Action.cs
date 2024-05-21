@@ -6,16 +6,16 @@ namespace LevelEditor.Command
     internal class Action : ICommand
     {
         private readonly ControlHandleAction m_controlHandleAction;
-
-        private readonly CONTROLHANDLEACTIONTYPE m_lastActionType;
-
-        private readonly CONTROLHANDLEACTIONTYPE m_nextActionType;
+        
+        private readonly Controlhandleactiontype m_lastActionType;
+        
+        private readonly Controlhandleactiontype m_nextActionType;
 
         private readonly bool m_lastGrid;
 
         private readonly bool m_nextGrid;
-
-        public Action(ControlHandleAction controlHandleAction, CONTROLHANDLEACTIONTYPE nextActionType)
+        
+        public Action(ControlHandleAction controlHandleAction, Controlhandleactiontype nextActionType)
         {
             m_controlHandleAction = controlHandleAction;
             m_lastActionType      = m_controlHandleAction.ControlHandleActionType;

@@ -2,22 +2,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Moon.Kernel.Utils;
 
-namespace LevelEditor
+namespace LevelEditor.Command
 {
     /// <summary>
     ///     Select the Item command
     /// </summary>
     public class Select : ICommand
     {
-        private readonly List<AbstractItem> _targetList;
-        private readonly OutlineManager     _outlinePainter;
-        private readonly List<AbstractItem> _lastList = new();
-        private readonly List<AbstractItem> _nextList = new();
+        private readonly List<Item>     _targetList;
+        private readonly OutlineManager _outlinePainter;
+        private readonly List<Item>     _lastList = new();
+        private readonly List<Item>     _nextList = new();
 
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public Select(List<AbstractItem> targetList, List<AbstractItem> nextList, OutlineManager outlinePainter)
+        public Select(List<Item> targetList, List<Item> nextList, OutlineManager outlinePainter)
         {
             _outlinePainter = outlinePainter;
             _targetList     = targetList.ToList();

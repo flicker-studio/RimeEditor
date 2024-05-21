@@ -41,7 +41,7 @@ namespace Test.Runtime.LevelEditor.Command
                 (
                  async () =>
                  {
-                     var itemList  = new List<AbstractItem>(1);
+                     var itemList  = new List<Item>(1);
                      var scaleList = new List<Vector3>(1);
                      itemList.Add(new Platform());
                      scaleList.Add(Vector3.down);

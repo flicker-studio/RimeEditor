@@ -10,7 +10,7 @@ namespace LevelEditor
     {
         private void Start()
         {
-            Boot.PostBoot += Controller.Instance.AssetsLoaderAsync;
+            Boot.PostBoot += EntranceController.Instance.AssetsLoaderAsync;
         }
     }
 }

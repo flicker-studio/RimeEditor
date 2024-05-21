@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Frame.StateMachine;
-using Frame.Tool.Popover;
 using LevelEditor.Command;
+using Moon.Runtime;
 using UnityEngine;
 
 namespace LevelEditor
@@ -9,7 +9,7 @@ namespace LevelEditor
     public class ItemTransformPanelShowState : AdditiveState
     {
         private InputManager       InputManager          => m_information.InputManager;
-        private List<AbstractItem> Items                 => m_information.DataManager.TargetItems;
+        private List<Item>         Items                 => m_information.DataManager.TargetItems;
         private ItemTransformPanel GetItemTransformPanel => m_information.UIManager.GetItemTransformPanel;
         private bool               GetPositionChange     => m_information.UIManager.GetItemTransformPanel.GetPositionChange;
         private bool               GetRotationChange     => m_information.UIManager.GetItemTransformPanel.GetRotationChange;

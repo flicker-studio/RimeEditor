@@ -5,6 +5,7 @@ using LevelEditor.Command;
 using Moon.Kernel.Extension;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Rect = LevelEditor.Command.Rect;
 using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
@@ -13,8 +14,8 @@ namespace LevelEditor
     {
         private UIManager GetUI => m_information.UIManager;
         private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
-
-        private List<AbstractItem> TargetItems => m_information.DataManager.TargetItems;
+        
+        private List<Item> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 

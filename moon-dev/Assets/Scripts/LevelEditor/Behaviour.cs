@@ -1,6 +1,6 @@
-using Frame.StateMachine;
 using LevelEditor.Command;
 using LevelEditor.State;
+using Moon.Runtime.DesignPattern;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Context = LevelEditor.State.Context;
@@ -24,7 +24,7 @@ namespace LevelEditor
             input.actions["Redo"].started += Test;
             input.actions["Undo"].started += Test2;
             
-            var information = Controller.Configure;
+            var information = EntranceController.Configure;
             
             _browseState = new BrowseState(transform as RectTransform);
             _editorState = new EditorState(information.UI);

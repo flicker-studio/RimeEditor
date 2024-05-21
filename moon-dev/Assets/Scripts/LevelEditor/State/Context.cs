@@ -1,7 +1,7 @@
 ﻿namespace LevelEditor.State
 {
     /// <inheritdoc />
-    public class Context : Frame.StateMachine.Context
+    public class Context : Moon.Runtime.DesignPattern.Context
     {
     }
 }

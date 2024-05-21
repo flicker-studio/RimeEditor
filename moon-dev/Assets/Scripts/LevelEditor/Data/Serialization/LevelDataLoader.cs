@@ -17,7 +17,7 @@ namespace LevelEditor
         /// <summary>
         ///     Load all levels in this computer
         /// </summary>
-        public static async UniTask<List<LevelData>> LoadLevelDatas(GlobalSetting setting)
+        public static async UniTask<List<LevelData>> LoadLevelData(GlobalSetting setting)
         {
             var levelDataPath = setting.LevelPath;
             var dataList      = new List<LevelData>();

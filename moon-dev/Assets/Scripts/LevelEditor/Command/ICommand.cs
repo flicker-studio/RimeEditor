@@ -1,12 +1,10 @@
-namespace LevelEditor
+namespace LevelEditor.Command
 {
-    /// <summary>
-    ///     Command mode interface
-    /// </summary>
-    public interface ICommand : Frame.Tool.ICommand
+    /// <inheritdoc />
+    internal interface ICommand : Moon.Runtime.DesignPattern.ICommand
     {
         /// <summary>
-        ///     Revoke an command that was executed
+        ///     Revoke a command that was executed
         /// </summary>
         public void Undo();
     }

@@ -1,7 +1,7 @@
 using System;
-using Frame.Tool.Popover;
 using Moon.Kernel.Attribute;
 using Moon.Kernel.Setting;
+using Moon.Runtime;
 using UnityEngine;
 
 namespace LevelEditor
@@ -254,7 +254,7 @@ namespace LevelEditor
             public Vector2 SIZE { get; private set; }
 
             [field: SerializeField, CustomLabel("出现位置")]
-            public POPOVERLOCATION POPOVER_LOCATION { get; private set; }
+            public Popoverlocation POPOVER_LOCATION { get; private set; }
         }
 
         [Serializable]

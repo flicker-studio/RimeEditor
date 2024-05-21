@@ -16,7 +16,7 @@ namespace LevelEditor
     /// </summary>
     public sealed class RotationAxisDragState : AdditiveState
     {
-        private List<AbstractItem> Items                     => m_information.DataManager.TargetItems;
+        private List<Item>         Items                     => m_information.DataManager.TargetItems;
         private ControlHandlePanel ControlHandlePanel        => m_information.UIManager.GetControlHandlePanel;
         private RectTransform      RotationAxisRectTransform => ControlHandlePanel.GetRotationRect;
         private Vector2            MouseCursorCompensation   => ControlHandlePanel.GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;

@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LevelEditor
+namespace LevelEditor.Command
 {
     /// <summary>
     ///     Rotate command
     /// </summary>
     public sealed class Rotation : ICommand
     {
-        private readonly List<AbstractItem> _items;
-        private readonly List<Quaternion>   _newRot;
-        private readonly List<Quaternion>   _oldRot;
+        private readonly List<Item>       _items;
+        private readonly List<Quaternion> _newRot;
+        private readonly List<Quaternion> _oldRot;
 
         /// <summary>
         ///     Command constructor
@@ -19,13 +19,13 @@ namespace LevelEditor
         /// <param name="newRot">New rotating quaternion</param>
         public Rotation
         (
-            IReadOnlyCollection<AbstractItem> items,
-            IEnumerable<Quaternion>           newRot
+            IReadOnlyCollection<Item> items,
+            IEnumerable<Quaternion>   newRot
         )
         {
             var count = items.Count;
-
-            _items  = new List<AbstractItem>(count);
+            
+            _items  = new List<Item>(count);
             _newRot = new List<Quaternion>(count);
             _oldRot = new List<Quaternion>(count);
 

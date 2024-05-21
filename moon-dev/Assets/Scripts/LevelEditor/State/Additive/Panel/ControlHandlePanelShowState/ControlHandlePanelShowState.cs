@@ -53,8 +53,8 @@ namespace LevelEditor
         private float GetCellSize     => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
         private int   GetGrowthFactor => GetControlHandlePanel.GetGridSnappingProperty.GROWTH_FACTOR;
         private Color GetGridColor    => GetControlHandlePanel.GetGridSnappingProperty.GRID_COLOR;
-
-        private readonly List<AbstractItem> m_copyDatas = new();
+        
+        private readonly List<Item> m_copyDatas = new();
 
         private GridPainter m_gridPainter;
 
@@ -73,8 +73,8 @@ namespace LevelEditor
         {
             m_gridPainter = new GridPainter(GetGridObj, GetGridSize, GetCellSize, GetGrowthFactor, GetGridColor);
         }
-
-        private void ClearCopyDatas(SubLevelData subLevelData)
+        
+        private void ClearCopyDatas(SubLevel subLevel)
         {
             m_copyDatas.Clear();
         }
@@ -131,24 +131,24 @@ namespace LevelEditor
                 }
             }
         }
-
-        private void ShowActionView(CONTROLHANDLEACTIONTYPE levelEditorActionType)
+        
+        private void ShowActionView(Controlhandleactiontype levelEditorActionType)
         {
             switch (levelEditorActionType)
             {
-                case CONTROLHANDLEACTIONTYPE.PositionAxisButton:
+                case Controlhandleactiontype.PositionAxisButton:
                     ShowPositionAxis();
                     break;
-                case CONTROLHANDLEACTIONTYPE.RotationAxisButton:
+                case Controlhandleactiontype.RotationAxisButton:
                     ShowRotationAxis();
                     break;
-                case CONTROLHANDLEACTIONTYPE.ScaleAxisButton:
+                case Controlhandleactiontype.ScaleAxisButton:
                     ShowScaleAxis();
                     break;
-                case CONTROLHANDLEACTIONTYPE.RectButton:
+                case Controlhandleactiontype.RectButton:
                     ShowRectAxis();
                     break;
-                case CONTROLHANDLEACTIONTYPE.ViewButton:
+                case Controlhandleactiontype.ViewButton:
                     HideAxis();
                     break;
             }

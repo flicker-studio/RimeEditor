@@ -19,16 +19,16 @@ namespace LevelEditor
             var GetRButtonDown = m_information.InputManager.GetRButtonDown;
             var GetSButtonDown = m_information.InputManager.GetSButtonDown;
             if (GetPButtonDown)
-                CommandInvoker.Execute(new Action(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.PositionAxisButton));
+                CommandInvoker.Execute(new Action(GetControlHandleAction, Controlhandleactiontype.PositionAxisButton));
             else if (GetShiftButton && GetRButtonDown)
-                CommandInvoker.Execute(new Action(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.RectButton));
+                CommandInvoker.Execute(new Action(GetControlHandleAction, Controlhandleactiontype.RectButton));
             else if (GetRButtonDown)
-                CommandInvoker.Execute(new Action(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.RotationAxisButton));
+                CommandInvoker.Execute(new Action(GetControlHandleAction, Controlhandleactiontype.RotationAxisButton));
             // else if ( )
             // {
             //     CommandInvoker.Execute(new ActionChangeCommand(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.ViewButton));
             // }
-            else if (GetSButtonDown) CommandInvoker.Execute(new Action(GetControlHandleAction, CONTROLHANDLEACTIONTYPE.ScaleAxisButton));
+            else if (GetSButtonDown) CommandInvoker.Execute(new Action(GetControlHandleAction, Controlhandleactiontype.ScaleAxisButton));
             // else if (GetUndoButtonDown)
             // {
             //     CommandInvoker.Undo();

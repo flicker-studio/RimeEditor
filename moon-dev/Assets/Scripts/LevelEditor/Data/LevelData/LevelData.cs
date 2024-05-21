@@ -76,10 +76,10 @@ namespace LevelEditor
         private DateTime m_createDate;
 
         /// <summary>
-        ///     Sublevel data
+        ///    List of sublevel data
         /// </summary>
-        [JsonProperty("SubLevelDatas", Order = 7)]
-        public List<SubLevelData> SubLevelDatas;
+        [JsonProperty("SubLevelDataList", Order = 7)]
+        public List<SubLevel> SubLevelDataList;
 
         /// <summary>
         ///     Current storage location
@@ -95,15 +95,15 @@ namespace LevelEditor
 
         public LevelData(int a)
         {
-            Path = default;
-            LevelName = default;
-            AuthorName = default;
-            Introduction = default;
-            Version = default;
-            Cover = default;
-            SubLevelDatas = new List<SubLevelData>();
-            m_hashKey = default;
-            m_createDate = default;
+            Path             = default;
+            LevelName        = default;
+            AuthorName       = default;
+            Introduction     = default;
+            Version          = default;
+            Cover            = default;
+            SubLevelDataList = new List<SubLevel>();
+            m_hashKey        = default;
+            m_createDate     = default;
         }
     }
 }

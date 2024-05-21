@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Frame.StateMachine;
-using Frame.Tool.Pool;
 using LevelEditor.Command;
 using Moon.Kernel.Extension;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Action = System.Action;
+using Object = UnityEngine.Object;
 using RectTransform = UnityEngine.RectTransform;
 
 namespace LevelEditor
@@ -25,15 +25,15 @@ namespace LevelEditor
         private GameObject                      GetInspectorRootObj      => GetInspectorPanel.RootRect.gameObject;
         private RectTransform                   GetInspectorContent      => GetInspectorPanel.ContentRect;
         private UISetting.InspectorItemProperty GetInspectorItemProperty => GetInspectorPanel.InspectorItemProperty;
-        private List<AbstractItem>              TargetDatas              => m_information.DataManager.TargetItems;
+        private List<Item>                      TargetDatas              => m_information.DataManager.TargetItems;
         private GameObject                      GetBoolItemPrefab        => m_information.PrefabManager.GetBoolItem;
-
-        private readonly Dictionary<Type, List<GameObject>>                      _inspectorItemDic      = new();
-        private readonly Dictionary<string, GameObject>                          _inspectorNameDic      = new();
-        private readonly Dictionary<string, Type>                                _commonFields          = new();
-        private readonly Dictionary<string, Dictionary<AbstractItem, FieldInfo>> _fieldInfoDic          = new();
-        private static   UpdateInspectorSignal                                   _updateInspectorSignal = new();
-        private          bool                                                    _isRedoOrUndo;
+        
+        private readonly Dictionary<Type, List<GameObject>>              _inspectorItemDic      = new();
+        private readonly Dictionary<string, GameObject>                  _inspectorNameDic      = new();
+        private readonly Dictionary<string, Type>                        _commonFields          = new();
+        private readonly Dictionary<string, Dictionary<Item, FieldInfo>> _fieldInfoDic          = new();
+        private static   UpdateInspectorSignal                           _updateInspectorSignal = new();
+        private          bool                                            _isRedoOrUndo;
 
         [RuntimeInitializeOnLoadMethod]
         private static void ResetStaticVar()
@@ -78,13 +78,13 @@ namespace LevelEditor
             ClearInspectorItem();
             GetInspectorRootObj.SetActive(false);
         }
-
-        public void FindSameField(AbstractItem abstractItem)
+        
+        public void FindSameField(Item item)
         {
             FindSameField();
         }
-
-        public void FindSameField(List<AbstractItem> itemData)
+        
+        public void FindSameField(List<Item> itemData)
         {
             FindSameField();
         }
@@ -109,7 +109,7 @@ namespace LevelEditor
                     if (!_fieldInfoDic.ContainsKey(field.Name))
                     {
                         _commonFields.Add(field.Name, field.FieldType);
-                        _fieldInfoDic.Add(field.Name, new Dictionary<AbstractItem, FieldInfo>());
+                        _fieldInfoDic.Add(field.Name, new Dictionary<Item, FieldInfo>());
                     }
 
                     _fieldInfoDic[field.Name].Add(item, field);
@@ -133,7 +133,7 @@ namespace LevelEditor
                     foreach (var inspectorItem in inspectorItemPair.Value)
                     {
                         inspectorItem.GetComponent<Toggle>().onValueChanged.RemoveAllListeners();
-                        ObjectPool.Instance.OnRelease(inspectorItem);
+                        Object.Destroy(inspectorItem);
                     }
 
             _inspectorItemDic.Clear();
@@ -145,8 +145,8 @@ namespace LevelEditor
             if (type == typeof(bool))
             {
                 if (!_inspectorItemDic.ContainsKey(type)) _inspectorItemDic.Add(type, new List<GameObject>());
-
-                var inspectorItem = ObjectPool.Instance.OnTake(GetBoolItemPrefab);
+                
+                var inspectorItem = Object.Instantiate(GetBoolItemPrefab);
                 inspectorItem.transform.SetParent(GetInspectorContent);
                 _inspectorItemDic[type].Add(inspectorItem);
                 return inspectorItem;
@@ -154,8 +154,8 @@ namespace LevelEditor
 
             return null;
         }
-
-        private void AddEventToInspectorItem(GameObject inspectorItem, Type type, Dictionary<AbstractItem, FieldInfo> fieldInfoDic)
+        
+        private void AddEventToInspectorItem(GameObject inspectorItem, Type type, Dictionary<Item, FieldInfo> fieldInfoDic)
         {
             if (type == typeof(bool))
                 inspectorItem.GetComponent<Toggle>().onValueChanged.AddListener(value =>
@@ -176,8 +176,8 @@ namespace LevelEditor
             foreach (var keyValuePair in _commonFields)
                 UpdateInspectorItem(_inspectorNameDic[keyValuePair.Key], keyValuePair.Value, keyValuePair.Key, _fieldInfoDic[keyValuePair.Key]);
         }
-
-        private void UpdateInspectorItem(GameObject inspectorItem, Type type, string name, Dictionary<AbstractItem, FieldInfo> fieldInfoDic)
+        
+        private void UpdateInspectorItem(GameObject inspectorItem, Type type, string name, Dictionary<Item, FieldInfo> fieldInfoDic)
         {
             if (type == typeof(bool))
             {

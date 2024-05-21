@@ -1,5 +1,5 @@
 using System;
-using LevelEditor;
+using LevelEditor.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -7,9 +7,9 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 ///     Custom deserialization transformations
 /// </summary>
-public class ItemDataConverter : CustomCreationConverter<AbstractItem>
+public class ItemDataConverter : CustomCreationConverter<LevelEditor.Item>
 {
-    private ItemDataType m_itemDataType;
+    private ItemType m_itemDataType;
 
     private ItemProduct m_itemProduct;
     //TODO:需加载SO
@@ -19,7 +19,7 @@ public class ItemDataConverter : CustomCreationConverter<AbstractItem>
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
         var token = JToken.ReadFrom(reader);
-        m_itemDataType = token["ItemDataType"].ToObject<ItemDataType>();
+        m_itemDataType = token["ItemDataType"].ToObject<ItemType>();
 
         m_itemProduct = ItemProductAnalysis(token["ProductName"].ToString(),
                                             token["ProductType"].ToString());
@@ -28,15 +28,15 @@ public class ItemDataConverter : CustomCreationConverter<AbstractItem>
     }
 
     /// <inheritdoc />
-    public override AbstractItem Create(Type objectType)
+    public override LevelEditor.Item Create(Type objectType)
     {
         switch (m_itemDataType)
         {
-            case ItemDataType.ENTRANCE:
+            case ItemType.ENTRANCE:
             // return new Entrance(m_itemProduct, true);
-            case ItemDataType.PLATFORM:
+            case ItemType.PLATFORM:
             // return new Platform(m_itemProduct, true);
-            case ItemDataType.EXIT:
+            case ItemType.EXIT:
             //return new Exit(m_itemProduct, true);
             default:
                 return null;

@@ -31,7 +31,7 @@ namespace LevelEditor
 
         public async UniTask Init()
         {
-            var levelEditorTransform = Controller.RootObject.transform as RectTransform;
+            var levelEditorTransform = EntranceController.RootObject.transform as RectTransform;
 
             var prefab = await ResourcesService.LoadAssetAsync<PrefabFactory>("Assets/Settings/GlobalSettings/PrefabFactory.asset");
             UI = await ResourcesService.LoadAssetAsync<UISetting>("Assets/Settings/GlobalSettings/LevelEditorUIProperty.asset");
@@ -59,20 +59,20 @@ namespace LevelEditor
         //     // DataManager.SetActiveEditors(true);
         //     //  OutlineManager.SetRenderObjects(DataManager.TargetObjs);
         // }
-
-        private void ResetCommand(SubLevelData subLevelData)
+        
+        private void ResetCommand(SubLevel subLevel)
         {
             CommandInvoker.Clear();
         }
-
-        private void ResetOutline(SubLevelData subLevelData)
+        
+        private void ResetOutline(SubLevel subLevel)
         {
             OutlineManager.SetRenderObjects(DataManager.TargetObjs);
         }
-
-        private void ResetCameraPos(SubLevelData subLevelData)
+        
+        private void ResetCameraPos(SubLevel subLevel)
         {
-            var itemObjs = subLevelData.ItemAssets.GetItemObjs();
+            var itemObjs = subLevel.ItemAssets.GetItemObjs();
 
             if (itemObjs.Count == 0)
             {

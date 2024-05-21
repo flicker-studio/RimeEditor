@@ -20,9 +20,8 @@ namespace LevelEditor
         private UIManager GetUI => m_information.UIManager;
 
         private InputManager GetInput => m_information.InputManager;
-
-
-        private List<AbstractItem> TargetItems => GetData.TargetItems;
+        
+        private List<Item> TargetItems => GetData.TargetItems;
 
         private List<GameObject> TargetObjs => GetData.TargetObjs;
 

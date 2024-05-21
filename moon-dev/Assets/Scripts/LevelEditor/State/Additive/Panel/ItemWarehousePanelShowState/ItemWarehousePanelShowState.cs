@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Frame.CompnentExtensions;
 using Frame.StateMachine;
-using Frame.Tool.Pool;
 using LevelEditor.Command;
 using LevelEditor.Data;
 using Moon.Kernel.Extension;
@@ -11,6 +10,7 @@ using Moon.Kernel.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace LevelEditor
 {
@@ -40,8 +40,8 @@ namespace LevelEditor
         private string             GetItemLatticeImageName   => GetItemWarehousePanel.GetItemLatticeImageName;
         private string             GetItemLatticeTextName    => GetItemWarehousePanel.GetItemLatticeTextName;
         private string             GetItemTypeTextName       => GetItemWarehousePanel.GetItemTypeTextName;
-        private List<AbstractItem> ItemAssets                => m_information.DataManager.ItemAssets;
-        private List<AbstractItem> TargetAssets              => m_information.DataManager.TargetItems;
+        private List<Item>         ItemAssets                => m_information.DataManager.ItemAssets;
+        private List<Item>         TargetAssets              => m_information.DataManager.TargetItems;
 
         private                 OutlineManager                                GetOutlinePainter => m_information.OutlineManager;
         private static          ItemProduct                                   m_currentChoose;
@@ -367,7 +367,7 @@ namespace LevelEditor
 
         private GameObject CreateItemDtailGroup(string itemType)
         {
-            var itemDtailGroup = ObjectPool.Instance.OnTake(GetItemDtailGroup);
+            var itemDtailGroup = Object.Instantiate(GetItemDtailGroup);
             itemDtailGroup.transform.SetParent(GetItemDetailGroupContent);
             itemDtailGroup.transform.Find(GetDetailGroupTextName).GetComponent<TextMeshProUGUI>().text = itemType;
             return itemDtailGroup;
