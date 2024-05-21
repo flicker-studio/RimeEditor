@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace LevelEditor.View
+namespace LevelEditor.View.Element
 {
     /// <summary>
     ///     Level entries displayed in the Browse screen

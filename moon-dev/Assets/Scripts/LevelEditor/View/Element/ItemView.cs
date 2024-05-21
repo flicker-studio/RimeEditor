@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using Frame.CompnentExtensions;
 using LevelEditor.Controller;
+using LevelEditor.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LevelEditor.Data
+namespace LevelEditor.View.Element
 {
     /// <summary>
     ///     Display items in the inspection panel

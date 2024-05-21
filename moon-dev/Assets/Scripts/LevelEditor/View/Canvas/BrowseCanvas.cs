@@ -4,7 +4,9 @@ using System.IO;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using LevelEditor.State;
+using LevelEditor.View.Element;
 using Moon.Kernel.Extension;
+using Moon.Kernel.Service;
 using Moon.Runtime;
 using SimpleFileBrowser;
 using TMPro;
@@ -102,13 +104,13 @@ namespace LevelEditor.View.Canvas
             Dispose(false);
         }
         
-        public void Active()
+        public async void Active()
         {
+            var pre = await ResourcesService.LoadAssetAsync<GameObject>("Assets/Resources/Prefabs/LevelItem.prefab");
+            
             // _createButton.interactable = false;
             _fullPanelRect.gameObject.SetActive(true);
             _levelManagerRootRect.gameObject.SetActive(true);
-            
-            var pre = Resources.Load("Prefabs/LevelItem") as GameObject;
             
             for (var i = 0; i < 12; i++)
             {
