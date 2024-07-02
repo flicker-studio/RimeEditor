@@ -3,13 +3,13 @@ using LevelEditor.View.Element;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace LevelEditor
+namespace LevelEditor.Item
 {
     /// <summary>
     ///     Item base class, which is the base class for the creatable sections in the Level Editor.
     /// </summary>
     [JsonConverter(typeof(ItemDataConverter))]
-    public abstract class Item
+    public abstract class ItemBase
     {
         /// <summary>
         ///     View of entries displayed in Hierarchy
@@ -35,7 +35,7 @@ namespace LevelEditor
         ///     Generate new Item based on type
         /// </summary>
         /// <param name="type">Type required</param>
-        protected internal Item(ItemType type)
+        protected internal ItemBase(ItemType type)
         {
             Type = type;
             // TODO: Bound ItemView 
@@ -46,12 +46,20 @@ namespace LevelEditor
         /// <summary>
         ///     Set the item to inactive
         /// </summary>
-        public abstract void Inactive();
+        public virtual void Inactive()
+        {
+            View.Inactive();
+            GameObject.SetActive(false);
+        }
         
         /// <summary>
         ///     Set the item to active
         /// </summary>
-        public abstract void Active(bool a = false);
+        public virtual void Active(bool a = false)
+        {
+            View.Active();
+            GameObject.SetActive(true);
+        }
         
         /// <summary>
         ///     Called when preview mode is enabled

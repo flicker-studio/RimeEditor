@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using LevelEditor.Item;
 using Moon.Kernel.Utils;
 
 namespace LevelEditor.Command
@@ -9,15 +10,15 @@ namespace LevelEditor.Command
     /// </summary>
     public class Select : ICommand
     {
-        private readonly List<Item>     _targetList;
+        private readonly List<ItemBase>     _targetList;
         private readonly OutlineManager _outlinePainter;
-        private readonly List<Item>     _lastList = new();
-        private readonly List<Item>     _nextList = new();
+        private readonly List<ItemBase>     _lastList = new();
+        private readonly List<ItemBase>     _nextList = new();
 
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public Select(List<Item> targetList, List<Item> nextList, OutlineManager outlinePainter)
+        public Select(List<ItemBase> targetList, List<ItemBase> nextList, OutlineManager outlinePainter)
         {
             _outlinePainter = outlinePainter;
             _targetList     = targetList.ToList();

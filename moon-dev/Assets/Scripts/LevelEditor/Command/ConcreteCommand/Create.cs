@@ -1,4 +1,5 @@
 using LevelEditor.Data;
+using LevelEditor.Item;
 
 namespace LevelEditor.Command
 {
@@ -7,26 +8,26 @@ namespace LevelEditor.Command
     /// </summary>
     public sealed class Create : ICommand
     {
-        private readonly Item _item;
+        private readonly ItemBase _itemBase;
 
         /// <summary>
         ///     Default constructor
         /// </summary>
         public Create(ItemType type)
         {
-            _item = ItemFactory.Create(type);
+            _itemBase = ItemFactory.Create(type);
         }
 
         /// <inheritdoc />
         public void Execute()
         {
-            _item.Active();
+            _itemBase.Active();
         }
 
         /// <inheritdoc />
         public void Undo()
         {
-            _item.Inactive();
+            _itemBase.Inactive();
         }
     }
 }

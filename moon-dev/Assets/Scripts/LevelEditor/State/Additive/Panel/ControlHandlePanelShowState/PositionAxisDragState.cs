@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,7 +24,7 @@ namespace LevelEditor
 
         private ControlHandlePanel GetControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
         
-        private List<Item> TargetItems => m_information.DataManager.TargetItems;
+        private List<ItemBase> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 

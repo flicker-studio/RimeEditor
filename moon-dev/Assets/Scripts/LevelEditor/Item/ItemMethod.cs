@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LevelEditor
+namespace LevelEditor.Item
 {
     public static class ItemMethod
     {
-        public static Item CheckItemObj(this List<Item> itemDatas, GameObject targetObj)
+        public static ItemBase CheckItemObj(this List<ItemBase> itemDatas, GameObject targetObj)
         {
             foreach (var itemData in itemDatas)
             {
@@ -15,9 +15,9 @@ namespace LevelEditor
             return null;
         }
         
-        public static List<Item> CheckItemObjs(this List<Item> itemDatas, List<GameObject> targetObjs)
+        public static List<ItemBase> CheckItemObjs(this List<ItemBase> itemDatas, List<GameObject> targetObjs)
         {
-            var tempList = new List<Item>();
+            var tempList = new List<ItemBase>();
 
             foreach (var targetObj in targetObjs)
             {
@@ -34,7 +34,7 @@ namespace LevelEditor
             return tempList;
         }
         
-        public static List<GameObject> GetItemObjs(this List<Item> itemDatas)
+        public static List<GameObject> GetItemObjs(this List<ItemBase> itemDatas)
         {
             List<GameObject> itemObjs = new List<GameObject>();
 
@@ -50,7 +50,7 @@ namespace LevelEditor
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public static (List<Vector3>, List<Quaternion>, List<Vector3>) GetTransforms(this List<Item> items)
+        public static (List<Vector3>, List<Quaternion>, List<Vector3>) GetTransforms(this List<ItemBase> items)
         {
             var positionList = new List<Vector3>();
             var rotationList = new List<Quaternion>();
@@ -66,7 +66,7 @@ namespace LevelEditor
             return (positionList, rotationList, scaleList);
         }
         
-        public static Item CheckItemObj(this ObservableList<Item> itemDatas, GameObject targetObj)
+        public static ItemBase CheckItemObj(this ObservableList<ItemBase> itemDatas, GameObject targetObj)
         {
             foreach (var itemData in itemDatas)
             {
@@ -76,9 +76,9 @@ namespace LevelEditor
             return null;
         }
         
-        public static List<Item> CheckItemObjs(this ObservableList<Item> itemDatas, List<GameObject> targetObjs)
+        public static List<ItemBase> CheckItemObjs(this ObservableList<ItemBase> itemDatas, List<GameObject> targetObjs)
         {
-            var tempList = new List<Item>();
+            var tempList = new List<ItemBase>();
 
             foreach (var targetObj in targetObjs)
             {
@@ -95,7 +95,7 @@ namespace LevelEditor
             return tempList;
         }
         
-        public static List<GameObject> GetItemObjs(this ObservableList<Item> itemDatas)
+        public static List<GameObject> GetItemObjs(this ObservableList<ItemBase> itemDatas)
         {
             List<GameObject> itemObjs = new List<GameObject>();
 

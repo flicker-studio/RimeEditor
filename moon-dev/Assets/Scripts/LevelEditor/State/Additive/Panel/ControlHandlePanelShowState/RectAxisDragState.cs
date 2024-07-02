@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +16,7 @@ namespace LevelEditor
         private UIManager GetUI => m_information.UIManager;
         private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
         
-        private List<Item> TargetItems => m_information.DataManager.TargetItems;
+        private List<ItemBase> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
 

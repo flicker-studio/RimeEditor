@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LevelEditor.Item;
 using UnityEngine;
 
 namespace LevelEditor.Command
@@ -9,18 +10,18 @@ namespace LevelEditor.Command
     /// </summary>
     public class Scale : ICommand
     {
-        private readonly List<Item>    _items;
+        private readonly List<ItemBase>    _items;
         private readonly List<Vector3> _newScale;
         private readonly List<Vector3> _oldScale;
 
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public Scale(List<Item> items, IEnumerable<Vector3> newScale)
+        public Scale(List<ItemBase> items, IEnumerable<Vector3> newScale)
         {
             var count = items.Count;
             
-            _items    = new List<Item>(count);
+            _items    = new List<ItemBase>(count);
             _newScale = new List<Vector3>(count);
             _oldScale = new List<Vector3>(count);
 

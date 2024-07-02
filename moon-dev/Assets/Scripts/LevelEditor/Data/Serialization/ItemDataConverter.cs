@@ -1,5 +1,6 @@
 using System;
 using LevelEditor.Data;
+using LevelEditor.Item;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -7,7 +8,7 @@ using Newtonsoft.Json.Linq;
 /// <summary>
 ///     Custom deserialization transformations
 /// </summary>
-public class ItemDataConverter : CustomCreationConverter<LevelEditor.Item>
+public class ItemDataConverter : CustomCreationConverter<ItemBase>
 {
     private ItemType m_itemDataType;
 
@@ -28,7 +29,7 @@ public class ItemDataConverter : CustomCreationConverter<LevelEditor.Item>
     }
 
     /// <inheritdoc />
-    public override LevelEditor.Item Create(Type objectType)
+    public override ItemBase Create(Type objectType)
     {
         switch (m_itemDataType)
         {

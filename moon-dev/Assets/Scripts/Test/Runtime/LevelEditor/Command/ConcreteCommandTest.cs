@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using LevelEditor;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using Moon.Kernel;
 using Moon.Kernel.Service;
 using UnityEngine;
@@ -41,7 +42,7 @@ namespace Test.Runtime.LevelEditor.Command
                 (
                  async () =>
                  {
-                     var itemList  = new List<Item>(1);
+                     var itemList  = new List<ItemBase>(1);
                      var scaleList = new List<Vector3>(1);
                      itemList.Add(new Platform());
                      scaleList.Add(Vector3.down);

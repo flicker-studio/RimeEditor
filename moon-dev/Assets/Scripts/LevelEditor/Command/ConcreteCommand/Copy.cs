@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LevelEditor.Item;
 using Moon.Kernel.Utils;
 
 namespace LevelEditor.Command
@@ -8,21 +9,21 @@ namespace LevelEditor.Command
     /// </summary>
     public class Copy : ICommand
     {
-        private readonly List<Item> _copyItem;
-        private readonly List<Item> _sourceItem;
+        private readonly List<ItemBase> _copyItem;
+        private readonly List<ItemBase> _sourceItem;
 
         /// <summary>
         ///     Default constructor
         /// </summary>
         public Copy
         (
-            List<Item>     sourceItem,
+            List<ItemBase>     sourceItem,
             OutlineManager outlinePainter
         )
         {
             var count = sourceItem.Count;
-            _sourceItem = new List<Item>(count);
-            _copyItem   = new List<Item>(count);
+            _sourceItem = new List<ItemBase>(count);
+            _copyItem   = new List<ItemBase>(count);
             _sourceItem.AddRange(sourceItem);
         }
 

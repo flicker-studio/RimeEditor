@@ -1,9 +1,9 @@
 using System;
 using LevelEditor.Data;
 
-namespace LevelEditor
+namespace LevelEditor.Item
 {
-    public class Platform : Item
+    public class Platform : ItemBase
     {
         public bool CanPush;
         

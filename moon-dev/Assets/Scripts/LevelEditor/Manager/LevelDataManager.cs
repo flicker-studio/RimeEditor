@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using LevelEditor.Item;
 using Moon.Kernel;
 using Moon.Kernel.Setting;
 using UnityEngine;
@@ -45,7 +46,7 @@ namespace LevelEditor
         /// <summary>
         /// </summary>
         [CanBeNull]
-        public List<Item> ItemAssets
+        public List<ItemBase> ItemAssets
         {
             get
             {
@@ -59,7 +60,7 @@ namespace LevelEditor
 
         /// <summary>
         /// </summary>
-        public readonly List<Item> TargetItems = new();
+        public readonly List<ItemBase> TargetItems = new();
 
         /// <summary>
         /// </summary>
@@ -207,7 +208,7 @@ namespace LevelEditor
                 itemAsset.Inactive();
         }
         
-        private void SetItemAssetActive(List<Item> itemDatas, bool active, bool isReload = false)
+        private void SetItemAssetActive(List<ItemBase> itemDatas, bool active, bool isReload = false)
         {
             foreach (var itemData in itemDatas) itemData.Active(active);
         }

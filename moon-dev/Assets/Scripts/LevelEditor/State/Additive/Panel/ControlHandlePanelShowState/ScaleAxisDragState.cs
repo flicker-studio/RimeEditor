@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Struct;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace LevelEditor
 
         private InputManager GetInput => m_information.InputManager;
         
-        private List<Item> TargetItems => GetData.TargetItems;
+        private List<ItemBase> TargetItems => GetData.TargetItems;
 
         private List<GameObject> TargetObjs => GetData.TargetObjs;
 

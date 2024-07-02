@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LevelEditor.Item;
 using UnityEngine;
 
 namespace LevelEditor.View.Canvas
@@ -9,7 +10,7 @@ namespace LevelEditor.View.Canvas
     /// </summary>
     internal sealed class EditorCanvas : ICanvas
     {
-        internal Action<List<Item>> Update;
+        internal Action<List<ItemBase>> Update;
         private  InspectorPanel     _inspectorPanel;
         private  ActionPanel        _actionPanel;
         

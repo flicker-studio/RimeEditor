@@ -1,17 +1,18 @@
 using System.Collections.Generic;
+using LevelEditor.Item;
 using UnityEngine;
 
 namespace LevelEditor.Command
 {
     public class Rect : ICommand
     {
-        private readonly List<Item>    m_itemDatas    = new();
+        private readonly List<ItemBase>    m_itemDatas    = new();
         private readonly List<Vector3> m_lastScale    = new();
         private readonly List<Vector3> m_nextScale    = new();
         private readonly List<Vector3> m_lastPosition = new();
         private readonly List<Vector3> m_nextPosition = new();
         
-        public Rect(List<Item>    itemDatas, List<Vector3> lastPosition, List<Vector3> nextPosition, List<Vector3> lastScale,
+        public Rect(List<ItemBase>    itemDatas, List<Vector3> lastPosition, List<Vector3> nextPosition, List<Vector3> lastScale,
                     List<Vector3> nextScale)
         {
             m_itemDatas.AddRange(itemDatas);

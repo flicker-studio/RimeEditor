@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using LevelEditor.Data;
 
-namespace LevelEditor
+namespace LevelEditor.Item
 {
     /// <summary>
     ///     Item's factory class, which can only be used to create new Item subclasses.
@@ -14,7 +14,7 @@ namespace LevelEditor
         /// <param name="type"></param>
         /// <returns>A new instance</returns>
         [UsedImplicitly]
-        public static Item Create(ItemType type)
+        public static ItemBase Create(ItemType type)
         {
             return type switch
                    {
@@ -29,20 +29,20 @@ namespace LevelEditor
         /// <summary>
         ///     Create the corresponding Item
         /// </summary>
-        /// <param name="item">
+        /// <param name="itemBase">
         /// </param>
         /// <returns>
         ///     A new instance
         /// </returns>
         [UsedImplicitly]
-        public static Item Copy(Item item)
+        public static ItemBase Copy(ItemBase itemBase)
         {
-            return item.Type switch
+            return itemBase.Type switch
                    {
                        ItemType.PLATFORM  => new Platform(),
                        ItemType.MECHANISM => new Platform(),
                        ItemType.ENTRANCE  => new Entrance(),
-                       ItemType.EXIT      => new Exit(),
+                       ItemType.EXIT      => new Exit(itemBase as Exit),
                        _                  => null
                    };
         }

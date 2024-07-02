@@ -5,6 +5,7 @@ using Frame.CompnentExtensions;
 using Frame.StateMachine;
 using LevelEditor.Command;
 using LevelEditor.Data;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Utils;
 using TMPro;
@@ -40,8 +41,8 @@ namespace LevelEditor
         private string             GetItemLatticeImageName   => GetItemWarehousePanel.GetItemLatticeImageName;
         private string             GetItemLatticeTextName    => GetItemWarehousePanel.GetItemLatticeTextName;
         private string             GetItemTypeTextName       => GetItemWarehousePanel.GetItemTypeTextName;
-        private List<Item>         ItemAssets                => m_information.DataManager.ItemAssets;
-        private List<Item>         TargetAssets              => m_information.DataManager.TargetItems;
+        private List<ItemBase>         ItemAssets                => m_information.DataManager.ItemAssets;
+        private List<ItemBase>         TargetAssets              => m_information.DataManager.TargetItems;
 
         private                 OutlineManager                                GetOutlinePainter => m_information.OutlineManager;
         private static          ItemProduct                                   m_currentChoose;

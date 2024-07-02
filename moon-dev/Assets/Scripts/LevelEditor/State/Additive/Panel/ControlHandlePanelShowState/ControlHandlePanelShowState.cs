@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Frame.StateMachine;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using UnityEngine;
 using RectTransform = UnityEngine.RectTransform;
@@ -54,7 +55,7 @@ namespace LevelEditor
         private int   GetGrowthFactor => GetControlHandlePanel.GetGridSnappingProperty.GROWTH_FACTOR;
         private Color GetGridColor    => GetControlHandlePanel.GetGridSnappingProperty.GRID_COLOR;
         
-        private readonly List<Item> m_copyDatas = new();
+        private readonly List<ItemBase> m_copyDatas = new();
 
         private GridPainter m_gridPainter;
 

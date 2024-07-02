@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Frame.StateMachine;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using TMPro;
 using UnityEngine;
@@ -25,13 +26,13 @@ namespace LevelEditor
         private GameObject                      GetInspectorRootObj      => GetInspectorPanel.RootRect.gameObject;
         private RectTransform                   GetInspectorContent      => GetInspectorPanel.ContentRect;
         private UISetting.InspectorItemProperty GetInspectorItemProperty => GetInspectorPanel.InspectorItemProperty;
-        private List<Item>                      TargetDatas              => m_information.DataManager.TargetItems;
+        private List<ItemBase>                      TargetDatas              => m_information.DataManager.TargetItems;
         private GameObject                      GetBoolItemPrefab        => m_information.PrefabManager.GetBoolItem;
         
         private readonly Dictionary<Type, List<GameObject>>              _inspectorItemDic      = new();
         private readonly Dictionary<string, GameObject>                  _inspectorNameDic      = new();
         private readonly Dictionary<string, Type>                        _commonFields          = new();
-        private readonly Dictionary<string, Dictionary<Item, FieldInfo>> _fieldInfoDic          = new();
+        private readonly Dictionary<string, Dictionary<ItemBase, FieldInfo>> _fieldInfoDic          = new();
         private static   UpdateInspectorSignal                           _updateInspectorSignal = new();
         private          bool                                            _isRedoOrUndo;
 
@@ -79,12 +80,12 @@ namespace LevelEditor
             GetInspectorRootObj.SetActive(false);
         }
         
-        public void FindSameField(Item item)
+        public void FindSameField(ItemBase itemBase)
         {
             FindSameField();
         }
         
-        public void FindSameField(List<Item> itemData)
+        public void FindSameField(List<ItemBase> itemData)
         {
             FindSameField();
         }
@@ -109,7 +110,7 @@ namespace LevelEditor
                     if (!_fieldInfoDic.ContainsKey(field.Name))
                     {
                         _commonFields.Add(field.Name, field.FieldType);
-                        _fieldInfoDic.Add(field.Name, new Dictionary<Item, FieldInfo>());
+                        _fieldInfoDic.Add(field.Name, new Dictionary<ItemBase, FieldInfo>());
                     }
 
                     _fieldInfoDic[field.Name].Add(item, field);
@@ -155,7 +156,7 @@ namespace LevelEditor
             return null;
         }
         
-        private void AddEventToInspectorItem(GameObject inspectorItem, Type type, Dictionary<Item, FieldInfo> fieldInfoDic)
+        private void AddEventToInspectorItem(GameObject inspectorItem, Type type, Dictionary<ItemBase, FieldInfo> fieldInfoDic)
         {
             if (type == typeof(bool))
                 inspectorItem.GetComponent<Toggle>().onValueChanged.AddListener(value =>
@@ -177,7 +178,7 @@ namespace LevelEditor
                 UpdateInspectorItem(_inspectorNameDic[keyValuePair.Key], keyValuePair.Value, keyValuePair.Key, _fieldInfoDic[keyValuePair.Key]);
         }
         
-        private void UpdateInspectorItem(GameObject inspectorItem, Type type, string name, Dictionary<Item, FieldInfo> fieldInfoDic)
+        private void UpdateInspectorItem(GameObject inspectorItem, Type type, string name, Dictionary<ItemBase, FieldInfo> fieldInfoDic)
         {
             if (type == typeof(bool))
             {

@@ -3,6 +3,7 @@ using System.Linq;
 using Frame.StateMachine;
 using LevelEditor;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using LevelEditor.View.Element;
 using Moon.Kernel.Utils;
 using UnityEngine;
@@ -13,8 +14,8 @@ public class HierarchyPanelShowState : AdditiveState
     private          LevelDataManager       DataManager       => m_information.DataManager;
     private          HierarchyPanel         HierarchyPanel    => m_information.UIManager.GetHierarchyPanel;
     private          Transform              ScrollViewContent => HierarchyPanel.GetHierarchyContent;
-    private          List<LevelEditor.Item> TargetItems       => DataManager.TargetItems;
-    private          List<LevelEditor.Item> ItemAssets        => DataManager.ItemAssets;
+    private          List<ItemBase> TargetItems       => DataManager.TargetItems;
+    private          List<ItemBase> ItemAssets        => DataManager.ItemAssets;
     private          OutlineManager         Outline           => m_information.OutlineManager;
     private          Button                 AddButton         => HierarchyPanel.GetAddButton;
     private          Button                 DeleteButton      => HierarchyPanel.GetDeleteButton;
@@ -23,7 +24,7 @@ public class HierarchyPanelShowState : AdditiveState
     private          bool                   CtrlInput         => m_information.InputManager.GetCtrlButton;
     private          bool                   DeleteInputDown   => m_information.InputManager.GetDeleteButtonDown;
     private readonly List<ItemView>         _itemViewList     = new();
-    private          List<LevelEditor.Item> _selectedItemList = new();
+    private          List<ItemBase> _selectedItemList = new();
 
     public HierarchyPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
     {
@@ -82,18 +83,18 @@ public class HierarchyPanelShowState : AdditiveState
             */
     }
     
-    private void CreateNode(List<LevelEditor.Item> targetItems)
+    private void CreateNode(List<ItemBase> targetItems)
     {
         foreach (var targetItem in targetItems) CreateNode(targetItem);
     }
     
-    private void CreateNode(LevelEditor.Item targetItem)
+    private void CreateNode(ItemBase targetItemBase)
     {
-        var ItemView               = CreateChild(targetItem);
+        var ItemView               = CreateChild(targetItemBase);
         var itemNodeChildTransform = ItemView.Transform;
 
         foreach (var itemNodeProperty in _itemViewList)
-            if (itemNodeProperty is ItemView && itemNodeProperty.Type == targetItem.Type)
+            if (itemNodeProperty is ItemView && itemNodeProperty.Type == targetItemBase.Type)
             {
                 ItemView = itemNodeProperty;
                 var parentChilds = ItemView.GetAllChild();
@@ -110,22 +111,22 @@ public class HierarchyPanelShowState : AdditiveState
                 return;
             }
         
-        ItemView = CreateParent(targetItem);
+        ItemView = CreateParent(targetItemBase);
         itemNodeChildTransform.SetSiblingIndex(ItemView.Transform.GetSiblingIndex() + 1);
         ItemView.AddChild(ItemView);
         ItemView.ShowChild();
     }
     
-    private void Delete(List<LevelEditor.Item> item)
+    private void Delete(List<ItemBase> item)
     {
         _selectedItemList.Clear();
 
         foreach (var itemData in item) Delete(itemData);
     }
     
-    private void Delete(LevelEditor.Item item)
+    private void Delete(ItemBase itemBase)
     {
-        Delete(item.View);
+        Delete(itemBase.View);
     }
 
     private void Delete(ItemView itemView)
@@ -133,17 +134,17 @@ public class HierarchyPanelShowState : AdditiveState
         itemView.Remove();
     }
     
-    private ItemView CreateParent(LevelEditor.Item item)
+    private ItemView CreateParent(ItemBase itemBase)
     {
-        var itemNodeParent = new ItemView(item, GetSelectedNode, ScrollView);
+        var itemNodeParent = new ItemView(itemBase, GetSelectedNode, ScrollView);
         _itemViewList.Add(itemNodeParent);
         itemNodeParent.Transform.SetSiblingIndex(ScrollViewContent.childCount);
         return itemNodeParent;
     }
     
-    private ItemView CreateChild(LevelEditor.Item targetItem)
+    private ItemView CreateChild(ItemBase targetItemBase)
     {
-        var itemNodeChild = new ItemView(targetItem, GetSelectedNode, ScrollView);
+        var itemNodeChild = new ItemView(targetItemBase, GetSelectedNode, ScrollView);
         _itemViewList.Add(itemNodeChild);
         return itemNodeChild;
     }
@@ -164,12 +165,12 @@ public class HierarchyPanelShowState : AdditiveState
         _itemViewList.Clear();
     }
     
-    private void SyncNodePanelSelect(List<LevelEditor.Item> itemData)
+    private void SyncNodePanelSelect(List<ItemBase> itemData)
     {
         SyncNodePanelSelect();
     }
     
-    private void SyncNodePanelSelect(LevelEditor.Item item)
+    private void SyncNodePanelSelect(ItemBase itemBase)
     {
         SyncNodePanelSelect();
     }
@@ -183,7 +184,7 @@ public class HierarchyPanelShowState : AdditiveState
 
         foreach (var targetItem in TargetItems)
         foreach (var itemNodeProperty in _itemViewList)
-            if (itemNodeProperty is ItemView itemNodeChild && itemNodeChild.Item == targetItem)
+            if (itemNodeProperty is ItemView itemNodeChild && itemNodeChild.ItemBase == targetItem)
             {
                 itemNodeChild.IsSelected = true;
                 break;
@@ -235,7 +236,7 @@ public class HierarchyPanelShowState : AdditiveState
 
         foreach (var itemNodeProperty in _itemViewList)
         {
-            if (itemNodeProperty.Item != lastSelectData) continue;
+            if (itemNodeProperty.ItemBase != lastSelectData) continue;
             endSelect = itemNodeProperty.Transform.GetSiblingIndex();
             break;
         }
@@ -263,7 +264,7 @@ public class HierarchyPanelShowState : AdditiveState
         if (selectView is ItemView child)
         {
             selectView.IsSelected = true;
-            _selectedItemList.Add(child.Item);
+            _selectedItemList.Add(child.ItemBase);
             _selectedItemList = _selectedItemList.Distinct().ToList();
             CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
             return;
@@ -276,7 +277,7 @@ public class HierarchyPanelShowState : AdditiveState
             foreach (var itemNodeChild in tarGetAllChild)
             {
                 itemNodeChild.IsSelected = true;
-                _selectedItemList.Add(itemNodeChild.Item);
+                _selectedItemList.Add(itemNodeChild.ItemBase);
             }
 
             _selectedItemList = _selectedItemList.Distinct().ToList();
@@ -292,9 +293,9 @@ public class HierarchyPanelShowState : AdditiveState
             selectView.IsSelected = !selectView.IsSelected;
 
             if (selectView.IsSelected)
-                _selectedItemList.Add(child.Item);
+                _selectedItemList.Add(child.ItemBase);
             else
-                _selectedItemList.Remove(child.Item);
+                _selectedItemList.Remove(child.ItemBase);
 
             _selectedItemList = _selectedItemList.Distinct().ToList();
             CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
@@ -311,9 +312,9 @@ public class HierarchyPanelShowState : AdditiveState
                 itemNodeChild.IsSelected = isSelectParent;
 
                 if (itemNodeChild.IsSelected)
-                    _selectedItemList.Add(itemNodeChild.Item);
+                    _selectedItemList.Add(itemNodeChild.ItemBase);
                 else
-                    _selectedItemList.Remove(itemNodeChild.Item);
+                    _selectedItemList.Remove(itemNodeChild.ItemBase);
             }
 
             _selectedItemList = _selectedItemList.Distinct().ToList();

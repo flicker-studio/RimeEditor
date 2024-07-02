@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using TMPro;
 using UnityEngine;
@@ -68,7 +69,7 @@ namespace LevelEditor
             var inspectorItem = Object.Instantiate(prefab, ContentRect, true);
         }
         
-        public void TransformBind(List<Item> items)
+        public void TransformBind(List<ItemBase> items)
         {
             var count = items.Count;
             if (count <= 0) return;

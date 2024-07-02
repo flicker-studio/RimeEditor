@@ -1,15 +1,16 @@
 using System.Collections.Generic;
+using LevelEditor.Item;
 
 namespace LevelEditor.Command
 {
     public class Delete : ICommand
     {
-        private readonly List<Item> _targetItem;
+        private readonly List<ItemBase> _targetItem;
 
         /// <summary>
         ///     Default constructor
         /// </summary>
-        public Delete(List<Item> targetItem)
+        public Delete(List<ItemBase> targetItem)
         {
             _targetItem = targetItem;
         }

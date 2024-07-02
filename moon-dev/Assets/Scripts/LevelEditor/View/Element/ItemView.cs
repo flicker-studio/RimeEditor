@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Frame.CompnentExtensions;
 using LevelEditor.Controller;
 using LevelEditor.Data;
+using LevelEditor.Item;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,13 +26,13 @@ namespace LevelEditor.View.Element
         
         /// <summary>
         /// </summary>
-        public Transform Transform => _item.GameObject.transform;
+        public Transform Transform => _itemBase.GameObject.transform;
         
-        public Item Item => _item;
+        public ItemBase ItemBase => _itemBase;
         
         private readonly TextMeshProUGUI _textMesh;
         private readonly Button          _arrowButton;
-        private readonly Item            _item;
+        private readonly ItemBase        _itemBase;
         private          string          _name;
         private readonly ItemType        _type;
         private readonly List<ItemView>  _childList = new();
@@ -39,16 +40,16 @@ namespace LevelEditor.View.Element
         
         /// <summary>
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="itemBase"></param>
         /// <param name="onSelect"></param>
         /// <param name="scrollView"></param>
-        public ItemView(Item item, Action onSelect, ScrollRect scrollView) :
-            base(item.GameObject, onSelect, scrollView)
+        public ItemView(ItemBase itemBase, Action onSelect, ScrollRect scrollView) :
+            base(itemBase.GameObject, onSelect, scrollView)
         {
-            _item        = item;
+            _itemBase    = itemBase;
             _textMesh    = GameObject.Find("DescribeText").GetComponent<TextMeshProUGUI>();
             _arrowButton = GameObject.Find("Arrow").GetComponent<Button>();
-            _type        = item.Type;
+            _type        = itemBase.Type;
         }
         
         /// <summary>
@@ -124,6 +125,14 @@ namespace LevelEditor.View.Element
         }
         
         public void Select()
+        {
+        }
+        
+        public void Active()
+        {
+        }
+        
+        public void Inactive()
         {
         }
     }

@@ -2,12 +2,12 @@ using System;
 using Item;
 using LevelEditor.Data;
 
-namespace LevelEditor
+namespace LevelEditor.Item
 {
     /// <summary>
     ///     Ingress data, which is used to initialize the role location
     /// </summary>
-    internal class Entrance : Item
+    internal class Entrance : ItemBase
     {
         private readonly EntrancePlay _play;
         

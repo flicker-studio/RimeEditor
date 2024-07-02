@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using System.Reflection;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 
 namespace LevelEditor.Command
 {
     public sealed class FieldInfoChangeCommand : ICommand
     {
-        private readonly List<Item>                               m_targetList       = new();
+        private readonly List<ItemBase>                               m_targetList       = new();
         private readonly List<FieldInfo>                          m_targetFieldInfos = new();
         private readonly List<object>                             m_lastValues       = new();
         private readonly object                                   m_nextValue        = new();
         private readonly InspectorShowState.UpdateInspectorSignal m_updateInspectorSignal;
         
-        public FieldInfoChangeCommand(List<Item>                               targetList, List<FieldInfo> targetFieldInfos, object nextValue,
+        public FieldInfoChangeCommand(List<ItemBase>                               targetList, List<FieldInfo> targetFieldInfos, object nextValue,
                                       InspectorShowState.UpdateInspectorSignal updateInspectorSignal)
         {
             m_targetList.AddRange(targetList);

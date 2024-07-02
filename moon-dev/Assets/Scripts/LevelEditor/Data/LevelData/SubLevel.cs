@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LevelEditor.Item;
 using Newtonsoft.Json;
 
 namespace LevelEditor
@@ -17,7 +18,7 @@ namespace LevelEditor
         ///     A list of the resources referenced by the current level
         /// </summary>
         [JsonProperty("ItemAssets", Order = 2)]
-        public List<Item> ItemAssets;
+        public List<ItemBase> ItemAssets;
 
         /// <summary>
         ///     The default construction of sublevel data
@@ -26,7 +27,7 @@ namespace LevelEditor
         public SubLevel(string name)
         {
             Name       = name;
-            ItemAssets = new List<Item>();
+            ItemAssets = new List<ItemBase>();
         }
     }
 }

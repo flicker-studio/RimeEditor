@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Struct;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace LevelEditor
     /// </summary>
     public sealed class RotationAxisDragState : AdditiveState
     {
-        private List<Item>         Items                     => m_information.DataManager.TargetItems;
+        private List<ItemBase>         Items                     => m_information.DataManager.TargetItems;
         private ControlHandlePanel ControlHandlePanel        => m_information.UIManager.GetControlHandlePanel;
         private RectTransform      RotationAxisRectTransform => ControlHandlePanel.GetRotationRect;
         private Vector2            MouseCursorCompensation   => ControlHandlePanel.GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;

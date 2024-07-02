@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Frame.StateMachine;
 using LevelEditor.Command;
+using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Utils;
 using UnityEngine;
@@ -37,11 +38,11 @@ namespace LevelEditor
                                                          .NewY(Mathf.Clamp(m_information.CameraManager.MousePosition.y * GetScreenScale.y, 0,
                                                                            Screen.height * GetScreenScale.y));
         
-        private List<Item> TargetList => m_information.DataManager.TargetItems;
+        private List<ItemBase> TargetList => m_information.DataManager.TargetItems;
         
         private List<Collider2D> m_selectList = new List<Collider2D>();
         
-        private List<Item> ItemAssets => m_information.DataManager.ItemAssets;
+        private List<ItemBase> ItemAssets => m_information.DataManager.ItemAssets;
         
         private Vector2 m_originMousePositon;
         
@@ -183,7 +184,7 @@ namespace LevelEditor
         
         private void ReturnTargetList()
         {
-            var tempList = new List<Item>();
+            var tempList = new List<ItemBase>();
             
             if (GetShiftButton)
             {
@@ -231,9 +232,9 @@ namespace LevelEditor
             CommandInvoker.Execute(new Select(TargetList, tempList, GetOutlinePainter));
         }
         
-        private List<Item> ChangeCollidersToDatas(List<Collider2D> colliders)
+        private List<ItemBase> ChangeCollidersToDatas(List<Collider2D> colliders)
         {
-            var tempList = new List<Item>();
+            var tempList = new List<ItemBase>();
             
             foreach (var collider in colliders)
             {
