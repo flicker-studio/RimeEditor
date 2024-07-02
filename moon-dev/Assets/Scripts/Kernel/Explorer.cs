@@ -13,7 +13,7 @@ namespace Moon.Kernel
         /// <summary>
         ///     Contains a variety of configuration items
         /// </summary>
-        public static class Settings
+        public static class Setting
         {
             /// <summary>
             ///     The basic setting of the project
@@ -30,6 +30,11 @@ namespace Moon.Kernel
         public static T TryGetService<T>() where T : Service.Service
         {
             return SCM.TryGetService<T>();
+        }
+
+        public static T TryGetSetting<T>() where T : SettingBase
+        {
+            return SettingHelper.TryGetSetting<T>();
         }
     }
 }

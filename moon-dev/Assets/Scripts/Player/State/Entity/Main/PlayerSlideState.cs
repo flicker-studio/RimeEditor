@@ -1,5 +1,5 @@
 using Frame.StateMachine;
-using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using UnityEngine;
 
 namespace Character
@@ -17,7 +17,8 @@ namespace Character
         private CharacterProperty.PlayerMoveProperty GetMoveProperty => m_playerInformation.GetMoveProperty;
 
         #endregion
-        public PlayerSlideState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+
+        public PlayerSlideState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
         }
 
@@ -30,11 +31,12 @@ namespace Character
             }
 
             m_timer += Time.fixedDeltaTime;
+
             GetRigidbody.velocity = GetRigidbody.velocity.NewY(
                 -GetMoveProperty.ACCELERATION_CURVE.Evaluate(m_timer / GetMoveProperty.SLICE_TIME_TO_MAXIMUN_SPEED)
                 * GetMoveProperty.SLIDE_SPEED);
+
             GetRigidbody.velocity = GetRigidbody.velocity.NewX(0);
         }
     }
-
 }

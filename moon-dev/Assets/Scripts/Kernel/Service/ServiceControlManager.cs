@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using Moon.Kernel.Attribute;
 using UnityEngine;
@@ -37,7 +37,6 @@ namespace Moon.Kernel.Service
             RunningServices.Add(service);
         }
 
-
         /// <summary>
         ///     Terminate a running service to free up memory
         /// </summary>
@@ -50,10 +49,15 @@ namespace Moon.Kernel.Service
                 throw new NullReferenceException();
             }
 
-            service.Abort();
             RunningServices.Remove(service);
-        }
+            if (ServicesCache.TryGetValue(service.GetType(), out var target))
+            {
+                ServicesCache.Remove(service.GetType());
+            }
 
+            service.Abort();
+            service.Dispose();
+        }
 
         /// <summary>
         ///     Get the running Service class
@@ -79,51 +83,56 @@ namespace Moon.Kernel.Service
             throw new NullReferenceException();
         }
 
-
         /// <summary>
         ///     Register for services by attribute
         /// </summary>
         /// <exception cref="WarningException">Thrown when an error occurs during the creation of an instance</exception>
-        internal static async Task RegisterServices()
+        internal static async UniTask RegisterServices()
         {
             Debug.Log("<color=green>[SERVICE]</color> Initializing service");
 
             Debug.Log("<color=green>[SERVICE]</color> Instantiating the service");
 
-            await Task.Run(() =>
+            var serviceAssembly = typeof(Service).Assembly;
+            var assemblyTypes   = serviceAssembly.GetTypes();
+
+            foreach (var type in assemblyTypes)
+            {
+                var attr = type.GetCustomAttribute<SystemServiceAttribute>();
+
+                if (attr == null)
                 {
-                    var serviceAssembly = typeof(Service).Assembly;
-                    var assemblyTypes = serviceAssembly.GetTypes();
-
-                    foreach (var type in assemblyTypes)
-                    {
-                        var attr = type.GetCustomAttribute<SystemServiceAttribute>();
-
-                        if (attr == null)
-                        {
-                            continue;
-                        }
-
-                        var instance = attr.Create();
-
-                        if (instance is null)
-                        {
-                            throw new WarningException($"There has some error in {type} class");
-                        }
-
-                        RunningServices.Add(instance);
-
-                        _onStart += instance.OnStart;
-                    }
+                    continue;
                 }
-            );
+
+                if (serviceAssembly.CreateInstance(type.FullName!) is not Service instance)
+                {
+                    throw new WarningException($"There has some error in {type} class");
+                }
+
+                instance?.Instanced();
+                RunningServices.Add(instance);
+
+                _onStart += instance.OnStart;
+            }
 
             _onStart.Invoke();
 
             Debug.Log("<color=green>[SERVICE]</color>  Instantiation of service is complete");
             var runTask = RunningServices.Select(service => service.Run());
-            await Task.WhenAll(runTask);
+            await UniTask.WhenAll(runTask);
             Debug.Log("<color=green>[SERVICE]</color> Initialization is complete");
+        }
+
+        internal static void Destroy()
+        {
+            foreach (var service in RunningServices)
+            {
+                service.Dispose();
+            }
+
+            RunningServices.Clear();
+            ServicesCache.Clear();
         }
     }
 }

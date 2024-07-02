@@ -4,8 +4,10 @@
     "references": [
         "UnityEngine.TestRunner",
       "UnityEditor.TestRunner",
-      "Moon.Runtime.System",
-      "UniTask"
+      "UniTask",
+        "Moon.Kernel",
+      "Moon.Runtime",
+      "LevelEditor"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

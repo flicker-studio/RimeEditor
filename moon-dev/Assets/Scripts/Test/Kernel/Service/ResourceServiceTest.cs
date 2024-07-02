@@ -18,11 +18,12 @@ namespace Test.Kernel.Service
             {
                 await Explorer.BootCompletionTask;
 
-                var setting =
-                    ResourcesService.LoadAssetAsync<MoonSetting>("Assets/Settings/Dev/MoonSetting.asset").Result;
+                var actual = Explorer.TryGetSetting<MoonSetting>();
+                var expected = await ResourcesService.LoadAssetAsync<MoonSetting>("Assets/Settings/Dev/MoonSetting.asset");
 
-                Assert.AreEqual(Explorer.Settings.MoonSetting, setting);
+                Assert.AreEqual(expected, actual);
             });
         }
+        
     }
 }

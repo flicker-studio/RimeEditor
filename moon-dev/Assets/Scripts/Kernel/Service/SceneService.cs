@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
@@ -13,7 +12,7 @@ namespace Moon.Kernel.Service
     /// <summary>
     ///     This service is used for scene management, including loading and unloading
     /// </summary>
-    [UsedImplicitly, SystemService(typeof(SceneService))]
+    [UsedImplicitly, SystemService]
     public sealed class SceneService : Service
     {
         /// <summary>
@@ -38,9 +37,6 @@ namespace Moon.Kernel.Service
         /// </summary>
         public const string PersistenceSceneName = "Persistent";
 
-
-        #region public API
-
         /// <summary>
         ///     Unload tag scene and load next scene asynchronously
         /// </summary>
@@ -51,13 +47,15 @@ namespace Moon.Kernel.Service
         {
             var unloadName = ActiveScene.name;
 
-            if (!Boot.SceneName.Contains(loadName))
+            try
+            {
+                await SceneManager.LoadSceneAsync(loadName, LoadSceneMode.Additive);
+                await SceneManager.UnloadSceneAsync(unloadName);
+            }
+            catch (Exception e)
             {
                 throw new Exception();
             }
-
-            await SceneManager.LoadSceneAsync(loadName, LoadSceneMode.Additive);
-            await SceneManager.UnloadSceneAsync(unloadName);
 
             //select the newest scene and set it active
             var targetScene = SceneManager.GetSceneByName(loadName);
@@ -108,23 +106,29 @@ namespace Moon.Kernel.Service
             return target;
         }
 
-        #endregion
+        ~SceneService()
+        {
+            // Do not re-create Dispose clean-up code here.
+            // Calling Dispose(disposing: false) is optimal in terms of
+            // readability and maintainability.
+            Dispose(disposing: false);
+        }
 
-        internal async override Task Run()
+        internal override async UniTask Run()
         {
             PersistenceScene = await TryLoadScene(PersistenceSceneName);
-
+/*
             if (Explorer.Settings.MoonSetting.AutoStartScene)
             {
                 await TryLoadScene(Explorer.Settings.MoonSetting.startScene);
             }
-
+*/
             SceneManager.activeSceneChanged += OnActiveSceneChange;
-            SceneManager.sceneUnloaded += OnSceneUnload;
-            SceneManager.sceneLoaded += OnSceneLoad;
+            SceneManager.sceneUnloaded      += OnSceneUnload;
+            SceneManager.sceneLoaded        += OnSceneLoad;
         }
 
-        internal async override Task Abort()
+        internal override async Task Abort()
         {
             await Task.Run(OnStop);
         }
@@ -135,11 +139,6 @@ namespace Moon.Kernel.Service
 
         internal override void OnStop()
         {
-        }
-
-        internal override void Dispose(bool all)
-        {
-            throw new NotImplementedException();
         }
 
         private void OnSceneLoad(Scene scene, LoadSceneMode loadSceneMode)

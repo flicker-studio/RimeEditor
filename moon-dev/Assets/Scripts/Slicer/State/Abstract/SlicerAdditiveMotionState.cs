@@ -1,5 +1,4 @@
 using Frame.StateMachine;
-using Frame.Tool;
 
 namespace Slicer
 {
@@ -8,7 +7,7 @@ namespace Slicer
         protected SlicerInformation m_slicerInformation;
 
         protected SliceCommand MSliceDoCommand;
-    
+
         private bool m_firstExecute = true;
 
         protected bool GetFirstExecute

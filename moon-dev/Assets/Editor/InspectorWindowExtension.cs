@@ -1,17 +1,17 @@
 using System;
 using System.IO;
 using Data.ScriptableObject;
-using Frame.Static.Global;
+using LevelEditor.Data;
+using Moon.Kernel;
 using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace WindowExtension
 {
     [CustomEditor(typeof(PolygonCollider2D))]
-    public class PolygonCollider2DEditor : UnityEditor.Editor
+    public class PolygonCollider2DEditor : Editor
     {
-        private UnityEditor.Editor defaultEditor;
+        private Editor defaultEditor;
 
         private void OnEnable()
         {
@@ -60,27 +60,27 @@ namespace WindowExtension
         {
             throw new Exception("The methods do not exist!");
 
-            var rigidbodyParentPrefab = Resources.Load<PrefabFactory>("GlobalSettings/PrefabFactory").RIGIDBODY_PARENT;
+            var rigidbodyParentPrefab = Explorer.TryGetSetting<PrefabFactory>().RIGIDBODY_PARENT;
             var rigidbodyParent = Instantiate(rigidbodyParentPrefab);
 
             // TODO:Fix compilation errors
             // rigidbodyParent.transform.parent = target.GameObject().transform.parent;
             // target.GameObject().transform.parent = rigidbodyParent.transform;
-            rigidbodyParent.name = rigidbodyParentPrefab.name + Random.Range(10000, 1000000);
-
-            if (!target.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG))
-            {
-                target.name += GlobalSetting.ObjNameTag.RIGIDBODY_TAG;
-            }
-
-            Undo.RegisterCreatedObjectUndo(target, "CreateRigidbody " + target.name);
+            // rigidbodyParent.name = rigidbodyParentPrefab.name + Random.Range(10000, 1000000);
+            //
+            // if (!target.name.Contains(GlobalSetting.ObjNameTag.RIGIDBODY_TAG))
+            // {
+            //     target.name += GlobalSetting.ObjNameTag.RIGIDBODY_TAG;
+            // }
+            //
+            // Undo.RegisterCreatedObjectUndo(target, "CreateRigidbody " + target.name);
         }
     }
 
     [CustomEditor(typeof(RectTransform), true)]
-    public class CustomRectTransformEditor : UnityEditor.Editor
+    public class CustomRectTransformEditor : Editor
     {
-        private UnityEditor.Editor defaultEditor;
+        private Editor defaultEditor;
 
         private void OnEnable()
         {
@@ -134,7 +134,7 @@ namespace WindowExtension
     }
 
     [CustomEditor(typeof(ItemProduct))]
-    public class ItemProductEditor : UnityEditor.Editor
+    public class ItemProductEditor : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -178,7 +178,7 @@ namespace WindowExtension
 
                 var bytes = preview.EncodeToPNG();
 
-                var typeDirectory = Enum.GetName(typeof(ITEMTYPEENUM), itemProduct.ItemType);
+                var typeDirectory = Enum.GetName(typeof(ItemType), itemProduct.ItemType);
 
                 var path = Application.dataPath +
                            $"/Resources/Items/Images/{typeDirectory}/{itemProduct.Name}" + ".png";

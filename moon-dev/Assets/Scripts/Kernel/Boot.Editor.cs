@@ -20,6 +20,7 @@ namespace Moon.Kernel
         {
             Scene();
             PreCheck();
+            EditorApplication.playModeStateChanged += A;
         }
     }
 
@@ -28,7 +29,7 @@ namespace Moon.Kernel
         private static void Scene()
         {
             var sceneCount = SceneManager.sceneCountInBuildSettings;
-            var scenePath = new string[sceneCount];
+            var scenePath  = new string[sceneCount];
 
             for (var i = 0; i < sceneCount; i++) scenePath[i] = Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
 
@@ -47,6 +48,14 @@ namespace Moon.Kernel
             if (!SceneName.Contains(PersistenceSceneName))
             {
                 throw new Exception($"{PersistenceSceneName} scene is lose!");
+            }
+        }
+
+        private static void A(PlayModeStateChange playModeStateChange)
+        {
+            if (playModeStateChange == PlayModeStateChange.ExitingPlayMode)
+            {
+                Destroy();
             }
         }
     }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Frame.StateMachine;
-using Frame.Static.Extensions;
+using Moon.Kernel.Extension;
 using UnityEngine;
 
 namespace Character
@@ -27,14 +27,14 @@ namespace Character
             if (GetIsGround)
             {
                 m_raycastPoints = GetRaycastGroundPoints;
-                if(m_raycastPoints == null || m_raycastPoints.Count <= GetPerpendicularOnGround.NEGLECTED_POINTS) return;
+                if (m_raycastPoints == null || m_raycastPoints.Count <= GetPerpendicularOnGround.NEGLECTED_POINTS) return;
+
                 GetRigidbody.transform.up = m_raycastPoints.CalculateBestFitLine().GetOrthogonalVector();
             }
         }
 
-        public PlayerPerpendicularGroundState(BaseInformation information,MotionCallBack motionCallBack):base(information, motionCallBack)
+        public PlayerPerpendicularGroundState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
         {
         }
     }
-
 }
