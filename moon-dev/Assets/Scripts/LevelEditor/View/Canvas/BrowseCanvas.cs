@@ -7,10 +7,8 @@ using LevelEditor.State;
 using LevelEditor.View.Element;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Service;
-using Moon.Runtime;
 using SimpleFileBrowser;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using RectTransform = UnityEngine.RectTransform;
@@ -22,47 +20,12 @@ namespace LevelEditor.View.Canvas
     /// </summary>
     internal sealed class BrowseCanvas : ICanvas
     {
-        #region VARIABLE
-        
-        private UISetting.PopoverProperty PopoverProperty { get; }
-        
-        private readonly RawImage      _levelCoverImage;
-        private readonly ScrollRect    _levelScrollRect;
-        private readonly string        _levelTextName;
-        private readonly string        _levelPathTextName;
-        private readonly string        _levelImageName;
-        private readonly RectTransform _levelManagerRootRect;
-        private readonly RectTransform _levelListContentRect;
-        private readonly RectTransform _fullPanelRect;
-        
-        private readonly Button _openButton;
-        private readonly Button _createButton;
-        private readonly Button _declarationButton;
-        private readonly Button _exitButton;
-        private readonly Button _refreshButton;
-        private readonly Button _importButton;
-        private readonly Button _worksShopButton;
-        private          Button _localLevelButton;
-        private readonly Button _deleteButton;
-        
-        private readonly TextMeshProUGUI _levelName;
-        private readonly TextMeshProUGUI _anthorName;
-        private readonly TextMeshProUGUI _dateTime;
-        private readonly TextMeshProUGUI _instroduction;
-        private readonly TextMeshProUGUI _version;
-        private readonly TextMeshProUGUI _subLevelNumber;
-        
-        private          LevelEntry       _activeEntry;
-        private readonly List<LevelEntry> _levelEntries = new();
-        
-        #endregion
-        
         private readonly UISetting.LevelManagerPanelUIName uiProperty;
-        
+
         public BrowseCanvas([NotNull] RectTransform rect)
         {
             #region GET
-            
+
             uiProperty            = EntranceController.Configure.UI.GetLevelManagerPanelUI.GetLevelManagerPanelUIName;
             PopoverProperty       = EntranceController.Configure.UI.GetPopoverProperty;
             _levelTextName        = uiProperty.ITEM_LEVEL_NAME;
@@ -88,9 +51,9 @@ namespace LevelEditor.View.Canvas
             _dateTime             = rect.FindPath(uiProperty.DATE_TIME).GetComponent<TextMeshProUGUI>();
             _instroduction        = rect.FindPath(uiProperty.INSTRODUCTION).GetComponent<TextMeshProUGUI>();
             _version              = rect.FindPath(uiProperty.VERSION).GetComponent<TextMeshProUGUI>();
-            
+
             #endregion
-            
+
             _createButton.onClick.AddListener(Create);
             _openButton.onClick.AddListener(Open);
             _refreshButton.onClick.AddListener(RefreshLevelList);
@@ -98,26 +61,21 @@ namespace LevelEditor.View.Canvas
             _importButton.onClick.AddListener(ImportLevel);
             _exitButton.onClick.AddListener(Exit);
         }
-        
-        ~BrowseCanvas()
-        {
-            Dispose(false);
-        }
-        
+
         public async void Active()
         {
             var pre = await ResourcesService.LoadAssetAsync<GameObject>("Assets/Resources/Prefabs/LevelItem.prefab");
-            
+
             // _createButton.interactable = false;
             _fullPanelRect.gameObject.SetActive(true);
             _levelManagerRootRect.gameObject.SetActive(true);
-            
+
             for (var i = 0; i < 12; i++)
             {
                 var str1 = Path.GetRandomFileName();
                 var str2 = Path.GetRandomFileName();
                 var str3 = Path.GetRandomFileName();
-                
+
                 var levelEntry = new LevelEntry
                     (
                      pre,
@@ -132,19 +90,24 @@ namespace LevelEditor.View.Canvas
                 _levelEntries.Add(levelEntry);
             }
         }
-        
+
         public void Inactive()
         {
             _levelManagerRootRect.gameObject.SetActive(false);
             _fullPanelRect.gameObject.SetActive(false);
         }
-        
+
         public void Dispose()
         {
             Dispose(false);
             GC.SuppressFinalize(this);
         }
-        
+
+        ~BrowseCanvas()
+        {
+            Dispose(false);
+        }
+
         private void Dispose(bool disposing)
         {
             if (disposing)
@@ -152,7 +115,7 @@ namespace LevelEditor.View.Canvas
                 // TODO: Release managed resources
             }
         }
-        
+
         /// <summary>
         ///     Select a level to trigger
         /// </summary>
@@ -160,7 +123,7 @@ namespace LevelEditor.View.Canvas
         private void Select(LevelEntry entry)
         {
             // select the entry
-            
+
             if (_activeEntry == null)
             {
                 _activeEntry = entry;
@@ -170,29 +133,29 @@ namespace LevelEditor.View.Canvas
                 _activeEntry.Uncheck();
                 _activeEntry = entry;
             }
-            
+
             _activeEntry.Selected();
-            
+
             _anthorName.text         = _activeEntry.Info.Author;
             _levelName.text          = _activeEntry.Info.Name;
             _instroduction.text      = _activeEntry.Info.Introduction;
             _levelCoverImage.texture = _activeEntry.Info.Cover;
         }
-        
+
         /// <summary>
         ///     Create a new level and add it to the list
         /// </summary>
         private void Create()
         {
             // register event
-            
+
             // show create canvas
-            
+
             var pre  = Resources.Load("Prefabs/LevelItem") as GameObject;
             var str1 = Path.GetRandomFileName();
             var str2 = Path.GetRandomFileName();
             var str3 = Path.GetRandomFileName();
-            
+
             var levelEntry = new LevelEntry
                 (
                  pre,
@@ -205,12 +168,12 @@ namespace LevelEditor.View.Canvas
                  uiProperty.ITEM_LEVEL_ICON
                 );
             _levelEntries.Add(levelEntry);
-            
+
             Select(levelEntry);
-            
+
             _levelScrollRect.verticalScrollbar.value = 0;
         }
-        
+
         /// <summary>
         ///     Open the selected level and enter the edit state.
         /// </summary>
@@ -219,7 +182,7 @@ namespace LevelEditor.View.Canvas
             _activeEntry.Open();
             EntranceController.Behaviour.StateSwitch<EditorState>();
         }
-        
+
         /// <summary>
         ///     Deletes the selected level.
         /// </summary>
@@ -230,29 +193,31 @@ namespace LevelEditor.View.Canvas
             _activeEntry.Dispose();
             _activeEntry = null;
         }
-        
+
         /// <summary>
         ///     Refresh the current level list.
         /// </summary>
         private void RefreshLevelList()
         {
         }
-        
+
         /// <summary>
         ///     Exit the current interface.
         /// </summary>
         private void Exit()
         {
-            PopoverLauncher.Instance.LaunchSelector(_levelManagerRootRect, PopoverProperty.POPOVER_TEXT_EXIT, () =>
-            {
-                #if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-                #else
-                Application.Quit();
-                #endif
-            });
+            throw new NotImplementedException();
+
+            // PopoverLauncher.Instance.LaunchSelector(_levelManagerRootRect, PopoverProperty.POPOVER_TEXT_EXIT, () =>
+            // {
+            //     #if UNITY_EDITOR
+            //     EditorApplication.isPlaying = false;
+            //     #else
+            //     Application.Quit();
+            //     #endif
+            // });
         }
-        
+
         /// <summary>
         ///     Import an external level.
         /// </summary>
@@ -261,14 +226,14 @@ namespace LevelEditor.View.Canvas
             //TODO: You can select whether to save it locally
             OpenLevelFileAsync().Forget();
         }
-        
+
         /// <summary>
         ///     An asynchronous file loading method.
         /// </summary>
         private async UniTaskVoid OpenLevelFileAsync()
         {
             await FileBrowser.WaitForLoadDialog(FileBrowser.PickMode.Files, false, null, null, "Open a level directory", "Load");
-            
+
             if (FileBrowser.Success)
             {
                 var path = FileBrowser.Result[0].Replace("\\", "/");
@@ -276,5 +241,40 @@ namespace LevelEditor.View.Canvas
                 RefreshLevelList();
             }
         }
+
+        #region VARIABLE
+
+        private UISetting.PopoverProperty PopoverProperty { get; }
+
+        private readonly RawImage      _levelCoverImage;
+        private readonly ScrollRect    _levelScrollRect;
+        private readonly string        _levelTextName;
+        private readonly string        _levelPathTextName;
+        private readonly string        _levelImageName;
+        private readonly RectTransform _levelManagerRootRect;
+        private readonly RectTransform _levelListContentRect;
+        private readonly RectTransform _fullPanelRect;
+
+        private readonly Button _openButton;
+        private readonly Button _createButton;
+        private readonly Button _declarationButton;
+        private readonly Button _exitButton;
+        private readonly Button _refreshButton;
+        private readonly Button _importButton;
+        private readonly Button _worksShopButton;
+        private          Button _localLevelButton;
+        private readonly Button _deleteButton;
+
+        private readonly TextMeshProUGUI _levelName;
+        private readonly TextMeshProUGUI _anthorName;
+        private readonly TextMeshProUGUI _dateTime;
+        private readonly TextMeshProUGUI _instroduction;
+        private readonly TextMeshProUGUI _version;
+        private readonly TextMeshProUGUI _subLevelNumber;
+
+        private          LevelEntry       _activeEntry;
+        private readonly List<LevelEntry> _levelEntries = new();
+
+        #endregion
     }
 }

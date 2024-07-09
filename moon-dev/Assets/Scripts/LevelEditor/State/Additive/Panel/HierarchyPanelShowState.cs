@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Frame.StateMachine;
@@ -11,19 +12,7 @@ using UnityEngine.UI;
 
 public class HierarchyPanelShowState : AdditiveState
 {
-    private          LevelDataManager       DataManager       => m_information.DataManager;
-    private          HierarchyPanel         HierarchyPanel    => m_information.UIManager.GetHierarchyPanel;
-    private          Transform              ScrollViewContent => HierarchyPanel.GetHierarchyContent;
-    private          List<ItemBase> TargetItems       => DataManager.TargetItems;
-    private          List<ItemBase> ItemAssets        => DataManager.ItemAssets;
-    private          OutlineManager         Outline           => m_information.OutlineManager;
-    private          Button                 AddButton         => HierarchyPanel.GetAddButton;
-    private          Button                 DeleteButton      => HierarchyPanel.GetDeleteButton;
-    private          ScrollRect             ScrollView        => HierarchyPanel.GetScrollView;
-    private          bool                   ShiftInput        => m_information.InputManager.GetShiftButton;
-    private          bool                   CtrlInput         => m_information.InputManager.GetCtrlButton;
-    private          bool                   DeleteInputDown   => m_information.InputManager.GetDeleteButtonDown;
-    private readonly List<ItemView>         _itemViewList     = new();
+    private readonly List<ItemView> _itemViewList     = new();
     private          List<ItemBase> _selectedItemList = new();
 
     public HierarchyPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
@@ -34,6 +23,19 @@ public class HierarchyPanelShowState : AdditiveState
         InitState();
     }
 
+    private LevelDataManager DataManager       => m_information.DataManager;
+    private HierarchyPanel   HierarchyPanel    => m_information.UIManager.GetHierarchyPanel;
+    private Transform        ScrollViewContent => HierarchyPanel.GetHierarchyContent;
+    private List<ItemBase>   TargetItems       => DataManager.TargetItems;
+    private List<ItemBase>   ItemAssets        => DataManager.ItemAssets;
+    private OutlineManager   Outline           => m_information.OutlineManager;
+    private Button           AddButton         => HierarchyPanel.GetAddButton;
+    private Button           DeleteButton      => HierarchyPanel.GetDeleteButton;
+    private ScrollRect       ScrollView        => HierarchyPanel.GetScrollView;
+    private bool             ShiftInput        => throw new InvalidOperationException(); // m_information.InputManager.GetShiftButton;
+    private bool             CtrlInput         => throw new InvalidOperationException(); // m_information.InputManager.GetCtrlButton;
+    private bool             DeleteInputDown   => throw new InvalidOperationException(); // m_information.InputManager.GetDeleteButtonDown;
+
     /// <inheritdoc />
     public override void Motion(BaseInformation information)
     {
@@ -43,7 +45,7 @@ public class HierarchyPanelShowState : AdditiveState
     private void InitState()
     {
         if (DataManager.CurrentSubLevel is null) return;
-        
+
         SyncNodeByLevelData((SubLevel)DataManager.CurrentSubLevel);
     }
 
@@ -82,12 +84,12 @@ public class HierarchyPanelShowState : AdditiveState
             TargetItems.OnAddRange += SyncNodePanelSelect;
             */
     }
-    
+
     private void CreateNode(List<ItemBase> targetItems)
     {
         foreach (var targetItem in targetItems) CreateNode(targetItem);
     }
-    
+
     private void CreateNode(ItemBase targetItemBase)
     {
         var ItemView               = CreateChild(targetItemBase);
@@ -110,20 +112,20 @@ public class HierarchyPanelShowState : AdditiveState
                 ItemView.ShowChild();
                 return;
             }
-        
+
         ItemView = CreateParent(targetItemBase);
         itemNodeChildTransform.SetSiblingIndex(ItemView.Transform.GetSiblingIndex() + 1);
         ItemView.AddChild(ItemView);
         ItemView.ShowChild();
     }
-    
+
     private void Delete(List<ItemBase> item)
     {
         _selectedItemList.Clear();
 
         foreach (var itemData in item) Delete(itemData);
     }
-    
+
     private void Delete(ItemBase itemBase)
     {
         Delete(itemBase.View);
@@ -133,7 +135,7 @@ public class HierarchyPanelShowState : AdditiveState
     {
         itemView.Remove();
     }
-    
+
     private ItemView CreateParent(ItemBase itemBase)
     {
         var itemNodeParent = new ItemView(itemBase, GetSelectedNode, ScrollView);
@@ -141,14 +143,14 @@ public class HierarchyPanelShowState : AdditiveState
         itemNodeParent.Transform.SetSiblingIndex(ScrollViewContent.childCount);
         return itemNodeParent;
     }
-    
+
     private ItemView CreateChild(ItemBase targetItemBase)
     {
         var itemNodeChild = new ItemView(targetItemBase, GetSelectedNode, ScrollView);
         _itemViewList.Add(itemNodeChild);
         return itemNodeChild;
     }
-    
+
     private void SyncNodeByLevelData(SubLevel subLevel)
     {
         InitEvent();
@@ -164,12 +166,12 @@ public class HierarchyPanelShowState : AdditiveState
 
         _itemViewList.Clear();
     }
-    
+
     private void SyncNodePanelSelect(List<ItemBase> itemData)
     {
         SyncNodePanelSelect();
     }
-    
+
     private void SyncNodePanelSelect(ItemBase itemBase)
     {
         SyncNodePanelSelect();

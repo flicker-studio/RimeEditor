@@ -17,35 +17,19 @@ namespace LevelEditor
     /// </summary>
     public sealed class RotationAxisDragState : AdditiveState
     {
-        private List<ItemBase>         Items                     => m_information.DataManager.TargetItems;
-        private ControlHandlePanel ControlHandlePanel        => m_information.UIManager.GetControlHandlePanel;
-        private RectTransform      RotationAxisRectTransform => ControlHandlePanel.GetRotationRect;
-        private Vector2            MouseCursorCompensation   => ControlHandlePanel.GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
-        private Vector3            MousePosition             => m_information.CameraManager.MousePosition;
-        private bool               MouseLeftButtonUp         => m_information.InputManager.GetMouseLeftButtonUp;
-        private bool               UseGrid                   => ControlHandlePanel.GetControlHandleAction.UseGrid;
-        private float              RotationUnit              => ControlHandlePanel.GetGridSnappingProperty.ROTATION_UNIT;
+        private readonly List<Vector3> _mousePosVectorList = new();
 
-        private          Vector3 _originMousePosition;
-        private          Vector3 _currentMousePosition;
-        private readonly Vector3 _originMouseToAxisDir;
-        private readonly Vector3 _oriRotationAxisPos;
-        private          Flag    _waitToNextFrame;
+        private readonly Action        _onLeftUp;
+        private readonly Action        _onUpdate;
+        private readonly Vector3       _originMouseToAxisDir;
+        private readonly Vector3       _oriRotationAxisPos;
+        private readonly List<Vector3> _targetPosition = new();
 
-        private float     RotationSpeed              => m_information.UIManager.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
-        private Transform CameraTransform            => Camera.main.transform;
-        private Vector3   RotationAxisScreenPosition => RotationAxisRectTransform.anchoredPosition;
+        private readonly List<Quaternion> _targetRotation = new();
+        private          Vector3          _currentMousePosition;
 
-        private Vector3 RotationAxisWorldPosition => Camera.main.ScreenToWorldPoint
-            (RotationAxisScreenPosition.NewZ(Mathf.Abs(CameraTransform.position.z)));
-
-        private readonly List<Quaternion> _targetRotation     = new();
-        private readonly List<Vector3>    _targetPosition     = new();
-        private readonly List<Vector3>    _mousePosVectorList = new();
-
-        private readonly Action _onLeftUp;
-        private readonly Action _onUpdate;
-
+        private Vector3 _originMousePosition;
+        private Flag    _waitToNextFrame;
 
         /// <summary>
         ///     Default constructor
@@ -63,6 +47,22 @@ namespace LevelEditor
             _onUpdate += CheckMouseScreenPosition;
             _onUpdate += UpdateRotation;
         }
+
+        private List<ItemBase>     Items => m_information.DataManager.TargetItems;
+        private ControlHandlePanel ControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
+        private RectTransform      RotationAxisRectTransform => ControlHandlePanel.GetRotationRect;
+        private Vector2            MouseCursorCompensation => ControlHandlePanel.GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
+        private Vector3            MousePosition => m_information.CameraManager.MousePosition;
+        private bool               MouseLeftButtonUp => throw new InvalidOperationException(); //m_information.InputManager.GetMouseLeftButtonUp;
+        private bool               UseGrid => ControlHandlePanel.GetControlHandleAction.UseGrid;
+        private float              RotationUnit => ControlHandlePanel.GetGridSnappingProperty.ROTATION_UNIT;
+
+        private float     RotationSpeed              => m_information.UIManager.GetControlHandlePanel.GetRotationDragProperty.ROTATION_SPEED;
+        private Transform CameraTransform            => Camera.main.transform;
+        private Vector3   RotationAxisScreenPosition => RotationAxisRectTransform.anchoredPosition;
+
+        private Vector3 RotationAxisWorldPosition => Camera.main.ScreenToWorldPoint
+            (RotationAxisScreenPosition.NewZ(Mathf.Abs(CameraTransform.position.z)));
 
         /// <inheritdoc />
         public override void Motion(BaseInformation information)

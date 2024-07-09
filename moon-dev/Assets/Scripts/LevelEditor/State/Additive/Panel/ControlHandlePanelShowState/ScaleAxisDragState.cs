@@ -12,98 +12,6 @@ namespace LevelEditor
 {
     public class ScaleAxisDragState : AdditiveState
     {
-        #region Get properties.
-
-        private CameraManager GetCamera => m_information.CameraManager;
-
-        private LevelDataManager GetData => m_information.DataManager;
-
-        private UIManager GetUI => m_information.UIManager;
-
-        private InputManager GetInput => m_information.InputManager;
-        
-        private List<ItemBase> TargetItems => GetData.TargetItems;
-
-        private List<GameObject> TargetObjs => GetData.TargetObjs;
-
-        private RectTransform GetScaleRect => GetUI.GetControlHandlePanel.GetScaleRect;
-
-        private RectTransform GetScaleXAxisRect => GetUI.GetControlHandlePanel.GetScaleXAxisRect;
-
-        private RectTransform GetScaleYAxisRect => GetUI.GetControlHandlePanel.GetScaleYAxisRect;
-
-        private float GetScaleSpeed => m_information.UIManager.GetControlHandlePanel.GetScaleDragProperty.SCALE_SPEED;
-
-        private float GetCenterAxisCompensation =>
-            m_information.UIManager.GetControlHandlePanel.GetScaleDragProperty.CENTER_AXIS_COMPENSATION;
-
-        private Vector2 GetMousePosition => GetCamera.MousePosition;
-
-        private Vector2 GetMouseCursorCompensation => GetUI.GetControlHandlePanel
-                                                           .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
-
-        private bool GetMouseLeftButtonUp => GetInput.GetMouseLeftButtonUp;
-
-
-        private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
-
-        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
-
-        private float GetCellHalfSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
-
-        #endregion
-
-        #region Other types of variables.
-
-        public enum SCALEDRAGTYPE
-        {
-            XAxis,
-
-            YAxis,
-
-            XYAxis
-        }
-
-        private SCALEDRAGTYPE m_scaleDragType;
-
-        private Flag m_waitToNextFrame;
-
-        #endregion
-
-        #region Position variate and scale variate.
-
-        private Vector2 m_originMouseSumVector;
-
-        private Vector2 m_originMousePosition;
-
-        private Vector2 m_currentMousePosition;
-
-        private readonly List<Vector3> m_targetOriginScale = new();
-
-        private readonly List<Vector3> m_targetCurrentScale = new();
-
-        private readonly List<Vector3> m_targetOriginPosition = new();
-
-        private readonly List<Vector3> m_targetCurrentPosition = new();
-
-        private readonly List<Vector2> m_mousePosVectorList = new();
-
-        private Vector3 m_centerPosition;
-
-        #endregion
-
-        #region Scale's position variate and size variate.
-
-        private Vector2 m_scaleAxisXOriginPos;
-
-        private Vector2 m_scaleAxisYOriginPos;
-
-        private Vector2 m_scaleAxisXOriginSize;
-
-        private Vector2 m_scaleAxisYOriginSize;
-
-        #endregion
-
         public ScaleAxisDragState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
             StateInit();
@@ -148,10 +56,7 @@ namespace LevelEditor
 
         private void UpdateScale()
         {
-            if (m_waitToNextFrame.GetFlag)
-            {
-                return;
-            }
+            if (m_waitToNextFrame.GetFlag) return;
 
             var mouseSumVector = Vector2.zero;
 
@@ -164,10 +69,7 @@ namespace LevelEditor
             Vector3 currentMouseProject;
             Vector3 originMouseProject;
 
-            if (mouseSumVector.magnitude == 0)
-            {
-                return;
-            }
+            if (mouseSumVector.magnitude == 0) return;
 
             switch (m_scaleDragType)
             {
@@ -182,7 +84,7 @@ namespace LevelEditor
                     break;
             }
 
-            currentMouseProject = Vector3.Project(mouseSumVector, scaleDir);
+            currentMouseProject = Vector3.Project(mouseSumVector,         scaleDir);
             originMouseProject  = Vector3.Project(m_originMouseSumVector, scaleDir);
 
             for (var i = 0; i < TargetObjs.Count; i++) ApplyScaleToTarget(currentMouseProject, originMouseProject, i);
@@ -193,10 +95,7 @@ namespace LevelEditor
             var upperRightProjectLength = Vector3.Dot(mouseSumVector, (GetScaleRect.up + GetScaleRect.right).normalized);
             var lowerLeftProjectLength  = Vector3.Dot(mouseSumVector, -(GetScaleRect.up + GetScaleRect.right).normalized);
 
-            if (upperRightProjectLength >= lowerLeftProjectLength)
-            {
-                return mouseSumVector.NewX(1).NewY(1);
-            }
+            if (upperRightProjectLength >= lowerLeftProjectLength) return mouseSumVector.NewX(1).NewY(1);
 
             return mouseSumVector.NewX(-1).NewY(-1);
         }
@@ -244,23 +143,20 @@ namespace LevelEditor
                 var newSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size.HadamardProduct(newScale);
 
                 oldSize = new Vector3(GetCellSize * Mathf.RoundToInt(oldSize.x / GetCellSize),
-                    GetCellSize * Mathf.RoundToInt(oldSize.y / GetCellSize),
-                    GetCellSize * Mathf.RoundToInt(oldSize.z / GetCellSize));
+                                      GetCellSize * Mathf.RoundToInt(oldSize.y / GetCellSize),
+                                      GetCellSize * Mathf.RoundToInt(oldSize.z / GetCellSize));
 
                 newSize = new Vector3(GetCellSize * Mathf.RoundToInt(newSize.x / GetCellSize),
-                    GetCellSize * Mathf.RoundToInt(newSize.y / GetCellSize),
-                    GetCellSize * Mathf.RoundToInt(newSize.z / GetCellSize));
+                                      GetCellSize * Mathf.RoundToInt(newSize.y / GetCellSize),
+                                      GetCellSize * Mathf.RoundToInt(newSize.z / GetCellSize));
 
-                if (oldSize == newSize)
-                {
-                    return;
-                }
+                if (oldSize == newSize) return;
 
                 var tempScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
 
                 var tempPosition = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newPosition.x / GetCellHalfSize),
-                    GetCellHalfSize * Mathf.RoundToInt(newPosition.y / GetCellHalfSize),
-                    GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
+                                               GetCellHalfSize * Mathf.RoundToInt(newPosition.y / GetCellHalfSize),
+                                               GetCellHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfSize));
 
                 switch (m_scaleDragType)
                 {
@@ -280,15 +176,11 @@ namespace LevelEditor
             }
 
             if (GetUseGrid)
-            {
                 TargetObjs[index].transform.localScale = newScale.NewX(Mathf.RoundToInt(newScale.x))
                                                                  .NewY(Mathf.RoundToInt(newScale.y));
-            }
             else
-            {
                 TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x, 2))
                                                                  .NewY((float)Math.Round(newScale.y, 2));
-            }
 
             TargetObjs[index].transform.position = newPosition;
         }
@@ -296,17 +188,10 @@ namespace LevelEditor
         private void InitDragType()
         {
             if (GetUI.GetControlHandlePanel.GetScaleInputX)
-            {
                 m_scaleDragType = SCALEDRAGTYPE.XAxis;
-            }
             else if (GetUI.GetControlHandlePanel.GetScaleInputY)
-            {
-                m_scaleDragType = SCALEDRAGTYPE.YAxis;
-            }
-            else if (GetUI.GetControlHandlePanel.GetScaleInputXY)
-            {
-                m_scaleDragType = SCALEDRAGTYPE.XYAxis;
-            }
+                m_scaleDragType                                                   = SCALEDRAGTYPE.YAxis;
+            else if (GetUI.GetControlHandlePanel.GetScaleInputXY) m_scaleDragType = SCALEDRAGTYPE.XYAxis;
         }
 
         private void InitData()
@@ -322,7 +207,7 @@ namespace LevelEditor
 
             m_centerPosition = m_targetOriginPosition.GetCenterPoint();
         }
-        
+
         private void ChangeAxisScale(Vector3 oriMouseProject, Vector3 currentMouseProject)
         {
             int axisDir;
@@ -334,16 +219,13 @@ namespace LevelEditor
                     axisDir = Vector3.Dot(mouseProjectDir, GetScaleRect.right) >= 0 ? 1 : -1;
 
                     GetScaleXAxisRect.anchoredPosition = GetScaleXAxisRect.anchoredPosition
-                                                                          .NewX(UseCenterAxisCompensation(m_scaleAxisXOriginPos.x + axisDir * mouseProjectDir.magnitude / 2));
+                                                                          .NewX(UseCenterAxisCompensation(m_scaleAxisXOriginPos.x +
+                                                                                         axisDir * mouseProjectDir.magnitude / 2));
 
                     if (GetScaleXAxisRect.anchoredPosition.x > 0)
-                    {
                         GetScaleXAxisRect.localRotation = Quaternion.identity;
-                    }
                     else
-                    {
                         GetScaleXAxisRect.localRotation = Quaternion.Euler(0, 0, 180);
-                    }
 
                     GetScaleXAxisRect.sizeDelta = GetScaleXAxisRect.sizeDelta
                                                                    .NewX(Mathf.Abs(GetScaleXAxisRect.anchoredPosition.x * 2));
@@ -353,16 +235,13 @@ namespace LevelEditor
                     axisDir = Vector3.Dot(mouseProjectDir, GetScaleRect.up) >= 0 ? 1 : -1;
 
                     GetScaleYAxisRect.anchoredPosition = GetScaleYAxisRect.anchoredPosition
-                                                                          .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y + axisDir * mouseProjectDir.magnitude / 2));
+                                                                          .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y +
+                                                                                         axisDir * mouseProjectDir.magnitude / 2));
 
                     if (GetScaleYAxisRect.anchoredPosition.y >= 0)
-                    {
                         GetScaleYAxisRect.localRotation = Quaternion.identity;
-                    }
                     else
-                    {
                         GetScaleYAxisRect.localRotation = Quaternion.Euler(0, 0, 180);
-                    }
 
                     GetScaleYAxisRect.sizeDelta = GetScaleYAxisRect.sizeDelta
                                                                    .NewY(Mathf.Abs(GetScaleYAxisRect.anchoredPosition.y * 2));
@@ -372,31 +251,25 @@ namespace LevelEditor
                     axisDir = Vector3.Dot(mouseProjectDir, (GetScaleRect.right + GetScaleRect.up).normalized) >= 0 ? 1 : -1;
 
                     GetScaleYAxisRect.anchoredPosition = GetScaleYAxisRect.anchoredPosition
-                                                                          .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y + axisDir * mouseProjectDir.magnitude / 2));
+                                                                          .NewY(UseCenterAxisCompensation(m_scaleAxisYOriginPos.y +
+                                                                                         axisDir * mouseProjectDir.magnitude / 2));
 
                     if (GetScaleYAxisRect.anchoredPosition.y >= 0)
-                    {
                         GetScaleYAxisRect.localRotation = Quaternion.identity;
-                    }
                     else
-                    {
                         GetScaleYAxisRect.localRotation = Quaternion.Euler(0, 0, 180);
-                    }
 
                     GetScaleYAxisRect.sizeDelta = GetScaleYAxisRect.sizeDelta
                                                                    .NewY(Mathf.Abs(GetScaleYAxisRect.anchoredPosition.y * 2));
 
                     GetScaleXAxisRect.anchoredPosition = GetScaleXAxisRect.anchoredPosition
-                                                                          .NewX(UseCenterAxisCompensation(m_scaleAxisXOriginPos.x + axisDir * mouseProjectDir.magnitude / 2));
+                                                                          .NewX(UseCenterAxisCompensation(m_scaleAxisXOriginPos.x +
+                                                                                         axisDir * mouseProjectDir.magnitude / 2));
 
                     if (GetScaleXAxisRect.anchoredPosition.x >= 0)
-                    {
                         GetScaleXAxisRect.localRotation = Quaternion.identity;
-                    }
                     else
-                    {
                         GetScaleXAxisRect.localRotation = Quaternion.Euler(0, 0, 180);
-                    }
 
                     GetScaleXAxisRect.sizeDelta = GetScaleXAxisRect.sizeDelta
                                                                    .NewX(Mathf.Abs(GetScaleXAxisRect.anchoredPosition.x * 2));
@@ -463,5 +336,96 @@ namespace LevelEditor
                 m_waitToNextFrame.SetFlag = true;
             }
         }
+
+        #region Get properties.
+
+        private CameraManager GetCamera => m_information.CameraManager;
+
+        private LevelDataManager GetData => m_information.DataManager;
+
+        private UIManager GetUI => m_information.UIManager;
+
+        private InputManager GetInput => m_information.InputManager;
+
+        private List<ItemBase> TargetItems => GetData.TargetItems;
+
+        private List<GameObject> TargetObjs => GetData.TargetObjs;
+
+        private RectTransform GetScaleRect => GetUI.GetControlHandlePanel.GetScaleRect;
+
+        private RectTransform GetScaleXAxisRect => GetUI.GetControlHandlePanel.GetScaleXAxisRect;
+
+        private RectTransform GetScaleYAxisRect => GetUI.GetControlHandlePanel.GetScaleYAxisRect;
+
+        private float GetScaleSpeed => m_information.UIManager.GetControlHandlePanel.GetScaleDragProperty.SCALE_SPEED;
+
+        private float GetCenterAxisCompensation =>
+            m_information.UIManager.GetControlHandlePanel.GetScaleDragProperty.CENTER_AXIS_COMPENSATION;
+
+        private Vector2 GetMousePosition => GetCamera.MousePosition;
+
+        private Vector2 GetMouseCursorCompensation => GetUI.GetControlHandlePanel
+                                                           .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
+
+        private bool GetMouseLeftButtonUp => throw new InvalidOperationException(); //GetInput.GetMouseLeftButtonUp;
+
+        private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
+
+        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
+
+        private float GetCellHalfSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
+
+        #endregion
+
+        #region Other types of variables.
+
+        public enum SCALEDRAGTYPE
+        {
+            XAxis,
+
+            YAxis,
+
+            XYAxis
+        }
+
+        private SCALEDRAGTYPE m_scaleDragType;
+
+        private Flag m_waitToNextFrame;
+
+        #endregion
+
+        #region Position variate and scale variate.
+
+        private Vector2 m_originMouseSumVector;
+
+        private Vector2 m_originMousePosition;
+
+        private Vector2 m_currentMousePosition;
+
+        private readonly List<Vector3> m_targetOriginScale = new();
+
+        private readonly List<Vector3> m_targetCurrentScale = new();
+
+        private readonly List<Vector3> m_targetOriginPosition = new();
+
+        private readonly List<Vector3> m_targetCurrentPosition = new();
+
+        private readonly List<Vector2> m_mousePosVectorList = new();
+
+        private Vector3 m_centerPosition;
+
+        #endregion
+
+        #region Scale's position variate and size variate.
+
+        private Vector2 m_scaleAxisXOriginPos;
+
+        private Vector2 m_scaleAxisYOriginPos;
+
+        private Vector2 m_scaleAxisXOriginSize;
+
+        private Vector2 m_scaleAxisYOriginSize;
+
+        #endregion
     }
 }

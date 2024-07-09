@@ -1,3 +1,4 @@
+using System;
 using Moon.Kernel.Extension;
 using Moon.Kernel.Struct;
 using UnityEngine.EventSystems;
@@ -32,64 +33,17 @@ namespace LevelEditor
 
     public class ControlHandlePanel
     {
-        #region Some public get methods.
+        private readonly ControlHandleAction _controlHandleAction = new();
 
-        public Image                          GetSelectionImage       => _selectionImage;
-        public RectTransform                  GetGridRect             => _gridRect;
-        public RectTransform                  GetSelectionRect        => _selectionRect;
-        public RectTransform                  GetPositionRect         => _positionRect;
-        public RectTransform                  GetRotationRect         => _rotationRect;
-        public RectTransform                  GetScaleRect            => _scaleRect;
-        public RectTransform                  GetScaleXAxisRect       => _scaleXRect;
-        public RectTransform                  GetScaleYAxisRect       => _scaleYRect;
-        public RectTransform                  GetRectRect             => _rectRect;
-        public UISetting.SelectionProperty    GetSelectionProperty    => _property.GetSelectionProperty;
-        public UISetting.RotationDragProperty GetRotationDragProperty => _property.GetRotationDragProperty;
-        public UISetting.ScaleDragProperty    GetScaleDragProperty    => _property.GetScaleDragProperty;
-        public UISetting.MouseCursorProperty  GetMouseCursorProperty  => _property.GetMouseCursorProperty;
-        public UISetting.GridSnappingProperty GetGridSnappingProperty => _property.GetGridSnappingProperty;
+        private GridPainter _gridPainter;
 
-        public bool GetPositionInputX                 => _positionInputX.GetInput;
-        public bool GetPositionInputY                 => _positionInputY.GetInput;
-        public bool GetPositionInputXY                => _positionInputXY.GetInput;
-        public bool GetScaleInputX                    => _scaleInputX.GetInput;
-        public bool GetScaleInputY                    => _scaleInputY.GetInput;
-        public bool GetScaleInputXY                   => _scaleInputXY.GetInput;
-        public bool GetRectTopRightCornerInput        => _rectTopRightCornerInput.GetInput;
-        public bool GetRectTopLeftCornerInput         => _rectTopLeftCornerInput.GetInput;
-        public bool GetRectBottomRightCornerInput     => _rectBottomRightCornerInput.GetInput;
-        public bool GetRectBottomLeftCornerInput      => _rectBottomLeftCornerInput.GetInput;
-        public bool GetRectTopEdgeInput               => _rectTopEdgeInput.GetInput;
-        public bool GetRectRightEdgeInput             => _rectRightEdgeInput.GetInput;
-        public bool GetRectBottomEdgeInput            => _rectBottomEdgeInput.GetInput;
-        public bool GetRectLeftEdgeInput              => _rectLeftEdgeInput.GetInput;
-        public bool GetRectCenterInput                => _rectCenterInput.GetInput;
-        public bool GetPositionInputXDown             => _positionInputX.GetInputDown;
-        public bool GetPositionInputYDown             => _positionInputY.GetInputDown;
-        public bool GetPositionInputXYDown            => _positionInputXY.GetInputDown;
-        public bool GetRotationInputZDown             => _rotationInputZ.GetInputDown;
-        public bool GetScaleInputXDown                => _scaleInputX.GetInputDown;
-        public bool GetScaleInputYDown                => _scaleInputY.GetInputDown;
-        public bool GetScaleInputXYDown               => _scaleInputXY.GetInputDown;
-        public bool GetRectTopRightCornerInputDown    => _rectTopRightCornerInput.GetInputDown;
-        public bool GetRectTopLeftCornerInputDown     => _rectTopLeftCornerInput.GetInputDown;
-        public bool GetRectBottomRightCornerInputDown => _rectBottomRightCornerInput.GetInputDown;
-        public bool GetRectBottomLeftCornerInputDown  => _rectBottomLeftCornerInput.GetInputDown;
-        public bool GetRectTopEdgeInputDown           => _rectTopEdgeInput.GetInputDown;
-        public bool GetRectRightEdgeInputDown         => _rectRightEdgeInput.GetInputDown;
-        public bool GetRectBottomEdgeInputDown        => _rectBottomEdgeInput.GetInputDown;
-        public bool GetRectLeftEdgeInputDown          => _rectLeftEdgeInput.GetInputDown;
-        public bool GetRectCenterInputDown            => _rectCenterInput.GetInputDown;
+        private RectTransform _gridRect;
 
-        public ControlHandleAction GetControlHandleAction => _controlHandleAction;
+        private Input<bool> _positionInputX;
 
-        #endregion
+        private Input<bool> _positionInputXY;
 
-        #region Selection's rect transform components.
-
-        private RectTransform _selectionRect;
-
-        #endregion
+        private Input<bool> _positionInputY;
 
         #region Position's rect transform components.
 
@@ -97,55 +51,25 @@ namespace LevelEditor
 
         #endregion
 
-        #region Rotation's rect transform components.
+        private UISetting.ControlHandleUI _property;
 
-        private RectTransform _rotationRect;
+        private Input<bool> _rectBottomEdgeInput;
 
-        #endregion
+        private Input<bool> _rectBottomLeftCornerInput;
 
-        #region Scale's rect transform components;
+        private Input<bool> _rectBottomRightCornerInput;
 
-        private RectTransform _scaleRect;
+        private Input<bool> _rectCenterInput;
 
-        private RectTransform _scaleXRect;
+        private Input<bool> _rectLeftEdgeInput;
 
-        private RectTransform _scaleYRect;
+        private Input<bool> _rectRightEdgeInput;
 
-        #endregion
+        private Input<bool> _rectTopEdgeInput;
 
-        #region Rect's rect transform components.
+        private Input<bool> _rectTopLeftCornerInput;
 
-        private RectTransform _rectRect;
-
-        private RectTransform _rectTopRightCornerRect;
-
-        private RectTransform _rectTopLeftCornerRect;
-
-        private RectTransform _rectBottomRightCornerRect;
-
-        private RectTransform _rectBottomLeftCornerRect;
-
-        private RectTransform _rectTopEdgeRect;
-
-        private RectTransform _rectRightEdgeRect;
-
-        private RectTransform _rectBottomEdgeRect;
-
-        private RectTransform _rectLeftEdgeRect;
-
-        private RectTransform _rectCenterRect;
-
-        #endregion
-
-        #region Position's button components.
-
-        private Button _positionButtonX;
-
-        private Button _positionButtonY;
-
-        private Button _positionButtonXY;
-
-        #endregion
+        private Input<bool> _rectTopRightCornerInput;
 
         #region Rotation's button components.
 
@@ -153,91 +77,37 @@ namespace LevelEditor
 
         #endregion
 
-        #region Scale's button components.
-
-        private Button _scaleButtonXHead;
-
-        private Button _scaleButtonXBody;
-
-        private Button _scaleButtonYHead;
-
-        private Button _scaleButtonYBody;
-
-        private Button _scaleButtonXY;
-
-        #endregion
-
-        #region Rect's button components.
-
-        private Button _rectTopRightCornerButton;
-
-        private Button _rectTopLeftCornerButton;
-
-        private Button _rectBottomRightCornerButton;
-
-        private Button _rectBottomLeftCornerButton;
-
-        private Button _rectTopEdgeButton;
-
-        private Button _rectRightEdgeButton;
-
-        private Button _rectLeftEdgeButton;
-
-        private Button _rectBottomEdgeButton;
-
-        private Button _rectCenterButton;
-
-        #endregion
-
-        private RectTransform _gridRect;
-
-        private Image _selectionImage;
-
-        private Input<bool> _positionInputX;
-
-        private Input<bool> _positionInputY;
-
-        private Input<bool> _positionInputXY;
-
         private Input<bool> _rotationInputZ;
+
+        #region Rotation's rect transform components.
+
+        private RectTransform _rotationRect;
+
+        #endregion
 
         private Input<bool> _scaleInputX;
 
-        private Input<bool> _scaleInputY;
-
         private Input<bool> _scaleInputXY;
 
-        private Input<bool> _rectTopRightCornerInput;
+        private Input<bool> _scaleInputY;
 
-        private Input<bool> _rectTopLeftCornerInput;
+        private Image _selectionImage;
 
-        private Input<bool> _rectBottomRightCornerInput;
+        #region Selection's rect transform components.
 
-        private Input<bool> _rectBottomLeftCornerInput;
+        private RectTransform _selectionRect;
 
-        private Input<bool> _rectTopEdgeInput;
+        #endregion
 
-        private Input<bool> _rectRightEdgeInput;
-
-        private Input<bool> _rectBottomEdgeInput;
-
-        private Input<bool> _rectLeftEdgeInput;
-
-        private Input<bool> _rectCenterInput;
-
-        private readonly ControlHandleAction _controlHandleAction = new();
-
-        private GridPainter _gridPainter;
-
-        private UISetting.ControlHandleUI _property;
-        
-        private bool GetMouseLeftButton => Moon.Runtime.InputManager.Instance.GetMouseLeftButton;
+        // Moon.Runtime.InputManager.Instance.GetMouseLeftButton
 
         public ControlHandlePanel(RectTransform levelEditorCanvasRect, UISetting levelEditorUISetting)
         {
             InitComponent(levelEditorCanvasRect, levelEditorUISetting);
             InitEvent();
         }
+
+        private bool GetMouseLeftButton => throw new InvalidOperationException();
 
         private void InitComponent(RectTransform rect, UISetting levelEditorUISetting)
         {
@@ -445,5 +315,138 @@ namespace LevelEditor
             _rectCenterButton.AddTriggerEvent(EventTriggerType.PointerUp,
                                               data => _rectCenterInput.SetInput = false);
         }
+
+        #region Some public get methods.
+
+        public Image                          GetSelectionImage       => _selectionImage;
+        public RectTransform                  GetGridRect             => _gridRect;
+        public RectTransform                  GetSelectionRect        => _selectionRect;
+        public RectTransform                  GetPositionRect         => _positionRect;
+        public RectTransform                  GetRotationRect         => _rotationRect;
+        public RectTransform                  GetScaleRect            => _scaleRect;
+        public RectTransform                  GetScaleXAxisRect       => _scaleXRect;
+        public RectTransform                  GetScaleYAxisRect       => _scaleYRect;
+        public RectTransform                  GetRectRect             => _rectRect;
+        public UISetting.SelectionProperty    GetSelectionProperty    => _property.GetSelectionProperty;
+        public UISetting.RotationDragProperty GetRotationDragProperty => _property.GetRotationDragProperty;
+        public UISetting.ScaleDragProperty    GetScaleDragProperty    => _property.GetScaleDragProperty;
+        public UISetting.MouseCursorProperty  GetMouseCursorProperty  => _property.GetMouseCursorProperty;
+        public UISetting.GridSnappingProperty GetGridSnappingProperty => _property.GetGridSnappingProperty;
+
+        public bool GetPositionInputX                 => _positionInputX.GetInput;
+        public bool GetPositionInputY                 => _positionInputY.GetInput;
+        public bool GetPositionInputXY                => _positionInputXY.GetInput;
+        public bool GetScaleInputX                    => _scaleInputX.GetInput;
+        public bool GetScaleInputY                    => _scaleInputY.GetInput;
+        public bool GetScaleInputXY                   => _scaleInputXY.GetInput;
+        public bool GetRectTopRightCornerInput        => _rectTopRightCornerInput.GetInput;
+        public bool GetRectTopLeftCornerInput         => _rectTopLeftCornerInput.GetInput;
+        public bool GetRectBottomRightCornerInput     => _rectBottomRightCornerInput.GetInput;
+        public bool GetRectBottomLeftCornerInput      => _rectBottomLeftCornerInput.GetInput;
+        public bool GetRectTopEdgeInput               => _rectTopEdgeInput.GetInput;
+        public bool GetRectRightEdgeInput             => _rectRightEdgeInput.GetInput;
+        public bool GetRectBottomEdgeInput            => _rectBottomEdgeInput.GetInput;
+        public bool GetRectLeftEdgeInput              => _rectLeftEdgeInput.GetInput;
+        public bool GetRectCenterInput                => _rectCenterInput.GetInput;
+        public bool GetPositionInputXDown             => _positionInputX.GetInputDown;
+        public bool GetPositionInputYDown             => _positionInputY.GetInputDown;
+        public bool GetPositionInputXYDown            => _positionInputXY.GetInputDown;
+        public bool GetRotationInputZDown             => _rotationInputZ.GetInputDown;
+        public bool GetScaleInputXDown                => _scaleInputX.GetInputDown;
+        public bool GetScaleInputYDown                => _scaleInputY.GetInputDown;
+        public bool GetScaleInputXYDown               => _scaleInputXY.GetInputDown;
+        public bool GetRectTopRightCornerInputDown    => _rectTopRightCornerInput.GetInputDown;
+        public bool GetRectTopLeftCornerInputDown     => _rectTopLeftCornerInput.GetInputDown;
+        public bool GetRectBottomRightCornerInputDown => _rectBottomRightCornerInput.GetInputDown;
+        public bool GetRectBottomLeftCornerInputDown  => _rectBottomLeftCornerInput.GetInputDown;
+        public bool GetRectTopEdgeInputDown           => _rectTopEdgeInput.GetInputDown;
+        public bool GetRectRightEdgeInputDown         => _rectRightEdgeInput.GetInputDown;
+        public bool GetRectBottomEdgeInputDown        => _rectBottomEdgeInput.GetInputDown;
+        public bool GetRectLeftEdgeInputDown          => _rectLeftEdgeInput.GetInputDown;
+        public bool GetRectCenterInputDown            => _rectCenterInput.GetInputDown;
+
+        public ControlHandleAction GetControlHandleAction => _controlHandleAction;
+
+        #endregion
+
+        #region Scale's rect transform components;
+
+        private RectTransform _scaleRect;
+
+        private RectTransform _scaleXRect;
+
+        private RectTransform _scaleYRect;
+
+        #endregion
+
+        #region Rect's rect transform components.
+
+        private RectTransform _rectRect;
+
+        private RectTransform _rectTopRightCornerRect;
+
+        private RectTransform _rectTopLeftCornerRect;
+
+        private RectTransform _rectBottomRightCornerRect;
+
+        private RectTransform _rectBottomLeftCornerRect;
+
+        private RectTransform _rectTopEdgeRect;
+
+        private RectTransform _rectRightEdgeRect;
+
+        private RectTransform _rectBottomEdgeRect;
+
+        private RectTransform _rectLeftEdgeRect;
+
+        private RectTransform _rectCenterRect;
+
+        #endregion
+
+        #region Position's button components.
+
+        private Button _positionButtonX;
+
+        private Button _positionButtonY;
+
+        private Button _positionButtonXY;
+
+        #endregion
+
+        #region Scale's button components.
+
+        private Button _scaleButtonXHead;
+
+        private Button _scaleButtonXBody;
+
+        private Button _scaleButtonYHead;
+
+        private Button _scaleButtonYBody;
+
+        private Button _scaleButtonXY;
+
+        #endregion
+
+        #region Rect's button components.
+
+        private Button _rectTopRightCornerButton;
+
+        private Button _rectTopLeftCornerButton;
+
+        private Button _rectBottomRightCornerButton;
+
+        private Button _rectBottomLeftCornerButton;
+
+        private Button _rectTopEdgeButton;
+
+        private Button _rectRightEdgeButton;
+
+        private Button _rectLeftEdgeButton;
+
+        private Button _rectBottomEdgeButton;
+
+        private Button _rectCenterButton;
+
+        #endregion
     }
 }

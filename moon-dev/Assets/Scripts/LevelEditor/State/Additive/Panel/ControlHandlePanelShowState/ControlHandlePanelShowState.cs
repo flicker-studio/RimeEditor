@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Frame.StateMachine;
-using LevelEditor.Command;
 using LevelEditor.Item;
 using Moon.Kernel.Extension;
 using UnityEngine;
@@ -11,6 +10,16 @@ namespace LevelEditor
 {
     public class ControlHandlePanelShowState : AdditiveState
     {
+        private readonly List<ItemBase> m_copyDatas = new();
+
+        private GridPainter m_gridPainter;
+
+        public ControlHandlePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
+        {
+            InitGird();
+            InitEvent();
+        }
+
         private LevelDataManager GetData => m_information.DataManager;
 
         private InputManager GetInput => m_information.InputManager;
@@ -54,16 +63,6 @@ namespace LevelEditor
         private float GetCellSize     => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
         private int   GetGrowthFactor => GetControlHandlePanel.GetGridSnappingProperty.GROWTH_FACTOR;
         private Color GetGridColor    => GetControlHandlePanel.GetGridSnappingProperty.GRID_COLOR;
-        
-        private readonly List<ItemBase> m_copyDatas = new();
-
-        private GridPainter m_gridPainter;
-
-        public ControlHandlePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
-        {
-            InitGird();
-            InitEvent();
-        }
 
         private void InitEvent()
         {
@@ -74,7 +73,7 @@ namespace LevelEditor
         {
             m_gridPainter = new GridPainter(GetGridObj, GetGridSize, GetCellSize, GetGrowthFactor, GetGridColor);
         }
-        
+
         private void ClearCopyDatas(SubLevel subLevel)
         {
             m_copyDatas.Clear();
@@ -95,44 +94,44 @@ namespace LevelEditor
 
         private void CheckButton()
         {
-            if (m_information.InputManager.GetMouseLeftButtonDown && !UIExtension.IsPointerOverUIElement())
-                if (!CheckStates.Contains(typeof(MouseSelecteState)))
-                    ChangeMotionState(typeof(MouseSelecteState));
-
-            if (GetPositionAxisButtonDown)
-                if (!CheckStates.Contains(typeof(PositionAxisDragState)))
-                    ChangeMotionState(typeof(PositionAxisDragState));
-
-            if (GetRotationAxisZButtonDown)
-                if (!CheckStates.Contains(typeof(RotationAxisDragState)))
-                    ChangeMotionState(typeof(RotationAxisDragState));
-
-            if (GetScaleAxisButtonDown)
-                if (!CheckStates.Contains(typeof(ScaleAxisDragState)))
-                    ChangeMotionState(typeof(ScaleAxisDragState));
-
-            if (GetRectAxisButtonDowm)
-                if (!CheckStates.Contains(typeof(RectAxisDragState)))
-                    ChangeMotionState(typeof(RectAxisDragState));
-
-            if (GetInput.GetGButtonDown) CommandInvoker.Execute(new Action(GetControlHandleAction, !GetControlHandleAction.UseGrid));
-
-            if (GetInput.GetCtrlButton && GetInput.GetCButtonDown)
-            {
-                m_copyDatas.Clear();
-                m_copyDatas.AddRange(GetData.TargetItems);
-            }
-
-            if (GetInput.GetCtrlButton && GetInput.GetVButtonDown)
-            {
-                if (m_copyDatas.Count > 0)
-                {
-                    var command = new Copy(GetData.ItemAssets, m_information.OutlineManager);
-                    CommandInvoker.Execute(command);
-                }
-            }
+            // if (m_information.InputManager.GetMouseLeftButtonDown && !UIExtension.IsPointerOverUIElement())
+            //     if (!CheckStates.Contains(typeof(MouseSelecteState)))
+            //         ChangeMotionState(typeof(MouseSelecteState));
+            //
+            // if (GetPositionAxisButtonDown)
+            //     if (!CheckStates.Contains(typeof(PositionAxisDragState)))
+            //         ChangeMotionState(typeof(PositionAxisDragState));
+            //
+            // if (GetRotationAxisZButtonDown)
+            //     if (!CheckStates.Contains(typeof(RotationAxisDragState)))
+            //         ChangeMotionState(typeof(RotationAxisDragState));
+            //
+            // if (GetScaleAxisButtonDown)
+            //     if (!CheckStates.Contains(typeof(ScaleAxisDragState)))
+            //         ChangeMotionState(typeof(ScaleAxisDragState));
+            //
+            // if (GetRectAxisButtonDowm)
+            //     if (!CheckStates.Contains(typeof(RectAxisDragState)))
+            //         ChangeMotionState(typeof(RectAxisDragState));
+            //
+            // if (GetInput.GetGButtonDown) CommandInvoker.Execute(new Action(GetControlHandleAction, !GetControlHandleAction.UseGrid));
+            //
+            // if (GetInput.GetCtrlButton && GetInput.GetCButtonDown)
+            // {
+            //     m_copyDatas.Clear();
+            //     m_copyDatas.AddRange(GetData.TargetItems);
+            // }
+            //
+            // if (GetInput.GetCtrlButton && GetInput.GetVButtonDown)
+            // {
+            //     if (m_copyDatas.Count > 0)
+            //     {
+            //         var command = new Copy(GetData.ItemAssets, m_information.OutlineManager);
+            //         CommandInvoker.Execute(command);
+            //     }
+            // }
         }
-        
+
         private void ShowActionView(Controlhandleactiontype levelEditorActionType)
         {
             switch (levelEditorActionType)

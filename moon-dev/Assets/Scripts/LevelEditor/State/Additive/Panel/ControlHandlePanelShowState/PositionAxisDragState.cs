@@ -20,10 +20,29 @@ namespace LevelEditor
             XYAxis
         }
 
+        private readonly List<Vector3> m_targetCurrentPosition = new();
+
+        private readonly List<Vector3> m_targetOriginPosition = new();
+
+        private Vector3 m_currentMouseWorldPosition;
+
+        private Vector3 m_mouseScreenPosition;
+
+        private Vector3 m_originMouseWorldPosition;
+
         private POSITIONDRAGTYPE m_positionDragType;
 
+        private List<Vector3> m_targetCurrentScale = new();
+
+        private List<Vector3> m_targetOriginScale = new();
+
+        public PositionAxisDragState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
+        {
+            StateInit();
+        }
+
         private ControlHandlePanel GetControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
-        
+
         private List<ItemBase> TargetItems => m_information.DataManager.TargetItems;
 
         private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
@@ -33,33 +52,13 @@ namespace LevelEditor
         private Vector2 GetMousePosition => m_information.CameraManager.MousePosition;
 
         private Vector2 GetMouseCursorCompensation => GetControlHandlePanel
-            .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
+                                                     .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
 
-        private bool GetMouseLeftButtonUp => m_information.InputManager.GetMouseLeftButtonUp;
-
+        private bool GetMouseLeftButtonUp => throw new InvalidOperationException(); // m_information.InputManager.GetMouseLeftButtonUp;
 
         private bool GetUseGrid => GetControlHandlePanel.GetControlHandleAction.UseGrid;
 
         private float GetCellHalfSize => GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE / 2f;
-
-        private Vector3 m_originMouseWorldPosition;
-
-        private Vector3 m_currentMouseWorldPosition;
-
-        private List<Vector3> m_targetOriginScale = new List<Vector3>();
-
-        private List<Vector3> m_targetCurrentScale = new List<Vector3>();
-
-        private List<Vector3> m_targetOriginPosition = new List<Vector3>();
-
-        private List<Vector3> m_targetCurrentPosition = new List<Vector3>();
-
-        private Vector3 m_mouseScreenPosition;
-
-        public PositionAxisDragState(BaseInformation information, MotionCallBack motionCallBack) : base(information, motionCallBack)
-        {
-            StateInit();
-        }
 
         public override void Motion(BaseInformation information)
         {
@@ -112,8 +111,8 @@ namespace LevelEditor
             if (GetUseGrid && TargetObjs.Count > 1)
             {
                 moveDir = new Vector3(GetCellHalfSize * Mathf.RoundToInt(moveDir.x / GetCellHalfSize)
-                    , GetCellHalfSize * Mathf.RoundToInt(moveDir.y / GetCellHalfSize)
-                    , moveDir.z);
+                                    , GetCellHalfSize * Mathf.RoundToInt(moveDir.y / GetCellHalfSize)
+                                    , moveDir.z);
             }
 
             for (var i = 0; i < TargetObjs.Count; i++)
@@ -134,7 +133,7 @@ namespace LevelEditor
                 }
 
                 TargetObjs[i].transform.position = TargetObjs[i].transform.position.NewX((float)Math.Round(TargetObjs[i].transform.position.x, 2))
-                    .NewY((float)Math.Round(TargetObjs[i].transform.position.y, 2));
+                                                                .NewY((float)Math.Round(TargetObjs[i].transform.position.y,                    2));
 
                 if (GetUseGrid && TargetObjs.Count == 1)
                 {
@@ -142,19 +141,23 @@ namespace LevelEditor
                     {
                         case POSITIONDRAGTYPE.XAxis:
                             TargetObjs[i].transform.position = TargetObjs[i].transform.position
-                                .NewX(GetCellHalfSize * Mathf.RoundToInt(TargetObjs[i].transform.position.x / GetCellHalfSize));
+                                                                            .NewX(GetCellHalfSize *
+                                                                                  Mathf.RoundToInt(TargetObjs[i].transform.position.x /
+                                                                                                   GetCellHalfSize));
 
                             break;
                         case POSITIONDRAGTYPE.YAxis:
                             TargetObjs[i].transform.position = TargetObjs[i].transform.position
-                                .NewY(GetCellHalfSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellHalfSize));
+                                                                            .NewY(GetCellHalfSize *
+                                                                                  Mathf.RoundToInt(TargetObjs[i].transform.position.y /
+                                                                                                   GetCellHalfSize));
 
                             break;
                         case POSITIONDRAGTYPE.XYAxis:
                             TargetObjs[i].transform.position =
                                 new Vector3(GetCellHalfSize * Mathf.RoundToInt(TargetObjs[i].transform.position.x / GetCellHalfSize)
-                                    , GetCellHalfSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellHalfSize)
-                                    , TargetObjs[i].transform.position.z);
+                                          , GetCellHalfSize * Mathf.RoundToInt(TargetObjs[i].transform.position.y / GetCellHalfSize)
+                                          , TargetObjs[i].transform.position.z);
 
                             break;
                         default:

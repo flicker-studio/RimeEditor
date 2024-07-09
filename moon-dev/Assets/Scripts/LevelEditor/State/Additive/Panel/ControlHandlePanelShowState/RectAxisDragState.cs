@@ -13,31 +13,6 @@ namespace LevelEditor
 {
     public class RectAxisDragState : AdditiveState
     {
-        private UIManager GetUI => m_information.UIManager;
-        private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
-        
-        private List<ItemBase> TargetItems => m_information.DataManager.TargetItems;
-
-        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
-
-        private Vector3 GetMouseWorldPoint => m_information.CameraManager.MouseWorldPosition;
-
-        private Vector2 GetMousePosition => m_information.CameraManager.MousePosition;
-
-        private Vector2 GetMouseCursorCompensation => m_information.UIManager.GetControlHandlePanel
-            .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
-
-        private bool GetMouseLeftButtonUp => m_information.InputManager.GetMouseLeftButtonUp;
-
-
-        private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
-
-        private float GetCellHalfSize => GetCellSize / 2f;
-
-        private float GetCellHalfHalfSize => GetCellHalfSize / 2f;
-
-        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
-
         public enum RECTDRAGTYPE
         {
             TopRightCorner,
@@ -59,28 +34,52 @@ namespace LevelEditor
             Center
         }
 
-        private RECTDRAGTYPE m_rectDragType;
+        private readonly List<Vector3> m_targetCurrentPosition = new();
 
-        private Vector3 m_mouseScreenPosition;
-
-        private Vector3 m_currentMouseWorldPosition;
-
-        private Vector3 m_originMouseWorldPosition;
+        private readonly List<Vector3> m_targetCurrentScale = new();
 
         private Vector3 m_centerPosition;
 
+        private Vector3 m_currentMouseWorldPosition;
+
+        private Vector3 m_mouseScreenPosition;
+
+        private Vector3 m_originMouseWorldPosition;
+
+        private RECTDRAGTYPE m_rectDragType;
+
         private List<Vector3> m_targetOriginPosition = new List<Vector3>();
 
-        private List<Vector3> m_targetCurrentPosition = new List<Vector3>();
-
         private List<Vector3> m_targetOriginScale = new List<Vector3>();
-
-        private List<Vector3> m_targetCurrentScale = new List<Vector3>();
 
         public RectAxisDragState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
             StateInit();
         }
+
+        private UIManager     GetUI       => m_information.UIManager;
+        private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
+
+        private List<ItemBase> TargetItems => m_information.DataManager.TargetItems;
+
+        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
+
+        private Vector3 GetMouseWorldPoint => m_information.CameraManager.MouseWorldPosition;
+
+        private Vector2 GetMousePosition => m_information.CameraManager.MousePosition;
+
+        private Vector2 GetMouseCursorCompensation => m_information.UIManager.GetControlHandlePanel
+                                                                   .GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;
+
+        private bool GetMouseLeftButtonUp => throw new InvalidOperationException(); //m_information.InputManager.GetMouseLeftButtonUp;
+
+        private bool GetUseGrid => GetUI.GetControlHandlePanel.GetControlHandleAction.UseGrid;
+
+        private float GetCellHalfSize => GetCellSize / 2f;
+
+        private float GetCellHalfHalfSize => GetCellHalfSize / 2f;
+
+        private float GetCellSize => GetUI.GetControlHandlePanel.GetGridSnappingProperty.CELL_SIZE;
 
         public override void Motion(BaseInformation information)
         {
@@ -115,11 +114,11 @@ namespace LevelEditor
                 Vector3 scaleDir = Vector3.one;
                 Vector3 currentMouseProject;
                 Vector3 originMouseProject;
-                Vector3 positionOffset = m_targetOriginPosition[index] - m_centerPosition;
-                Vector3 rate = Vector3.zero;
-                Vector3 newScale = Vector3.zero;
-                Vector3 oldScale = Vector3.zero;
-                Vector3 newPosition = Vector3.zero;
+                var     positionOffset        = m_targetOriginPosition[index] - m_centerPosition;
+                var     rate                  = Vector3.zero;
+                var     newScale              = Vector3.zero;
+                var     oldScale              = Vector3.zero;
+                var     newPosition           = Vector3.zero;
                 Vector3 positionOffsetProject = Vector3.zero;
 
                 switch (m_rectDragType)
@@ -128,21 +127,21 @@ namespace LevelEditor
                         if (GetUseGrid && TargetObjs.Count > 1)
                         {
                             moveDir = new Vector3(GetCellHalfSize * Mathf.RoundToInt(moveDir.x / GetCellHalfSize)
-                                , GetCellHalfSize * Mathf.RoundToInt(moveDir.y / GetCellHalfSize)
-                                , moveDir.z);
+                                                , GetCellHalfSize * Mathf.RoundToInt(moveDir.y / GetCellHalfSize)
+                                                , moveDir.z);
                         }
 
                         TargetObjs[index].transform.position = m_targetOriginPosition[index] + moveDir;
 
                         TargetObjs[index].transform.position.NewX((float)Math.Round(TargetObjs[index].transform.position.x, 2))
-                            .NewY((float)Math.Round(TargetObjs[index].transform.position.y, 2));
+                                         .NewY((float)Math.Round(TargetObjs[index].transform.position.y,                    2));
 
                         if (GetUseGrid && TargetObjs.Count == 1)
                         {
                             TargetObjs[index].transform.position =
                                 new Vector3(GetCellHalfSize * Mathf.RoundToInt(TargetObjs[index].transform.position.x / GetCellHalfSize)
-                                    , GetCellHalfSize * Mathf.RoundToInt(TargetObjs[index].transform.position.y / GetCellHalfSize)
-                                    , TargetObjs[index].transform.position.z);
+                                          , GetCellHalfSize * Mathf.RoundToInt(TargetObjs[index].transform.position.y / GetCellHalfSize)
+                                          , TargetObjs[index].transform.position.z);
                         }
 
                         continue;
@@ -171,15 +170,15 @@ namespace LevelEditor
                 }
 
                 currentMouseProject = m_currentMouseWorldPosition + m_originMouseWorldPosition - 2 * m_centerPosition;
-                originMouseProject = 2 * (m_originMouseWorldPosition - m_centerPosition);
+                originMouseProject  = 2 * (m_originMouseWorldPosition - m_centerPosition);
 
                 if (scaleDir != Vector3.one)
                 {
                     currentMouseProject = Vector3
-                        .Project(currentMouseProject, scaleDir);
+                       .Project(currentMouseProject, scaleDir);
 
                     originMouseProject = Vector3
-                        .Project(originMouseProject, scaleDir);
+                       .Project(originMouseProject, scaleDir);
                 }
 
                 rate = currentMouseProject.DivideVector(originMouseProject);
@@ -208,51 +207,51 @@ namespace LevelEditor
                 }
 
                 newPosition = m_centerPosition + positionOffset + positionOffsetProject
-                    .HadamardProduct(new Vector3(rate.x - 1, rate.y - 1, rate.z - 1)) + (currentMouseProject - originMouseProject) / 2;
+                   .HadamardProduct(new Vector3(rate.x - 1, rate.y - 1, rate.z - 1)) + (currentMouseProject - originMouseProject) / 2;
 
                 if (GetUseGrid)
                 {
                     Vector3 oldSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size
-                        .HadamardProduct(TargetObjs[index].transform.localScale);
+                                                       .HadamardProduct(TargetObjs[index].transform.localScale);
 
                     Vector3 newSize = TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size.HadamardProduct(newScale);
 
                     oldSize = new Vector3(GetCellHalfSize * Mathf.RoundToInt(oldSize.x / GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(oldSize.y / GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(oldSize.z / GetCellHalfSize));
+                                          GetCellHalfSize * Mathf.RoundToInt(oldSize.y / GetCellHalfSize),
+                                          GetCellHalfSize * Mathf.RoundToInt(oldSize.z / GetCellHalfSize));
 
                     newSize = new Vector3(GetCellHalfSize * Mathf.RoundToInt(newSize.x / GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(newSize.y / GetCellHalfSize),
-                        GetCellHalfSize * Mathf.RoundToInt(newSize.z / GetCellHalfSize));
+                                          GetCellHalfSize * Mathf.RoundToInt(newSize.y / GetCellHalfSize),
+                                          GetCellHalfSize * Mathf.RoundToInt(newSize.z / GetCellHalfSize));
 
                     if (oldSize == newSize) return;
 
                     Vector3 tempScale = newSize.DivideVector(TargetObjs[index].GetComponent<MeshFilter>().mesh.bounds.size);
 
                     Vector3 tempPosition = new Vector3(GetCellHalfHalfSize * Mathf.RoundToInt(newPosition.x / GetCellHalfHalfSize),
-                        GetCellHalfHalfSize * Mathf.RoundToInt(newPosition.y / GetCellHalfHalfSize),
-                        GetCellHalfHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfHalfSize));
+                                                       GetCellHalfHalfSize * Mathf.RoundToInt(newPosition.y / GetCellHalfHalfSize),
+                                                       GetCellHalfHalfSize * Mathf.RoundToInt(newPosition.z / GetCellHalfHalfSize));
 
                     switch (m_rectDragType)
                     {
                         case RECTDRAGTYPE.LeftEdge:
-                            newScale = newScale.NewX(tempScale.x);
+                            newScale    = newScale.NewX(tempScale.x);
                             newPosition = newPosition.NewX(tempPosition.x);
                             break;
                         case RECTDRAGTYPE.RightEdge:
-                            newScale = newScale.NewX(tempScale.x);
+                            newScale    = newScale.NewX(tempScale.x);
                             newPosition = newPosition.NewX(tempPosition.x);
                             break;
                         case RECTDRAGTYPE.TopEdge:
-                            newScale = newScale.NewY(tempScale.y);
+                            newScale    = newScale.NewY(tempScale.y);
                             newPosition = newPosition.NewY(tempPosition.y);
                             break;
                         case RECTDRAGTYPE.BottomEdge:
-                            newScale = newScale.NewY(tempScale.y);
+                            newScale    = newScale.NewY(tempScale.y);
                             newPosition = newPosition.NewY(tempPosition.y);
                             break;
                         default:
-                            newScale = newScale.NewX(tempScale.x).NewY(tempScale.y);
+                            newScale    = newScale.NewX(tempScale.x).NewY(tempScale.y);
                             newPosition = newPosition.NewX(tempPosition.x).NewY(tempPosition.y);
                             break;
                     }
@@ -261,18 +260,19 @@ namespace LevelEditor
                 if (GetUseGrid)
                 {
                     TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x, 1))
-                        .NewY((float)Math.Round(newScale.y, 1));
+                                                                     .NewY((float)Math.Round(newScale.y, 1));
                 }
                 else
                 {
                     TargetObjs[index].transform.localScale = newScale.NewX((float)Math.Round(newScale.x, 2))
-                        .NewY((float)Math.Round(newScale.y, 2));
+                                                                     .NewY((float)Math.Round(newScale.y, 2));
                 }
 
                 TargetObjs[index].transform.position = newPosition;
 
-                TargetObjs[index].transform.position = TargetObjs[index].transform.position.NewX((float)Math.Round(TargetObjs[index].transform.position.x, 2))
-                    .NewY((float)Math.Round(TargetObjs[index].transform.position.y, 2));
+                TargetObjs[index].transform.position = TargetObjs[index]
+                                                      .transform.position.NewX((float)Math.Round(TargetObjs[index].transform.position.x, 2))
+                                                      .NewY((float)Math.Round(TargetObjs[index].transform.position.y,                    2));
             }
         }
 
@@ -363,7 +363,7 @@ namespace LevelEditor
             if (m_mouseScreenPosition.x <= 0)
             {
                 Mouse.current.WarpCursorPosition(new Vector2(Screen.width - GetMouseCursorCompensation.x,
-                    m_mouseScreenPosition.y));
+                                                             m_mouseScreenPosition.y));
             }
 
             if (m_mouseScreenPosition.y >= Screen.height)
@@ -374,7 +374,7 @@ namespace LevelEditor
             if (m_mouseScreenPosition.y <= 0)
             {
                 Mouse.current.WarpCursorPosition(new Vector2(m_mouseScreenPosition.x,
-                    Screen.height - GetMouseCursorCompensation.y));
+                                                             Screen.height - GetMouseCursorCompensation.y));
             }
         }
     }

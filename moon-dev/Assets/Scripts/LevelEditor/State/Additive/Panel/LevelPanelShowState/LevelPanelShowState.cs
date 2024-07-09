@@ -2,24 +2,23 @@ using System;
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
 using Moon.Kernel.Utils;
-using Moon.Runtime;
 using UnityEngine;
 
 namespace LevelEditor
 {
     public class LevelPanelShowState : AdditiveState
     {
-        private LevelAction GetLevelAction => m_information.LevelAction;
-        private LevelPanel GetLevelPanel => m_information.UIManager.GetLevelPanel;
-
-        private LevelDataManager GetData => m_information.DataManager;
-
-        private OutlineManager OutlineManager => m_information.OutlineManager;
-
         public LevelPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
             InitEvents();
         }
+
+        private LevelAction GetLevelAction => m_information.LevelAction;
+        private LevelPanel  GetLevelPanel  => m_information.UIManager.GetLevelPanel;
+
+        private LevelDataManager GetData => m_information.DataManager;
+
+        private OutlineManager OutlineManager => m_information.OutlineManager;
 
         private void InitEvents()
         {
@@ -50,13 +49,13 @@ namespace LevelEditor
             if (string.IsNullOrEmpty(GetData.CurrentLevel.LevelName))
             {
                 LaunchPopover(GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_LEVEL_NAME_MISSING,
-                    GetLevelPanel.GetPopoverProperty.POPOVER_ERROR_COLOR);
+                              GetLevelPanel.GetPopoverProperty.POPOVER_ERROR_COLOR);
 
                 return;
             }
 
             LaunchPopover(GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_SAVE_SUCCESS,
-                GetLevelPanel.GetPopoverProperty.POPOVER_SUCCESS_COLOR);
+                          GetLevelPanel.GetPopoverProperty.POPOVER_SUCCESS_COLOR);
 
             GetData.ToJson();
         }
@@ -75,20 +74,23 @@ namespace LevelEditor
 
         private void LaunchPopover(string text, Color color)
         {
-            PopoverLauncher.Instance
-                .LaunchTip(GetLevelPanel.GetSaveButton.transform,
-                    GetLevelPanel.GetPopoverProperty.POPOVER_LOCATION,
-                    GetLevelPanel.GetPopoverProperty.SIZE,
-                    color,
-                    text,
-                    GetLevelPanel.GetPopoverProperty.DURATION);
+            throw new NotImplementedException();
+
+            // PopoverLauncher.Instance
+            //     .LaunchTip(GetLevelPanel.GetSaveButton.transform,
+            //         GetLevelPanel.GetPopoverProperty.POPOVER_LOCATION,
+            //         GetLevelPanel.GetPopoverProperty.SIZE,
+            //         color,
+            //         text,
+            //         GetLevelPanel.GetPopoverProperty.DURATION);
         }
 
         private void ExitCurrentLevelPopover()
         {
-            PopoverLauncher.Instance.LaunchSelector(GetLevelPanel.GetExitButton.transform,
-                GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_EXIT,
-                ExitCurrentLevel);
+            throw new NotImplementedException();
+            // PopoverLauncher.Instance.LaunchSelector(GetLevelPanel.GetExitButton.transform,
+            //     GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_EXIT,
+            //     ExitCurrentLevel);
         }
 
         private void ExitCurrentLevel()

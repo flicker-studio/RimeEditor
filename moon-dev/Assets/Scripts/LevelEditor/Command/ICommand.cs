@@ -1,8 +1,15 @@
 namespace LevelEditor.Command
 {
-    /// <inheritdoc />
-    internal interface ICommand : Moon.Runtime.DesignPattern.ICommand
+    /// <summary>
+    ///     Command Pattern base interface.
+    /// </summary>
+    internal interface ICommand
     {
+        /// <summary>
+        ///     Execute a command
+        /// </summary>
+        public void Execute();
+
         /// <summary>
         ///     Revoke a command that was executed
         /// </summary>

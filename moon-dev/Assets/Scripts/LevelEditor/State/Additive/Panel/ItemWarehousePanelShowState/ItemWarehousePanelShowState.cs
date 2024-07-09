@@ -17,6 +17,26 @@ namespace LevelEditor
 {
     public class ItemWarehousePanelShowState : AdditiveState
     {
+        private static          ItemProduct                                   m_currentChoose;
+        private static          bool                                          m_isInit               = true;
+        private static readonly Dictionary<ItemType, List<ItemProductButton>> m_searchItemProductDic = new();
+        private static readonly List<ItemProduct>                             m_searchItemProduct    = new();
+        private static          GameObject                                    m_searchItemGroupObj;
+        private static          ItemTypeButton                                m_searchItemTypeButton;
+        private static          Dictionary<ItemType, List<ItemProduct>>       m_itemDictionary;
+        private static          List<GameObject>                              m_itemGroupObjList;
+        private static          List<ItemTypeButton>                          m_itemTypeList;
+        private static          List<ItemProductButton>                       m_itemProductButtonList;
+
+        public ItemWarehousePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
+        {
+            LoadItemsFromPoject();
+            LoadItemWarehouseFromItems();
+            InitState();
+            InitListener();
+            SetPanelActive(true);
+        }
+
         private InputManager       GetInput                  => m_information.InputManager;
         private LevelAction        GetLevelAction            => m_information.LevelAction;
         private ItemWarehousePanel GetItemWarehousePanel     => m_information.UIManager.GetItemWarehousePanel;
@@ -41,20 +61,10 @@ namespace LevelEditor
         private string             GetItemLatticeImageName   => GetItemWarehousePanel.GetItemLatticeImageName;
         private string             GetItemLatticeTextName    => GetItemWarehousePanel.GetItemLatticeTextName;
         private string             GetItemTypeTextName       => GetItemWarehousePanel.GetItemTypeTextName;
-        private List<ItemBase>         ItemAssets                => m_information.DataManager.ItemAssets;
-        private List<ItemBase>         TargetAssets              => m_information.DataManager.TargetItems;
+        private List<ItemBase>     ItemAssets                => m_information.DataManager.ItemAssets;
+        private List<ItemBase>     TargetAssets              => m_information.DataManager.TargetItems;
 
-        private                 OutlineManager                                GetOutlinePainter => m_information.OutlineManager;
-        private static          ItemProduct                                   m_currentChoose;
-        private static          bool                                          m_isInit               = true;
-        private static readonly Dictionary<ItemType, List<ItemProductButton>> m_searchItemProductDic = new();
-        private static readonly List<ItemProduct>                             m_searchItemProduct    = new();
-        private static          GameObject                                    m_searchItemGroupObj;
-        private static          ItemTypeButton                                m_searchItemTypeButton;
-        private static          Dictionary<ItemType, List<ItemProduct>>       m_itemDictionary;
-        private static          List<GameObject>                              m_itemGroupObjList;
-        private static          List<ItemTypeButton>                          m_itemTypeList;
-        private static          List<ItemProductButton>                       m_itemProductButtonList;
+        private OutlineManager GetOutlinePainter => m_information.OutlineManager;
 
         [RuntimeInitializeOnLoadMethod]
         private static void ResetStaticVar()
@@ -70,22 +80,13 @@ namespace LevelEditor
             m_searchItemProduct.Clear();
         }
 
-        public ItemWarehousePanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
-        {
-            LoadItemsFromPoject();
-            LoadItemWarehouseFromItems();
-            InitState();
-            InitListener();
-            SetPanelActive(true);
-        }
-
         public override void Motion(BaseInformation information)
         {
         }
 
         private void InitState()
         {
-            GetInput.SetCanInput(false);
+            throw new InvalidOperationException(); // GetInput.SetCanInput(false);
         }
 
         private void InitListener()
@@ -135,7 +136,7 @@ namespace LevelEditor
 
         private void ResetState()
         {
-            GetInput.SetCanInput(true);
+            throw new InvalidOperationException(); //   GetInput.SetCanInput(true);
             ResetTextState();
             ResetSearchPanelState();
             ResetButtonState();

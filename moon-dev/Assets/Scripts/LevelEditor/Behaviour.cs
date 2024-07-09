@@ -1,6 +1,5 @@
 using LevelEditor.Command;
 using LevelEditor.State;
-using Moon.Runtime.DesignPattern;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Context = LevelEditor.State.Context;
@@ -13,40 +12,40 @@ namespace LevelEditor
     internal class Behaviour : MonoBehaviour
     {
         public PlayerInput input;
-        
+
         private readonly Context _context = new();
         private          IState  _browseState;
         private          IState  _editorState;
-        
+
+        private void Update()
+        {
+            _context.Update?.Invoke();
+        }
+
         private void OnEnable()
         {
             input                         =  FindObjectOfType<PlayerInput>();
             input.actions["Redo"].started += Test;
             input.actions["Undo"].started += Test2;
-            
+
             var information = EntranceController.Configure;
-            
+
             _browseState = new BrowseState(transform as RectTransform);
             _editorState = new EditorState(information.UI);
-            
+
             StateSwitch<BrowseState>();
         }
-        
+
         private void Test(InputAction.CallbackContext callbackContext)
         {
             CommandInvoker.Redo();
         }
-        
+
         private void Test2(InputAction.CallbackContext callbackContext)
         {
             CommandInvoker.Undo();
         }
-        
-        private void Update()
-        {
-            _context.Update?.Invoke();
-        }
-        
+
         internal void StateSwitch<T>() where T : IState
         {
             var type = typeof(T);

@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
 using LevelEditor.View.Canvas;
-using Moon.Runtime.DesignPattern;
 using SimpleFileBrowser;
 using UnityEngine;
 
@@ -14,37 +13,37 @@ namespace LevelEditor.State
     internal sealed class BrowseState : IState
     {
         private readonly BrowseCanvas _browseCanvas;
-        
+
         public BrowseState(RectTransform rect)
         {
             _browseCanvas = new BrowseCanvas(rect);
         }
-        
+
         /// <inheritdoc />
         public void OnEnter()
         {
             //Load the data first
             _browseCanvas.Active();
         }
-        
+
         /// <inheritdoc />
         public void OnUpdate()
         {
         }
-        
+
         /// <inheritdoc />
         public void OnExit()
         {
             _browseCanvas.Inactive();
         }
-        
+
         private async UniTaskVoid OpenLevelFileAsync()
         {
             await FileBrowser.WaitForLoadDialog(FileBrowser.PickMode.Folders, false, null, null, "Open a level directory", "Load");
             if (FileBrowser.Success)
             {
                 var path = FileBrowser.Result[0].Replace("\\", "/");
-                
+
                 // if (!DataManager.OpenLocalLevelDirectory(path))
                 // {
                 //     PopoverLauncher.Instance.LaunchTip

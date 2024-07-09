@@ -1,7 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
-using Moon.Runtime;
 using SimpleFileBrowser;
 using TMPro;
 using UnityEngine;
@@ -12,9 +11,16 @@ namespace LevelEditor
 {
     public class LevelSettingPanelShowState : AdditiveState
     {
-        private InputManager GetInput => m_information.InputManager;
-        private LevelDataManager GetData => m_information.DataManager;
-        private LevelData GetCurrentLevel => GetData.CurrentLevel;
+        private string m_coverImagePath;
+
+        public LevelSettingPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
+        {
+            InitState();
+        }
+
+        private InputManager      GetInput             => m_information.InputManager;
+        private LevelDataManager  GetData              => m_information.DataManager;
+        private LevelData         GetCurrentLevel      => GetData.CurrentLevel;
         private LevelSettingPanel GetLevelSettingPanel => m_information.UIManager.GetLevelSettingPanel;
 
         private UISetting.PopoverProperty GetPopoverProperty => GetLevelSettingPanel.GetPopoverProperty;
@@ -39,18 +45,11 @@ namespace LevelEditor
 
         private TMP_InputField GetIntroductionInputField => GetLevelSettingPanel.GetIntroductionInputField;
 
-        private string m_coverImagePath;
-
-        public LevelSettingPanelShowState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
-        {
-            InitState();
-        }
-
         private void InitState()
         {
             GetPopoverPanelObj.SetActive(true);
             GetLevelSettingPanelObj.SetActive(true);
-            GetInput.SetCanInput(false);
+            throw new InvalidOperationException(); // GetInput.SetCanInput(false);
             GetCloseButton.onClick.AddListener(RemoveState);
             GetSaveButton.onClick.AddListener(SaveLevel);
             GetCoverImageButton.onClick.AddListener(UploadCoverImage);
@@ -61,7 +60,7 @@ namespace LevelEditor
         {
             GetLevelSettingPanelObj.SetActive(false);
             GetPopoverPanelObj.SetActive(false);
-            GetInput.SetCanInput(true);
+            throw new InvalidOperationException(); // GetInput.SetCanInput(true);
             GetCloseButton.onClick.RemoveAllListeners();
             GetSaveButton.onClick.RemoveAllListeners();
             GetCoverImageButton.onClick.RemoveAllListeners();
@@ -71,13 +70,13 @@ namespace LevelEditor
         private void SaveLevel()
         {
             GetData.Save
-            (
-                GetLevelNameInputField.text,
-                GetAuthorNameInputField.text,
-                GetIntroductionInputField.text,
-                GetVersionInputField.text,
-                GetCoverImage.texture as Texture2D
-            );
+                (
+                 GetLevelNameInputField.text,
+                 GetAuthorNameInputField.text,
+                 GetIntroductionInputField.text,
+                 GetVersionInputField.text,
+                 GetCoverImage.texture as Texture2D
+                );
 
             RemoveState();
         }
@@ -105,11 +104,11 @@ namespace LevelEditor
 
         private void InitInputField()
         {
-            GetLevelNameInputField.text = GetCurrentLevel.LevelName;
-            GetAuthorNameInputField.text = GetCurrentLevel.AuthorName;
+            GetLevelNameInputField.text    = GetCurrentLevel.LevelName;
+            GetAuthorNameInputField.text   = GetCurrentLevel.AuthorName;
             GetIntroductionInputField.text = GetCurrentLevel.Introduction;
-            GetVersionInputField.text = GetCurrentLevel.Version;
-            GetCoverImage.texture = GetCurrentLevel.Cover;
+            GetVersionInputField.text      = GetCurrentLevel.Version;
+            GetCoverImage.texture          = GetCurrentLevel.Cover;
         }
 
         private void CheckImage()
@@ -130,9 +129,11 @@ namespace LevelEditor
             }
             catch (Exception e)
             {
-                PopoverLauncher.Instance.LaunchTip(GetLevelSettingPanelObj.transform, GetPopoverProperty.POPOVER_LOCATION,
-                    GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
-                    GetPopoverProperty.CANT_LOAD_IMAGE_ERROR, GetPopoverProperty.DURATION);
+                throw new NotImplementedException();
+
+                // PopoverLauncher.Instance.LaunchTip(GetLevelSettingPanelObj.transform, GetPopoverProperty.POPOVER_LOCATION,
+                //     GetPopoverProperty.SIZE, GetPopoverProperty.POPOVER_ERROR_COLOR,
+                //     GetPopoverProperty.CANT_LOAD_IMAGE_ERROR, GetPopoverProperty.DURATION);
 
                 return;
             }

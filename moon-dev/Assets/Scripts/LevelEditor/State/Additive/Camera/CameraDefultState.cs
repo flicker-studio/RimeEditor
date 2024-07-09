@@ -9,10 +9,11 @@ namespace LevelEditor
 {
     public class CameraDefultState : AdditiveState
     {
-        private bool GetMouseMiddleButtonDown => m_information.InputManager.GetMouseMiddleButtonDown;
+        /*
+            private bool GetMouseMiddleButtonDown => m_information.InputManager.GetMouseMiddleButtonDown;
 
-        private bool GetMouseSrollDown => m_information.InputManager.GetMouseSrollDown;
-
+            private bool GetMouseSrollDown => m_information.InputManager.GetMouseSrollDown;
+    */
         public CameraDefultState(BaseInformation baseInformation, MotionCallBack motionCallBack) : base(baseInformation, motionCallBack)
         {
         }
@@ -50,9 +51,9 @@ namespace LevelEditor
         GameObject GetTopUIObjectUnderMouse()
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current)
-            {
-                position = Mouse.current.position.ReadValue()
-            };
+                                           {
+                                               position = Mouse.current.position.ReadValue()
+                                           };
 
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerData, results);

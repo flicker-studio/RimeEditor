@@ -1,7 +1,6 @@
 using System;
 using Moon.Kernel.Attribute;
 using Moon.Kernel.Setting;
-using Moon.Runtime;
 using UnityEngine;
 
 namespace LevelEditor
@@ -42,7 +41,6 @@ namespace LevelEditor
 
         [field: SerializeField, Header("弹窗属性")]
         public PopoverProperty GetPopoverProperty { get; private set; }
-
 
         [Serializable]
         public struct LevelPanelUI
@@ -155,7 +153,6 @@ namespace LevelEditor
             public float ROTATION_SPEED { get; private set; }
         }
 
-
         [Serializable]
         public struct ScaleDragProperty
         {
@@ -253,8 +250,8 @@ namespace LevelEditor
             [field: SerializeField, CustomLabel("尺寸")]
             public Vector2 SIZE { get; private set; }
 
-            [field: SerializeField, CustomLabel("出现位置")]
-            public Popoverlocation POPOVER_LOCATION { get; private set; }
+            // [field: SerializeField, CustomLabel("出现位置")]
+            // public Popoverlocation POPOVER_LOCATION { get; private set; }
         }
 
         [Serializable]

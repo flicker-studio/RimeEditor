@@ -1,25 +1,19 @@
+using System;
 using System.Collections.Generic;
 using Frame.StateMachine;
 using LevelEditor.Command;
 using LevelEditor.Item;
-using Moon.Runtime;
 using UnityEngine;
 
 namespace LevelEditor
 {
     public class ItemTransformPanelShowState : AdditiveState
     {
-        private InputManager       InputManager          => m_information.InputManager;
-        private List<ItemBase>         Items                 => m_information.DataManager.TargetItems;
-        private ItemTransformPanel GetItemTransformPanel => m_information.UIManager.GetItemTransformPanel;
-        private bool               GetPositionChange     => m_information.UIManager.GetItemTransformPanel.GetPositionChange;
-        private bool               GetRotationChange     => m_information.UIManager.GetItemTransformPanel.GetRotationChange;
-        private bool               GetScaleChange        => m_information.UIManager.GetItemTransformPanel.GetScaleChange;
+        private bool m_isUndoOrRedo;
 
         private List<Vector3>    m_lastPositon  = new();
         private List<Quaternion> m_lastRotation = new();
         private List<Vector3>    m_lastScale    = new();
-        private bool             m_isUndoOrRedo;
 
         /// <summary>
         ///     Default constructor
@@ -28,6 +22,13 @@ namespace LevelEditor
         {
             InitState();
         }
+
+        private InputManager       InputManager          => m_information.InputManager;
+        private List<ItemBase>     Items                 => m_information.DataManager.TargetItems;
+        private ItemTransformPanel GetItemTransformPanel => m_information.UIManager.GetItemTransformPanel;
+        private bool               GetPositionChange     => m_information.UIManager.GetItemTransformPanel.GetPositionChange;
+        private bool               GetRotationChange     => m_information.UIManager.GetItemTransformPanel.GetRotationChange;
+        private bool               GetScaleChange        => m_information.UIManager.GetItemTransformPanel.GetScaleChange;
 
         /// <inheritdoc />
         public override void Motion(BaseInformation information)
@@ -122,21 +123,23 @@ namespace LevelEditor
             if (Items.Count == 0)
             {
                 if (!CheckStates.Contains(typeof(LevelSettingPanelShowState)) && !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
-                    InputManager.SetCanInput(true);
+                    throw new InvalidOperationException(); //InputManager.SetCanInput(true);
                 RemoveState();
                 return;
             }
 
             if (GetItemTransformPanel.GetOnSelect)
             {
-                InputManager.SetCanInput(false);
+                throw new InvalidOperationException(); //   InputManager.SetCanInput(false);
                 SetItemValue();
                 return;
             }
 
-            if (!InputManager.GetCanInput && PopoverLauncher.Instance.CanInput && !CheckStates.Contains(typeof(LevelSettingPanelShowState)) &&
-                !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
-                InputManager.SetCanInput(true);
+            throw new NotImplementedException();
+
+            // if (!InputManager.GetCanInput && PopoverLauncher.Instance.CanInput && !CheckStates.Contains(typeof(LevelSettingPanelShowState)) &&
+            //     !CheckStates.Contains(typeof(ItemWarehousePanelShowState)))
+            //     InputManager.SetCanInput(true);
             (m_lastPositon, m_lastRotation, m_lastScale) = Items.GetTransforms();
             SetFieldUIValue();
         }

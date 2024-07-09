@@ -1,5 +1,4 @@
 ﻿using System;
-using Moon.Runtime.DesignPattern;
 
 namespace LevelEditor.State
 {
@@ -10,13 +9,13 @@ namespace LevelEditor.State
         {
             throw new NotImplementedException();
         }
-        
+
         /// <inheritdoc />
         public void OnUpdate()
         {
             throw new NotImplementedException();
         }
-        
+
         /// <inheritdoc />
         public void OnExit()
         {
