@@ -1,8 +1,8 @@
-- name: 开始
+- name: Start
   href: index.md
-- name: 开发手册
+- name: Manual
   href: manual/
-- name: 脚本 API
+- name: API
   href: api/
-- name: UML类图
+- name: UML
   href: mermaid/

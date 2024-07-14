@@ -1,9 +1,0 @@
-version: "1.0"
-linter: jetbrains/qodana-dotnet:2023.3
-include:
-  - name: Unity.PerformanceCriticalCodeCameraMain
-  - name: MISMATCHED_ASMDEF_FILENAME
-  - name: Unity.PreferGuidReference
-  - name: Unity.BurstLocalStringVariableDeclaration
-  - name: Unity.PerformanceCriticalCodeInvocation
-  - name: Unity.PerformanceCriticalCodeNullComparison

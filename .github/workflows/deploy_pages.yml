@@ -1,0 +1,73 @@
+name: Deploy pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-website:
+    name: Build website
+    runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2022.3.10f1-linux-il2cpp-2
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: moon-dev/Library
+          key: ${{ runner.os }}-Library-Rime
+          restore-keys: |
+            Library-
+
+      - name: Unity Activation and Generate .csproj
+        run : unity-editor -batchmode -nographics -quit -username ${{ secrets.UNITY_CI_EMAIL }} -password ${{ secrets.UNITY_CI_PASSWORD }} -serial ${{ secrets.UNITY_CI_SERIAL }} -projectPath moon-dev -executeMethod Packages.Rider.Editor.RiderScriptEditor.SyncSolution
+
+      - name: Return License 
+        run: unity-editor -quit -batchmode -returnlicense -username ${{ secrets.UNITY_CI_EMAIL }} -password ${{ secrets.UNITY_CI_PASSWORD }} 
+      
+      - name: Dotnet Setup
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.x
+
+      - name: Setup Docfx
+        run: dotnet tool update docfx --tool-path ./
+      
+      - name: Build Site
+        run: ./docfx docs/docfx.json
+
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: _site
+          path: docs/_site        
+
+  deploy-website:
+    name: Deploy website
+    needs: build-website
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+      # Download the generated documentation
+    - name: Download site artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: _site
+
+    - name: Publish to Cloudflare Pages
+      uses: cloudflare/pages-action@v1
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+        projectName: moon-manual
+        directory: ./
+        gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        workingDirectory: ./_site
+        wranglerVersion: '3'
+      

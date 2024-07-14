@@ -1,0 +1,54 @@
+name: Pr check
+
+on:
+  pull_request:
+    paths: [moon-dev/Assets/**]
+  workflow_dispatch:
+
+jobs:
+  meta-check:
+    name: "Check all .meta"
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Check all .meta
+        uses: DeNA/unity-meta-check@v3
+        with:
+          target_path: moon-dev/Assets
+          enable_junit: true
+          junit_xml_path: junit.xml
+
+      - name: Report  
+        uses: mikepenz/action-junit-report@v4
+        with:
+          report_paths: junit.xml
+        if: always()
+
+  unit-test:
+    if: ${{ github.repository_owner == 'fictional-vision'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache  
+        uses: actions/cache@v4
+        with:
+          path: moon-dev/Library
+          key: ${{ runner.os }}-Library-Rime
+          restore-keys: |
+            Library-
+
+      - name: Unit test
+        id: Tests 
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_CI_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_CI_PASSWORD }}
+          UNITY_LICENSE: ${{ secrets.UNITY_CI_LICENSE }}
+        with:
+          projectPath: moon-dev/
+          githubToken: ${{ secrets.GITHUB_TOKEN }}

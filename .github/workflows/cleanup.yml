@@ -1,6 +1,5 @@
 name: Delete old ci
 on:
-  schedule: [cron: '0 0 * * 3,6']
   workflow_dispatch:
     inputs:
       days:
@@ -11,21 +10,7 @@ on:
         required: true
     
 jobs:
-  Auto-Cleanup:
-    if: ${{github.event_name != 'workflow_dispatch'}}
-    runs-on: ubuntu-latest
-    permissions: write-all
-    steps:
-      - name: Delete workflow runs
-        uses: Mattraks/delete-workflow-runs@v2
-        with:
-          token: ${{ github.token }}
-          repository: ${{ github.repository }}
-          retain_days: 14
-          keep_minimum_runs: 6
-    
   Manual-Cleanup:
-    if: ${{github.event_name == 'workflow_dispatch'}}
     runs-on: ubuntu-latest
     permissions: write-all
     steps:

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8b115a2e5548b59394257d716df41e, type: 3}
+  m_Name: PrefabSetting
+  m_EditorClassIdentifier: 
+  <POPOVER_WINDOW>k__BackingField: {fileID: 2848693578046491148, guid: ef473836622fe6f428bce9158d1d1019, type: 3}
+  <SLICE_OBJ>k__BackingField: {fileID: 0}
+  <COMBINATION_COLLIDES_RIGIDBODY_PARENT>k__BackingField: {fileID: 0}
+  <COMBINATION_COLLIDES_NOT_RIGIDBODY_PARENT>k__BackingField: {fileID: 0}
+  <RIGIDBODY_PARENT>k__BackingField: {fileID: 0}
+  <EMPTY_GAMEOBJECT>k__BackingField: {fileID: 0}
+  <ITEM_NODE>k__BackingField: {fileID: 0}
+  <ITEM_DETAIL_GROUP>k__BackingField: {fileID: 0}
+  <ITEM_LATTICE>k__BackingField: {fileID: 0}
+  <ITEM_TYPE>k__BackingField: {fileID: 0}
+  <PLAYER>k__BackingField: {fileID: 0}
+  <PLAYER_CAMERA>k__BackingField: {fileID: 0}
+  <SLICER>k__BackingField: {fileID: 0}
+  <BOOL_ITEM>k__BackingField: {fileID: 0}
+  <LEVEL_DATA_BUTTON>k__BackingField: {fileID: 0}

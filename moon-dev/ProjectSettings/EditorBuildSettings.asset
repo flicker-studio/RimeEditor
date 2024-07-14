@@ -6,25 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Persistent.unity
-    guid: 2b7c63f5d43023b429dd72f7926f87d5
-  - enabled: 1
     path: Assets/Scenes/LevelEditor.unity
     guid: c7dbc4c8adb3bc846aa556cce448ffa0
-  - enabled: 1
-    path: Assets/Scenes/Test_Ryouta.unity
-    guid: 5c8f89a55926e6945bf220e5c6240691
-  - enabled: 1
-    path: Assets/Scenes/TestScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
-    path: Assets/Scenes/LevelPlay.unity
-    guid: eecaae8081ea5df4d91a25e7718addfa
-  - enabled: 1
-    path: Assets/Scenes/Unit Test/Test Scene 1.unity
-    guid: 4d303e9d16c484f4ebb205d826e4cb7a
-  - enabled: 1
-    path: Assets/Scenes/Unit Test/Test Scene 2.unity
-    guid: 84ba5b9ecf82d5d4d81149ce6df8fbb0
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: abbfdc00c0c61524889a8f8ec24d99d1, type: 2}

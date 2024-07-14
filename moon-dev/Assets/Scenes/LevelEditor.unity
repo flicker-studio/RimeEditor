@@ -24162,9 +24162,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1568195517}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a642abf67e0fae4092f87c90e0d1b49, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cc6fe98c6f94d54484466ce6655f33c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: 0}
+  LevelEditorSetting: {fileID: 11400000, guid: 24ebb09f6e044ea4984d32728546fc89, type: 2}
 --- !u!1 &1572981431
 GameObject:
   m_ObjectHideFlags: 0
@@ -24449,6 +24451,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1cb9b4bf-4bf9-4247-8bb9-edb3eee3411a
     m_ActionName: Default/Redo[/Keyboard/ctrl,/Keyboard/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 75fd29bc-fd58-4234-a5d0-0c0a9fef2a3a
+    m_ActionName: Default/Undo[/Keyboard/ctrl,/Keyboard/z]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Default control scheme
   m_DefaultActionMap: Default
@@ -31869,7 +31875,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1568195521}
+  - {fileID: 796367822}
   - {fileID: 1613084506}
   - {fileID: 1037276505}
-  - {fileID: 796367822}
   - {fileID: 10807577}
