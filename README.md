@@ -4,7 +4,7 @@ Rime Editor
 
 <div align="center">
 
-[![Deploy webpage](https://github.com/flicker-studio/RimeEditor/actions/workflows/deploy_pages.yml.yml/badge.svg)](https://github.com/flicker-studio/RimeEditor/actions/workflows/help-docs.yml)
+[![Deploy pages](https://github.com/flicker-studio/RimeEditor/actions/workflows/deploy_pages.yml/badge.svg?branch=main)](https://github.com/flicker-studio/RimeEditor/actions/workflows/deploy_pages.yml)
 [![license badge](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
 [![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
 
