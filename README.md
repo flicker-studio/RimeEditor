@@ -1,46 +1,32 @@
 <h1 align="center">
-  <img src="docs/resources/images/logo/head.png?raw=true" alt="ProJect-Moon Logo" width="1000">
-ProJect-Moon
+Rime Editor
 </h1>
 
 <div align="center">
 
-[![Help Docs](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/help-docs.yml/badge.svg)](https://orange-cliff-0c5466300.3.azurestaticapps.net)
-[![Unit Test](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml/badge.svg)](https://github.com/fictional-vision/ProJect-Moon/actions/workflows/unit-test.yml)
+[![Deploy webpage](https://github.com/flicker-studio/RimeEditor/actions/workflows/deploy_pages.yml.yml/badge.svg)](https://github.com/flicker-studio/RimeEditor/actions/workflows/help-docs.yml)
+[![license badge](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE.md)
 [![Static-Badge](https://img.shields.io/badge/contact-BiliBili-blue)](https://space.bilibili.com/165762441)
+
 </div>
 
-## TODO
+**Rime Editor** is a level editor tool based on the Unity runtime, which makes it easy to add custom levels editor to your game. The process of edit-export-share-import can be completed with just a few clicks.
 
-- [x] Build the basic framework and design the coding style.
-- [x] Multi-parameter player controller.
-- [x] Polygoncollider2D needs to be generated from the mesh, and concave polygons need to be supported.
-- [x] Accurate clipping, and the minimum number of game objects mounted.
-- [ ] Add move following and rotation following states to the SlicerController.
-- [ ] The camera controller, based on Cinemachine cameras, requires enough pithy.
-- [ ] The AI of game NPCS requires high scalability and state-based production.
-- [ ] Optimal handling of physical collisions in which multiple objects physically form an assembly.
-- [ ] It can detect complex physical collisions without using rigid body components.
-- [ ] Portal, Total War Simulator like level editor, edit the level while the game is running.
+## Features
 
-## Project milestone
+ - Flexible package that can be integrated into your game
+ - Rich setting options and a high degree of customization
+ - Supports a variety of input and rendering methods
 
-- The algorithm of generating polygoncollider2D mesh based on mesh triangle is completed, and the performance is good, and it supports concave polygon.
+## Releases & Documentation
 
-  - The core idea of the algorithm is to find all triangles according to mesh and make them two-dimensional, and remove redundant,       intersecting triangles and vertices that do not form a triangle. Finally, a greedy algorithm is used to generate polygoncollider2D. I am glad that Unity mesh models are already triangulated, which saves me a lot of trouble.
+**We're working on a first version, and you can visit the main branch to access our latest code.**
 
-  <p align="right">——2023.9.11</p>
+**You can also check out our newest [web docs](https://moon-manual.pages.dev)!**
 
-<h3 align="center">
-  <img src="docs/resources/images/Textures/CreatPolygonCollider.png?raw=true" alt="CreatPolygonCollider" width="1000">
-</h3>
+## Community and Feedback
 
-- Very accurate slicer box, and the parameters are very concise, the code logic is good.
+Rime Editor is an open-source project and we encourage and welcome contributions. If you wish to contribute, be sure to review our contribution guidelines and code of conduct.
 
-  - Based on Ezy-Slice. A slicer box is generated based on some mathematical and linear algebra calculations, and the object pool framework is used. So far, slicer box is working very well.
+For problems with the setup of Rime Editor, or have questions about our development and code, please post a discussion in the discussion board and we will respond positively. If you run into any other problems  or have a specific feature request, please submit a GitHub issue, and be sure to include as much detail as possible.
 
-  <p align="right">——2023.9.16</p>
-
-<h3 align="center">
-  <img src="docs/resources/images/Textures/SlicerBox.png?raw=true" alt="SlicerBox" width="1000">
-</h3>
