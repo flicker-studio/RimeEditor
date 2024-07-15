@@ -1,6 +1,5 @@
 using LevelEditor.Data;
 using LevelEditor.View.Element;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace LevelEditor.Item
@@ -8,13 +7,14 @@ namespace LevelEditor.Item
     /// <summary>
     ///     Item base class, which is the base class for the creatable sections in the Level Editor.
     /// </summary>
-    [JsonConverter(typeof(ItemDataConverter))]
     public abstract class ItemBase
     {
         /// <summary>
         ///     Game Object bound to Item
         /// </summary>
         public readonly GameObject GameObject;
+
+        public readonly string ID;
 
         /// <summary>
         ///     Generate new Item based on type
