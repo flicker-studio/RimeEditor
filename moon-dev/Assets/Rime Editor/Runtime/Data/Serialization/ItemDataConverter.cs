@@ -19,7 +19,7 @@ namespace RimeEditor.Runtime
             var json_object = new JObject
                               {
                                   { "ID", src.ID },
-                                  { "Transform", src.Transform.ToString() },
+                                  { "Transform", JToken.FromObject(src.Transform) },
                                   { "User Data", src.UserData }
                               };
             writer.WriteValue(json_object.ToString());

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace RimeEditor.Runtime
@@ -12,17 +14,17 @@ namespace RimeEditor.Runtime
         /// <summary>
         ///     The prefab ID of the item, read only
         /// </summary>
-        public readonly string ID;
+        [NotNull] public readonly string ID;
 
         /// <summary>
         ///     Position in the scene, updated at any time
         /// </summary>
-        public Transform Transform;
+        [NotNull] public Transform Transform;
 
         /// <summary>
         ///     User information string,default is empty to save space
         /// </summary>
-        public string UserData;
+        [CanBeNull] public string UserData;
 
         /// <summary>
         ///     Default constructor,instantiate with existing data
@@ -30,8 +32,11 @@ namespace RimeEditor.Runtime
         /// <param name="id">Saved ID</param>
         /// <param name="transform">Saved location information</param>
         /// <param name="useData">Saved user data</param>
-        public ItemData(string id, Transform transform, string useData)
+        public ItemData([NotNull] string id, [NotNull] Transform transform, [CanBeNull] string useData)
         {
+            //check value
+            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id)) throw new NullReferenceException();
+
             ID        = id;
             Transform = transform;
             UserData  = useData;
