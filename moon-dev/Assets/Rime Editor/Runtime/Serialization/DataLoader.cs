@@ -4,94 +4,93 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
-using LevelEditor.Settings;
+using JetBrains.Annotations;
+using LevelEditor;
 using Newtonsoft.Json;
+using UnityEngine;
 
-namespace LevelEditor
+namespace RimeEditor.Runtime
 {
     /// <summary>
+    ///     A static class that loads data
     /// </summary>
-    public static class LevelDataLoader
+    public static class DataLoader
     {
         /// <summary>
-        ///     Load all levels in this computer
+        ///     A specific file that records data information
         /// </summary>
-        public static async Task<List<LevelData>> LoadLevelData(GlobalSetting setting)
+        public const string DataFilePattern = "data.sav";
+
+        public static string StoreFolderPath = Application.persistentDataPath;
+
+        /// <summary>
+        ///     Loads data stored on the local computer
+        /// </summary>
+        public static async Task<List<LevelInfo>> LoadLocal()
         {
-            var levelDataPath = setting.LevelPath;
-            var dataList      = new List<LevelData>();
+            var data_list = new List<LevelInfo>();
 
-            if (!Directory.Exists(levelDataPath))
+            // Check the folder location
+            if (!Directory.Exists(StoreFolderPath))
             {
-                Directory.CreateDirectory(setting.LevelPath);
-                return dataList;
+                Directory.CreateDirectory(StoreFolderPath);
+                return data_list;
             }
 
-            var directoryInfo = new DirectoryInfo(setting.LevelPath);
-            var files         = directoryInfo.GetFiles("*.json", SearchOption.AllDirectories).ToList();
+            // Load all the adapted files
+            var directory_info      = new DirectoryInfo(StoreFolderPath);
+            var directory_info_list = directory_info.GetDirectories().ToList();
 
-            foreach (var fileInfo in files)
+            // Check all the directory information and load it
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var directory in directory_info_list)
             {
-                var dataPath = Path.ChangeExtension(fileInfo.FullName, null);
+                var data_file_info_list = directory.GetFiles(DataFilePattern).ToList();
 
-                if (!Directory.Exists(dataPath)) continue;
+                if (data_file_info_list.Count != 1) continue;
 
-                var streamReader = fileInfo.OpenText();
-                var json         = await streamReader.ReadToEndAsync();
-                var levelData    = Deserialize(json);
-                streamReader.Close();
-                streamReader.Dispose();
+                var data_file_stream_reader = data_file_info_list[0].OpenText();
+                var data_file_json_text     = await data_file_stream_reader.ReadToEndAsync();
 
-                levelData.Path = $"Path:{dataPath}";
+                data_file_stream_reader.Close();
+                data_file_stream_reader.Dispose();
 
-                dataList.Add(levelData);
+                var level_data = JsonConvert.DeserializeObject<LevelInfo>(data_file_json_text);
 
-                var imagePath =
-                    $"{dataPath}" +
-                    $"/{setting.ImagesDataName}" +
-                    $"/{setting.CoverImageName}";
-
-                if (File.Exists(imagePath)) await UpdateImage(levelData, imagePath);
+                data_list.Add(level_data);
             }
 
-            return dataList;
+            return data_list;
         }
 
         /// <summary>
-        ///     Open the level data file
+        ///      Loads data stored in a archive file
         /// </summary>
-        /// <param name="setting"></param>
         /// <param name="zipPath">Target zip file</param>
-        public static async Task<LevelData> LoadArchive(GlobalSetting setting, string zipPath)
+        public static async Task<LevelInfo> LoadArchive([NotNull] string zipPath)
         {
             using var archive = ZipFile.Open(zipPath, ZipArchiveMode.Read);
 
-            var entry = archive.GetEntry(setting.InformationFile);
+            var entry = archive.GetEntry(DataFilePattern);
 
             if (entry == null) throw new Exception("Not the proper file.");
 
-            using var reader = new StreamReader(entry.Open());
+            using var data_file_stream_reader = new StreamReader(entry.Open());
 
-            var infoJson = await reader.ReadToEndAsync();
-
-            LevelInfo info;
+            var data_file_json_text = await data_file_stream_reader.ReadToEndAsync();
 
             try
             {
-                info = JsonConvert.DeserializeObject<LevelInfo>(infoJson);
+                var info           = JsonConvert.DeserializeObject<LevelInfo>(data_file_json_text);
+                var extract_folder = Path.Combine(StoreFolderPath, info.ID.ToString());
+                //Unzip it to a persistent folder
+                ZipFile.ExtractToDirectory(zipPath, extract_folder);
+                return info;
             }
             catch (Exception)
             {
                 throw new Exception("File information is corrupted.");
             }
-
-            var storeFolder = Path.Combine(setting.RootPath, new Guid().ToString());
-
-            //Unzip it to a persistent folder
-            ZipFile.ExtractToDirectory(zipPath, storeFolder);
-
-            //   await info.UpdateCover();
-            return new LevelData();
         }
 
         /// <summary>

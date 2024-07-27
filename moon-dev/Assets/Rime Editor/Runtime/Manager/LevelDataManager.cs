@@ -4,6 +4,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using LevelEditor.Item;
+using RimeEditor.Runtime;
 using UnityEngine;
 
 namespace LevelEditor
@@ -156,8 +157,7 @@ namespace LevelEditor
         public async UniTask LoadLevelFiles()
         {
             SetActiveEditors(false);
-            var setting = LevelEditorSetting.Instance.GlobalSetting;
-            m_levelDatas = await LevelDataLoader.LoadLevelData(setting);
+            // m_levelDatas = await DataLoader.LoadLocal();
         }
 
         /// <summary>
@@ -167,9 +167,9 @@ namespace LevelEditor
         /// <returns></returns>
         public LevelData OpenLocalLevel(string zip_path)
         {
-            var setting = LevelEditorSetting.Instance.GlobalSetting;
-            var data    = LevelDataLoader.LoadArchive(setting, zip_path);
-            return data.Result;
+            var data = DataLoader.LoadArchive(zip_path);
+            //return data.Result;
+            throw new NotImplementedException();
         }
 
         public void ToJson()
@@ -180,13 +180,13 @@ namespace LevelEditor
                     //itemAsset.GetTransformToData();
                 }
 
-            LevelDataLoader.ToJson(CurrentLevel);
+            DataLoader.ToJson(CurrentLevel);
         }
 
         public LevelData FromJson(string json)
         {
             SetActiveEditors(false);
-            return LevelDataLoader.Deserialize(json);
+            return DataLoader.Deserialize(json);
         }
 
         public void CreateLevel()
@@ -207,7 +207,7 @@ namespace LevelEditor
 
         public bool DeleteLevel(LevelData levelData)
         {
-            return LevelDataLoader.Delete(levelData);
+            return DataLoader.Delete(levelData);
         }
 
         [UsedImplicitly]

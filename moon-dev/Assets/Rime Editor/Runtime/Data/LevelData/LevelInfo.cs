@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using JetBrains.Annotations;
 using LevelEditor.Data.Serialization;
 using Newtonsoft.Json;
@@ -22,6 +23,8 @@ namespace LevelEditor
         public string Introduction => _introduction;
 
         public Texture2D Cover => _cover;
+
+        public Guid ID;
 
         /// <summary>
         ///     The name of level
@@ -50,6 +53,7 @@ namespace LevelEditor
 
         public LevelInfo([NotNull] string name, [NotNull] string author, [NotNull] string introduction, [NotNull] Texture2D cover)
         {
+            ID            = Guid.NewGuid();
             _name         = name;
             _author       = author;
             _introduction = introduction;
@@ -59,6 +63,7 @@ namespace LevelEditor
 
         public LevelInfo([NotNull] string name, [NotNull] string author, [NotNull] string introduction)
         {
+            ID            = Guid.NewGuid();
             _name         = name;
             _author       = author;
             _introduction = introduction;
