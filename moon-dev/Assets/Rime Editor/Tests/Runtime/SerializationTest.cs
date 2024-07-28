@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LevelEditor;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using RimeEditor.Runtime;
 using UnityEngine;
@@ -8,7 +9,8 @@ namespace RimeEditor.Tests.Runtime
 {
     public class SerializationTest
     {
-        private ItemData _itemData;
+        private ItemData  _itemData;
+        private LevelInfo _levelInfo;
 
         [SetUp]
         public void SetUp()
@@ -25,15 +27,24 @@ namespace RimeEditor.Tests.Runtime
 
             var tuple = (str, game_object.transform);
             _itemData = new ItemData(tuple.str, tuple.transform, null);
+
+            _levelInfo = new LevelInfo("Test", "Mors", "in test", cover: null);
         }
 
-        // A Test behaves as an ordinary method
         [Test]
         public void ItemDataSerializePasses()
         {
             var json     = JsonConvert.SerializeObject(_itemData);
             var new_data = JsonConvert.DeserializeObject<ItemData>(json);
             Assert.AreEqual(_itemData.ID, new_data.ID);
+        }
+
+        [Test]
+        public void LevelInfoPasses()
+        {
+            var json     = _levelInfo.ToString();
+            var new_data = JsonConvert.DeserializeObject<LevelInfo>(json);
+            Assert.AreEqual(_levelInfo, new_data);
         }
     }
 }

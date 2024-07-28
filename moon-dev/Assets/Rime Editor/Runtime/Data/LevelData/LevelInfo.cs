@@ -1,12 +1,9 @@
-﻿#region
-
-using System;
-using JetBrains.Annotations;
+﻿using System;
+using System.IO;
 using LevelEditor.Data.Serialization;
 using Newtonsoft.Json;
+using RimeEditor.Runtime;
 using UnityEngine;
-
-#endregion
 
 namespace LevelEditor
 {
@@ -16,85 +13,96 @@ namespace LevelEditor
     [JsonConverter(typeof(LevelInfoConverter))]
     public struct LevelInfo
     {
-        public string Name => _name;
-
-        public string Author => _author;
-
-        public string Introduction => _introduction;
-
-        public Texture2D Cover => _cover;
-
-        public Guid ID;
+        /// <summary>
+        ///     The name of level cover file
+        /// </summary>
+        private const string CoverFileName = "cover.jpg";
 
         /// <summary>
-        ///     The name of level
+        ///     The name of this level info file
         /// </summary>
-        private string _name;
+        private const string InfoFileName = ".inf";
+
+        /// <summary>
+        ///     The name of the level
+        /// </summary>
+        public string Name { get; }
 
         /// <summary>
         ///     Author's name
         /// </summary>
-        private string _author;
+        public string Author { get; }
 
         /// <summary>
         ///     Introduction to the level
         /// </summary>
-        private string _introduction;
+        public string Introduction { get; }
 
         /// <summary>
         ///     The cover of the level
         /// </summary>
-        private readonly Texture2D _cover;
+        public Texture2D Cover { get; }
 
         /// <summary>
-        ///     The cover path of the level
+        ///     The ID of the level, randomly generated and unique
         /// </summary>
-        private readonly string _coverPath;
+        public string ID => _id.ToString();
 
-        public LevelInfo([NotNull] string name, [NotNull] string author, [NotNull] string introduction, [NotNull] Texture2D cover)
+        private readonly string _storePath;
+        private readonly Guid   _id;
+
+        public LevelInfo(string name, string author, string introduction, Texture2D cover)
         {
-            ID            = Guid.NewGuid();
-            _name         = name;
-            _author       = author;
-            _introduction = introduction;
-            _coverPath    = null;
-            _cover        = cover;
+            _id          = Guid.NewGuid();
+            Name         = name;
+            Author       = author;
+            Introduction = introduction;
+            _storePath   = Path.Combine(DataLoader.StoreFolderPath, _id.ToString(), InfoFileName);
+            Cover        = cover == null ? Texture2D.grayTexture : cover;
         }
 
-        public LevelInfo([NotNull] string name, [NotNull] string author, [NotNull] string introduction)
+        public LevelInfo(string name, string author, string introduction, string id)
         {
-            ID            = Guid.NewGuid();
-            _name         = name;
-            _author       = author;
-            _introduction = introduction;
-            _coverPath    = null;
-            _cover        = Texture2D.grayTexture;
+            Name         = name;
+            Author       = author;
+            Introduction = introduction;
+            _id          = Guid.Parse(id);
+            _storePath   = Path.Combine(DataLoader.StoreFolderPath, _id.ToString(), InfoFileName);
+
+            Cover = null;
         }
 
-        public void UpdateInfo
-        (
-            string name         = null,
-            string author       = null,
-            string introduction = null
-        )
+        /// <inheritdoc />
+        public override string ToString()
         {
-            if (name != null) _name = name;
-
-            if (author != null) _author = author;
-
-            if (introduction != null) _introduction = introduction;
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
-/*
-        public async UniTask UpdateCover(string rootPath)
-        {
-            var path = Path.Combine(rootPath, _coverName + ".dat");
 
-            // await using var reader = new FileStream(path, FileMode.Open);
-            // var byteData = new byte[reader.Length];
-            // var read = reader.Read(byteData, 0, byteData.Length);
-            var uwr = UnityWebRequestTexture.GetTexture("file:///" + path);
-            await uwr.SendWebRequest();
-            _cover = DownloadHandlerTexture.GetContent(uwr);
-        }*/
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (obj is not LevelInfo other) return false;
+
+            return _id.Equals(other._id)
+                && Name == other.Name
+                && Author == other.Author
+                && Introduction == other.Introduction;
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_id, Name, Author, Introduction);
+        }
+
+        public void UpdateCover()
+        {
+            var cover_path = Path.Combine(DataLoader.StoreFolderPath, _id.ToString(), CoverFileName);
+
+            using var reader    = new FileStream(cover_path, FileMode.Open);
+            var       byte_data = new byte[reader.Length];
+            var       read      = reader.Read(byte_data, 0, byte_data.Length);
+            Cover.LoadImage(byte_data);
+        }
     }
 }

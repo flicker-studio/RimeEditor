@@ -81,7 +81,7 @@ namespace LevelEditor.View.Canvas
                      Select,
                      _levelScrollRect.content,
                      _levelScrollRect,
-                     new LevelInfo(str1, str2, str3),
+                     new LevelInfo(str1, str2, str3, cover: null),
                      uiProperty.ITEM_LEVEL_NAME,
                      uiProperty.ITEM_LEVEL_PATH,
                      uiProperty.ITEM_LEVEL_ICON
@@ -161,7 +161,7 @@ namespace LevelEditor.View.Canvas
                  Select,
                  _levelScrollRect.content,
                  _levelScrollRect,
-                 new LevelInfo(str1, str2, str3),
+                 new LevelInfo(str1, str2, str3, cover: null),
                  uiProperty.ITEM_LEVEL_NAME,
                  uiProperty.ITEM_LEVEL_PATH,
                  uiProperty.ITEM_LEVEL_ICON

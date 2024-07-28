@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using LevelEditor.Extension;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -19,10 +18,6 @@ namespace LevelEditor
         [JsonIgnore]
         public string CreateTime => m_createDate.ToString(CultureInfo.CurrentCulture);
 
-        /// <inheritdoc cref="m_hashKey" />
-        [JsonIgnore]
-        public string HashKey => m_hashKey;
-
         /// <summary>
         ///     Update the information in the structure
         /// </summary>
@@ -35,14 +30,7 @@ namespace LevelEditor
             Cover        = cover;
 
             m_createDate = DateTime.Now;
-            var strings = LevelName + m_createDate;
-            m_hashKey = strings.ToSHA256();
         }
-
-        /// <summary>
-        ///     Gets the hash of the current data
-        /// </summary>
-        [JsonProperty("Key", Order = 1)] private string m_hashKey;
 
         /// <summary>
         ///     The name of the current level
@@ -97,8 +85,8 @@ namespace LevelEditor
             Version          = default;
             Cover            = default;
             SubLevelDataList = new List<SubLevel>();
-            m_hashKey        = default;
-            m_createDate     = default;
+
+            m_createDate = default;
         }
     }
 }

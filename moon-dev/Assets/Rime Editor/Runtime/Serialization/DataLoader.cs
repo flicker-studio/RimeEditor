@@ -19,7 +19,7 @@ namespace RimeEditor.Runtime
         /// <summary>
         ///     A specific file that records data information
         /// </summary>
-        public const string DataFilePattern = "data.sav";
+        public const string DataFilePattern = ".inf";
 
         public static string StoreFolderPath = Application.persistentDataPath;
 
@@ -196,12 +196,8 @@ namespace RimeEditor.Runtime
             File.WriteAllBytes(filePath, bytes);
         }
 
-        private static Task UpdateImage(LevelData levelData, string path)
+        public static void Export(string targetPath)
         {
-            return Task.CompletedTask;
-            // var uwr = UnityWebRequestTexture.GetTexture("file:///" + path);
-            // await uwr.SendWebRequest();
-            // levelData.Cover = DownloadHandlerTexture.GetContent(uwr);
         }
     }
 }
