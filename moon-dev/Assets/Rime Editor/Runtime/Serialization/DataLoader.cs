@@ -100,12 +100,13 @@ namespace RimeEditor.Runtime
         /// <returns>Whether the deletion was successful </returns>
         public static bool Delete(LevelData levelData)
         {
-            var targetPath = levelData.Path.Replace("Path:", "");
-
-            if (!Directory.Exists(targetPath)) return false;
-
-            Directory.Delete(targetPath, true);
-            return true;
+            throw new NotImplementedException();
+            // var targetPath = levelData.Path.Replace("Path:", "");
+            //
+            // if (!Directory.Exists(targetPath)) return false;
+            //
+            // Directory.Delete(targetPath, true);
+            // return true;
         }
 
         /// <summary>

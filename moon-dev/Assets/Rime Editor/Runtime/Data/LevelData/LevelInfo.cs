@@ -10,6 +10,9 @@ namespace LevelEditor
     /// <summary>
     ///     Used to store created level information
     /// </summary>
+    /// <remarks>
+    ///     Use value types to avoid GC
+    /// </remarks>
     [JsonConverter(typeof(LevelInfoConverter))]
     public struct LevelInfo
     {
@@ -19,37 +22,31 @@ namespace LevelEditor
         private const string CoverFileName = "cover.jpg";
 
         /// <summary>
-        ///     The name of this level info file
-        /// </summary>
-        private const string InfoFileName = ".inf";
-
-        /// <summary>
         ///     The name of the level
         /// </summary>
-        public string Name { get; }
+        public string Name;
 
         /// <summary>
         ///     Author's name
         /// </summary>
-        public string Author { get; }
+        public string Author;
 
         /// <summary>
         ///     Introduction to the level
         /// </summary>
-        public string Introduction { get; }
+        public string Introduction;
 
         /// <summary>
         ///     The cover of the level
         /// </summary>
-        public Texture2D Cover { get; }
+        public Texture2D Cover;
 
         /// <summary>
         ///     The ID of the level, randomly generated and unique
         /// </summary>
         public string ID => _id.ToString();
 
-        private readonly string _storePath;
-        private readonly Guid   _id;
+        private readonly Guid _id;
 
         public LevelInfo(string name, string author, string introduction, Texture2D cover)
         {
@@ -57,8 +54,8 @@ namespace LevelEditor
             Name         = name;
             Author       = author;
             Introduction = introduction;
-            _storePath   = Path.Combine(DataLoader.StoreFolderPath, _id.ToString(), InfoFileName);
-            Cover        = cover == null ? Texture2D.grayTexture : cover;
+
+            Cover = cover == null ? Texture2D.grayTexture : cover;
         }
 
         public LevelInfo(string name, string author, string introduction, string id)
@@ -67,9 +64,17 @@ namespace LevelEditor
             Author       = author;
             Introduction = introduction;
             _id          = Guid.Parse(id);
-            _storePath   = Path.Combine(DataLoader.StoreFolderPath, _id.ToString(), InfoFileName);
+            Cover        = null;
+        }
 
-            Cover = null;
+        public void UpdateCover()
+        {
+            var cover_path = Path.Combine(DataLoader.StoreFolderPath, _id.ToString(), CoverFileName);
+
+            using var reader    = new FileStream(cover_path, FileMode.Open);
+            var       byte_data = new byte[reader.Length];
+            var       read      = reader.Read(byte_data, 0, byte_data.Length);
+            Cover.LoadImage(byte_data);
         }
 
         /// <inheritdoc />
@@ -93,16 +98,6 @@ namespace LevelEditor
         public override int GetHashCode()
         {
             return HashCode.Combine(_id, Name, Author, Introduction);
-        }
-
-        public void UpdateCover()
-        {
-            var cover_path = Path.Combine(DataLoader.StoreFolderPath, _id.ToString(), CoverFileName);
-
-            using var reader    = new FileStream(cover_path, FileMode.Open);
-            var       byte_data = new byte[reader.Length];
-            var       read      = reader.Read(byte_data, 0, byte_data.Length);
-            Cover.LoadImage(byte_data);
         }
     }
 }
