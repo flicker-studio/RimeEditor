@@ -21,7 +21,7 @@ namespace LevelEditor
 
         private InputManager      GetInput             => m_information.InputManager;
         private BrowseController  Get                  => m_information.Controller;
-        private LevelData         GetCurrentLevel      => Get.CurrentCustomLevel;
+        private LevelInfo         GetCurrentLevel      => Get.CurrentCustomLevel.Info;
         private LevelSettingPanel GetLevelSettingPanel => m_information.UIManager.GetLevelSettingPanel;
 
         private UISetting.PopoverProperty GetPopoverProperty => GetLevelSettingPanel.GetPopoverProperty;
@@ -105,11 +105,11 @@ namespace LevelEditor
 
         private void InitInputField()
         {
-            GetLevelNameInputField.text    = GetCurrentLevel.LevelName;
-            GetAuthorNameInputField.text   = GetCurrentLevel.AuthorName;
+            GetLevelNameInputField.text    = GetCurrentLevel.Name;
+            GetAuthorNameInputField.text   = GetCurrentLevel.Author;
             GetIntroductionInputField.text = GetCurrentLevel.Introduction;
-            GetVersionInputField.text      = GetCurrentLevel.Version;
-            GetCoverImage.texture          = GetCurrentLevel.Cover;
+            //  GetVersionInputField.text      = GetCurrentLevel.Version;
+            GetCoverImage.texture = GetCurrentLevel.Cover;
         }
 
         private void CheckImage()

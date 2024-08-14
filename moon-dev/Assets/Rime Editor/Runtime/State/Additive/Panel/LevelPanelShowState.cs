@@ -47,7 +47,7 @@ namespace LevelEditor
 
         private void SaveLevel()
         {
-            if (string.IsNullOrEmpty(Get.CurrentCustomLevel.Name))
+            if (string.IsNullOrEmpty(Get.CurrentCustomLevel.Info.Name))
             {
                 LaunchPopover(GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_LEVEL_NAME_MISSING,
                               GetLevelPanel.GetPopoverProperty.POPOVER_ERROR_COLOR);
@@ -57,8 +57,6 @@ namespace LevelEditor
 
             LaunchPopover(GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_SAVE_SUCCESS,
                           GetLevelPanel.GetPopoverProperty.POPOVER_SUCCESS_COLOR);
-
-            Get.ToJson();
         }
 
         private void ToLevelSetting()

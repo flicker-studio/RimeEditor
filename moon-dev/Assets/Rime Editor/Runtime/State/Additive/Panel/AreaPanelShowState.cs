@@ -76,7 +76,7 @@ public class AreaPanelShowState : AdditiveState
     private void ReloadLevel()
     {
         GetAreaDropdown.ClearOptions();
-        var subLevelDatas = GetController.CurrentCustomLevel.SubLevelDataList;
+        var subLevelDatas = GetController.CurrentCustomLevel.Data.SubLevelDataList;
 
         for (var index = 0; index < subLevelDatas.Count; index++) AddLevel(subLevelDatas[index].Name);
 

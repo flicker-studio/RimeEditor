@@ -38,7 +38,7 @@ namespace LevelEditor
             InputManager  = new InputManager();
             Controller    = new BrowseController();
 
-            await Controller.Refresh();
+            Controller.Refresh();
 
             CameraManager = new CameraManager(cam);
             LevelAction   = new LevelAction();

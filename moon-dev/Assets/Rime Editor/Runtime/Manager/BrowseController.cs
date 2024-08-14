@@ -143,7 +143,7 @@ namespace RimeEditor.Runtime
         /// </summary>
         public void Open()
         {
-            CustomLevelIndex = CustomLevels.IndexOf(level);
+            //  CustomLevelIndex = CustomLevels.IndexOf(level);
             SwitchSubLevel(0, true);
         }
 
