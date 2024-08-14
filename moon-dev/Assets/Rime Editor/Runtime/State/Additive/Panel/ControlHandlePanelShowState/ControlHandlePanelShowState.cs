@@ -3,6 +3,7 @@ using System.Linq;
 using Frame.StateMachine;
 using LevelEditor.Extension;
 using LevelEditor.Item;
+using RimeEditor.Runtime;
 using UnityEngine;
 using RectTransform = UnityEngine.RectTransform;
 
@@ -20,7 +21,7 @@ namespace LevelEditor
             InitEvent();
         }
 
-        private LevelDataManager GetData => m_information.DataManager;
+        private BrowseController Get => m_information.Controller;
 
         private InputManager GetInput => m_information.InputManager;
 
@@ -66,7 +67,7 @@ namespace LevelEditor
 
         private void InitEvent()
         {
-            GetData.SyncLevelData += ClearCopyDatas;
+            Get.SyncLevelData += ClearCopyDatas;
         }
 
         private void InitGird()
@@ -160,10 +161,10 @@ namespace LevelEditor
             GetScaleAxisObj.SetActive(false);
             GetRectObj.SetActive(false);
 
-            if (GetData.TargetObjs.Count > 0)
+            if (Get.TargetObjs.Count > 0)
             {
                 GetPositionAxisObj.transform.position = Camera.main
-                                                              .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs)
+                                                              .WorldToScreenPoint(GetPositionListFromGameObjectList(Get.TargetObjs)
                                                                                      .GetCenterPoint());
 
                 GetPositionAxisObj.SetActive(true);
@@ -180,10 +181,10 @@ namespace LevelEditor
             GetScaleAxisObj.SetActive(false);
             GetRectObj.SetActive(false);
 
-            if (GetData.TargetObjs.Count > 0)
+            if (Get.TargetObjs.Count > 0)
             {
                 GetRotationAxisObj.transform.position = Camera.main
-                                                              .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs)
+                                                              .WorldToScreenPoint(GetPositionListFromGameObjectList(Get.TargetObjs)
                                                                                      .GetCenterPoint());
 
                 GetRotationAxisObj.SetActive(true);
@@ -200,13 +201,13 @@ namespace LevelEditor
             GetRotationAxisObj.SetActive(false);
             GetRectObj.SetActive(false);
 
-            if (GetData.TargetObjs.Count > 0)
+            if (Get.TargetObjs.Count > 0)
             {
                 GetScaleAxisObj.transform.position = Camera.main
-                                                           .WorldToScreenPoint(GetPositionListFromGameObjectList(GetData.TargetObjs)
+                                                           .WorldToScreenPoint(GetPositionListFromGameObjectList(Get.TargetObjs)
                                                                                   .GetCenterPoint());
 
-                GetScaleAxisObj.transform.rotation = GetData.TargetObjs.Last().transform.rotation;
+                GetScaleAxisObj.transform.rotation = Get.TargetObjs.Last().transform.rotation;
                 GetScaleAxisObj.SetActive(true);
             }
             else
@@ -221,17 +222,17 @@ namespace LevelEditor
             GetRotationAxisObj.SetActive(false);
             GetScaleAxisObj.SetActive(false);
 
-            if (GetData.TargetObjs.Count == 0)
+            if (Get.TargetObjs.Count == 0)
             {
                 GetRectObj.SetActive(false);
                 return;
             }
 
-            if (GetData.TargetObjs.Count > 0) GetRectObj.SetActive(true);
+            if (Get.TargetObjs.Count > 0) GetRectObj.SetActive(true);
 
-            if (GetData.TargetObjs.Count == 1)
+            if (Get.TargetObjs.Count == 1)
             {
-                var lastObj = GetData.TargetObjs.Last();
+                var lastObj = Get.TargetObjs.Last();
 
                 var renderer = lastObj.GetComponent<Renderer>();
 
@@ -258,14 +259,14 @@ namespace LevelEditor
                 return;
             }
 
-            if (GetData.TargetObjs.Count > 1)
+            if (Get.TargetObjs.Count > 1)
             {
                 var minX = float.MaxValue;
                 var minY = float.MaxValue;
                 var maxX = float.MinValue;
                 var maxY = float.MinValue;
 
-                foreach (var targetObj in GetData.TargetObjs)
+                foreach (var targetObj in Get.TargetObjs)
                 {
                     var renderer = targetObj.GetComponent<Renderer>();
 

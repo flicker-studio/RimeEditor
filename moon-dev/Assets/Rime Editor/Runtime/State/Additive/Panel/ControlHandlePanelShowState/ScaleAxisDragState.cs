@@ -4,6 +4,7 @@ using Frame.StateMachine;
 using LevelEditor.Extension;
 using LevelEditor.Item;
 using Moon.Kernel.Struct;
+using RimeEditor.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using RectTransform = UnityEngine.RectTransform;
@@ -341,15 +342,15 @@ namespace LevelEditor
 
         private CameraManager GetCamera => m_information.CameraManager;
 
-        private LevelDataManager GetData => m_information.DataManager;
+        private BrowseController Get => m_information.Controller;
 
         private UIManager GetUI => m_information.UIManager;
 
         private InputManager GetInput => m_information.InputManager;
 
-        private List<ItemBase> TargetItems => GetData.TargetItems;
+        private List<ItemBase> SelectedItems => Get.SelectedItems;
 
-        private List<GameObject> TargetObjs => GetData.TargetObjs;
+        private List<GameObject> TargetObjs => Get.TargetObjs;
 
         private RectTransform GetScaleRect => GetUI.GetControlHandlePanel.GetScaleRect;
 

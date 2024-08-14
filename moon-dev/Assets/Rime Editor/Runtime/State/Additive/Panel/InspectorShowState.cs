@@ -34,7 +34,7 @@ namespace LevelEditor
         private GameObject                      GetInspectorRootObj      => GetInspectorPanel.RootRect.gameObject;
         private RectTransform                   GetInspectorContent      => GetInspectorPanel.ContentRect;
         private UISetting.InspectorItemProperty GetInspectorItemProperty => GetInspectorPanel.InspectorItemProperty;
-        private List<ItemBase>                  TargetDatas              => m_information.DataManager.TargetItems;
+        private List<ItemBase>                  SelectedDatas            => m_information.Controller.SelectedItems;
         private GameObject                      GetBoolItemPrefab        => m_information.PrefabManager.GetBoolItem;
 
         [RuntimeInitializeOnLoadMethod]
@@ -46,7 +46,7 @@ namespace LevelEditor
 
         public override void Motion(Information information)
         {
-            if (TargetDatas.Count == 0)
+            if (SelectedDatas.Count == 0)
             {
                 //  TargetDatas.OnAdd -= FindSameField;
                 //  TargetDatas.OnAddRange -= FindSameField;
@@ -90,7 +90,7 @@ namespace LevelEditor
         {
             _fieldInfoDic.Clear();
             _commonFields.Clear();
-            foreach (var item in TargetDatas)
+            foreach (var item in SelectedDatas)
             {
                 var type   = item.GetType();
                 var fields = type.GetFields();

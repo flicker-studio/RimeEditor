@@ -24,7 +24,7 @@ namespace LevelEditor
         }
 
         private InputManager       InputManager          => m_information.InputManager;
-        private List<ItemBase>     Items                 => m_information.DataManager.TargetItems;
+        private List<ItemBase>     Items                 => m_information.Controller.SelectedItems;
         private ItemTransformPanel GetItemTransformPanel => m_information.UIManager.GetItemTransformPanel;
         private bool               GetPositionChange     => m_information.UIManager.GetItemTransformPanel.GetPositionChange;
         private bool               GetRotationChange     => m_information.UIManager.GetItemTransformPanel.GetRotationChange;

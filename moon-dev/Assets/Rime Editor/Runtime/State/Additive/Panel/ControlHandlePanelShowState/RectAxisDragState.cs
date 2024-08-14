@@ -60,9 +60,9 @@ namespace LevelEditor
         private UIManager     GetUI       => m_information.UIManager;
         private RectTransform GetRectRect => GetUI.GetControlHandlePanel.GetRectRect;
 
-        private List<ItemBase> TargetItems => m_information.DataManager.TargetItems;
+        private List<ItemBase> SelectedItems => m_information.Controller.SelectedItems;
 
-        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
+        private List<GameObject> TargetObjs => m_information.Controller.TargetObjs;
 
         private Vector3 GetMouseWorldPoint => m_information.CameraManager.MouseWorldPosition;
 
@@ -91,7 +91,7 @@ namespace LevelEditor
                     m_targetCurrentScale.Add(TargetObjs[i].transform.localScale);
                 }
 
-                CommandInvoker.Execute(new Rect(TargetItems, m_targetOriginPosition
+                CommandInvoker.Execute(new Rect(SelectedItems, m_targetOriginPosition
                                               , m_targetCurrentPosition, m_targetOriginScale, m_targetCurrentScale));
 
                 RemoveState();

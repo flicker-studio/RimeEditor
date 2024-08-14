@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using LevelEditor.Command;
 using LevelEditor.Item;
 using LevelEditor.Manager;
+using RimeEditor.Runtime;
 using UnityEngine;
 
 namespace LevelEditor
@@ -13,7 +14,7 @@ namespace LevelEditor
 
         public UIManager UIManager { get; private set; }
 
-        public LevelDataManager DataManager { get; private set; }
+        public BrowseController Controller { get; private set; }
 
         public PrefabManager PrefabManager { get; private set; }
 
@@ -35,18 +36,18 @@ namespace LevelEditor
             PrefabManager = new PrefabManager(prefab);
             UIManager     = new UIManager(levelEditorTransform, UI);
             InputManager  = new InputManager();
-            DataManager   = new LevelDataManager();
+            Controller    = new BrowseController();
 
-            await DataManager.LoadLevelFiles();
+            await Controller.Refresh();
 
             CameraManager = new CameraManager(cam);
             LevelAction   = new LevelAction();
             var mask = setting.OutlineSetting.OutlineMask;
             var fill = setting.OutlineSetting.OutlineMask;
-            OutlineManager            =  new OutlineManager(mask, fill, cam);
-            DataManager.SyncLevelData += ResetCommand;
-            DataManager.SyncLevelData += ResetOutline;
-            DataManager.SyncLevelData += ResetCameraPos;
+            OutlineManager           =  new OutlineManager(mask, fill, cam);
+            Controller.SyncLevelData += ResetCommand;
+            Controller.SyncLevelData += ResetOutline;
+            Controller.SyncLevelData += ResetCameraPos;
         }
 
         // internal void EnableExcute()
@@ -62,7 +63,7 @@ namespace LevelEditor
 
         private void ResetOutline(SubLevel subLevel)
         {
-            OutlineManager.SetRenderObjects(DataManager.TargetObjs);
+            OutlineManager.SetRenderObjects(Controller.TargetObjs);
         }
 
         private void ResetCameraPos(SubLevel subLevel)

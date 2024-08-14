@@ -7,6 +7,7 @@ using LevelEditor.Command;
 using LevelEditor.Item;
 using LevelEditor.Manager;
 using LevelEditor.View.Element;
+using RimeEditor.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,11 +24,11 @@ public class HierarchyPanelShowState : AdditiveState
         InitState();
     }
 
-    private LevelDataManager DataManager       => m_information.DataManager;
+    private BrowseController Controller        => m_information.Controller;
     private HierarchyPanel   HierarchyPanel    => m_information.UIManager.GetHierarchyPanel;
     private Transform        ScrollViewContent => HierarchyPanel.GetHierarchyContent;
-    private List<ItemBase>   TargetItems       => DataManager.TargetItems;
-    private List<ItemBase>   ItemAssets        => DataManager.ItemAssets;
+    private List<ItemBase>   SelectedItems     => Controller.SelectedItems;
+    private List<ItemBase>   ItemAssets        => Controller.ItemAssets;
     private OutlineManager   Outline           => m_information.OutlineManager;
     private Button           AddButton         => HierarchyPanel.GetAddButton;
     private Button           DeleteButton      => HierarchyPanel.GetDeleteButton;
@@ -39,14 +40,14 @@ public class HierarchyPanelShowState : AdditiveState
     /// <inheritdoc />
     public override void Motion(Information information)
     {
-        if (DeleteInputDown) CommandInvoker.Execute(new Delete(TargetItems.ToList()));
+        if (DeleteInputDown) CommandInvoker.Execute(new Delete(SelectedItems.ToList()));
     }
 
     private void InitState()
     {
-        if (DataManager.CurrentSubLevel is null) return;
+        if (Controller.CurrentSubLevel is null) return;
 
-        SyncNodeByLevelData((SubLevel)DataManager.CurrentSubLevel);
+        SyncNodeByLevelData(Controller.CurrentSubLevel);
     }
 
     private void InitButton()
@@ -56,12 +57,12 @@ public class HierarchyPanelShowState : AdditiveState
             if (!CheckStates.Contains(typeof(ItemWarehousePanelShowState))) ChangeMotionState(typeof(ItemWarehousePanelShowState));
         });
 
-        DeleteButton.onClick.AddListener(() => { CommandInvoker.Execute(new Delete(TargetItems.ToList())); });
+        DeleteButton.onClick.AddListener(() => { CommandInvoker.Execute(new Delete(SelectedItems.ToList())); });
     }
 
     private void InitSyncEvent()
     {
-        DataManager.SyncLevelData += SyncNodeByLevelData;
+        Controller.SyncLevelData += SyncNodeByLevelData;
     }
 
     private void InitEvent()
@@ -180,11 +181,11 @@ public class HierarchyPanelShowState : AdditiveState
     private void SyncNodePanelSelect()
     {
         _selectedItemList.Clear();
-        _selectedItemList.AddRange(TargetItems);
+        _selectedItemList.AddRange(SelectedItems);
 
         foreach (var itemNodeProperty in _itemViewList) itemNodeProperty.IsSelected = false;
 
-        foreach (var targetItem in TargetItems)
+        foreach (var targetItem in SelectedItems)
         foreach (var itemNodeProperty in _itemViewList)
             if (itemNodeProperty is ItemView itemNodeChild && itemNodeChild.ItemBase == targetItem)
             {
@@ -264,7 +265,7 @@ public class HierarchyPanelShowState : AdditiveState
             selectView.IsSelected = true;
             _selectedItemList.Add(child.ItemBase);
             _selectedItemList = _selectedItemList.Distinct().ToList();
-            CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
+            CommandInvoker.Execute(new Select(SelectedItems, _selectedItemList, Outline));
             return;
         }
 
@@ -279,7 +280,7 @@ public class HierarchyPanelShowState : AdditiveState
             }
 
             _selectedItemList = _selectedItemList.Distinct().ToList();
-            CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
+            CommandInvoker.Execute(new Select(SelectedItems, _selectedItemList, Outline));
             selectView.IsSelected = true;
         }
     }
@@ -296,7 +297,7 @@ public class HierarchyPanelShowState : AdditiveState
                 _selectedItemList.Remove(child.ItemBase);
 
             _selectedItemList = _selectedItemList.Distinct().ToList();
-            CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
+            CommandInvoker.Execute(new Select(SelectedItems, _selectedItemList, Outline));
             return;
         }
 
@@ -316,7 +317,7 @@ public class HierarchyPanelShowState : AdditiveState
             }
 
             _selectedItemList = _selectedItemList.Distinct().ToList();
-            CommandInvoker.Execute(new Select(TargetItems, _selectedItemList, Outline));
+            CommandInvoker.Execute(new Select(SelectedItems, _selectedItemList, Outline));
             selectView.IsSelected = isSelectParent;
         }
     }

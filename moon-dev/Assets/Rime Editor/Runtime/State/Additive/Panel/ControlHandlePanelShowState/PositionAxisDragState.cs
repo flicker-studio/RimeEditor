@@ -43,9 +43,9 @@ namespace LevelEditor
 
         private ControlHandlePanel GetControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
 
-        private List<ItemBase> TargetItems => m_information.DataManager.TargetItems;
+        private List<ItemBase> SelectedItems => m_information.Controller.SelectedItems;
 
-        private List<GameObject> TargetObjs => m_information.DataManager.TargetObjs;
+        private List<GameObject> TargetObjs => m_information.Controller.TargetObjs;
 
         private Vector3 GetMouseWorldPoint => m_information.CameraManager.MouseWorldPosition;
 
@@ -66,7 +66,7 @@ namespace LevelEditor
             {
                 for (var i = 0; i < TargetObjs.Count; i++) m_targetCurrentPosition.Add(TargetObjs[i].transform.position);
 
-                CommandInvoker.Execute(new PositionCommand(TargetItems, m_targetCurrentPosition));
+                CommandInvoker.Execute(new PositionCommand(SelectedItems, m_targetCurrentPosition));
                 RemoveState();
                 return;
             }

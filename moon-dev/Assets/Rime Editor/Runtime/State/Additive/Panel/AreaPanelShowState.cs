@@ -1,5 +1,6 @@
 using Frame.StateMachine;
 using LevelEditor;
+using RimeEditor.Runtime;
 using TMPro;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class AreaPanelShowState : AdditiveState
         InitState();
     }
 
-    private LevelDataManager GetDataManager  => m_information.DataManager;
+    private BrowseController GetController   => m_information.Controller;
     private TMP_Dropdown     GetAreaDropdown => m_information.UIManager.GetAreaPanel.GetAreaDropdown;
 
     private Button GetAddButton => m_information.UIManager.GetAreaPanel.GetAddButton;
@@ -47,14 +48,14 @@ public class AreaPanelShowState : AdditiveState
 
     private void SetLevelIndex(int index)
     {
-        GetDataManager.SetSubLevelIndex(index);
+        GetController.SwitchSubLevel(index);
     }
 
     private void AddLevel()
     {
-        GetDataManager.AddSubLevel();
-        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(((SubLevel)GetDataManager.CurrentSubLevel).Name));
-        GetAreaDropdown.value = GetDataManager.CurrentSubLevelIndex;
+        GetController.AddSubLevel();
+        GetAreaDropdown.options.Add(new TMP_Dropdown.OptionData(GetController.CurrentSubLevel.Name));
+        GetAreaDropdown.value = GetController.CurrentSubLevelIndex;
     }
 
     private void AddLevel(string levelName)
@@ -64,18 +65,18 @@ public class AreaPanelShowState : AdditiveState
 
     private void DeleteLevel()
     {
-        if (GetDataManager.ShowSubLevels().Count <= 1) return;
+        if (GetController.ShowSubLevels().Count <= 1) return;
 
-        GetAreaDropdown.options.RemoveAt(GetDataManager.CurrentSubLevelIndex);
-        GetDataManager.DeleteSubLevel();
-        GetAreaDropdown.value = GetDataManager.CurrentSubLevelIndex;
+        GetAreaDropdown.options.RemoveAt(GetController.CurrentSubLevelIndex);
+        GetController.DeleteSubLevel();
+        GetAreaDropdown.value = GetController.CurrentSubLevelIndex;
         GetAreaDropdown.RefreshShownValue();
     }
 
     private void ReloadLevel()
     {
         GetAreaDropdown.ClearOptions();
-        var subLevelDatas = GetDataManager.CurrentLevel.SubLevelDataList;
+        var subLevelDatas = GetController.CurrentCustomLevel.SubLevelDataList;
 
         for (var index = 0; index < subLevelDatas.Count; index++) AddLevel(subLevelDatas[index].Name);
 

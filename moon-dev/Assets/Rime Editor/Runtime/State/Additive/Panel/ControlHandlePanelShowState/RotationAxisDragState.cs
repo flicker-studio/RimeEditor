@@ -48,7 +48,7 @@ namespace LevelEditor
             _onUpdate += UpdateRotation;
         }
 
-        private List<ItemBase>     Items => m_information.DataManager.TargetItems;
+        private List<ItemBase>     Items => m_information.Controller.SelectedItems;
         private ControlHandlePanel ControlHandlePanel => m_information.UIManager.GetControlHandlePanel;
         private RectTransform      RotationAxisRectTransform => ControlHandlePanel.GetRotationRect;
         private Vector2            MouseCursorCompensation => ControlHandlePanel.GetMouseCursorProperty.CURSOR_BOUND_CHECK_COMPENSATION;

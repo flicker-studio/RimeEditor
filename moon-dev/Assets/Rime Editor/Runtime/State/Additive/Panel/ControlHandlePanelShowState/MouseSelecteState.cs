@@ -59,9 +59,9 @@ namespace LevelEditor
                                                          .NewY(Mathf.Clamp(m_information.CameraManager.MousePosition.y * GetScreenScale.y, 0,
                                                                            Screen.height * GetScreenScale.y));
 
-        private List<ItemBase> TargetList => m_information.DataManager.TargetItems;
+        private List<ItemBase> SelectedList => m_information.Controller.SelectedItems;
 
-        private List<ItemBase> ItemAssets => m_information.DataManager.ItemAssets;
+        private List<ItemBase> ItemAssets => m_information.Controller.ItemAssets;
 
         public override void Motion(Information information)
         {
@@ -221,7 +221,7 @@ namespace LevelEditor
 
             tempList = tempList.Distinct().ToList();
             GetOutlinePainter.SetRenderObjects(tempList.GetItemObjs());
-            CommandInvoker.Execute(new Select(TargetList, tempList, GetOutlinePainter));
+            CommandInvoker.Execute(new Select(SelectedList, tempList, GetOutlinePainter));
         }
 
         private List<ItemBase> ChangeCollidersToDatas(List<Collider2D> colliders)

@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
 using LevelEditor.Manager;
+using RimeEditor.Runtime;
 using UnityEngine;
 
 namespace LevelEditor
@@ -16,7 +17,7 @@ namespace LevelEditor
         private LevelAction GetLevelAction => m_information.LevelAction;
         private LevelPanel  GetLevelPanel  => m_information.UIManager.GetLevelPanel;
 
-        private LevelDataManager GetData => m_information.DataManager;
+        private BrowseController Get => m_information.Controller;
 
         private OutlineManager OutlineManager => m_information.OutlineManager;
 
@@ -39,14 +40,14 @@ namespace LevelEditor
 
         private void PlayLevel()
         {
-            GetData.SetActiveEditors(false);
+            Get.SetActiveEditors(false);
             OutlineManager.SetRenderObjects(null);
-            LevelPlay.Instance.Play(GetData.ShowSubLevels(), GetData.CurrentSubLevelIndex);
+            LevelPlay.Instance.Play(Get.ShowSubLevels(), Get.CurrentSubLevelIndex);
         }
 
         private void SaveLevel()
         {
-            if (string.IsNullOrEmpty(GetData.CurrentLevel.LevelName))
+            if (string.IsNullOrEmpty(Get.CurrentCustomLevel.Name))
             {
                 LaunchPopover(GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_LEVEL_NAME_MISSING,
                               GetLevelPanel.GetPopoverProperty.POPOVER_ERROR_COLOR);
@@ -57,7 +58,7 @@ namespace LevelEditor
             LaunchPopover(GetLevelPanel.GetPopoverProperty.POPOVER_TEXT_SAVE_SUCCESS,
                           GetLevelPanel.GetPopoverProperty.POPOVER_SUCCESS_COLOR);
 
-            GetData.ToJson();
+            Get.ToJson();
         }
 
         private void ToLevelSetting()

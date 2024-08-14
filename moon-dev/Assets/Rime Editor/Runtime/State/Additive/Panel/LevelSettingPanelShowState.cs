@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Frame.StateMachine;
+using RimeEditor.Runtime;
 using SimpleFileBrowser;
 using TMPro;
 using UnityEngine;
@@ -19,8 +20,8 @@ namespace LevelEditor
         }
 
         private InputManager      GetInput             => m_information.InputManager;
-        private LevelDataManager  GetData              => m_information.DataManager;
-        private LevelData         GetCurrentLevel      => GetData.CurrentLevel;
+        private BrowseController  Get                  => m_information.Controller;
+        private LevelData         GetCurrentLevel      => Get.CurrentCustomLevel;
         private LevelSettingPanel GetLevelSettingPanel => m_information.UIManager.GetLevelSettingPanel;
 
         private UISetting.PopoverProperty GetPopoverProperty => GetLevelSettingPanel.GetPopoverProperty;
@@ -69,7 +70,7 @@ namespace LevelEditor
 
         private void SaveLevel()
         {
-            GetData.Save
+            Get.Save
                 (
                  GetLevelNameInputField.text,
                  GetAuthorNameInputField.text,

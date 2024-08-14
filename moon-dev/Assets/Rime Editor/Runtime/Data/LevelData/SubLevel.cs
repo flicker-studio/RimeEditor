@@ -12,5 +12,7 @@ namespace LevelEditor
         ///     A list of the resources referenced by the current level
         /// </summary>
         public List<ItemBase> ItemAssets = new();
+
+        public string Name = string.Empty;
     }
 }

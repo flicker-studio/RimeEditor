@@ -61,8 +61,8 @@ namespace LevelEditor
         private string             GetItemLatticeImageName   => GetItemWarehousePanel.GetItemLatticeImageName;
         private string             GetItemLatticeTextName    => GetItemWarehousePanel.GetItemLatticeTextName;
         private string             GetItemTypeTextName       => GetItemWarehousePanel.GetItemTypeTextName;
-        private List<ItemBase>     ItemAssets                => m_information.DataManager.ItemAssets;
-        private List<ItemBase>     TargetAssets              => m_information.DataManager.TargetItems;
+        private List<ItemBase>     ItemAssets                => m_information.Controller.ItemAssets;
+        private List<ItemBase>     SelectedAssets            => m_information.Controller.SelectedItems;
 
         private OutlineManager GetOutlinePainter => m_information.OutlineManager;
 
